@@ -36,7 +36,7 @@ Imports:
     crayon,
     methods,
     ggplot2
-Depends: R (>= 3.1.0)
+Depends: R (>= 3.5.0)
 VignetteBuilder: knitr
 Remotes:
     mrc-ide/dde,
