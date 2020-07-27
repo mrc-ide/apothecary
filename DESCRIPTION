@@ -27,6 +27,7 @@ RoxygenNote: 7.1.0
 Imports: 
     odin (>= 1.0.5), 
     dde (>= 1.0.2),
+    squire,
     dplyr,
     tidyr,
     rlang,
@@ -40,4 +41,5 @@ Depends: R (>= 3.5.0)
 VignetteBuilder: knitr
 Remotes:
     mrc-ide/dde,
-    mrc-ide/odin
+    mrc-ide/odin,
+    mrc-ide/squire
