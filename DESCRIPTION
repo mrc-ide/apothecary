@@ -4,17 +4,16 @@ Title: SEIR transmission model of COVID-19 with pharmaceutical interventions
 Version: 0.1.0
 Authors@R: c(
   person("Charlie", "Whittaker", email = "charles.whittaker16@imperial.ac.uk", role = c("aut", "cre")),
-  person("OJ", "Watson", email = "o.watson15@imperial.ac.uk", role = c("aut", "cre")),
+  person("OJ", "Watson", email = "o.watson15@imperial.ac.uk", role = c("aut")),
   person("Patrick", "Walker", email = "patrick.walker06@imperial.ac.uk", role = c("aut")),
   person("Peter", "Winskill", email = "p.winskill@imperial.ac.uk", role = c("aut")),
   person("Giovanni", "Charles", email = "giovanni.charles10@imperial.ac.uk", role = c("aut")),
   person("Arran", "Hamlet", email = "p.winskill@imperial.ac.uk", role = c("aut")),
-  person("Hayley", "Thompson", email = "giovanni.charles10@imperial.ac.uk", role = c("aut")),
+  person("Hayley", "Thompson", email = "giovanni.charles10@imperial.ac.uk", role = c("aut"))
   )    
 Description: An extended model of the SEIR model available in the squire package
   (available at: https://github.com/mrc-ide/squire) extended to explore the impact
   of different pharmaceutical therapeutics. 
-
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
