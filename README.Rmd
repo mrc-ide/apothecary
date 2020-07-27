@@ -24,6 +24,13 @@ knitr::opts_chunk$set(
 
 apothecary enables users to simulate models of SARS-CoV-2 epidemics with an explicit focus on exploring the impact of therapeutic interventions. This is done using an age-structured SEIR model that also explicitly considers healthcare capacity and disease severity. 
 
+## IMPORTANT NOTES
+
+:warning: This code is released with no support and is not currently finished. Users outside Imperial College looking to run transmission models should *NOT* be using *apothecary* and instead use the actively maintained, currently functional packageg *squire*. 
+
+:warning: This model is in active development and so parameter names and behaviours, as well as output file formats, will change without notice.
+
+
 # Copyright and Licensing
 The source code for apothecary is licensed under the GPLv3, see LICENSE for more details.
 
