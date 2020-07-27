@@ -16,3 +16,9 @@ output:
 <!-- badges: end -->
 
 apothecary enables users to simulate models of SARS-CoV-2 epidemics with an explicit focus on exploring the impact of therapeutic interventions. This is done using an age-structured SEIR model that also explicitly considers healthcare capacity and disease severity. 
+
+# Copyright and Licensing
+The source code for apothecary is licensed under the GPLv3, see LICENSE for more details.
+
+It is Copyright Imperial College of Science, Technology and Medicine. The lead developers are Charlie Whittaker and OJ Watson
+
