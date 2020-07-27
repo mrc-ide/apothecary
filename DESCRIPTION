@@ -11,14 +11,34 @@ Authors@R: c(
   person("Arran", "Hamlet", email = "p.winskill@imperial.ac.uk", role = c("aut")),
   person("Hayley", "Thompson", email = "giovanni.charles10@imperial.ac.uk", role = c("aut")),
   )    
-
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: An extended model of the SEIR model used in the Imperial College
-  London Report into the global impact of COVID-19 and strategies for mitigation
-  and suppression (https://www.imperial.ac.uk/mrc-global-infectious-disease-analysis/covid-19/report-12-global-impact-covid-19/).
-  Extensions now include healthcare treatment pathways and excess mortality. 
-
+Description: An extended model of the SEIR model available in the squire package
+  (available at: https://github.com/mrc-ide/squire) extended to explore the impact
+  of different pharmaceutical therapeutics. 
 
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
+Suggests: 
+    testthat (>= 2.1.0),
+    covr,
+    readxl,
+    knitr,
+    rmarkdown
+RoxygenNote: 7.1.0
+Imports: 
+    odin (>= 1.0.5), 
+    dde (>= 1.0.2),
+    dplyr,
+    tidyr,
+    rlang,
+    furrr,
+    magrittr,
+    purrr,
+    crayon,
+    methods,
+    ggplot2
+Depends: R (>= 3.1.0)
+VignetteBuilder: knitr
+Remotes:
+    mrc-ide/dde,
+    mrc-ide/odin
