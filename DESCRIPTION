@@ -14,7 +14,7 @@ Authors@R: c(
 Description: An extended model of the SEIR model available in the squire package
   (available at: https://github.com/mrc-ide/squire) extended to explore the impact
   of different pharmaceutical therapeutics. 
-License: What license is it under?
+License: GPLv3
 Encoding: UTF-8
 LazyData: true
 Suggests: 
