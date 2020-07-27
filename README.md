@@ -19,7 +19,7 @@ apothecary enables users to simulate models of SARS-CoV-2 epidemics with an expl
 
 ## IMPORTANT NOTES
 
-:warning: This code is released with no support and is not currently finished. Users outside Imperial College looking to run transmission models should *NOT* be using *apothecary* and instead use the actively maintained, currently functional packageg *squire*. 
+:warning: This code is released with no support and is not currently finished. Users outside Imperial College looking to run models of COVID-19 transmissiondynamics should **NOT** be using **apothecary** and instead use the actively maintained, currently functional package **squire** (available at: https://github.com/mrc-ide/squire) 
 
 :warning: This model is in active development and so parameter names and behaviours, as well as output file formats, will change without notice.
 
