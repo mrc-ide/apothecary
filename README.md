@@ -40,3 +40,7 @@ for more details.
 
 It is Copyright Imperial College of Science, Technology and Medicine.
 The lead developers are Charlie Whittaker and OJ Watson
+
+# Notes
+
+With thanks to vectorportal.com for the Pestle and Mortar image.
