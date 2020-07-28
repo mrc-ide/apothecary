@@ -6,6 +6,16 @@
 \usage{
 initial_params(country = NULL, population = NULL, seeding_cases = 20)
 }
+\arguments{
+\item{country}{country}
+
+\item{population}{population}
+
+\item{seeding_cases}{seeding_cases}
+}
+\value{
+inits
+}
 \description{
 Generate initial parameters for the apothecary model
 }
