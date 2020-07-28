@@ -6,7 +6,7 @@
 #'
 initial_params <- function(country = NULL, population = NULL, seeding_cases = 20) {
 
-  if (!is.null(population) & length(population != 17)) {
+  if (!is.null(population) & length(population) != 17) {
     stop("population input is wrong - needs to be 17 in length")
   }
 
@@ -23,7 +23,7 @@ initial_params <- function(country = NULL, population = NULL, seeding_cases = 20
   age_group_indices <- c(8, 9, 10, 11) # age_group indices corresponding to middle-aged travellers
   raw_seeding_cases[age_group_indices] <- as.vector(stats::rmultinom(1, size = seeding_cases, prob = rep(0.25, 4)))
 
-  inits <- list(S0 = population,
+  inits <- list(S_0 = population,
                 E1_0 = raw_seeding_cases,
                 E2_0 = rep(0, 17),
                 IAsymp_0 = rep(0, 17),
@@ -86,138 +86,6 @@ initial_params <- function(country = NULL, population = NULL, seeding_cases = 20
 
 }
 
-# -----------------------------------------------------------------------------
-#' Generate drug based parameters for the apothecary model
-#'
-#' @return Parameters
-#' @export
-#'
-drug_params <- function(
-  prophylactic_drug_timing_1 = 100000,
-  prophylactic_drug_timing_2 = 100000,
-  prophylactic_prop_treat = 0,
-  prophylactic_drug_wane = 1000000,
-  drug_1_indic = 0,
-  drug_1_effect_size = 0,
-  drug_2_indic = 0,
-  drug_2_effect_size = 0,
-  drug_3_indic = 0,
-  drug_3_prop_treat = 0,
-  drug_3_effect_size = 0,
-  drug_4_indic = 0,
-  drug_4_prop_treat = 0,
-  drug_4_effect_size = 0,
-  drug_5_indic_IMild = 0,
-  drug_5_indic_ICase = 0,
-  drug_5_prop_treat = 0,
-  drug_5_effect_size = 0,
-  drug_6_indic = 0,
-  drug_6_prop_treat = 0,
-  drug_6_effect_size = 0,
-  drug_7_indic = 0,
-  drug_7_prop_treat = 0,
-  drug_7_effect_size = 0,
-  drug_8_indic_IMod_GetHosp_GetOx = 0,
-  drug_8_indic_IMod_GetHosp_NoOx = 0,
-  drug_8_prop_treat = 0,
-  drug_8_GetOx_effect_size = 0,
-  drug_8_NoOx_effect_size = 0,
-  drug_9_indic_ISev_GetICU_GetOx = 0,
-  drug_9_indic_ISev_GetICU_NoOx = 0,
-  drug_9_prop_treat = 0,
-  drug_9_GetOx_effect_size = 0,
-  drug_9_NoOx_effect_size = 0,
-  drug_10_indic_ICrit_GetICU_GetOx_GetMV = 0,
-  drug_10_indic_ICrit_GetICU_GetOx_NoMV = 0,
-  drug_10_indic_ICrit_GetICU_NoOx_NoMV = 0,
-  drug_10_prop_treat = 0,
-  drug_10_GetOx_GetMV_effect_size = 0,
-  drug_10_GetOx_NoMV_effect_size = 0,
-  drug_10_NoOx_NoMV_effect_size = 0,
-  drug_11_indic_IMod_GetHosp_GetOx = 0,
-  drug_11_indic_IMod_GetHosp_NoOx = 0,
-  drug_11_prop_treat = 0,
-  drug_11_GetOx_effect_size = 0,
-  drug_11_NoOx_effect_size = 0,
-  drug_12_indic_ISev_GetICU_GetOx = 0,
-  drug_12_indic_ISev_GetICU_NoOx = 0,
-  drug_12_prop_treat = 0,
-  drug_12_GetOx_effect_size = 0,
-  drug_12_NoOx_effect_size = 0,
-  drug_13_indic_ICrit_GetICU_GetOx_GetMV = 0,
-  drug_13_indic_ICrit_GetICU_GetOx_NoMV = 0,
-  drug_13_indic_ICrit_GetICU_NoOx_NoMV = 0,
-  drug_13_prop_treat = 0,
-  drug_13_GetOx_GetMV_effect_size = 0,
-  drug_13_GetOx_NoMV_effect_size = 0,
-  drug_13_NoOx_NoMV_effect_size = 0
-) {
-
-  drugs <- list(
-    prophylactic_drug_timing_1 = prophylactic_drug_timing_1,
-    prophylactic_drug_timing_2 = prophylactic_drug_timing_2,
-    prophylactic_prop_treat = prophylactic_prop_treat,
-    prophylactic_drug_wane = prophylactic_drug_wane,
-    drug_1_indic = drug_1_indic,
-    drug_1_effect_size = drug_1_effect_size,
-    drug_2_indic = drug_2_indic,
-    drug_2_effect_size = drug_2_effect_size,
-    drug_3_indic = drug_3_indic,
-    drug_3_prop_treat = drug_3_prop_treat,
-    drug_3_effect_size = drug_3_effect_size,
-    drug_4_indic = drug_4_indic,
-    drug_4_prop_treat = drug_4_prop_treat,
-    drug_4_effect_size = drug_4_effect_size,
-    drug_5_indic_IMild = drug_5_indic_IMild,
-    drug_5_indic_ICase = drug_5_indic_ICase,
-    drug_5_prop_treat = drug_5_prop_treat,
-    drug_5_effect_size = drug_5_effect_size,
-    drug_6_indic = drug_6_indic,
-    drug_6_prop_treat = drug_6_prop_treat,
-    drug_6_effect_size = drug_6_effect_size,
-    drug_7_indic = drug_7_indic,
-    drug_7_prop_treat = drug_7_prop_treat,
-    drug_7_effect_size = drug_7_effect_size,
-    drug_8_indic_IMod_GetHosp_GetOx = drug_8_indic_IMod_GetHosp_GetOx,
-    drug_8_indic_IMod_GetHosp_NoOx = drug_8_indic_IMod_GetHosp_NoOx,
-    drug_8_prop_treat = drug_8_prop_treat,
-    drug_8_GetOx_effect_size = drug_8_GetOx_effect_size,
-    drug_8_NoOx_effect_size = drug_8_NoOx_effect_size,
-    drug_9_indic_ISev_GetICU_GetOx = drug_9_indic_ISev_GetICU_GetOx,
-    drug_9_indic_ISev_GetICU_NoOx = drug_9_indic_ISev_GetICU_NoOx,
-    drug_9_prop_treat = drug_9_prop_treat,
-    drug_9_GetOx_effect_size = drug_9_GetOx_effect_size,
-    drug_9_NoOx_effect_size = drug_9_NoOx_effect_size,
-    drug_10_indic_ICrit_GetICU_GetOx_GetMV = drug_10_indic_ICrit_GetICU_GetOx_GetMV,
-    drug_10_indic_ICrit_GetICU_GetOx_NoMV = drug_10_indic_ICrit_GetICU_GetOx_NoMV,
-    drug_10_indic_ICrit_GetICU_NoOx_NoMV = drug_10_indic_ICrit_GetICU_NoOx_NoMV,
-    drug_10_prop_treat = drug_10_prop_treat,
-    drug_10_GetOx_GetMV_effect_size = drug_10_GetOx_GetMV_effect_size,
-    drug_10_GetOx_NoMV_effect_size = drug_10_GetOx_NoMV_effect_size,
-    drug_10_NoOx_NoMV_effect_size = drug_10_NoOx_NoMV_effect_size,
-    drug_11_indic_IMod_GetHosp_GetOx = drug_11_indic_IMod_GetHosp_GetOx,
-    drug_11_indic_IMod_GetHosp_NoOx = drug_11_indic_IMod_GetHosp_NoOx,
-    drug_11_prop_treat = drug_11_prop_treat,
-    drug_11_GetOx_effect_size = drug_11_GetOx_effect_size,
-    drug_11_NoOx_effect_size = drug_11_NoOx_effect_size,
-    drug_12_indic_ISev_GetICU_GetOx = drug_12_indic_ISev_GetICU_GetOx,
-    drug_12_indic_ISev_GetICU_NoOx = drug_12_indic_ISev_GetICU_NoOx,
-    drug_12_prop_treat = drug_12_prop_treat,
-    drug_12_GetOx_effect_size = drug_12_GetOx_effect_size,
-    drug_12_NoOx_effect_size = drug_12_NoOx_effect_size,
-    drug_13_indic_ICrit_GetICU_GetOx_GetMV = drug_13_indic_ICrit_GetICU_GetOx_GetMV,
-    drug_13_indic_ICrit_GetICU_GetOx_NoMV = drug_13_indic_ICrit_GetICU_GetOx_NoMV,
-    drug_13_indic_ICrit_GetICU_NoOx_NoMV = drug_13_indic_ICrit_GetICU_NoOx_NoMV,
-    drug_13_prop_treat = drug_13_prop_treat,
-    drug_13_GetOx_GetMV_effect_size = drug_13_GetOx_GetMV_effect_size,
-    drug_13_GetOx_NoMV_effect_size = drug_13_GetOx_NoMV_effect_size,
-    drug_13_NoOx_NoMV_effect_size = drug_13_NoOx_NoMV_effect_size)
-
-  return(drugs)
-}
-
-
-
 
 # -----------------------------------------------------------------------------
 #' Parmaters for Apothecary SEIR model
@@ -239,13 +107,13 @@ apothecary_parameters <- function(
   tt_hosp_beds = 0,
   tt_ICU_beds = 0,
   tt_oxygen_supply = 0,
-  input_oxygen_supply = NULL,
+  input_oxygen_supply = 1000000000,
   tt_baseline_oxygen_demand = 0,
-  input_baseline_oxygen_demand = NULL,
-  oxygen_availability_0 = NULL,
-  max_leftover = NULL,
+  input_baseline_oxygen_demand = 0,
+  oxygen_availability_0 = 1000000000,
+  max_leftover = 0,
   severe_critical_case_oxygen_consumption_multiplier = 1.5,
-  MV_capacity = NULL,
+  MV_capacity = 1000000000,
 
   # transmission related parameters
   R0 = 3,
@@ -317,7 +185,67 @@ apothecary_parameters <- function(
   dur_ICrit_GetICU_NoOx_NoMV_Surv = 11.3/2,
   dur_ICrit_GetICU_NoOx_NoMV_Die = 10.1/2,
   dur_ICrit_NoICU_NoOx_NoMV_Surv = 11.3/2,
-  dur_ICrit_NoICU_NoOx_NoMV_Die = 10.1/2
+  dur_ICrit_NoICU_NoOx_NoMV_Die = 10.1/2,
+
+  # drug related parameters
+  prophylactic_drug_timing_1 = 100000,
+  prophylactic_drug_timing_2 = 100000,
+  prophylactic_prop_treat = 0,
+  prophylactic_drug_wane = 1000000,
+  drug_1_indic = 0,
+  drug_1_effect_size = 0,
+  drug_2_indic = 0,
+  drug_2_effect_size = 0,
+  drug_3_indic = 0,
+  drug_3_prop_treat = 0,
+  drug_3_effect_size = 0,
+  drug_4_indic = 0,
+  drug_4_prop_treat = 0,
+  drug_4_effect_size = 0,
+  drug_5_indic_IMild = 0,
+  drug_5_indic_ICase = 0,
+  drug_5_prop_treat = 0,
+  drug_5_effect_size = 0,
+  drug_6_indic = 0,
+  drug_6_prop_treat = 0,
+  drug_6_effect_size = 0,
+  drug_7_indic = 0,
+  drug_7_prop_treat = 0,
+  drug_7_effect_size = 0,
+  drug_8_indic_IMod_GetHosp_GetOx = 0,
+  drug_8_indic_IMod_GetHosp_NoOx = 0,
+  drug_8_prop_treat = 0,
+  drug_8_GetOx_effect_size = 0,
+  drug_8_NoOx_effect_size = 0,
+  drug_9_indic_ISev_GetICU_GetOx = 0,
+  drug_9_indic_ISev_GetICU_NoOx = 0,
+  drug_9_prop_treat = 0,
+  drug_9_GetOx_effect_size = 0,
+  drug_9_NoOx_effect_size = 0,
+  drug_10_indic_ICrit_GetICU_GetOx_GetMV = 0,
+  drug_10_indic_ICrit_GetICU_GetOx_NoMV = 0,
+  drug_10_indic_ICrit_GetICU_NoOx_NoMV = 0,
+  drug_10_prop_treat = 0,
+  drug_10_GetOx_GetMV_effect_size = 0,
+  drug_10_GetOx_NoMV_effect_size = 0,
+  drug_10_NoOx_NoMV_effect_size = 0,
+  drug_11_indic_IMod_GetHosp_GetOx = 0,
+  drug_11_indic_IMod_GetHosp_NoOx = 0,
+  drug_11_prop_treat = 0,
+  drug_11_GetOx_effect_size = 0,
+  drug_11_NoOx_effect_size = 0,
+  drug_12_indic_ISev_GetICU_GetOx = 0,
+  drug_12_indic_ISev_GetICU_NoOx = 0,
+  drug_12_prop_treat = 0,
+  drug_12_GetOx_effect_size = 0,
+  drug_12_NoOx_effect_size = 0,
+  drug_13_indic_ICrit_GetICU_GetOx_GetMV = 0,
+  drug_13_indic_ICrit_GetICU_GetOx_NoMV = 0,
+  drug_13_indic_ICrit_GetICU_NoOx_NoMV = 0,
+  drug_13_prop_treat = 0,
+  drug_13_GetOx_GetMV_effect_size = 0,
+  drug_13_GetOx_NoMV_effect_size = 0,
+  drug_13_NoOx_NoMV_effect_size = 0
 
 ) {
 
@@ -374,158 +302,177 @@ apothecary_parameters <- function(
     mod_init <- initial_params(country = country, population = population)
   }
 
+  # Initialise drug parameters
+
   # Convert contact matrices to input matrices
   matrices_set <- matrix_set_explicit(contact_matrix_set, population)
-
-  # Input checks
-  # ----------------------------------------------------------------------------
-  mc <- matrix_check(population[-1], contact_matrix_set)
-  stopifnot(length(R0) == length(tt_R0))
-  stopifnot(length(contact_matrix_set) == length(tt_contact_matrix))
-  stopifnot(length(hosp_bed_capacity) == length(tt_hosp_beds))
-  stopifnot(length(ICU_bed_capacity) == length(tt_ICU_beds))
-  tc <- lapply(list(tt_R0/dt, tt_contact_matrix/dt), check_time_change, time_period/dt)
-  tc2 <- lapply(list(tt_hosp_beds/dt, tt_ICU_beds/dt), check_time_change, time_period/dt)
-
-  assert_pos(dt)
-  assert_pos(dur_E)
-  assert_pos(dur_IMild)
-  assert_pos(dur_ICase)
-  assert_pos(dur_get_ox_survive)
-  assert_pos(dur_get_ox_die)
-  assert_pos(dur_not_get_ox_survive)
-  assert_pos(dur_not_get_ox_die)
-  assert_pos(dur_get_mv_survive)
-  assert_pos(dur_get_mv_die)
-  assert_pos(dur_not_get_mv_survive)
-  assert_pos(dur_not_get_mv_die)
-  assert_pos(time_period)
-  assert_pos(hosp_bed_capacity)
-  assert_pos(ICU_bed_capacity)
-
-  assert_length(prob_hosp, length(population))
-  assert_length(prob_severe, length(population))
-  assert_length(prob_non_severe_death_treatment, length(population))
-  assert_length(prob_non_severe_death_no_treatment, length(population))
-  assert_length(prob_severe_death_treatment, length(population))
-  assert_length(prob_severe_death_no_treatment, length(population))
-  assert_length(p_dist, length(population))
-
-  assert_numeric(prob_hosp, length(population))
-  assert_numeric(prob_severe, length(population))
-  assert_numeric(prob_non_severe_death_treatment, length(population))
-  assert_numeric(prob_non_severe_death_no_treatment, length(population))
-  assert_numeric(prob_severe_death_treatment, length(population))
-  assert_numeric(prob_severe_death_no_treatment, length(population))
-  assert_numeric(p_dist, length(population))
-
-  assert_leq(prob_hosp, 1)
-  assert_leq(prob_severe, 1)
-  assert_leq(prob_non_severe_death_treatment, 1)
-  assert_leq(prob_non_severe_death_no_treatment, 1)
-  assert_leq(prob_severe_death_treatment, 1)
-  assert_leq(prob_severe_death_no_treatment, 1)
-  assert_leq(p_dist, 1)
-
-  assert_greq(prob_hosp, 0)
-  assert_greq(prob_severe, 0)
-  assert_greq(prob_non_severe_death_treatment, 0)
-  assert_greq(prob_non_severe_death_no_treatment, 0)
-  assert_greq(prob_severe_death_treatment, 0)
-  assert_greq(prob_severe_death_no_treatment, 0)
-  assert_greq(p_dist, 0)
-
 
   # Convert and Generate Parameters As Required
   # ----------------------------------------------------------------------------
 
   # durations
   gamma_E = 2 * 1/dur_E
+  gamma_IAsymp = 1/dur_IAsymp
   gamma_IMild = 1/dur_IMild
   gamma_ICase = 2 * 1/dur_ICase
-  gamma_get_ox_survive = 2 * 1/dur_get_ox_survive
-  gamma_get_ox_die = 2 * 1/dur_get_ox_die
-  gamma_not_get_ox_survive = 2 * 1/dur_not_get_ox_survive
-  gamma_not_get_ox_die = 2 * 1/dur_not_get_ox_die
-  gamma_get_mv_survive = 2 * 1/dur_get_mv_survive
-  gamma_get_mv_die = 2 * 1/dur_get_mv_die
-  gamma_not_get_mv_survive = 2 * 1/dur_not_get_mv_survive
-  gamma_not_get_mv_die = 2 * 1/dur_not_get_mv_die
   gamma_rec = 2 * 1/dur_rec
 
+  gamma_IMod_GetHosp_GetOx_Surv = 2 * 1/dur_IMod_GetHosp_GetOx_Surv
+  gamma_IMod_GetHosp_GetOx_Die = 2 * 1/dur_IMod_GetHosp_GetOx_Die
+  gamma_IMod_GetHosp_NoOx_Surv =  2 * 1/dur_IMod_GetHosp_NoOx_Surv
+  gamma_IMod_GetHosp_NoOx_Die = 2 * 1/dur_IMod_GetHosp_NoOx_Die
+  gamma_IMod_NoHosp_NoOx_Surv = 2 * 1/dur_IMod_NoHosp_NoOx_Surv
+  gamma_IMod_NoHosp_NoOx_Die = 2 * 1/dur_IMod_NoHosp_NoOx_Die
+
+  gamma_ISev_GetICU_GetOx_Surv = 2 * 1/dur_ISev_GetICU_GetOx_Surv
+  gamma_ISev_GetICU_GetOx_Die = 2 * 1/dur_ISev_GetICU_GetOx_Die
+  gamma_ISev_GetICU_NoOx_Surv = 2 * 1/dur_ISev_GetICU_NoOx_Surv
+  gamma_ISev_GetICU_NoOx_Die = 2 * 1/dur_ISev_GetICU_NoOx_Die
+  gamma_ISev_NoICU_NoOx_Surv = 2 * 1/dur_ISev_NoICU_NoOx_Surv
+  gamma_ISev_NoICU_NoOx_Die = 2 * 1/dur_ISev_NoICU_NoOx_Die
+
+  gamma_ICrit_GetICU_GetOx_GetMV_Surv = 2 * 1/dur_ICrit_GetICU_GetOx_GetMV_Surv
+  gamma_ICrit_GetICU_GetOx_GetMV_Die = 2 * 1/dur_ICrit_GetICU_GetOx_GetMV_Die
+  gamma_ICrit_GetICU_GetOx_NoMV_Surv = 2 * 1/dur_ICrit_GetICU_GetOx_NoMV_Surv
+  gamma_ICrit_GetICU_GetOx_NoMV_Die = 2 * 1/dur_ICrit_GetICU_GetOx_NoMV_Die
+  gamma_ICrit_GetICU_NoOx_NoMV_Surv = 2 * 1/dur_ICrit_GetICU_NoOx_NoMV_Surv
+  gamma_ICrit_GetICU_NoOx_NoMV_Die = 2 * 1/dur_ICrit_GetICU_NoOx_NoMV_Die
+  gamma_ICrit_NoICU_NoOx_NoMV_Surv = 2 * 1/dur_ICrit_NoICU_NoOx_NoMV_Surv
+  gamma_ICrit_NoICU_NoOx_NoMV_Die = 2 * 1/dur_ICrit_NoICU_NoOx_NoMV_Die
+
+  # Generate beta
   if (is.null(beta_set)) {
     baseline_matrix <- process_contact_matrix_scaled_age(contact_matrix_set[[1]], population)
-    beta_set <- beta_est_explicit(dur_IMild = dur_IMild,
-                                  dur_ICase = dur_ICase,
-                                  prob_hosp = prob_hosp,
-                                  mixing_matrix = baseline_matrix,
-                                  R0 = R0)
+    beta_set <- beta_est_apothecary(dur_IAsymp = dur_IAsymp,
+                                    dur_IMild = dur_IMild,
+                                    dur_ICase = dur_ICase,
+                                    rel_inf_asymp = rel_inf_asymp,
+                                    rel_inf_mild = rel_inf_mild,
+                                    prob_asymp = prob_asymp,
+                                    prob_hosp = prob_hosp,
+                                    mixing_matrix = baseline_matrix,
+                                    R0 = R0)
   }
 
-  # normalise to sum to 1
-  p_dist <- p_dist/mean(p_dist)
-
   # Collate Parameters Into List
-  pars <- list(N_age = length(population),
-               S_0 = mod_init$S,
-               E1_0 = mod_init$E1,
-               E2_0 = mod_init$E2,
-               IMild_0 = mod_init$IMild,
-               ICase1_0 = mod_init$ICase1,
-               ICase2_0 = mod_init$ICase2,
-               IOxGetLive1_0 = mod_init$IOxGetLive1,
-               IOxGetLive2_0 = mod_init$IOxGetLive2,
-               IOxGetDie1_0 = mod_init$IOxGetDie1,
-               IOxGetDie2_0 = mod_init$IOxGetDie2,
-               IOxNotGetLive1_0 = mod_init$IOxNotGetLive1,
-               IOxNotGetLive2_0 = mod_init$IOxNotGetLive2,
-               IOxNotGetDie1_0 = mod_init$IOxNotGetDie1,
-               IOxNotGetDie2_0 = mod_init$IOxNotGetDie2,
-               IMVGetLive1_0 = mod_init$IMVGetLive1,
-               IMVGetLive2_0 = mod_init$IMVGetLive2,
-               IMVGetDie1_0 = mod_init$IMVGetDie1,
-               IMVGetDie2_0 = mod_init$IMVGetDie2,
-               IMVNotGetLive1_0 = mod_init$IMVNotGetLive1,
-               IMVNotGetLive2_0 = mod_init$IMVNotGetLive2,
-               IMVNotGetDie1_0 = mod_init$IMVNotGetDie1,
-               IMVNotGetDie2_0 = mod_init$IMVNotGetDie2,
-               IRec1_0 = mod_init$IRec1,
-               IRec2_0 = mod_init$IRec2,
-               R_0 = mod_init$R,
-               D_0 = mod_init$D,
-               gamma_E = gamma_E,
-               gamma_IMild = gamma_IMild,
-               gamma_ICase = gamma_ICase,
-               gamma_get_ox_survive = gamma_get_ox_survive,
-               gamma_get_ox_die = gamma_get_ox_die,
-               gamma_not_get_ox_survive = gamma_not_get_ox_survive,
-               gamma_not_get_ox_die = gamma_not_get_ox_die,
-               gamma_get_mv_survive = gamma_get_mv_survive,
-               gamma_get_mv_die = gamma_get_mv_die,
-               gamma_not_get_mv_survive = gamma_not_get_mv_survive,
-               gamma_not_get_mv_die = gamma_not_get_mv_die,
-               gamma_rec = gamma_rec,
-               prob_hosp = prob_hosp,
-               prob_severe = prob_severe,
-               prob_non_severe_death_treatment = prob_non_severe_death_treatment,
-               prob_non_severe_death_no_treatment = prob_non_severe_death_no_treatment,
-               prob_severe_death_treatment = prob_severe_death_treatment,
-               prob_severe_death_no_treatment = prob_severe_death_no_treatment,
-               p_dist = p_dist,
-               hosp_beds = hosp_bed_capacity,
-               ICU_beds = ICU_bed_capacity,
-               tt_hosp_beds = round(tt_hosp_beds/dt),
-               tt_ICU_beds = round(tt_ICU_beds/dt),
-               tt_matrix = round(tt_contact_matrix/dt),
-               mix_mat_set = matrices_set,
-               tt_beta = round(tt_R0/dt),
-               beta_set = beta_set,
-               dt = dt,
-               population = population,
-               contact_matrix_set = contact_matrix_set)
-
-  class(pars) <- c("explicit_SEEIR_parameters", "squire_parameters")
-
-  return(pars)
+  overall <- c(mod_init,
+               list(tt_hosp_beds = tt_hosp_beds,
+                    hosp_beds = hosp_beds,
+                    tt_ICU_beds = tt_ICU_beds,
+                    ICU_beds = ICU_beds,
+                    tt_oxygen_supply = tt_oxygen_supply,
+                    input_oxygen_supply = input_oxygen_supply,
+                    tt_baseline_oxygen_demand = tt_baseline_oxygen_demand,
+                    input_baseline_oxygen_demand = input_baseline_oxygen_demand,
+                    oxygen_availability_0 = oxygen_availability_0,
+                    max_leftover = max_leftover,
+                    severe_critical_case_oxygen_consumption_multiplier = severe_critical_case_oxygen_consumption_multiplier,
+                    MV_capacity = MV_capacity,
+                    dt = dt,
+                    N_age = N_age,
+                    tt_matrix = tt_matrix,
+                    mix_mat_set = matrices_set,
+                    tt_beta = tt_beta,
+                    beta_set = beta_set,
+                    rel_inf_asymp = rel_inf_asymp,
+                    rel_inf_mild = rel_inf_mild,
+                    gamma_E = gamma_E,
+                    gamma_IAsymp = gamma_IAsymp,
+                    gamma_IMild = gamma_IMild,
+                    gamma_ICase = gamma_ICase,
+                    gamma_rec = gamma_rec,
+                    gamma_IMod_GetHosp_GetOx_Surv =gamma_IMod_GetHosp_GetOx_Surv,
+                    gamma_IMod_GetHosp_GetOx_Die = gamma_IMod_GetHosp_GetOx_Die,
+                    gamma_IMod_GetHosp_NoOx_Surv =  gamma_IMod_GetHosp_NoOx_Surv,
+                    gamma_IMod_GetHosp_NoOx_Die = gamma_IMod_GetHosp_NoOx_Die,
+                    gamma_IMod_NoHosp_NoOx_Surv = gamma_IMod_NoHosp_NoOx_Surv,
+                    gamma_IMod_NoHosp_NoOx_Die = gamma_IMod_NoHosp_NoOx_Die,
+                    gamma_ISev_GetICU_GetOx_Surv = gamma_ISev_GetICU_GetOx_Surv,
+                    gamma_ISev_GetICU_GetOx_Die = gamma_ISev_GetICU_GetOx_Die,
+                    gamma_ISev_GetICU_NoOx_Surv = gamma_ISev_GetICU_NoOx_Surv,
+                    gamma_ISev_GetICU_NoOx_Die = gamma_ISev_GetICU_NoOx_Die,
+                    gamma_ISev_NoICU_NoOx_Surv = gamma_ISev_NoICU_NoOx_Surv,
+                    gamma_ISev_NoICU_NoOx_Die = gamma_ISev_NoICU_NoOx_Die,
+                    gamma_ICrit_GetICU_GetOx_GetMV_Surv = gamma_ICrit_GetICU_GetOx_GetMV_Surv,
+                    gamma_ICrit_GetICU_GetOx_GetMV_Die = gamma_ICrit_GetICU_GetOx_GetMV_Die,
+                    gamma_ICrit_GetICU_GetOx_NoMV_Surv = gamma_ICrit_GetICU_GetOx_NoMV_Surv,
+                    gamma_ICrit_GetICU_GetOx_NoMV_Die = gamma_ICrit_GetICU_GetOx_NoMV_Die,
+                    gamma_ICrit_GetICU_NoOx_NoMV_Surv = gamma_ICrit_GetICU_NoOx_NoMV_Surv,
+                    gamma_ICrit_GetICU_NoOx_NoMV_Die = gamma_ICrit_GetICU_NoOx_NoMV_Die,
+                    gamma_ICrit_NoICU_NoOx_NoMV_Surv = gamma_ICrit_NoICU_NoOx_NoMV_Surv,
+                    gamma_ICrit_NoICU_NoOx_NoMV_Die = gamma_ICrit_NoICU_NoOx_NoMV_Die,
+                    prophylactic_drug_timing_1 = prophylactic_drug_timing_1,
+                    prophylactic_drug_timing_2 = prophylactic_drug_timing_2,
+                    prophylactic_prop_treat = prophylactic_prop_treat,
+                    prophylactic_drug_wane = prophylactic_drug_wane,
+                    drug_1_indic = drug_1_indic,
+                    drug_1_effect_size = drug_1_effect_size,
+                    drug_2_indic = drug_2_indic,
+                    drug_2_effect_size = drug_2_effect_size,
+                    drug_3_indic = drug_3_indic,
+                    drug_3_prop_treat = drug_3_prop_treat,
+                    drug_3_effect_size = drug_3_effect_size,
+                    drug_4_indic = drug_4_indic,
+                    drug_4_prop_treat = drug_4_prop_treat,
+                    drug_4_effect_size = drug_4_effect_size,
+                    drug_5_indic_IMild = drug_5_indic_IMild,
+                    drug_5_indic_ICase = drug_5_indic_ICase,
+                    drug_5_prop_treat = drug_5_prop_treat,
+                    drug_5_effect_size = drug_5_effect_size,
+                    drug_6_indic = drug_6_indic,
+                    drug_6_prop_treat = drug_6_prop_treat,
+                    drug_6_effect_size = drug_6_effect_size,
+                    drug_7_indic = drug_7_indic,
+                    drug_7_prop_treat = drug_7_prop_treat,
+                    drug_7_effect_size = drug_7_effect_size,
+                    drug_8_indic_IMod_GetHosp_GetOx = drug_8_indic_IMod_GetHosp_GetOx,
+                    drug_8_indic_IMod_GetHosp_NoOx = drug_8_indic_IMod_GetHosp_NoOx,
+                    drug_8_prop_treat = drug_8_prop_treat,
+                    drug_8_GetOx_effect_size = drug_8_GetOx_effect_size,
+                    drug_8_NoOx_effect_size = drug_8_NoOx_effect_size,
+                    drug_9_indic_ISev_GetICU_GetOx = drug_9_indic_ISev_GetICU_GetOx,
+                    drug_9_indic_ISev_GetICU_NoOx = drug_9_indic_ISev_GetICU_NoOx,
+                    drug_9_prop_treat = drug_9_prop_treat,
+                    drug_9_GetOx_effect_size = drug_9_GetOx_effect_size,
+                    drug_9_NoOx_effect_size = drug_9_NoOx_effect_size,
+                    drug_10_indic_ICrit_GetICU_GetOx_GetMV = drug_10_indic_ICrit_GetICU_GetOx_GetMV,
+                    drug_10_indic_ICrit_GetICU_GetOx_NoMV = drug_10_indic_ICrit_GetICU_GetOx_NoMV,
+                    drug_10_indic_ICrit_GetICU_NoOx_NoMV = drug_10_indic_ICrit_GetICU_NoOx_NoMV,
+                    drug_10_prop_treat = drug_10_prop_treat,
+                    drug_10_GetOx_GetMV_effect_size = drug_10_GetOx_GetMV_effect_size,
+                    drug_10_GetOx_NoMV_effect_size = drug_10_GetOx_NoMV_effect_size,
+                    drug_10_NoOx_NoMV_effect_size = drug_10_NoOx_NoMV_effect_size,
+                    drug_11_indic_IMod_GetHosp_GetOx = drug_11_indic_IMod_GetHosp_GetOx,
+                    drug_11_indic_IMod_GetHosp_NoOx = drug_11_indic_IMod_GetHosp_NoOx,
+                    drug_11_prop_treat = drug_11_prop_treat,
+                    drug_11_GetOx_effect_size = drug_11_GetOx_effect_size,
+                    drug_11_NoOx_effect_size = drug_11_NoOx_effect_size,
+                    drug_12_indic_ISev_GetICU_GetOx = drug_12_indic_ISev_GetICU_GetOx,
+                    drug_12_indic_ISev_GetICU_NoOx = drug_12_indic_ISev_GetICU_NoOx,
+                    drug_12_prop_treat = drug_12_prop_treat,
+                    drug_12_GetOx_effect_size = drug_12_GetOx_effect_size,
+                    drug_12_NoOx_effect_size = drug_12_NoOx_effect_size,
+                    drug_13_indic_ICrit_GetICU_GetOx_GetMV = drug_13_indic_ICrit_GetICU_GetOx_GetMV,
+                    drug_13_indic_ICrit_GetICU_GetOx_NoMV = drug_13_indic_ICrit_GetICU_GetOx_NoMV,
+                    drug_13_indic_ICrit_GetICU_NoOx_NoMV = drug_13_indic_ICrit_GetICU_NoOx_NoMV,
+                    drug_13_prop_treat = drug_13_prop_treat,
+                    drug_13_GetOx_GetMV_effect_size = drug_13_GetOx_GetMV_effect_size,
+                    drug_13_GetOx_NoMV_effect_size = drug_13_GetOx_NoMV_effect_size,
+                    drug_13_NoOx_NoMV_effect_size = drug_13_NoOx_NoMV_effect_size,
+                    prob_asymp = prob_asymp,
+                    prob_hosp = prob_hosp,
+                    prob_severe = prob_severe,
+                    prob_critical = prob_critical,
+                    prob_moderate_death_get_hosp_get_ox_baseline = prob_moderate_death_get_hosp_get_ox_baseline,
+                    prob_moderate_death_get_hosp_no_ox_baseline = prob_moderate_death_get_hosp_no_ox_baseline,
+                    prob_moderate_death_no_hosp_no_ox = prob_moderate_death_no_hosp_no_ox,
+                    prob_severe_death_get_ICU_get_ox_baseline = prob_severe_death_get_ICU_get_ox_baseline,
+                    prob_severe_death_get_ICU_no_ox_baseline = prob_severe_death_get_ICU_no_ox_baseline,
+                    prob_severe_death_no_ICU_no_ox = prob_severe_death_no_ICU_no_ox,
+                    prob_critical_death_get_ICU_get_ox_get_MV_baseline = prob_critical_death_get_ICU_get_ox_get_MV_baseline,
+                    prob_critical_death_get_ICU_get_ox_no_MV_baseline = prob_critical_death_get_ICU_get_ox_no_MV_baseline,
+                    prob_critical_death_get_ICU_no_ox_no_MV_baseline = prob_critical_death_get_ICU_no_ox_no_MV_baseline,
+                    prob_critical_death_no_ICU_no_ox_no_MV = prob_critical_death_no_ICU_no_ox_no_MV))
+  return(overall)
 
 }
