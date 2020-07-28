@@ -23,10 +23,11 @@ considers healthcare capacity and disease severity.
 
 ## IMPORTANT NOTES
 
-:warning: This code is released with no support and is not currently
-finished. Users outside Imperial College looking to run models of
-COVID-19 transmissiondynamics should **NOT** be using **apothecary** and
-instead use the actively maintained, currently functional package
+:warning: This code is released with no support, is not currently
+finished and initial results arising from its use have **NOT** been
+published. Users outside Imperial College looking to run models of
+COVID-19 transmission dynamics should **NOT** be using **apothecary**
+and instead use the actively maintained, currently functional package
 **squire** (available at: <https://github.com/mrc-ide/squire>)
 
 :warning: This model is in active development and so parameter names and
