@@ -1,6 +1,12 @@
-# -----------------------------------------------------------------------------
 #' Generate initial parameters for the apothecary model
+#'
+#' @param country country
+#' @param population population
+#' @param seeding_cases seeding_cases
+#'
+#' @return inits
 #' @export
+#'
 initial_params <- function(country = NULL, population = NULL, seeding_cases = 20) {
 
   if (!is.null(population) & length(population) != 17) {
