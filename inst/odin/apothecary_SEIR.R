@@ -318,7 +318,8 @@ n_ICase2_Hosp[] <- rbinom(ICase2[i], p_ICase2_Hosp) # Number progressing to requ
 n_IRec1_IRec2[] <- rbinom(IRec1[i], p_Rec1_Rec2) # Number progressing through ICU recovery compartment
 n_IRec2_R[] <- rbinom(IRec2[i], p_Rec2_R) # Number recovering completely NOTE, CHANGE: DOES P_REC NEEDS TO INCORPORATE DRUG EFFECT (9 & 10 THAT MODIFY SEV/CRIT DURATION OF STAY, THOR NOT??)
 
-
+##-----------------------------------------------------------------------------------------------------------
+##
 ##  This section is non-trivial and so a brief description of everything that occurs below
 ##  is provided:
 ##    1) The number of ICU beds available is calculated, compared to the number of individuals
@@ -328,13 +329,17 @@ n_IRec2_R[] <- rbinom(IRec2[i], p_Rec2_R) # Number recovering completely NOTE, C
 ##       newly requiring hospital beds, and these individuals are assigned to receive/not get a hospital
 ##       bed as appropriate.
 ##    3) The amount of oxygen available is calculated and split amongst hospital bed and ICU bed patients
-##       in a manner proportional to the numbers in each group. The amount of people in hospital beds/ICU
-##       beds receiving or not receiving oxygen is then calculated.
+##       in a manner proportional to the numbers in each group and their comparative oxygen requirements.
+##       The amount of people in hospital beds/ICU beds receiving or not receiving oxygen is then calculated.
 ##    4) For those in ICU beds receiving oxygen, the number of those who are severe (no MV required) and
 ##       those who are critical (MV required) is calculated and the number of available mechanical ventilators
 ##       distributed amongst the critical cases in a manner dependent on whether these critical cases
 ##       received oxygen or not.
-##------------------------------------------------------------------------------
+##  Note ISev and ICrit patients (i.e. those requiring an ICU bed) consume oxygen at a higher rate than
+##  IMod patients (i.e. those requiring a hospital bed). This is reflected using the parameter value
+##  severe_critical_case_oxygen_consumption_multiplier.
+##
+##-----------------------------------------------------------------------------------------------------------
 
 ## WORKING OUT NUMBER OF ICU BEDS AVAILABILE AND HOW MANY INDIVIDUALS RECEIVE THEM
 ##--------------------------------------------------------------------------------
@@ -402,8 +407,8 @@ number_NotHosp[] <- number_req_Hosp[i] - number_GetHosp[i] # Number of individua
 update(oxygen_availability) <- oxygen_supply + leftover - baseline_oxygen_demand
 
 # Working Out Proportion of Oxygen Going to Hospital Beds vs ICU Beds, and Splitting ICU Oxygen Into Amounts for Each Disease Severity Category
-prop_ox_hosp_beds <- if (total_GetHosp == 0 && total_GetICU == 0) 0 else (total_GetHosp/(total_GetHosp + total_GetICU * severe_critical_case_oxygen_consumption_multiplier))
-available_oxygen_for_hosp_beds <- round(prop_ox_hosp_beds * oxygen_availability)
+prop_ox_hosp_beds <- if (total_GetHosp == 0 && total_GetICU == 0) 0 else (total_GetHosp/(total_GetHosp + total_GetICU * severe_critical_case_oxygen_consumption_multiplier)) # proportion of available oxygen going to those in IMod (hospital beds)
+available_oxygen_for_hosp_beds <- round(prop_ox_hosp_beds * oxygen_availability) # available oxygen going to those in IMod (hospital beds)
 available_oxygen_for_ICU_beds <- floor((oxygen_availability - available_oxygen_for_hosp_beds)/severe_critical_case_oxygen_consumption_multiplier)
 available_oxygen_for_ICU_MV <- if(total_req_ICU_MV == 0 && total_req_ICU_Ox == 0) 0 else (round(available_oxygen_for_ICU_beds * total_req_ICU_MV/(total_req_ICU_MV + total_req_ICU_Ox))) # if these are 0s we get NAs maybe!!!
 available_oxygen_for_ICU_Ox <- available_oxygen_for_ICU_beds - available_oxygen_for_ICU_MV
@@ -427,13 +432,13 @@ number_GetICU_NoOx_NeedMV[] <- number_req_ICU_MV[i] - number_GetICU_GetOx_NeedMV
 ##----------------------------------------------------------------------------------------------------------------
 # Calculating the Number of Critical Cases Who Have Been Assigned to Receive Oxygen (Hence Are Eligible to Get MV) Who Also Get MV
 MV_occ <- sum(ICrit_GetICU_GetOx_GetMV_Surv1) + sum(ICrit_GetICU_GetOx_GetMV_Surv2) + sum(ICrit_GetICU_GetOx_GetMV_Die1) + sum(ICrit_GetICU_GetOx_GetMV_Die2) # Current Mechanical Ventilator Usage
-current_free_MV <- MV_capacity + sum(n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec) + sum(n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital) - MV_occ # Number of mechanical ventilators that are currently free
+current_free_MV <- MV_capacity + sum(n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec) + sum(n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital) - MV_occ # Number of mechanical ventilators that are currently free after taking into account flows out of ICrit
 total_GetICU_GetOx_GetMV <- if(current_free_MV <= 0) 0 else(if(current_free_MV - total_GetICU_GetOx_Need_MV >= 0) total_GetICU_GetOx_Need_MV else(current_free_MV))
 number_GetICU_GetOx_GetMV[] <-  rmhyper(total_GetICU_GetOx_GetMV, number_GetICU_GetOx_NeedMV)
 number_GetICU_GetOx_NoMV[] <- number_GetICU_GetOx_NeedMV[i] - number_GetICU_GetOx_GetMV[i]
 
 ## TALLYING UP USED AND REMAINING OXYGEN, INCLUDING ANY LEFTOVER, WHICH MAY OR MAY NOT BE CARRIED OVER INTO NEXT TIMESTEP
-##----------------------------------------------------------------------------------------------------------------
+##-----------------------------------------------------------------------------------------------------------------------
 temp_leftover <- oxygen_supply - baseline_oxygen_demand - sum(number_GetHosp_Ox) - (sum(number_GetICU_GetOx_NeedMV) + sum(number_GetICU_GetOx)) * severe_critical_case_oxygen_consumption_multiplier
 leftover <- if (temp_leftover < 0) 0 else (if(temp_leftover >= max_leftover) max_leftover else temp_leftover)
 oxygen_needed_overall <- sum(number_req_Hosp) + (sum(number_req_ICU_MV) + sum(number_req_ICU_Ox)) * severe_critical_case_oxygen_consumption_multiplier
@@ -537,18 +542,19 @@ delta_PE2[] <- n_PE1_PE2[i] - n_leave_PE2[i]
 
 # Stepdown Bed, Recovery and Death Related Compartments
 delta_IRec1[] <- n_ISev_GetICU_GetOx_Surv2_Rec[i] + n_ISev_GetICU_NoOx_Surv2_Rec[i] +
-  n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec[i]  + n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec[i] + n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec[i] -
-  n_IRec1_IRec2[i]
+                 n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec[i]  + n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec[i] + n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec[i] -
+                 n_IRec1_IRec2[i]
 delta_IRec2[] <- n_IRec1_IRec2[i] - n_IRec2_R[i]
-delta_R[] <- n_IMild_R[i] + n_IAsymp_R[i] +
-  n_IRec2_R[i] +
-  n_IMod_GetHosp_GetOx_Surv2_R[i] + n_IMod_GetHosp_NoOx_Surv2_R[i] + n_IMod_NoHosp_NoOx_Surv2_R[i] +
-  n_ISev_NoICU_NoOx_Surv2_R[i] +
-  n_ICrit_NoICU_NoOx_NoMV_Surv2_R[i]
+delta_R[] <- n_IMild_R[i] + n_IMild_Drug_5_R[i] +
+             n_IAsymp_R[i] +
+             n_IRec2_R[i] +
+             n_IMod_GetHosp_GetOx_Surv2_R[i] + n_IMod_GetHosp_NoOx_Surv2_R[i] + n_IMod_NoHosp_NoOx_Surv2_R[i] +
+             n_ISev_NoICU_NoOx_Surv2_R[i] +
+             n_ICrit_NoICU_NoOx_NoMV_Surv2_R[i]
 delta_D_Community[] <- n_IMod_NoHosp_NoOx_Die2_D_Community[i] + n_ISev_NoICU_NoOx_Die2_D_Community[i] + n_ICrit_NoICU_NoOx_NoMV_Die2_D_Community[i]
 delta_D_Hospital[] <- n_IMod_GetHosp_GetOx_Die2_D_Hospital[i] + n_IMod_GetHosp_NoOx_Die2_D_Hospital[i] +
-  n_ISev_GetICU_GetOx_Die2_D_Hospital[i] + n_ISev_GetICU_NoOx_Die2_D_Hospital[i] +
-  n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital[i] + n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital[i] + n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital[i]
+                      n_ISev_GetICU_GetOx_Die2_D_Hospital[i] + n_ISev_GetICU_NoOx_Die2_D_Hospital[i] +
+                      n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital[i] + n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital[i] + n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital[i]
 
 # Flows In and Out of Hospital Bed Related Compartments
 delta_IMod_GetHosp_GetOx_Die1[] <- n_IMod_GetHosp_GetOx_Die1[i] - n_IMod_GetHosp_GetOx_Die1_IMod_GetHosp_GetOx_Die2[i]
@@ -688,7 +694,7 @@ dim(beta_set) <- length(tt_beta)
 
 # Generating Force of Infection
 temp[] <- (rel_inf_asymp * IAsymp[i]) + (rel_inf_mild * IMild[i]) + ICase1[i] + ICase2[i]  +
-  (rel_inf_mild * drug_5_effect_size * IMild_Drug_5[i]) + (ICase1_Drug_5[i] + ICase2_Drug_5[i]) * drug_5_effect_size # ADD IN THE DRUG 5 REDUCED INFECTIVITY COMPARTMENTS TO THE FOI CALCULATION HERE CHANGE - INCLUDE drug_5_effect_size
+          (rel_inf_mild * drug_5_effect_size * IMild_Drug_5[i]) + ICase1_Drug_5[i] * drug_5_effect_size  + ICase2_Drug_5[i] * drug_5_effect_size
 s_ij[,] <- m[i, j] * temp[j]
 lambda[] <- beta * sum(s_ij[i, ])
 
@@ -706,8 +712,8 @@ ICU_beds[] <- user()
 dim(tt_ICU_beds) <- user()
 dim(ICU_beds) <- length(tt_ICU_beds)
 
-##  INTERPOLATION FOR PARAMETERS DESCRIBING THE AVAILABILITY OF HEALTHCARE MATERIALS
-##----------------------------------------------------------------------------------
+##  INTERPOLATION FOR PARAMETERS DESCRIBING THE AVAILABILITY OF HEALTHCARE MATERIALS LIKE OXYGEN OR MV
+##----------------------------------------------------------------------------------------------------
 oxygen_supply <- interpolate(tt_oxygen_supply, input_oxygen_supply, "constant") # rate of resupply of oxygen
 tt_oxygen_supply[] <- user()
 input_oxygen_supply[] <- user()
