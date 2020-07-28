@@ -1,127 +1,226 @@
-## Index locations of outputs in odin model
-#' @noRd
-odin_index <- function(model) {
-  n_out <- environment(model$initialize)$private$n_out %||% 0
-  n_state <- length(model$initial(0))
-  model$transform_variables(seq_len(1L + n_state + n_out))
-}
+# -----------------------------------------------------------------------------
+#' Generate initial parameters for the apothecary model
+#'
+#' @return Parameters
+#' @export
+#'
+initial_params <- function(country = NULL, population = NULL, seeding_cases = 20) {
 
+  if (!is.null(population) & length(population != 17)) {
+    stop("population input is wrong - needs to be 17 in length")
+  }
 
-parse_country_population_mixing_matrix <- function(
+  if (is.null(population) & is.null(country)) {
+    stop("one of either population or country must not be NULL")
+  }
 
+  if (is.null(population) & !is.null(country)) {
+    country_population <- get_population(country)
+    population <- country_population$n
+  }
 
-)
+  raw_seeding_cases <- rep(0, length(population))
+  age_group_indices <- c(8, 9, 10, 11) # age_group indices corresponding to middle-aged travellers
+  raw_seeding_cases[age_group_indices] <- as.vector(stats::rmultinom(1, size = seeding_cases, prob = rep(0.25, 4)))
 
+  inits <- list(S0 = population,
+                E1_0 = raw_seeding_cases,
+                E2_0 = rep(0, 17),
+                IAsymp_0 = rep(0, 17),
+                IMild_0 = rep(0, 17),
+                ICase1_0 = rep(0, 17),
+                ICase2_0 = rep(0, 17),
+                IRec1_0 = rep(0, 17),
+                IRec2_0 = rep(0, 17),
+                R_0 = rep(0, 17),
+                D_Community_0 = rep(0, 17),
+                D_Hospital_0 = rep(0, 17),
+                PS_0 = rep(0, 17),
+                PE1_0 = rep(0, 17),
+                PE2_0 = rep(0, 17),
+                IMild_Drug_5_0 = rep(0, 17),
+                ICase1_Drug_5_0 = rep(0, 17),
+                ICase2_Drug_5_0 = rep(0, 17),
+                IMod_GetHosp_GetOx_Surv1_0 = rep(0, 17),
+                IMod_GetHosp_GetOx_Surv2_0 = rep(0, 17),
+                IMod_GetHosp_GetOx_Die1_0 = rep(0, 17),
+                IMod_GetHosp_GetOx_Die2_0 = rep(0, 17),
+                IMod_GetHosp_NoOx_Surv1_0 = rep(0, 17),
+                IMod_GetHosp_NoOx_Surv2_0 = rep(0, 17),
+                IMod_GetHosp_NoOx_Die1_0 = rep(0, 17),
+                IMod_GetHosp_NoOx_Die2_0 = rep(0, 17),
+                IMod_NoHosp_NoOx_Surv1_0 = rep(0, 17),
+                IMod_NoHosp_NoOx_Surv2_0 = rep(0, 17),
+                IMod_NoHosp_NoOx_Die1_0 = rep(0, 17),
+                IMod_NoHosp_NoOx_Die2_0 = rep(0, 17),
+                ISev_GetICU_GetOx_Surv1_0 = rep(0, 17),
+                ISev_GetICU_GetOx_Surv2_0 = rep(0, 17),
+                ISev_GetICU_GetOx_Die1_0 = rep(0, 17),
+                ISev_GetICU_GetOx_Die2_0 = rep(0, 17),
+                ISev_GetICU_NoOx_Surv1_0 = rep(0, 17),
+                ISev_GetICU_NoOx_Surv2_0 = rep(0, 17),
+                ISev_GetICU_NoOx_Die1_0 = rep(0, 17),
+                ISev_GetICU_NoOx_Die2_0 = rep(0, 17),
+                ISev_NoICU_NoOx_Surv1_0 = rep(0, 17),
+                ISev_NoICU_NoOx_Surv2_0 = rep(0, 17),
+                ISev_NoICU_NoOx_Die1_0 = rep(0, 17),
+                ISev_NoICU_NoOx_Die2_0 = rep(0, 17),
+                ICrit_GetICU_GetOx_GetMV_Surv1_0 = rep(0, 17),
+                ICrit_GetICU_GetOx_GetMV_Surv2_0 = rep(0, 17),
+                ICrit_GetICU_GetOx_GetMV_Die1_0 = rep(0, 17),
+                ICrit_GetICU_GetOx_GetMV_Die2_0 = rep(0, 17),
+                ICrit_GetICU_GetOx_NoMV_Surv1_0 = rep(0, 17),
+                ICrit_GetICU_GetOx_NoMV_Surv2_0 = rep(0, 17),
+                ICrit_GetICU_GetOx_NoMV_Die1_0 = rep(0, 17),
+                ICrit_GetICU_GetOx_NoMV_Die2_0 = rep(0, 17),
+                ICrit_GetICU_NoOx_NoMV_Surv1_0 = rep(0, 17),
+                ICrit_GetICU_NoOx_NoMV_Surv2_0 = rep(0, 17),
+                ICrit_GetICU_NoOx_NoMV_Die1_0 = rep(0, 17),
+                ICrit_GetICU_NoOx_NoMV_Die2_0 = rep(0, 17),
+                ICrit_NoICU_NoOx_NoMV_Surv1_0 = rep(0, 17),
+                ICrit_NoICU_NoOx_NoMV_Surv2_0 = rep(0, 17),
+                ICrit_NoICU_NoOx_NoMV_Die1_0 = rep(0, 17),
+                ICrit_NoICU_NoOx_NoMV_Die2_0 = rep(0, 17))
 
-initial_values_generator <- function(
-
-
-)
-
-
-process_contact_matrix_scaled_age <- function(
-
-
-
-)
-
-beta_est_explicit <- function(
-
-
-
-
-)
-
-
-# Get ICU bed capacity
-#' @noRd
-get_ICU_bed_capacity <- function(country) {
-
-  beds <- get_healthcare_capacity(country)
-  ICU_beds <- beds$ICU_beds
-  population <- get_population(country)$n
-  ICU_bed_capacity <- round(ICU_beds * sum(population)/1000)
-  ICU_bed_capacity
-
-}
-
-# Get hospital bed capacity
-#' @noRd
-get_hosp_bed_capacity <- function(country = NULL) {
-
-  beds <- get_healthcare_capacity(country)
-  population <- get_population(country)$n
-  hosp_beds <- beds$hosp_beds
-  hosp_bed_capacity <- round(hosp_beds * sum(population)/1000)
+  return(inits)
 
 }
 
 # -----------------------------------------------------------------------------
-#' Parmaters for Apothecary SEIR model
+#' Generate drug based parameters for the apothecary model
 #'
-#' @param population Population vector (for each age group). Default = NULL,
-#'   which will cause population to be sourced from \code{country}
-#' @param country Character for country beign simulated. WIll be used to
-#'   generate \code{population} and \code{contact_matrix_set} if
-#'   unprovided. Either \code{country} or \code{population} and
-#'   \code{contact_matrix_set} must be provided.
-#' @param contact_matrix_set Contact matrices used in simulation. Default =
-#'   NULL, which will generate this based on the \code{country}.
-#' @param tt_contact_matrix Time change points for matrix change. Default = 0
-#' @param R0 Basic Reproduction Number. Default = 3
-#' @param tt_R0 Change time points for R0. Default = 0
-#' @param beta_set Alternative parameterisation via beta rather than R0.
-#'   Default = NULL, which causes beta to be estimated from R0
-#' @param time_period Length of simulation. Default = 365
-#' @param dt Time Step. Default = 0.1
-#' @param init Data.frame of initial conditions. Default = NULL
-#' @param seeding_cases Initial number of cases seeding the epidemic
-#' @param prob_hosp probability of hospitalisation by age.
-#'   Default = c(0.001127564, 0.000960857, 0.001774408, 0.003628171,
-#'   0.008100662, 0.015590734, 0.024597885, 0.035377529,
-#'   0.04385549, 0.058495518, 0.08747709, 0.109730508,
-#'   0.153943118, 0.177242143, 0.221362219, 0.267628264)
-#' @param prob_severe Probability of developing severe symptoms by age.
-#'   Default = c(3.73755e-05, 3.18497e-05, 5.88166e-05, 0.000120264,
-#'   0.000268514, 0.000516788, 0.00081535, 0.001242525,
-#'   0.001729275, 0.002880196, 0.00598205, 0.010821894,
-#'   0.022736324, 0.035911156, 0.056362032, 0.081467057)
-#' @param prob_non_severe_death_treatment Probability of death from non severe
-#'   treated infection.
-#'   Default = c(0.0125702, 0.0125702, 0.0125702, 0.0125702,
-#'   0.0125702, 0.0125702, 0.0125702, 0.013361147,
-#'   0.015104687, 0.019164124, 0.027477519, 0.041762108,
-#'   0.068531658, 0.105302319, 0.149305732, 0.20349534)
-#' @param prob_severe_death_treatment Probability of death from severe infection
-#'   that is treated. Default = rep(0.5, 16)
-#' @param prob_non_severe_death_no_treatment Probability of death in non severe
-#'   hospital inections that aren't treated
-#' @param prob_severe_death_no_treatment Probability of death from severe infection
-#'   that is not treated. Default = rep(0.95, 16)
-#' @param p_dist Preferentiality of age group receiving treatment relative to
-#'   other age groups when demand exceeds healthcare capacity.
-#' @param dur_E Mean duration of incubation period (days). Default = 4.6
-#' @param dur_IMild Mean duration of mild infection (days). Default = 2.1
-#' @param dur_ICase Mean duration from symptom onset to hospitil admission (days).
-#'   Default = 4.5
-#' @param dur_get_ox_survive Mean duration of oxygen given survive. Default = 5
-#' @param dur_get_ox_die Mean duration of oxygen given death. Default = 5
-#' @param dur_not_get_ox_survive Mean duration without oxygen given survive.
-#'   Default = 5
-#' @param dur_not_get_ox_die Mean duration without  oxygen given death.
-#'  Default = 5
-#' @param dur_get_mv_survive Mean duration of ventilation given survive.
-#'   Default = 7.3
-#' @param dur_get_mv_die Mean duration of ventilation given death. Default = 6
-#' @param dur_not_get_mv_survive Mean duration without ventilation given
-#'   survive. Default = 7.3
-#' @param dur_not_get_mv_die Mean duration without ventilation given
-#'   death. Default = 1
-#' @param dur_rec Duration of recovery after coming off ventilation. Default = 2
-#' @param hosp_bed_capacity General bed capacity. Can be single number or vector if capacity time-varies.
-#' @param ICU_bed_capacity ICU bed capacity. Can be single number or vector if capacity time-varies.
-#' @param tt_hosp_beds Times at which hospital bed capacity changes (Default = 0 = doesn't change)
-#' @param tt_ICU_beds Times at which ICU bed capacity changes (Default = 0 = doesn't change)
+#' @return Parameters
+#' @export
+#'
+drug_params <- function(
+  prophylactic_drug_timing_1 = 100000,
+  prophylactic_drug_timing_2 = 100000,
+  prophylactic_prop_treat = 0,
+  prophylactic_drug_wane = 1000000,
+  drug_1_indic = 0,
+  drug_1_effect_size = 0,
+  drug_2_indic = 0,
+  drug_2_effect_size = 0,
+  drug_3_indic = 0,
+  drug_3_prop_treat = 0,
+  drug_3_effect_size = 0,
+  drug_4_indic = 0,
+  drug_4_prop_treat = 0,
+  drug_4_effect_size = 0,
+  drug_5_indic_IMild = 0,
+  drug_5_indic_ICase = 0,
+  drug_5_prop_treat = 0,
+  drug_5_effect_size = 0,
+  drug_6_indic = 0,
+  drug_6_prop_treat = 0,
+  drug_6_effect_size = 0,
+  drug_7_indic = 0,
+  drug_7_prop_treat = 0,
+  drug_7_effect_size = 0,
+  drug_8_indic_IMod_GetHosp_GetOx = 0,
+  drug_8_indic_IMod_GetHosp_NoOx = 0,
+  drug_8_prop_treat = 0,
+  drug_8_GetOx_effect_size = 0,
+  drug_8_NoOx_effect_size = 0,
+  drug_9_indic_ISev_GetICU_GetOx = 0,
+  drug_9_indic_ISev_GetICU_NoOx = 0,
+  drug_9_prop_treat = 0,
+  drug_9_GetOx_effect_size = 0,
+  drug_9_NoOx_effect_size = 0,
+  drug_10_indic_ICrit_GetICU_GetOx_GetMV = 0,
+  drug_10_indic_ICrit_GetICU_GetOx_NoMV = 0,
+  drug_10_indic_ICrit_GetICU_NoOx_NoMV = 0,
+  drug_10_prop_treat = 0,
+  drug_10_GetOx_GetMV_effect_size = 0,
+  drug_10_GetOx_NoMV_effect_size = 0,
+  drug_10_NoOx_NoMV_effect_size = 0,
+  drug_11_indic_IMod_GetHosp_GetOx = 0,
+  drug_11_indic_IMod_GetHosp_NoOx = 0,
+  drug_11_prop_treat = 0,
+  drug_11_GetOx_effect_size = 0,
+  drug_11_NoOx_effect_size = 0,
+  drug_12_indic_ISev_GetICU_GetOx = 0,
+  drug_12_indic_ISev_GetICU_NoOx = 0,
+  drug_12_prop_treat = 0,
+  drug_12_GetOx_effect_size = 0,
+  drug_12_NoOx_effect_size = 0,
+  drug_13_indic_ICrit_GetICU_GetOx_GetMV = 0,
+  drug_13_indic_ICrit_GetICU_GetOx_NoMV = 0,
+  drug_13_indic_ICrit_GetICU_NoOx_NoMV = 0,
+  drug_13_prop_treat = 0,
+  drug_13_GetOx_GetMV_effect_size = 0,
+  drug_13_GetOx_NoMV_effect_size = 0,
+  drug_13_NoOx_NoMV_effect_size = 0
+) {
+
+  drugs <- list(
+    prophylactic_drug_timing_1 = prophylactic_drug_timing_1,
+    prophylactic_drug_timing_2 = prophylactic_drug_timing_2,
+    prophylactic_prop_treat = prophylactic_prop_treat,
+    prophylactic_drug_wane = prophylactic_drug_wane,
+    drug_1_indic = drug_1_indic,
+    drug_1_effect_size = drug_1_effect_size,
+    drug_2_indic = drug_2_indic,
+    drug_2_effect_size = drug_2_effect_size,
+    drug_3_indic = drug_3_indic,
+    drug_3_prop_treat = drug_3_prop_treat,
+    drug_3_effect_size = drug_3_effect_size,
+    drug_4_indic = drug_4_indic,
+    drug_4_prop_treat = drug_4_prop_treat,
+    drug_4_effect_size = drug_4_effect_size,
+    drug_5_indic_IMild = drug_5_indic_IMild,
+    drug_5_indic_ICase = drug_5_indic_ICase,
+    drug_5_prop_treat = drug_5_prop_treat,
+    drug_5_effect_size = drug_5_effect_size,
+    drug_6_indic = drug_6_indic,
+    drug_6_prop_treat = drug_6_prop_treat,
+    drug_6_effect_size = drug_6_effect_size,
+    drug_7_indic = drug_7_indic,
+    drug_7_prop_treat = drug_7_prop_treat,
+    drug_7_effect_size = drug_7_effect_size,
+    drug_8_indic_IMod_GetHosp_GetOx = drug_8_indic_IMod_GetHosp_GetOx,
+    drug_8_indic_IMod_GetHosp_NoOx = drug_8_indic_IMod_GetHosp_NoOx,
+    drug_8_prop_treat = drug_8_prop_treat,
+    drug_8_GetOx_effect_size = drug_8_GetOx_effect_size,
+    drug_8_NoOx_effect_size = drug_8_NoOx_effect_size,
+    drug_9_indic_ISev_GetICU_GetOx = drug_9_indic_ISev_GetICU_GetOx,
+    drug_9_indic_ISev_GetICU_NoOx = drug_9_indic_ISev_GetICU_NoOx,
+    drug_9_prop_treat = drug_9_prop_treat,
+    drug_9_GetOx_effect_size = drug_9_GetOx_effect_size,
+    drug_9_NoOx_effect_size = drug_9_NoOx_effect_size,
+    drug_10_indic_ICrit_GetICU_GetOx_GetMV = drug_10_indic_ICrit_GetICU_GetOx_GetMV,
+    drug_10_indic_ICrit_GetICU_GetOx_NoMV = drug_10_indic_ICrit_GetICU_GetOx_NoMV,
+    drug_10_indic_ICrit_GetICU_NoOx_NoMV = drug_10_indic_ICrit_GetICU_NoOx_NoMV,
+    drug_10_prop_treat = drug_10_prop_treat,
+    drug_10_GetOx_GetMV_effect_size = drug_10_GetOx_GetMV_effect_size,
+    drug_10_GetOx_NoMV_effect_size = drug_10_GetOx_NoMV_effect_size,
+    drug_10_NoOx_NoMV_effect_size = drug_10_NoOx_NoMV_effect_size,
+    drug_11_indic_IMod_GetHosp_GetOx = drug_11_indic_IMod_GetHosp_GetOx,
+    drug_11_indic_IMod_GetHosp_NoOx = drug_11_indic_IMod_GetHosp_NoOx,
+    drug_11_prop_treat = drug_11_prop_treat,
+    drug_11_GetOx_effect_size = drug_11_GetOx_effect_size,
+    drug_11_NoOx_effect_size = drug_11_NoOx_effect_size,
+    drug_12_indic_ISev_GetICU_GetOx = drug_12_indic_ISev_GetICU_GetOx,
+    drug_12_indic_ISev_GetICU_NoOx = drug_12_indic_ISev_GetICU_NoOx,
+    drug_12_prop_treat = drug_12_prop_treat,
+    drug_12_GetOx_effect_size = drug_12_GetOx_effect_size,
+    drug_12_NoOx_effect_size = drug_12_NoOx_effect_size,
+    drug_13_indic_ICrit_GetICU_GetOx_GetMV = drug_13_indic_ICrit_GetICU_GetOx_GetMV,
+    drug_13_indic_ICrit_GetICU_GetOx_NoMV = drug_13_indic_ICrit_GetICU_GetOx_NoMV,
+    drug_13_indic_ICrit_GetICU_NoOx_NoMV = drug_13_indic_ICrit_GetICU_NoOx_NoMV,
+    drug_13_prop_treat = drug_13_prop_treat,
+    drug_13_GetOx_GetMV_effect_size = drug_13_GetOx_GetMV_effect_size,
+    drug_13_GetOx_NoMV_effect_size = drug_13_GetOx_NoMV_effect_size,
+    drug_13_NoOx_NoMV_effect_size = drug_13_NoOx_NoMV_effect_size)
+
+  return(drugs)
+}
+
+
+
+
+# -----------------------------------------------------------------------------
+#' Parmaters for Apothecary SEIR model
 #'
 #' @return Paramater List
 #' @export
@@ -134,50 +233,91 @@ apothecary_parameters <- function(
   tt_contact_matrix = 0,
   contact_matrix_set = NULL,
 
-  # transmission
+  # healthcare related quantities
+  hosp_beds = NULL,
+  ICU_beds = NULL,
+  tt_hosp_beds = 0,
+  tt_ICU_beds = 0,
+  tt_oxygen_supply = 0,
+  input_oxygen_supply = NULL,
+  tt_baseline_oxygen_demand = 0,
+  input_baseline_oxygen_demand = NULL,
+  oxygen_availability_0 = NULL,
+  max_leftover = NULL,
+  severe_critical_case_oxygen_consumption_multiplier = 1.5,
+  MV_capacity = NULL,
+
+  # transmission related parameters
   R0 = 3,
   tt_R0 = 0,
   beta_set = NULL,
+  tt_beta = 0,
+  rel_inf_asymp = 1,
+  rel_inf_mild = 1,
+  tt_matrix = 0,
+  mix_mat_set = matrices_set,
 
-  # initial state, duration, reps
-  time_period = 365,
+  # miscellaneous parameters
   dt = 0.1,
+  N_age = 17,
+  time_period = 365,
   init = NULL,
   seeding_cases = NULL,
 
-  # parameters
   # probabilities
-  # probabilities
-  prob_hosp = probs$prob_hosp,
-  prob_severe = probs$prob_severe,
-  prob_non_severe_death_treatment = probs$prob_non_severe_death_treatment,
-  prob_non_severe_death_no_treatment = probs$prob_non_severe_death_no_treatment,
-  prob_severe_death_treatment = probs$prob_severe_death_treatment,
-  prob_severe_death_no_treatment = probs$prob_severe_death_no_treatment,
-  p_dist = probs$p_dist,
+  prob_asymp = rep(0.5, 17),
+  prob_hosp = c(0.000744192, 0.000634166,0.001171109, 0.002394593, 0.005346437 ,
+                0.010289885, 0.016234604, 0.023349169, 0.028944623, 0.038607042 ,
+                0.057734879, 0.072422135, 0.101602458, 0.116979814, 0.146099064,
+                0.176634654 ,0.180000000),
+  prob_severe = c(0.05022296,	0.05022296,	0.05022296,	0.05022296,	0.05022296,
+                  0.05022296,	0.05022296,	0.053214942, 0.05974426,	0.074602879,
+                  0.103612417, 0.149427991, 0.223777304,	0.306985918,
+                  0.385779555, 0.461217861, 0.709444444),
+  prob_critical = rep(0.8, 17),
+  prob_moderate_death_get_hosp_get_ox_baseline = c(0.0125702,	0.0125702,	0.0125702,	0.0125702, 0.0125702,
+                                                   0.0125702,	0.0125702,	0.013361147, 0.015104687,	0.019164124,
+                                                   0.027477519,	0.041762108, 0.068531658,	0.105302319, 0.149305732,
+                                                   0.20349534,	0.5804312),
+  prob_moderate_death_get_hosp_no_ox_baseline = rep(0.6, 17),
+  prob_moderate_death_no_hosp_no_ox = rep(0.6, 17),
+  prob_severe_death_get_ICU_get_ox_baseline = rep(0.5, 17),
+  prob_severe_death_get_ICU_no_ox_baseline = rep(0.95, 17),
+  prob_severe_death_no_ICU_no_ox = rep(0.95, 17),
+  prob_critical_death_get_ICU_get_ox_get_MV_baseline = rep(0.5, 17),
+  prob_critical_death_get_ICU_get_ox_no_MV_baseline = rep(0.95, 17),
+  prob_critical_death_get_ICU_no_ox_no_MV_baseline = rep(0.95, 17),
+  prob_critical_death_no_ICU_no_ox_no_MV = rep(0.95, 17),
 
   # durations
   dur_E  = 4.6,
+  dur_IAsymp = 2.1,
   dur_IMild = 2.1,
   dur_ICase = 4.5,
-
-  dur_get_ox_survive = 9.5,
-  dur_get_ox_die = 7.6,
-  dur_not_get_ox_survive = 9.5*0.5,
-  dur_not_get_ox_die = 7.6*0.5,
-
-  dur_get_mv_survive = 11.3,
-  dur_get_mv_die = 10.1,
-  dur_not_get_mv_survive = 11.3*0.5,
-  dur_not_get_mv_die = 1,
-
   dur_rec = 3.4,
 
-  # health system capacity
-  hosp_bed_capacity = NULL,
-  ICU_bed_capacity = NULL,
-  tt_hosp_beds = 0,
-  tt_ICU_beds = 0
+  dur_IMod_GetHosp_GetOx_Surv = 9.6,
+  dur_IMod_GetHosp_GetOx_Die = 7.6,
+  dur_IMod_GetHosp_NoOx_Surv = 9.6/2,
+  dur_IMod_GetHosp_NoOx_Die = 7.6/2,
+  dur_IMod_NoHosp_NoOx_Surv = 9.6/2,
+  dur_IMod_NoHosp_NoOx_Die = 7.6/2,
+
+  dur_ISev_GetICU_GetOx_Surv = 11.3,
+  dur_ISev_GetICU_GetOx_Die = 10.1,
+  dur_ISev_GetICU_NoOx_Surv = 11.3/2,
+  dur_ISev_GetICU_NoOx_Die = 10.1/2,
+  dur_ISev_NoICU_NoOx_Surv = 11.3/2,
+  dur_ISev_NoICU_NoOx_Die = 10.1/2,
+
+  dur_ICrit_GetICU_GetOx_GetMV_Surv = 11.3,
+  dur_ICrit_GetICU_GetOx_GetMV_Die = 10.1,
+  dur_ICrit_GetICU_GetOx_NoMV_Surv = 11.3/2,
+  dur_ICrit_GetICU_GetOx_NoMV_Die = 10.1/2,
+  dur_ICrit_GetICU_NoOx_NoMV_Surv = 11.3/2,
+  dur_ICrit_GetICU_NoOx_NoMV_Die = 10.1/2,
+  dur_ICrit_NoICU_NoOx_NoMV_Surv = 11.3/2,
+  dur_ICrit_NoICU_NoOx_NoMV_Die = 10.1/2
 
 ) {
 
@@ -203,24 +343,23 @@ apothecary_parameters <- function(
     }
   }
 
-
   # populate hospital and ICU bed capacity if not provided
-  if (is.null(hosp_bed_capacity)) {
+  if (is.null(hosp_beds)) {
     if (!is.null(country)) {
       beds <- get_healthcare_capacity(country)
       hosp_beds <- beds$hosp_beds
-      hosp_bed_capacity <- rep(round(hosp_beds * sum(population)/1000), length(tt_hosp_beds))
+      hosp_beds <- rep(round(hosp_beds * sum(population)/1000), length(tt_hosp_beds))
     } else {
-      hosp_bed_capacity <- round(5 * sum(population)/1000)
+      hosp_beds <- round(5 * sum(population)/1000)
     }
   }
-  if (is.null(ICU_bed_capacity)) {
+  if (is.null(ICU_beds)) {
     if (!is.null(country)) {
       beds <- get_healthcare_capacity(country)
       ICU_beds <- beds$ICU_beds
-      ICU_bed_capacity <- rep(round(ICU_beds * sum(population)/1000), length(tt_ICU_beds))
+      ICU_beds <- rep(round(ICU_beds * sum(population)/1000), length(tt_ICU_beds))
     } else {
-      ICU_bed_capacity <- round(3 * hosp_bed_capacity/100)
+      ICU_beds <- round(3 * hosp_beds/100)
     }
   }
 
@@ -230,9 +369,9 @@ apothecary_parameters <- function(
   # Initialise initial conditions
   if (!is.null(seeding_cases)) {
     assert_int(seeding_cases)
-    mod_init <- init_check_explicit(init, population, seeding_cases)
+    mod_init <- initial_params(country = country, population = population, seeding_cases = seeding_cases)
   } else {
-    mod_init <- init_check_explicit(init, population)
+    mod_init <- initial_params(country = country, population = population)
   }
 
   # Convert contact matrices to input matrices
