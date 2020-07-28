@@ -1,9 +1,6 @@
 # -----------------------------------------------------------------------------
 #' Generate initial parameters for the apothecary model
-#'
-#' @return Parameters
 #' @export
-#'
 initial_params <- function(country = NULL, population = NULL, seeding_cases = 20) {
 
   if (!is.null(population) & length(population) != 17) {
@@ -89,10 +86,7 @@ initial_params <- function(country = NULL, population = NULL, seeding_cases = 20
 
 # -----------------------------------------------------------------------------
 #' Parmaters for Apothecary SEIR model
-#'
-#' @return Paramater List
 #' @export
-#'
 apothecary_parameters <- function(
 
   # demography
