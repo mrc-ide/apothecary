@@ -32,6 +32,7 @@ Imports:
     tidyr,
     rlang,
     furrr,
+    purrr,
     magrittr,
     purrr,
     crayon,
