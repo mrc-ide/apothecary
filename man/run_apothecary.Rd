@@ -2,167 +2,145 @@
 % Please edit documentation in R/run.R
 \name{run_apothecary}
 \alias{run_apothecary}
-\title{Run the explicit SEEIR model}
+\title{Run the apothecary SEIR model}
 \usage{
 run_apothecary(
   country = NULL,
   population = NULL,
   tt_contact_matrix = 0,
   contact_matrix_set = NULL,
+  hosp_beds = NULL,
+  ICU_beds = NULL,
+  tt_hosp_beds = 0,
+  tt_ICU_beds = 0,
+  tt_oxygen_supply = 0,
+  input_oxygen_supply = 1e+09,
+  tt_baseline_oxygen_demand = 0,
+  input_baseline_oxygen_demand = 0,
+  oxygen_availability_0 = 1e+09,
+  max_leftover = 0,
+  severe_critical_case_oxygen_consumption_multiplier = 1.5,
+  MV_capacity = 1e+09,
   R0 = 3,
   tt_R0 = 0,
   beta_set = NULL,
-  time_period = 365,
+  tt_beta = 0,
+  rel_inf_asymp = 1,
+  rel_inf_mild = 1,
+  tt_matrix = 0,
   dt = 0.1,
-  day_return = FALSE,
-  replicates = 10,
+  N_age = 17,
+  time_period = 365,
   init = NULL,
-  seed = stats::runif(1, 0, 1e+08),
-  prob_hosp = probs$prob_hosp,
-  prob_severe = probs$prob_severe,
-  prob_non_severe_death_treatment = probs$prob_non_severe_death_treatment,
-  prob_non_severe_death_no_treatment = probs$prob_non_severe_death_no_treatment,
-  prob_severe_death_treatment = probs$prob_severe_death_treatment,
-  prob_severe_death_no_treatment = probs$prob_severe_death_no_treatment,
-  p_dist = probs$p_dist,
+  seeding_cases = NULL,
+  prob_asymp = rep(0.5, 17),
+  prob_hosp = c(0.000744192, 0.000634166, 0.001171109, 0.002394593, 0.005346437,
+    0.010289885, 0.016234604, 0.023349169, 0.028944623, 0.038607042, 0.057734879,
+    0.072422135, 0.101602458, 0.116979814, 0.146099064, 0.176634654, 0.18),
+  prob_severe = c(0.05022296, 0.05022296, 0.05022296, 0.05022296, 0.05022296,
+    0.05022296, 0.05022296, 0.053214942, 0.05974426, 0.074602879, 0.103612417,
+    0.149427991, 0.223777304, 0.306985918, 0.385779555, 0.461217861, 0.709444444),
+  prob_critical = rep(0.8, 17),
+  prob_moderate_death_get_hosp_get_ox_baseline = c(0.0125702, 0.0125702, 0.0125702,
+    0.0125702, 0.0125702, 0.0125702, 0.0125702, 0.013361147, 0.015104687, 0.019164124,
+    0.027477519, 0.041762108, 0.068531658, 0.105302319, 0.149305732, 0.20349534,
+    0.5804312),
+  prob_moderate_death_get_hosp_no_ox_baseline = rep(0.6, 17),
+  prob_moderate_death_no_hosp_no_ox = rep(0.6, 17),
+  prob_severe_death_get_ICU_get_ox_baseline = rep(0.5, 17),
+  prob_severe_death_get_ICU_no_ox_baseline = rep(0.95, 17),
+  prob_severe_death_no_ICU_no_ox = rep(0.95, 17),
+  prob_critical_death_get_ICU_get_ox_get_MV_baseline = rep(0.5, 17),
+  prob_critical_death_get_ICU_get_ox_no_MV_baseline = rep(0.95, 17),
+  prob_critical_death_get_ICU_no_ox_no_MV_baseline = rep(0.95, 17),
+  prob_critical_death_no_ICU_no_ox_no_MV = rep(0.95, 17),
   dur_E = 4.6,
+  dur_IAsymp = 2.1,
   dur_IMild = 2.1,
   dur_ICase = 4.5,
-  dur_get_ox_survive = 9.5,
-  dur_get_ox_die = 7.6,
-  dur_not_get_ox_survive = 9.5 * 0.5,
-  dur_not_get_ox_die = 7.6 * 0.5,
-  dur_get_mv_survive = 11.3,
-  dur_get_mv_die = 10.1,
-  dur_not_get_mv_survive = 11.3 * 0.5,
-  dur_not_get_mv_die = 1,
   dur_rec = 3.4,
-  hosp_bed_capacity = NULL,
-  ICU_bed_capacity = NULL,
-  tt_hosp_beds = 0,
-  tt_ICU_beds = 0,
-  seeding_cases = NULL
+  dur_IMod_GetHosp_GetOx_Surv = 9.6,
+  dur_IMod_GetHosp_GetOx_Die = 7.6,
+  dur_IMod_GetHosp_NoOx_Surv = 9.6/2,
+  dur_IMod_GetHosp_NoOx_Die = 7.6/2,
+  dur_IMod_NoHosp_NoOx_Surv = 9.6/2,
+  dur_IMod_NoHosp_NoOx_Die = 7.6/2,
+  dur_ISev_GetICU_GetOx_Surv = 11.3,
+  dur_ISev_GetICU_GetOx_Die = 10.1,
+  dur_ISev_GetICU_NoOx_Surv = 11.3/2,
+  dur_ISev_GetICU_NoOx_Die = 10.1/2,
+  dur_ISev_NoICU_NoOx_Surv = 11.3/2,
+  dur_ISev_NoICU_NoOx_Die = 10.1/2,
+  dur_ICrit_GetICU_GetOx_GetMV_Surv = 11.3,
+  dur_ICrit_GetICU_GetOx_GetMV_Die = 10.1,
+  dur_ICrit_GetICU_GetOx_NoMV_Surv = 11.3/2,
+  dur_ICrit_GetICU_GetOx_NoMV_Die = 10.1/2,
+  dur_ICrit_GetICU_NoOx_NoMV_Surv = 11.3/2,
+  dur_ICrit_GetICU_NoOx_NoMV_Die = 10.1/2,
+  dur_ICrit_NoICU_NoOx_NoMV_Surv = 11.3/2,
+  dur_ICrit_NoICU_NoOx_NoMV_Die = 10.1/2,
+  prophylactic_drug_timing_1 = 1e+05,
+  prophylactic_drug_timing_2 = 1e+05,
+  prophylactic_prop_treat = 0,
+  prophylactic_drug_wane = 1e+06,
+  drug_1_indic = 0,
+  drug_1_effect_size = 0,
+  drug_2_indic = 0,
+  drug_2_effect_size = 0,
+  drug_3_indic = 0,
+  drug_3_prop_treat = 0,
+  drug_3_effect_size = 0,
+  drug_4_indic = 0,
+  drug_4_prop_treat = 0,
+  drug_4_effect_size = 0,
+  drug_5_indic_IMild = 0,
+  drug_5_indic_ICase = 0,
+  drug_5_prop_treat = 0,
+  drug_5_effect_size = 0,
+  drug_6_indic = 0,
+  drug_6_prop_treat = 0,
+  drug_6_effect_size = 0,
+  drug_7_indic = 0,
+  drug_7_prop_treat = 0,
+  drug_7_effect_size = 0,
+  drug_8_indic_IMod_GetHosp_GetOx = 0,
+  drug_8_indic_IMod_GetHosp_NoOx = 0,
+  drug_8_prop_treat = 0,
+  drug_8_GetOx_effect_size = 0,
+  drug_8_NoOx_effect_size = 0,
+  drug_9_indic_ISev_GetICU_GetOx = 0,
+  drug_9_indic_ISev_GetICU_NoOx = 0,
+  drug_9_prop_treat = 0,
+  drug_9_GetOx_effect_size = 0,
+  drug_9_NoOx_effect_size = 0,
+  drug_10_indic_ICrit_GetICU_GetOx_GetMV = 0,
+  drug_10_indic_ICrit_GetICU_GetOx_NoMV = 0,
+  drug_10_indic_ICrit_GetICU_NoOx_NoMV = 0,
+  drug_10_prop_treat = 0,
+  drug_10_GetOx_GetMV_effect_size = 0,
+  drug_10_GetOx_NoMV_effect_size = 0,
+  drug_10_NoOx_NoMV_effect_size = 0,
+  drug_11_indic_IMod_GetHosp_GetOx = 0,
+  drug_11_indic_IMod_GetHosp_NoOx = 0,
+  drug_11_prop_treat = 0,
+  drug_11_GetOx_effect_size = 0,
+  drug_11_NoOx_effect_size = 0,
+  drug_12_indic_ISev_GetICU_GetOx = 0,
+  drug_12_indic_ISev_GetICU_NoOx = 0,
+  drug_12_prop_treat = 0,
+  drug_12_GetOx_effect_size = 0,
+  drug_12_NoOx_effect_size = 0,
+  drug_13_indic_ICrit_GetICU_GetOx_GetMV = 0,
+  drug_13_indic_ICrit_GetICU_GetOx_NoMV = 0,
+  drug_13_indic_ICrit_GetICU_NoOx_NoMV = 0,
+  drug_13_prop_treat = 0,
+  drug_13_GetOx_GetMV_effect_size = 0,
+  drug_13_GetOx_NoMV_effect_size = 0,
+  drug_13_NoOx_NoMV_effect_size = 0,
+  day_return = TRUE,
+  replicates = 1
 )
 }
-\arguments{
-\item{country}{Character for country beign simulated. WIll be used to
-generate \code{population} and \code{contact_matrix_set} if
-unprovided. Either \code{country} or \code{population} and
-\code{contact_matrix_set} must be provided.}
-
-\item{population}{Population vector (for each age group). Default = NULL,
-which will cause population to be sourced from \code{country}}
-
-\item{tt_contact_matrix}{Time change points for matrix change. Default = 0}
-
-\item{contact_matrix_set}{Contact matrices used in simulation. Default =
-NULL, which will generate this based on the \code{country}.}
-
-\item{R0}{Basic Reproduction Number. Default = 3}
-
-\item{tt_R0}{Change time points for R0. Default = 0}
-
-\item{beta_set}{Alternative parameterisation via beta rather than R0.
-Default = NULL, which causes beta to be estimated from R0}
-
-\item{time_period}{Length of simulation. Default = 365}
-
-\item{dt}{Time Step. Default = 0.1}
-
-\item{day_return}{Logical, do we want to return outut after each day rather
-than each dt. Default = FALSE}
-
-\item{replicates}{Number of replicates. Default = 10}
-
-\item{init}{Data.frame of initial conditions. Default = NULL}
-
-\item{seed}{Random seed used for simulations. Deafult = runif(1, 0, 10000)}
-
-\item{prob_hosp}{probability of hospitalisation by age.
-Default = c(0.001127564, 0.000960857, 0.001774408, 0.003628171,
-0.008100662, 0.015590734, 0.024597885, 0.035377529,
-0.04385549, 0.058495518, 0.08747709, 0.109730508,
-0.153943118, 0.177242143, 0.221362219, 0.267628264)}
-
-\item{prob_severe}{Probability of developing severe symptoms by age.
-Default = c(3.73755e-05, 3.18497e-05, 5.88166e-05, 0.000120264,
-0.000268514, 0.000516788, 0.00081535, 0.001242525,
-0.001729275, 0.002880196, 0.00598205, 0.010821894,
-0.022736324, 0.035911156, 0.056362032, 0.081467057)}
-
-\item{prob_non_severe_death_treatment}{Probability of death from non severe
-treated infection.
-Default = c(0.0125702, 0.0125702, 0.0125702, 0.0125702,
-0.0125702, 0.0125702, 0.0125702, 0.013361147,
-0.015104687, 0.019164124, 0.027477519, 0.041762108,
-0.068531658, 0.105302319, 0.149305732, 0.20349534)}
-
-\item{prob_non_severe_death_no_treatment}{Probability of death in non severe
-hospital inections that aren't treated}
-
-\item{prob_severe_death_treatment}{Probability of death from severe infection
-that is treated. Default = rep(0.5, 16)}
-
-\item{prob_severe_death_no_treatment}{Probability of death from severe infection
-that is not treated. Default = rep(0.95, 16)}
-
-\item{p_dist}{Preferentiality of age group receiving treatment relative to
-other age groups when demand exceeds healthcare capacity.}
-
-\item{dur_E}{Mean duration of incubation period (days). Default = 4.6}
-
-\item{dur_IMild}{Mean duration of mild infection (days). Default = 2.1}
-
-\item{dur_ICase}{Mean duration from symptom onset to hospitil admission (days).
-Default = 4.5}
-
-\item{dur_get_ox_survive}{Mean duration of oxygen given survive. Default = 5}
-
-\item{dur_get_ox_die}{Mean duration of oxygen given death. Default = 5}
-
-\item{dur_not_get_ox_survive}{Mean duration without oxygen given survive.
-Default = 5}
-
-\item{dur_not_get_ox_die}{Mean duration without  oxygen given death.
-Default = 5}
-
-\item{dur_get_mv_survive}{Mean duration of ventilation given survive.
-Default = 7.3}
-
-\item{dur_get_mv_die}{Mean duration of ventilation given death. Default = 6}
-
-\item{dur_not_get_mv_survive}{Mean duration without ventilation given
-survive. Default = 7.3}
-
-\item{dur_not_get_mv_die}{Mean duration without ventilation given
-death. Default = 1}
-
-\item{dur_rec}{Duration of recovery after coming off ventilation. Default = 2}
-
-\item{hosp_bed_capacity}{General bed capacity. Can be single number of vector if capacity time-varies.}
-
-\item{ICU_bed_capacity}{ICU bed capacity. Can be single number of vector if capacity time-varies.}
-
-\item{tt_hosp_beds}{Times at which hospital bed capacity changes (Default = 0 = doesn't change)}
-
-\item{tt_ICU_beds}{Times at which ICU bed capacity changes (Default = 0 = doesn't change)}
-
-\item{seeding_cases}{Initial number of cases seeding the epidemic}
-}
-\value{
-Simulation output
-}
 \description{
-Run the explicit SEEIR model
-}
-\details{
-All durations are in days.
-}
-\examples{
-\dontrun{
-pop <- get_population("Afghanistan")
-m1 <- run_explicit_SEEIR_model(R0 = 2,
-population = pop$n, dt = 1,
-contact_matrix_set=contact_matrices[[1]])
-}
+Run the apothecary SEIR model
 }

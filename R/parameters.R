@@ -123,13 +123,11 @@ apothecary_parameters <- function(
   rel_inf_asymp = 1,
   rel_inf_mild = 1,
   tt_matrix = 0,
-  mix_mat_set = matrices_set,
 
   # miscellaneous parameters
   dt = 0.1,
   N_age = 17,
   time_period = 365,
-  init = NULL,
   seeding_cases = NULL,
 
   # probabilities
