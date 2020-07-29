@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# apothecary <img src="man/figures/apothecary_logo.png" align="right" height="138.5" />
+# apothecary <img src=https://github.com/mrc-ide/apothecary/blob/master/man/figures/apothecary_logo.PNG align="right" height="138.5" />
 <!-- badges: start -->
 [![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
 [![AppVeyor build status](https://ci.appveyor.com/api/projects/status/github/mrc-ide/squire?branch=master&svg=true)](https://ci.appveyor.com/project/cwhittaker1000/apothecary)

@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# apothecary <img src="man/figures/apothecary_logo.png" align="right" height="138.5" />
+# apothecary <img src=https://github.com/mrc-ide/apothecary/blob/master/man/figures/apothecary_logo.PNG align="right" height="138.5" />
 
 <!-- badges: start -->
 
