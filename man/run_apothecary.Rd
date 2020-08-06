@@ -24,7 +24,6 @@ run_apothecary(
   R0 = 3,
   tt_R0 = 0,
   beta_set = NULL,
-  tt_beta = 0,
   rel_inf_asymp = 1,
   rel_inf_mild = 1,
   tt_matrix = 0,
