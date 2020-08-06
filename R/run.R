@@ -103,32 +103,40 @@ run_apothecary <- function(
   drug_1_effect_size = 0,
   drug_2_indic = 0,
   drug_2_effect_size = 0,
+
   drug_3_indic = 0,
   drug_3_prop_treat = 0,
   drug_3_effect_size = 0,
+
   drug_4_indic = 0,
   drug_4_prop_treat = 0,
   drug_4_effect_size = 0,
+
   drug_5_indic_IMild = 0,
   drug_5_indic_ICase = 0,
   drug_5_prop_treat = 0,
   drug_5_effect_size = 0,
+
   drug_6_indic = 0,
   drug_6_prop_treat = 0,
   drug_6_effect_size = 0,
+
   drug_7_indic = 0,
   drug_7_prop_treat = 0,
   drug_7_effect_size = 0,
+
   drug_8_indic_IMod_GetHosp_GetOx = 0,
   drug_8_indic_IMod_GetHosp_NoOx = 0,
   drug_8_prop_treat = 0,
   drug_8_GetOx_effect_size = 0,
   drug_8_NoOx_effect_size = 0,
+
   drug_9_indic_ISev_GetICU_GetOx = 0,
   drug_9_indic_ISev_GetICU_NoOx = 0,
   drug_9_prop_treat = 0,
   drug_9_GetOx_effect_size = 0,
   drug_9_NoOx_effect_size = 0,
+
   drug_10_indic_ICrit_GetICU_GetOx_GetMV = 0,
   drug_10_indic_ICrit_GetICU_GetOx_NoMV = 0,
   drug_10_indic_ICrit_GetICU_NoOx_NoMV = 0,
@@ -136,16 +144,19 @@ run_apothecary <- function(
   drug_10_GetOx_GetMV_effect_size = 0,
   drug_10_GetOx_NoMV_effect_size = 0,
   drug_10_NoOx_NoMV_effect_size = 0,
+
   drug_11_indic_IMod_GetHosp_GetOx = 0,
   drug_11_indic_IMod_GetHosp_NoOx = 0,
   drug_11_prop_treat = 0,
   drug_11_GetOx_effect_size = 0,
   drug_11_NoOx_effect_size = 0,
+
   drug_12_indic_ISev_GetICU_GetOx = 0,
   drug_12_indic_ISev_GetICU_NoOx = 0,
   drug_12_prop_treat = 0,
   drug_12_GetOx_effect_size = 0,
   drug_12_NoOx_effect_size = 0,
+
   drug_13_indic_ICrit_GetICU_GetOx_GetMV = 0,
   drug_13_indic_ICrit_GetICU_GetOx_NoMV = 0,
   drug_13_indic_ICrit_GetICU_NoOx_NoMV = 0,
