@@ -10,8 +10,8 @@ run_apothecary <- function(
   contact_matrix_set = NULL,
 
   # healthcare related quantities
-  hosp_beds = NULL,
-  ICU_beds = NULL,
+  hosp_bed_capacity = NULL,
+  ICU_bed_capacity = NULL,
   tt_hosp_beds = 0,
   tt_ICU_beds = 0,
   tt_oxygen_supply = 0,
@@ -174,8 +174,8 @@ run_apothecary <- function(
                                 population = population,
                                 tt_contact_matrix = tt_contact_matrix,
                                 contact_matrix_set = contact_matrix_set,
-                                hosp_beds = hosp_beds,
-                                ICU_beds = ICU_beds,
+                                hosp_bed_capacity = hosp_bed_capacity,
+                                ICU_bed_capacity = ICU_bed_capacity,
                                 tt_hosp_beds = tt_hosp_beds,
                                 tt_ICU_beds = tt_ICU_beds,
                                 tt_oxygen_supply = tt_oxygen_supply,

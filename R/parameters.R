@@ -102,8 +102,8 @@ apothecary_parameters <- function(
   contact_matrix_set = NULL,
 
   # healthcare related quantities
-  hosp_beds = NULL,
-  ICU_beds = NULL,
+  hosp_bed_capacity  = NULL,
+  ICU_bed_capacity  = NULL,
   tt_hosp_beds = 0,
   tt_ICU_beds = 0,
   tt_oxygen_supply = 0,
@@ -269,22 +269,22 @@ apothecary_parameters <- function(
   }
 
   # populate hospital and ICU bed capacity if not provided
-  if (is.null(hosp_beds)) {
+  if (is.null(hosp_bed_capacity)) {
     if (!is.null(country)) {
       beds <- get_healthcare_capacity(country)
-      hosp_beds <- beds$hosp_beds
-      hosp_beds <- rep(round(hosp_beds * sum(population)/1000), length(tt_hosp_beds))
+      hosp_bed_capacity <- beds$hosp_beds
+      hosp_bed_capacity <- rep(round(hosp_bed_capacity * sum(population)/1000), length(tt_hosp_beds))
     } else {
-      hosp_beds <- round(5 * sum(population)/1000)
+      hosp_bed_capacity <- round(5 * sum(population)/1000)
     }
   }
-  if (is.null(ICU_beds)) {
+  if (is.null(ICU_bed_capacity)) {
     if (!is.null(country)) {
       beds <- get_healthcare_capacity(country)
-      ICU_beds <- beds$ICU_beds
-      ICU_beds <- rep(round(ICU_beds * sum(population)/1000), length(tt_ICU_beds))
+      ICU_bed_capacity <- beds$ICU_beds
+      ICU_bed_capacity <- rep(round(ICU_bed_capacity * sum(population)/1000), length(tt_ICU_beds))
     } else {
-      ICU_beds <- round(3 * hosp_beds/100)
+      ICU_bed_capacity <- round(3 * hosp_bed_capacity/100)
     }
   }
 
@@ -355,9 +355,9 @@ apothecary_parameters <- function(
   # Collate Parameters Into List
   overall <- c(mod_init,
                list(tt_hosp_beds = tt_hosp_beds/dt,
-                    hosp_beds = hosp_beds,
+                    hosp_bed_capacity = hosp_bed_capacity,
                     tt_ICU_beds = tt_ICU_beds/dt,
-                    ICU_beds = ICU_beds,
+                    ICU_bed_capacity = ICU_bed_capacity,
                     tt_oxygen_supply = tt_oxygen_supply/dt,
                     input_oxygen_supply = input_oxygen_supply,
                     tt_baseline_oxygen_demand = tt_baseline_oxygen_demand/dt,
@@ -471,7 +471,9 @@ apothecary_parameters <- function(
                     prob_critical_death_get_ICU_get_ox_no_MV_baseline = prob_critical_death_get_ICU_get_ox_no_MV_baseline,
                     prob_critical_death_get_ICU_no_ox_no_MV_baseline = prob_critical_death_get_ICU_no_ox_no_MV_baseline,
                     prob_critical_death_no_ICU_no_ox_no_MV = prob_critical_death_no_ICU_no_ox_no_MV,
-                    time_period = time_period))
+                    time_period = time_period,
+                    contact_matrix_set = contact_matrix_set,
+                    population = population))
 
   class(overall) <- c("explicit_SEEIR_parameters", "squire_parameters")
 
