@@ -16,6 +16,20 @@ dt <- user() # Specified timestep
 time <- step * dt # Tracking actual time
 N_age <- user() # Number of age groups
 
+pop <- sum(S) + sum(E1) + sum(E2) + sum(IAsymp) + sum(IMild) + sum(ICase1) + sum(ICase2) + sum(IRec1) + sum(IRec2) + sum(R) +
+       sum(D_Community) + sum(D_Hospital) + sum(PS) + sum(PE1) + sum(PE2) + sum(IMild_Drug_5) + sum(ICase1_Drug_5) + sum(ICase2_Drug_5) +
+       sum(IMod_GetHosp_GetOx_Surv1) + sum(IMod_GetHosp_GetOx_Surv2) + sum(IMod_GetHosp_GetOx_Die1) + sum(IMod_GetHosp_GetOx_Die2) +
+       sum(IMod_GetHosp_NoOx_Surv1) + sum(IMod_GetHosp_NoOx_Surv2) + sum(IMod_GetHosp_NoOx_Die1) + sum(IMod_GetHosp_NoOx_Die2) +
+       sum(IMod_NoHosp_NoOx_Surv1) + sum(IMod_NoHosp_NoOx_Surv2) + sum(IMod_NoHosp_NoOx_Die1) + sum(IMod_NoHosp_NoOx_Die2) +
+       sum(ISev_GetICU_GetOx_Surv1) + sum(ISev_GetICU_GetOx_Surv2) + sum(ISev_GetICU_GetOx_Die1) + sum(ISev_GetICU_GetOx_Die2) +
+       sum(ISev_GetICU_NoOx_Surv1) + sum(ISev_GetICU_NoOx_Surv2) + sum(ISev_GetICU_NoOx_Die1) + sum(ISev_GetICU_NoOx_Die2) +
+       sum(ISev_NoICU_NoOx_Surv1) + sum(ISev_NoICU_NoOx_Surv2) + sum(ISev_NoICU_NoOx_Die1) + sum(ISev_NoICU_NoOx_Die2) +
+       sum(ICrit_GetICU_GetOx_GetMV_Surv1) + sum(ICrit_GetICU_GetOx_GetMV_Surv2) + sum(ICrit_GetICU_GetOx_GetMV_Die1) + sum(ICrit_GetICU_GetOx_GetMV_Die2) +
+       sum(ICrit_GetICU_GetOx_NoMV_Surv1) + sum(ICrit_GetICU_GetOx_NoMV_Surv2) + sum(ICrit_GetICU_GetOx_NoMV_Die1) + sum(ICrit_GetICU_GetOx_NoMV_Die2) +
+       sum(ICrit_GetICU_NoOx_NoMV_Surv1) + sum(ICrit_GetICU_NoOx_NoMV_Surv2) + sum(ICrit_GetICU_NoOx_NoMV_Die1) + sum(ICrit_GetICU_NoOx_NoMV_Die2) +
+       sum(ICrit_NoICU_NoOx_NoMV_Surv1) + sum(ICrit_NoICU_NoOx_NoMV_Surv2) + sum(ICrit_NoICU_NoOx_NoMV_Die1) + sum(ICrit_NoICU_NoOx_NoMV_Die2)
+output(pop) <- TRUE
+
 ## DRUG RELATED PARAMETERS AND EFFECTS
 ##------------------------------------------------------------------------------
 
@@ -211,7 +225,6 @@ prob_critical_death_get_ICU_no_ox_no_MV[] <- if (drug_13_indic_ICrit_GetICU_NoOx
 
 prob_critical_death_no_ICU_no_ox_no_MV[] <- user() # probability of dying from critical disease (i.e. requiring ICU bed, oxygen and MV) by age given you do NOT receive an ICU bed, you do NOT receive oxygen, and you do NOT receive MV
 
-
 ## INDIVIDUAL PROBABILITIES OF TRANSITION BETWEEN COMPARTMENTS
 ##------------------------------------------------------------------------------
 # Transition Probabilities Up Until Hospitalisation/Recovery from Mild Infection
@@ -230,7 +243,7 @@ p_Rec2_R <- 1 - exp(-gamma_rec * dt) # Progression through recovery from ICU in 
 # Transition Probabilities for Those Requiring Hospital Bed and Oxygen -> Recovery/Death, Incorporating Effects of Drug 8 if Relevant
 p_IMod_GetHosp_GetOx_Surv <- if (drug_8_indic_IMod_GetHosp_GetOx == 1) 1 - exp(-gamma_IMod_GetHosp_GetOx_Surv_Drug_8 * dt) else 1 - exp(-gamma_IMod_GetHosp_GetOx_Surv * dt) # Progression through requiring hosp bed and oxygen and receiving both -> Recovery
 p_IMod_GetHosp_GetOx_Die <- 1 - exp(-gamma_IMod_GetHosp_GetOx_Die * dt) # Progression through requiring hosp bed and oxygen and receiving both -> Dying
-p_IMod_GetHosp_NoOx_Surv <- if (drug_8_indic_IMod_GetHosp_NoOx == 1) 1 - exp(-gamma_IMod_GetHosp_NoOx_Surv_Drug_8 * dt) else 1 - exp(-gamma_IMod_GetHosp_GetOx_Surv * dt) # Progression through requiring hosp bed and oxygen, receiving hosp bed only -> Recovery
+p_IMod_GetHosp_NoOx_Surv <- if (drug_8_indic_IMod_GetHosp_NoOx == 1) 1 - exp(-gamma_IMod_GetHosp_NoOx_Surv_Drug_8 * dt) else 1 - exp(-gamma_IMod_GetHosp_NoOx_Surv * dt) # Progression through requiring hosp bed and oxygen, receiving hosp bed only -> Recovery
 p_IMod_GetHosp_NoOx_Die <- 1 - exp(-gamma_IMod_GetHosp_NoOx_Die * dt) # Progression through requiring hosp bed and oxygen, receiving hosp bed only -> Dying
 p_IMod_NoHosp_NoOx_Surv <- 1 - exp(-gamma_IMod_NoHosp_NoOx_Surv * dt) # Progression through requiring hosp bed and oxygen, receiving neither -> Recovery
 p_IMod_NoHosp_NoOx_Die <- 1 - exp(-gamma_IMod_NoHosp_NoOx_Die * dt) # Progression through requiring hosp bed and oxygen, receiving neither -> Dying
@@ -254,30 +267,25 @@ p_ICrit_GetICU_NoOx_NoMV_Die <- 1 - exp(-gamma_ICrit_GetICU_NoOx_NoMV_Die * dt) 
 p_ICrit_NoICU_NoOx_NoMV_Surv <- 1 - exp(-gamma_ICrit_NoICU_NoOx_NoMV_Surv * dt) # Progression through requiring ICU bed, oxygen and MV, receiving nothing -> Recovery
 p_ICrit_NoICU_NoOx_NoMV_Die <- 1 - exp(-gamma_ICrit_NoICU_NoOx_NoMV_Die * dt) # Progression through requiring ICU bed, oxygen and MV, receiving nothing -> Dying
 
-
 ## NUMBER OF INDIVIDUALS LEAVING DIFFERENT COMPARTMENTS
 ##------------------------------------------------------------------------------
 
 ## DRAWS FOR NUMBER OF INDIVIDUALS MOVING BETWEEN NON-HOSPITAL/ICU BED RELATED COMPARTMENTS
 ##-----------------------------------------------------------------------------------------
 
-# NEED TO WATCH OUT HERE FOR FOR ZEROES IN DENOMINATORS HERE THAT COULD LEAD TO WEIRD ERRORS THAT ODIN MIGHT NOT PICK UP. PARTICULARLY RELEVANT FOR COMPETING HAZARDS SECTION.
-
 # For those treated with the prophylactic drug (properties 1 and 2)
+drug_lambda[] <- if (drug_1_indic == 1) lambda[i] * drug_1_effect_size else lambda[i]
+
 n_S_PS[] <- if ((time == prophylactic_drug_timing_1 || time == prophylactic_drug_timing_2) && (drug_1_indic == 1|| drug_2_indic == 1)) rbinom(S[i], prophylactic_prop_treat) else 0 # number treated in mass community campaign with prophylactic drug
 
-p_leave_PS[] <- if (drug_1_indic == 1) 1 - exp(-(prophylactic_drug_wane + lambda[i] * drug_1_effect_size) * dt) else 1 - exp(-(prophylactic_drug_wane + lambda[i]) * dt) # total of competing hazards for leaving PS (drug wane -> S and infection -> PE1). Latter depends on whether drug 1 is active or not.
+p_leave_PS[] <- if (drug_1_indic == 1) 1 - exp(-(prophylactic_drug_wane + drug_lambda[i]) * dt) else 1 - exp(-(prophylactic_drug_wane + lambda[i]) * dt) # total of competing hazards for leaving PS (drug wane -> S and infection -> PE1). Latter depends on whether drug 1 is active or not.
 n_leave_PS[] <- rbinom(PS[i], p_leave_PS[i]) # total number of people leaving PS to either S or PE1
-n_PS_PE1[] <- if (drug_1_indic == 1) rbinom(n_leave_PS[i], (lambda[i] * drug_1_effect_size)/(lambda[i] * drug_1_effect_size + prophylactic_drug_wane)) else rbinom(n_leave_PS[i], (lambda[i])/(lambda[i] + prophylactic_drug_wane)) # number of people leaving PS who flow to PE1. Depends on whether drug 1 is active or not.
+
+n_PS_PE1[] <- if (prophylactic_drug_wane != 0) rbinom(n_leave_PS[i], (drug_lambda[i])/(drug_lambda[i] + prophylactic_drug_wane)) else n_leave_PS[i] # number of people leaving PS who flow to PE1. Depends on whether drug 1 is active or not.
 n_PS_S[] <- n_leave_PS[i] - n_PS_PE1[i] # number of people leaving PS who flow back to S (due to drug wearing off)
 
-n_leave_PE1[] <- rbinom(PE1[i], 1 - exp(-(prophylactic_drug_wane + gamma_E) * dt)) # total number of people leaving PE1 to either E1 or PE2
-n_PE1_PE2[] <- rbinom(n_leave_PE1[i], gamma_E/(prophylactic_drug_wane + gamma_E)) # number of people leaving PE1 who flow to PE2.
-n_PE1_E1[] <- n_leave_PE1[i] - n_PE1_PE2[i] # Number of people leaving PE1 who flow to E1 (due to drug wearing off)
-
-n_leave_PE2[] <- rbinom(PE2[i], 1 - exp(-(prophylactic_drug_wane + gamma_E) * dt)) # total number of people leaving PE2 to either E2 or one of the I compartments
-n_PE2_I[] <- rbinom(n_leave_PE2[i], gamma_E/(prophylactic_drug_wane + gamma_E)) # number of people leaving PE2 who flow to one of the I compartments
-n_PE2_E2[] <- n_leave_PE2[i] - n_PE2_I[i] # Number of people leaving PE2 who flow to E2 (due to drug wearing off)
+n_PE1_PE2[] <- rbinom(PE1[i], p_E1_E2) # number of people leaving PE1 who flow to PE2.
+n_PE2_I[] <-  rbinom(PE2[i], p_E2_I) # number of people leaving PE2 who flow to one of the I compartments
 
 n_PE2_ICase1_initial[] <- rbinom(n_PE2_I[i], prob_hosp[i]) # initial number of people moving from PE2 -> ICase1 (subsequently modified by Drug 2's effects, with some of these flowing to IMild instead)
 # CHANGE DO WE WANT DRUG_EFFECT_3 IN HERE AS WELL?? SEE BELOW FOR SNIPPET OF WHAT THIS SHOULD LOOK LIKE:
@@ -311,6 +319,7 @@ n_E2_IMild_No_Drug_5[] <- n_E2_IMild[i] - n_E2_IMild_Drug_5[i] # number of peopl
 n_IMild_R[] <- rbinom(IMild[i], p_IMild_R) # Number of mild infections NOT receiving drug 5 recovering, taking into account proportion receiving drug 4 and its effect to hasten recovery
 n_IMild_Drug_5_R[] <- rbinom(IMild_Drug_5[i], p_IMild_R) # Number of mild receibing drug 5 infections recovering, taking into account proportion receiving drug 4 and its effect to hasten recovery
 n_IAsymp_R[] <- rbinom(IAsymp[i], p_IAsymp_R) # Number of asymptomatic infections recovering
+
 n_ICase1_Drug_5_ICase2_Drug_5[] <- rbinom(ICase1_Drug_5[i], p_ICase1_ICase2) # Number of individuals in ICase1 who receive Drug 5 progressing to ICase2
 n_ICase2_Drug_5_Hosp[] <- rbinom(ICase2_Drug_5[i], p_ICase2_Hosp) # Number of individuals in ICase2 who receive Drug 5 progressing to IHosp
 n_ICase1_ICase2[] <- rbinom(ICase1[i], p_ICase1_ICase2) # Number progressing through the onset but not hospitalised compartment
@@ -524,8 +533,8 @@ n_ICrit_NoICU_NoOx_NoMV_Surv2_R[] <- rbinom(ICrit_NoICU_NoOx_NoMV_Surv2[i], p_IC
 
 # Non-Hospital/ICU Bed Related Compartments
 delta_S[] <- - n_S_E1[i] - n_S_PS[i] + n_PS_S[i]
-delta_E1[] <- n_S_E1[i] + n_PE1_E1[i] - n_E1_E2[i]
-delta_E2[] <- n_E1_E2[i] + n_PE2_E2[i] - n_E2_I[i]
+delta_E1[] <- n_S_E1[i] - n_E1_E2[i]
+delta_E2[] <- n_E1_E2[i] - n_E2_I[i]
 delta_IAsymp[] <- n_E2_IAsymp[i] + n_PE2_IAsymp[i] - n_IAsymp_R[i]
 
 delta_IMild[] <- n_E2_IMild_No_Drug_5[i] + n_PE2_IMild_No_Drug_5[i] - n_IMild_R[i]
@@ -537,8 +546,8 @@ delta_ICase1_Drug_5[] <- n_E2_ICase1_Drug_5[i] + n_PE2_ICase1_Drug_5[i] - n_ICas
 delta_ICase2_Drug_5[] <- n_ICase1_Drug_5_ICase2_Drug_5[i] - n_ICase2_Drug_5_Hosp[i]
 
 delta_PS[] <- n_S_PS[i] - n_leave_PS[i]
-delta_PE1[] <- n_PS_PE1[i] - n_leave_PE1[i]
-delta_PE2[] <- n_PE1_PE2[i] - n_leave_PE2[i]
+delta_PE1[] <- n_PS_PE1[i] - n_PE1_PE2[i]
+delta_PE2[] <- n_PE1_PE2[i] - n_PE2_I[i]
 
 # Stepdown Bed, Recovery and Death Related Compartments
 delta_IRec1[] <- n_ISev_GetICU_GetOx_Surv2_Rec[i] + n_ISev_GetICU_NoOx_Surv2_Rec[i] +
@@ -1199,17 +1208,13 @@ dim(prob_critical_death_get_ICU_no_ox_no_MV) <- N_age
 
 dim(prob_critical_death_no_ICU_no_ox_no_MV) <- N_age
 
-
+dim(drug_lambda) <- N_age
 dim(n_S_PS) <- N_age
 dim(n_leave_PS) <- N_age
 dim(n_PS_PE1) <- N_age
 dim(n_PS_S) <- N_age
-dim(n_leave_PE1) <- N_age
 dim(n_PE1_PE2) <- N_age
-dim(n_PE1_E1) <- N_age
-dim(n_leave_PE2) <- N_age
 dim(n_PE2_I) <- N_age
-dim(n_PE2_E2) <- N_age
 dim(n_PE2_ICase1_initial) <- N_age
 dim(n_PE2_ICase1) <- N_age
 dim(n_PE2_ICase1_Drug_5) <- N_age
@@ -1231,19 +1236,117 @@ dim(n_ICase1_Drug_5_ICase2_Drug_5) <- N_age
 dim(n_ICase2_Drug_5_Hosp) <- N_age
 dim(p_leave_PS) <- N_age
 
+# Variables to Check for Drug 1 and Drug 2
+output(n_S_PS) <- TRUE
+output(n_leave_PS) <- TRUE
+output(n_PS_PE1) <- TRUE
+output(n_PS_S) <- TRUE
+output(n_PE1_PE2) <- TRUE
+output(n_PE2_I) <- TRUE
+output(n_PE2_ICase1_initial) <- TRUE
+output(n_PE2_ICase1) <- TRUE
+
+# Variables to Check for Drug 3
+output(n_E2_ICase1_initial) <- TRUE
+output(n_E2_ICase1) <- TRUE
+output(n_E2_IAsymp) <- TRUE
+
+# Variables to Check for Drug 4
+output(gamma_IMild) <- TRUE
+output(gamma_IMild_Drug_4) <- TRUE
+output(p_IMild_R) <- TRUE
+
+# Variables to Check for Drug 5
+output(n_E2_IMild) <- TRUE
+output(n_E2_IMild_Drug_5) <- TRUE
+output(n_E2_IMild_No_Drug_5) <- TRUE
+output(n_PE2_IMild) <- TRUE
+output(n_PE2_IMild_Drug_5) <- TRUE
+output(n_PE2_IMild_No_Drug_5) <- TRUE
+#output(n_E2_ICase1) <- TRUE
+output(n_E2_ICase1_Drug_5) <- TRUE
+output(n_E2_ICase1_No_Drug_5) <- TRUE
+#output(n_PE2_ICase1) <- TRUE
+output(n_PE2_ICase1_Drug_5) <- TRUE
+output(n_PE2_ICase1_No_Drug_5) <- TRUE
+
+# Variables to Check for Drug 6
+output(number_req_ICU_initial) <- TRUE
+output(number_req_ICU) <- TRUE
+
+# Variables to Check for Drug 7
+output(number_req_ICU_MV_initial) <- TRUE
+output(number_req_ICU_MV) <- TRUE
+
+# Variables to Check for Drug 8
+output(gamma_IMod_GetHosp_GetOx_Surv) <- TRUE
+output(gamma_IMod_GetHosp_GetOx_Surv_Drug_8) <- TRUE
+output(gamma_IMod_GetHosp_NoOx_Surv) <- TRUE
+output(gamma_IMod_GetHosp_NoOx_Surv_Drug_8) <- TRUE
+output(p_IMod_GetHosp_GetOx_Surv) <- TRUE
+output(p_IMod_GetHosp_NoOx_Surv) <- TRUE
+
+# Variables to Check for Drug 9
+output(gamma_ISev_GetICU_GetOx_Surv) <- TRUE
+output(gamma_ISev_GetICU_GetOx_Surv_Drug_9) <- TRUE
+output(gamma_ISev_GetICU_NoOx_Surv) <- TRUE
+output(gamma_ISev_GetICU_NoOx_Surv_Drug_9) <- TRUE
+output(p_ISev_GetICU_GetOx_Surv) <- TRUE
+output(p_ISev_GetICU_NoOx_Surv) <- TRUE
+output(n_ISev_GetICU_GetOx_Die1) <- TRUE
+output(n_ISev_GetICU_GetOx_Surv1) <- TRUE
+output(n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2) <- TRUE
+
+# Variables to Check for Drug 10
+output(gamma_ICrit_GetICU_GetOx_GetMV_Surv) <- TRUE
+output(gamma_ICrit_GetICU_GetOx_GetMV_Surv_Drug_10) <- TRUE
+output(gamma_ICrit_GetICU_GetOx_NoMV_Surv) <- TRUE
+output(gamma_ICrit_GetICU_GetOx_NoMV_Surv_Drug_10) <- TRUE
+output(gamma_ICrit_GetICU_NoOx_NoMV_Surv) <- TRUE
+output(gamma_ICrit_GetICU_NoOx_NoMV_Surv_Drug_10) <- TRUE
+output(p_ICrit_GetICU_GetOx_GetMV_Surv) <- TRUE
+output(p_ICrit_GetICU_GetOx_NoMV_Surv) <- TRUE
+output(p_ICrit_GetICU_NoOx_NoMV_Surv) <- TRUE
+output(n_ICrit_GetICU_GetOx_GetMV_Surv1) <- TRUE
+output(n_ICrit_GetICU_GetOx_GetMV_Surv1_ICrit_GetICU_GetOx_GetMV_Surv2) <- TRUE
+
+# Variables to Check for Drug 11
+output(prob_moderate_death_get_hosp_get_ox_baseline) <- TRUE
+output(prob_moderate_death_get_hosp_get_ox_Drug_11) <- TRUE
+output(prob_moderate_death_get_hosp_get_ox) <- TRUE
+output(prob_moderate_death_get_hosp_no_ox_baseline) <- TRUE
+output(prob_moderate_death_get_hosp_no_ox_Drug_11) <- TRUE
+output(prob_moderate_death_get_hosp_no_ox) <- TRUE
+
+# Variables to Check for Drug 12
+output(prob_severe_death_get_ICU_get_ox_baseline) <- TRUE
+output(prob_severe_death_get_ICU_get_ox_Drug_12) <- TRUE
+output(prob_severe_death_get_ICU_get_ox) <- TRUE
+output(prob_severe_death_get_ICU_no_ox_baseline) <- TRUE
+output(prob_severe_death_get_ICU_no_ox_Drug_12) <- TRUE
+output(prob_severe_death_get_ICU_no_ox) <- TRUE
+
+# Variables to Check for Drug 13
+output(prob_critical_death_get_ICU_get_ox_get_MV_baseline) <- TRUE
+output(prob_critical_death_get_ICU_get_ox_get_MV_Drug_13) <- TRUE
+output(prob_critical_death_get_ICU_get_ox_get_MV) <- TRUE
+output(prob_critical_death_get_ICU_get_ox_no_MV_baseline) <- TRUE
+output(prob_critical_death_get_ICU_get_ox_no_MV_Drug_13) <- TRUE
+output(prob_critical_death_get_ICU_get_ox_no_MV) <- TRUE
+output(prob_critical_death_get_ICU_no_ox_no_MV_baseline) <- TRUE
+output(prob_critical_death_get_ICU_no_ox_no_MV_Drug_13) <- TRUE
+output(prob_critical_death_get_ICU_no_ox_no_MV) <- TRUE
+
 # Extra Non-State Variables Outputted by the Model
 output(time) <- TRUE
 output(n_S_E1) <- TRUE
 output(n_E1_E2) <- TRUE
 output(n_E2_I) <- TRUE
-output(n_E2_ICase1) <- TRUE
-output(n_E2_IMild) <- TRUE
 output(n_IMild_R) <- TRUE
 output(n_ICase1_ICase2) <- TRUE
 output(n_ICase2_Hosp) <- TRUE
 output(n_IRec1_IRec2) <- TRUE
 output(n_IRec2_R) <- TRUE
-output(number_req_ICU) <- TRUE
 output(total_req_ICU) <- TRUE
 output(ICU_occ) <- TRUE
 output(current_free_ICU) <- TRUE
@@ -1268,7 +1371,6 @@ output(available_oxygen_for_ICU_beds) <- TRUE
 output(total_GetHosp_GetOx) <- TRUE
 output(number_GetHosp_Ox) <- TRUE
 output(number_GetHosp_NoOx) <- TRUE
-output(number_req_ICU_MV) <- TRUE
 output(number_req_ICU_Ox) <- TRUE
 output(total_req_ICU_MV) <- TRUE
 output(total_req_ICU_Ox) <- TRUE
