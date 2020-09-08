@@ -311,7 +311,7 @@ number_NotHosp[] <- number_req_Hosp[i] - number_GetHosp[i]
 ## WORKING OUT HOW MUCH OXYGEN IS AVAILABILE AND HOW MANY INDIVIDUALS REQUIRING HOSPITAL/ICU BED RECEIVE IT
 ##---------------------------------------------------------------------------------------------------------
 # Updating Oxyen Availability With New Supply At Each Timestep, Subtract Off Baseline Demand and Add In Any O2 Leftover From Previous Timestep
-update(oxygen_availability) <- oxygen_supply + leftover - baseline_oxygen_demand
+deriv(oxygen_availability) <- oxygen_supply + leftover - baseline_oxygen_demand
 
 # Working Out Proportion of Oxygen Going to Hospital Beds vs ICU Beds, and Splitting ICU Oxygen Into Amounts for Each Disease Severity Category
 prop_ox_hosp_beds <- if (total_GetHosp == 0 && total_GetICU == 0) 0 else (total_GetHosp/(total_GetHosp + total_GetICU * severe_critical_case_oxygen_consumption_multiplier))
@@ -384,7 +384,7 @@ n_ISev_GetICU_GetOx_Surv1[] <- number_GetICU_GetOx[i] - n_ISev_GetICU_GetOx_Die1
 n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2[] <-if (drug_9_indic_ISev_GetICU_GetOx == 1) ISev_GetICU_GetOx_Surv1[i] * gamma_ISev_GetICU_GetOx_Surv_Drug_9 else ISev_GetICU_GetOx_Surv1[i] * gamma_ISev_GetICU_GetOx_Surv
 n_ISev_GetICU_GetOx_Surv2_Rec[] <- if (drug_9_indic_ISev_GetICU_GetOx == 1) ISev_GetICU_GetOx_Surv2[i] * gamma_ISev_GetICU_GetOx_Surv_Drug_9 else ISev_GetICU_GetOx_Surv2[i] * gamma_ISev_GetICU_GetOx_Surv
 
-n_ISev_GetICU_NoOx_Die1[] <- number_GetICU_NoOx[i] * gamma_severe_death_get_ICU_no_ox[i]
+n_ISev_GetICU_NoOx_Die1[] <- number_GetICU_NoOx[i] * prob_severe_death_get_ICU_no_ox[i]
 n_ISev_GetICU_NoOx_Die1_ISev_GetICU_NoOx_Die2[] <- ISev_GetICU_NoOx_Die1[i]* gamma_ISev_GetICU_NoOx_Die
 n_ISev_GetICU_NoOx_Die2_D_Hospital[] <- ISev_GetICU_NoOx_Die2[i] * gamma_ISev_GetICU_NoOx_Die
 n_ISev_GetICU_NoOx_Surv1[] <- number_GetICU_NoOx[i] - n_ISev_GetICU_NoOx_Die1[i]
@@ -417,7 +417,7 @@ n_ICrit_GetICU_NoOx_NoMV_Die1[] <- number_GetICU_NoOx_NeedMV[i] * prob_critical_
 n_ICrit_GetICU_NoOx_NoMV_Die1_ICrit_GetICU_NoOx_NoMV_Die2[] <- ICrit_GetICU_NoOx_NoMV_Die1[i] * gamma_ICrit_GetICU_NoOx_NoMV_Die
 n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital[] <- ICrit_GetICU_NoOx_NoMV_Die2[i] * gamma_ICrit_GetICU_NoOx_NoMV_Die
 n_ICrit_GetICU_NoOx_NoMV_Surv1[] <- number_GetICU_NoOx_NeedMV[i] - n_ICrit_GetICU_NoOx_NoMV_Die1[i]
-n_ICrit_GetICU_NoOx_NoMV_Surv1_ICrit_GetICU_NoOx_NoMV_Surv2[] <- if (drug_10_indic_ICrit_GetICU_NoOx_NoMV == 1) ICrit_GetICU_NoOx_NoMV_Surv1[i] * gamma_ICrit_GetICU_NoOx_NoMV_Surv_Drug_10  else ICrit_GetICU_NoOx_NoMV_Surv1[i] * gammma_ICrit_GetICU_NoOx_NoMV_Surv
+n_ICrit_GetICU_NoOx_NoMV_Surv1_ICrit_GetICU_NoOx_NoMV_Surv2[] <- if (drug_10_indic_ICrit_GetICU_NoOx_NoMV == 1) ICrit_GetICU_NoOx_NoMV_Surv1[i] * gamma_ICrit_GetICU_NoOx_NoMV_Surv_Drug_10  else ICrit_GetICU_NoOx_NoMV_Surv1[i] * gamma_ICrit_GetICU_NoOx_NoMV_Surv
 n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec[] <- if (drug_10_indic_ICrit_GetICU_NoOx_NoMV == 1) ICrit_GetICU_NoOx_NoMV_Surv2[i] * gamma_ICrit_GetICU_NoOx_NoMV_Surv_Drug_10  else ICrit_GetICU_NoOx_NoMV_Surv2[i] * gamma_ICrit_GetICU_NoOx_NoMV_Surv
 
 n_ICrit_NoICU_NoOx_NoMV_Die1[] <- number_NotICU_NotOx_NotMV[i] * prob_critical_death_no_ICU_no_ox_no_MV[i]
@@ -475,35 +475,520 @@ deriv(ISev_NoICU_NoOx_Surv1[]) <- n_ISev_NoICU_NoOx_Surv1[i] - n_ISev_NoICU_NoOx
 deriv(ISev_NoICU_NoOx_Surv2[]) <- n_ISev_NoICU_NoOx_Surv1_ISev_NoICU_NoOx_Surv2[i] - n_ISev_NoICU_NoOx_Surv2_R[i]
 
 # Passage Through Requiring ICU Bed, Oxygen and Mechanical Ventilation, Either Receiving All, ICU Bed and Oxygen, ICU Bed Only or Nothing, and Surviving or Not
-deriv(ICrit_GetICU_GetOx_GetMV_Die1[]) <-
-deriv(ICrit_GetICU_GetOx_GetMV_Die2[]) <-
-deriv(ICrit_GetICU_GetOx_GetMV_Surv1[]) <-
-deriv(ICrit_GetICU_GetOx_GetMV_Surv2[]) <-
-deriv(ICrit_GetICU_GetOx_NoMV_Die1[]) <-
-deriv(ICrit_GetICU_GetOx_NoMV_Die2[]) <-
-deriv(ICrit_GetICU_GetOx_NoMV_Surv1[]) <-
-deriv(ICrit_GetICU_GetOx_NoMV_Surv2[]) <-
-deriv(ICrit_GetICU_NoOx_NoMV_Die1[]) <-
-deriv(ICrit_GetICU_NoOx_NoMV_Die2[]) <-
-deriv(ICrit_GetICU_NoOx_NoMV_Surv1[]) <-
-deriv(ICrit_GetICU_NoOx_NoMV_Surv2[]) <-
-deriv(ICrit_NoICU_NoOx_NoMV_Die1[]) <-
-deriv(ICrit_NoICU_NoOx_NoMV_Die2[]) <-
-deriv(ICrit_NoICU_NoOx_NoMV_Surv1[]) <-
-deriv(ICrit_NoICU_NoOx_NoMV_Surv2[]) <-
+deriv(ICrit_GetICU_GetOx_GetMV_Die1[]) <- n_ICrit_GetICU_GetOx_GetMV_Die1[i] - n_ICrit_GetICU_GetOx_GetMV_Die1_ICrit_GetICU_GetOx_GetMV_Die2[i]
+deriv(ICrit_GetICU_GetOx_GetMV_Die2[]) <- n_ICrit_GetICU_GetOx_GetMV_Die1_ICrit_GetICU_GetOx_GetMV_Die2[i] - n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital[i]
+deriv(ICrit_GetICU_GetOx_GetMV_Surv1[]) <- n_ICrit_GetICU_GetOx_GetMV_Surv1[i] - n_ICrit_GetICU_GetOx_GetMV_Surv1_ICrit_GetICU_GetOx_GetMV_Surv2[i]
+deriv(ICrit_GetICU_GetOx_GetMV_Surv2[]) <- n_ICrit_GetICU_GetOx_GetMV_Surv1_ICrit_GetICU_GetOx_GetMV_Surv2[i] - n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec[i]
+deriv(ICrit_GetICU_GetOx_NoMV_Die1[]) <- n_ICrit_GetICU_GetOx_NoMV_Die1[i] - n_ICrit_GetICU_GetOx_NoMV_Die1_ICrit_GetICU_GetOx_NoMV_Die2[i]
+deriv(ICrit_GetICU_GetOx_NoMV_Die2[]) <- n_ICrit_GetICU_GetOx_NoMV_Die1_ICrit_GetICU_GetOx_NoMV_Die2[i] - n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital[i]
+deriv(ICrit_GetICU_GetOx_NoMV_Surv1[]) <- n_ICrit_GetICU_GetOx_NoMV_Surv1[i] - n_ICrit_GetICU_GetOx_NoMV_Surv1_ICrit_GetICU_GetOx_NoMV_Surv2[i]
+deriv(ICrit_GetICU_GetOx_NoMV_Surv2[]) <- n_ICrit_GetICU_GetOx_NoMV_Surv1_ICrit_GetICU_GetOx_NoMV_Surv2[i] - n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec[i]
+deriv(ICrit_GetICU_NoOx_NoMV_Die1[]) <- n_ICrit_GetICU_NoOx_NoMV_Die1[i] - n_ICrit_GetICU_NoOx_NoMV_Die1_ICrit_GetICU_NoOx_NoMV_Die2[i]
+deriv(ICrit_GetICU_NoOx_NoMV_Die2[]) <- n_ICrit_GetICU_NoOx_NoMV_Die1_ICrit_GetICU_NoOx_NoMV_Die2[i] - n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital[i]
+deriv(ICrit_GetICU_NoOx_NoMV_Surv1[]) <- n_ICrit_GetICU_NoOx_NoMV_Surv1[i] - n_ICrit_GetICU_NoOx_NoMV_Surv1_ICrit_GetICU_NoOx_NoMV_Surv2[i]
+deriv(ICrit_GetICU_NoOx_NoMV_Surv2[]) <- n_ICrit_GetICU_NoOx_NoMV_Surv1_ICrit_GetICU_NoOx_NoMV_Surv2[i] - n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec[i]
+deriv(ICrit_NoICU_NoOx_NoMV_Die1[]) <- n_ICrit_NoICU_NoOx_NoMV_Die1[i] - n_ICrit_NoICU_NoOx_NoMV_Die1_ICrit_NoICU_NoOx_NoMV_Die2[i]
+deriv(ICrit_NoICU_NoOx_NoMV_Die2[]) <- n_ICrit_NoICU_NoOx_NoMV_Die1_ICrit_NoICU_NoOx_NoMV_Die2[i] - n_ICrit_NoICU_NoOx_NoMV_Die2_D_Community[i]
+deriv(ICrit_NoICU_NoOx_NoMV_Surv1[]) <- n_ICrit_NoICU_NoOx_NoMV_Surv1[i] - n_ICrit_NoICU_NoOx_NoMV_Surv1_ICrit_NoICU_NoOx_NoMV_Surv2[i]
+deriv(ICrit_NoICU_NoOx_NoMV_Surv2[]) <- n_ICrit_NoICU_NoOx_NoMV_Surv1_ICrit_NoICU_NoOx_NoMV_Surv2[i] - n_ICrit_NoICU_NoOx_NoMV_Surv2_R[i]
 
 # Passage Through Recovery, from Mild Infection, Requiring Oxygen or From ICU Post-Requiring Mechanical Ventilation
-deriv(IRec1[]) <-
+deriv(IRec1[]) <- n_ISev_GetICU_GetOx_Surv2_Rec[i] + n_ISev_GetICU_NoOx_Surv2_Rec[i] +
+                  n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec[i]  + n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec[i] + n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec[i] -
+                  n_IRec1_IRec2[i]
 deriv(IRec2[]) <- n_IRec1_IRec2[i] - n_IRec2_R[i]
-deriv(D_Community[]) <-
-deriv(D_Hospital[]) <-
+deriv(D_Community[]) <- n_IMod_NoHosp_NoOx_Die2_D_Community[i] + n_ISev_NoICU_NoOx_Die2_D_Community[i] + n_ICrit_NoICU_NoOx_NoMV_Die2_D_Community[i]
+deriv(D_Hospital[]) <- n_IMod_GetHosp_GetOx_Die2_D_Hospital[i] + n_IMod_GetHosp_NoOx_Die2_D_Hospital[i] +
+                       n_ISev_GetICU_GetOx_Die2_D_Hospital[i] + n_ISev_GetICU_NoOx_Die2_D_Hospital[i] +
+                       n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital[i] + n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital[i] + n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital[i]
 deriv(R[]) <- n_IAsymp_R[i] + n_IMild_R[i] + n_IMild_Drug_5_R[i] + n_IRec2_R[i] +
               n_IMod_GetHosp_GetOx_Surv2_R[i] + n_IMod_GetHosp_NoOx_Surv2_R[i] + n_IMod_NoHosp_NoOx_Surv2_R[i] +
               n_ISev_NoICU_NoOx_Surv2_R[i] +
-              n_ICrit_NoICU_NoOx_NoMV_Surv2_R[i]n_IRec2_R[i]
+              n_ICrit_NoICU_NoOx_NoMV_Surv2_R[i]
+
+## COMPUTING THE FORCE OF INFECTION AND INTERPOLATION FOR MIXING MATRIX AND BETA
+##------------------------------------------------------------------------------
+# Interpolation for Mixing Matrix
+m[, ] <- interpolate(tt_matrix, mix_mat_set, "constant")
+dim(m) <- c(N_age, N_age)
+tt_matrix[] <- user()
+mix_mat_set[, ,] <- user()
+dim(tt_matrix) <- user()
+dim(mix_mat_set) <- c(length(tt_matrix), N_age, N_age)
+
+# Interpolation for beta
+beta <- interpolate(tt_beta, beta_set, "constant")
+tt_beta[] <- user()
+beta_set[] <- user()
+dim(tt_beta) <- user()
+dim(beta_set) <- length(tt_beta)
+
+# Generating Force of Infection
+temp[] <- (rel_inf_asymp * IAsymp[i]) + (rel_inf_mild * IMild[i]) + ICase1[i] + ICase2[i]  +
+          (rel_inf_mild * drug_5_effect_size * IMild_Drug_5[i]) + ICase1_Drug_5[i] * drug_5_effect_size  + ICase2_Drug_5[i] * drug_5_effect_size
+s_ij[,] <- m[i, j] * temp[j]
+lambda[] <- beta * sum(s_ij[i, ])
+
+## INTERPOLATION FOR CHANGING HOSPITAL AND ICU BED CAPACITY OVER TIME
+##------------------------------------------------------------------------------
+hosp_bed_capacity <- interpolate(tt_hosp_beds, hosp_beds, "constant")
+tt_hosp_beds[] <- user()
+hosp_beds[] <- user()
+dim(tt_hosp_beds) <- user()
+dim(hosp_beds) <- length(tt_hosp_beds)
+
+ICU_bed_capacity <- interpolate(tt_ICU_beds, ICU_beds, "constant")
+tt_ICU_beds[] <- user()
+ICU_beds[] <- user()
+dim(tt_ICU_beds) <- user()
+dim(ICU_beds) <- length(tt_ICU_beds)
+
+##  INTERPOLATION FOR PARAMETERS DESCRIBING THE AVAILABILITY OF HEALTHCARE MATERIALS LIKE OXYGEN OR MV
+##----------------------------------------------------------------------------------------------------
+oxygen_supply <- interpolate(tt_oxygen_supply, input_oxygen_supply, "constant") # rate of resupply of oxygen
+tt_oxygen_supply[] <- user()
+input_oxygen_supply[] <- user()
+dim(tt_oxygen_supply) <- user()
+dim(input_oxygen_supply) <- length(tt_oxygen_supply)
+
+baseline_oxygen_demand <- interpolate(tt_baseline_oxygen_demand, input_baseline_oxygen_demand, "constant") # rate of demand of oxygen
+tt_baseline_oxygen_demand[] <- user()
+input_baseline_oxygen_demand[] <- user()
+dim(tt_baseline_oxygen_demand) <- user()
+dim(input_baseline_oxygen_demand) <- length(tt_baseline_oxygen_demand)
+
+severe_critical_case_oxygen_consumption_multiplier <- user() # consumption of oxygen for severe/critical covid-19 cases compared to moderate cases
+max_leftover <- user()
+MV_capacity <- user() # number of mechanical ventilators available
 
 
+## DEFINING INITIAL STATES
+##------------------------------------------------------------------------------
+initial(oxygen_availability) <- oxygen_availability_0
+initial(S[]) <- S_0[i]
+initial(E1[]) <- E1_0[i]
+initial(E2[]) <- E2_0[i]
+initial(IAsymp[]) <- IAsymp_0[i]
+initial(IMild[]) <- IMild_0[i]
+initial(ICase1[]) <- ICase1_0[i]
+initial(ICase2[]) <- ICase2_0[i]
+initial(IMild_Drug_5[]) <- IMild_Drug_5_0[i]
+initial(ICase1_Drug_5[]) <- ICase1_Drug_5_0[i]
+initial(ICase2_Drug_5[]) <- ICase2_Drug_5_0[i]
+initial(IRec1[]) <- IRec1_0[i]
+initial(IRec2[]) <- IRec2_0[i]
+initial(R[]) <- R_0[i]
+initial(D_Community[]) <- D_Community_0[i]
+initial(D_Hospital[]) <- D_Hospital_0[i]
+initial(PS[]) <- PS_0[i]
+initial(PE1[]) <- PE1_0[i]
+initial(PE2[]) <- PE2_0[i]
 
+initial(IMod_GetHosp_GetOx_Surv1[]) <- IMod_GetHosp_GetOx_Surv1_0[i]
+initial(IMod_GetHosp_GetOx_Surv2[]) <- IMod_GetHosp_GetOx_Surv2_0[i]
+initial(IMod_GetHosp_GetOx_Die1[]) <- IMod_GetHosp_GetOx_Die1_0[i]
+initial(IMod_GetHosp_GetOx_Die2[]) <- IMod_GetHosp_GetOx_Die2_0[i]
+initial(IMod_GetHosp_NoOx_Surv1[]) <- IMod_GetHosp_NoOx_Surv1_0[i]
+initial(IMod_GetHosp_NoOx_Surv2[]) <- IMod_GetHosp_NoOx_Surv2_0[i]
+initial(IMod_GetHosp_NoOx_Die1[]) <- IMod_GetHosp_NoOx_Die1_0[i]
+initial(IMod_GetHosp_NoOx_Die2[]) <- IMod_GetHosp_NoOx_Die2_0[i]
+initial(IMod_NoHosp_NoOx_Surv1[]) <- IMod_NoHosp_NoOx_Surv1_0[i]
+initial(IMod_NoHosp_NoOx_Surv2[]) <- IMod_NoHosp_NoOx_Surv2_0[i]
+initial(IMod_NoHosp_NoOx_Die1[]) <- IMod_NoHosp_NoOx_Die1_0[i]
+initial(IMod_NoHosp_NoOx_Die2[]) <- IMod_NoHosp_NoOx_Die2_0[i]
+
+initial(ISev_GetICU_GetOx_Surv1[]) <- ISev_GetICU_GetOx_Surv1_0[i]
+initial(ISev_GetICU_GetOx_Surv2[]) <- ISev_GetICU_GetOx_Surv2_0[i]
+initial(ISev_GetICU_GetOx_Die1[]) <- ISev_GetICU_GetOx_Die1_0[i]
+initial(ISev_GetICU_GetOx_Die2[]) <- ISev_GetICU_GetOx_Die2_0[i]
+initial(ISev_GetICU_NoOx_Surv1[]) <- ISev_GetICU_NoOx_Surv1_0[i]
+initial(ISev_GetICU_NoOx_Surv2[]) <- ISev_GetICU_NoOx_Surv2_0[i]
+initial(ISev_GetICU_NoOx_Die1[]) <- ISev_GetICU_NoOx_Die1_0[i]
+initial(ISev_GetICU_NoOx_Die2[]) <- ISev_GetICU_NoOx_Die2_0[i]
+initial(ISev_NoICU_NoOx_Surv1[]) <- ISev_NoICU_NoOx_Surv1_0[i]
+initial(ISev_NoICU_NoOx_Surv2[]) <- ISev_NoICU_NoOx_Surv2_0[i]
+initial(ISev_NoICU_NoOx_Die1[]) <- ISev_NoICU_NoOx_Die1_0[i]
+initial(ISev_NoICU_NoOx_Die2[]) <- ISev_NoICU_NoOx_Die2_0[i]
+
+initial(ICrit_GetICU_GetOx_GetMV_Surv1[]) <- ICrit_GetICU_GetOx_GetMV_Surv1_0[i]
+initial(ICrit_GetICU_GetOx_GetMV_Surv2[]) <- ICrit_GetICU_GetOx_GetMV_Surv2_0[i]
+initial(ICrit_GetICU_GetOx_GetMV_Die1[]) <- ICrit_GetICU_GetOx_GetMV_Die1_0[i]
+initial(ICrit_GetICU_GetOx_GetMV_Die2[]) <- ICrit_GetICU_GetOx_GetMV_Die2_0[i]
+initial(ICrit_GetICU_GetOx_NoMV_Surv1[]) <- ICrit_GetICU_GetOx_NoMV_Surv1_0[i]
+initial(ICrit_GetICU_GetOx_NoMV_Surv2[]) <- ICrit_GetICU_GetOx_NoMV_Surv2_0[i]
+initial(ICrit_GetICU_GetOx_NoMV_Die1[]) <- ICrit_GetICU_GetOx_NoMV_Die1_0[i]
+initial(ICrit_GetICU_GetOx_NoMV_Die2[]) <- ICrit_GetICU_GetOx_NoMV_Die2_0[i]
+initial(ICrit_GetICU_NoOx_NoMV_Surv1[]) <- ICrit_GetICU_NoOx_NoMV_Surv1_0[i]
+initial(ICrit_GetICU_NoOx_NoMV_Surv2[]) <- ICrit_GetICU_NoOx_NoMV_Surv2_0[i]
+initial(ICrit_GetICU_NoOx_NoMV_Die1[]) <- ICrit_GetICU_NoOx_NoMV_Die1_0[i]
+initial(ICrit_GetICU_NoOx_NoMV_Die2[]) <- ICrit_GetICU_NoOx_NoMV_Die2_0[i]
+initial(ICrit_NoICU_NoOx_NoMV_Surv1[]) <- ICrit_NoICU_NoOx_NoMV_Surv1_0[i]
+initial(ICrit_NoICU_NoOx_NoMV_Surv2[]) <- ICrit_NoICU_NoOx_NoMV_Surv2_0[i]
+initial(ICrit_NoICU_NoOx_NoMV_Die1[]) <- ICrit_NoICU_NoOx_NoMV_Die1_0[i]
+initial(ICrit_NoICU_NoOx_NoMV_Die2[]) <- ICrit_NoICU_NoOx_NoMV_Die2_0[i]
+
+##Initial vectors
+rel_inf_asymp <- user()
+rel_inf_mild <- user()
+oxygen_availability_0 <- user()
+S_0[] <- user()
+E1_0[] <- user()
+E2_0[] <- user()
+IAsymp_0[] <- user()
+IMild_0[] <- user()
+ICase1_0[] <- user()
+ICase2_0[] <- user()
+IRec1_0[] <- user()
+IRec2_0[] <- user()
+R_0[] <- user()
+D_Community_0[] <- user()
+D_Hospital_0[] <- user()
+
+PS_0[] <- user()
+PE1_0[] <- user()
+PE2_0[] <- user()
+IMild_Drug_5_0[] <- user()
+ICase1_Drug_5_0[] <- user()
+ICase2_Drug_5_0[] <- user()
+
+IMod_GetHosp_GetOx_Surv1_0[] <- user()
+IMod_GetHosp_GetOx_Surv2_0[] <- user()
+IMod_GetHosp_GetOx_Die1_0[] <- user()
+IMod_GetHosp_GetOx_Die2_0[] <- user()
+IMod_GetHosp_NoOx_Surv1_0[] <- user()
+IMod_GetHosp_NoOx_Surv2_0[] <- user()
+IMod_GetHosp_NoOx_Die1_0[] <- user()
+IMod_GetHosp_NoOx_Die2_0[] <- user()
+IMod_NoHosp_NoOx_Surv1_0[] <- user()
+IMod_NoHosp_NoOx_Surv2_0[] <- user()
+IMod_NoHosp_NoOx_Die1_0[] <- user()
+IMod_NoHosp_NoOx_Die2_0[] <- user()
+
+ISev_GetICU_GetOx_Surv1_0[] <- user()
+ISev_GetICU_GetOx_Surv2_0[] <- user()
+ISev_GetICU_GetOx_Die1_0[] <- user()
+ISev_GetICU_GetOx_Die2_0[] <- user()
+ISev_GetICU_NoOx_Surv1_0[] <- user()
+ISev_GetICU_NoOx_Surv2_0[] <- user()
+ISev_GetICU_NoOx_Die1_0[] <- user()
+ISev_GetICU_NoOx_Die2_0[] <- user()
+ISev_NoICU_NoOx_Surv1_0[] <- user()
+ISev_NoICU_NoOx_Surv2_0[] <- user()
+ISev_NoICU_NoOx_Die1_0[] <- user()
+ISev_NoICU_NoOx_Die2_0[] <- user()
+
+ICrit_GetICU_GetOx_GetMV_Surv1_0[] <- user()
+ICrit_GetICU_GetOx_GetMV_Surv2_0[] <- user()
+ICrit_GetICU_GetOx_GetMV_Die1_0[] <- user()
+ICrit_GetICU_GetOx_GetMV_Die2_0[] <- user()
+ICrit_GetICU_GetOx_NoMV_Surv1_0[] <- user()
+ICrit_GetICU_GetOx_NoMV_Surv2_0[] <- user()
+ICrit_GetICU_GetOx_NoMV_Die1_0[] <- user()
+ICrit_GetICU_GetOx_NoMV_Die2_0[] <- user()
+ICrit_GetICU_NoOx_NoMV_Surv1_0[] <- user()
+ICrit_GetICU_NoOx_NoMV_Surv2_0[] <- user()
+ICrit_GetICU_NoOx_NoMV_Die1_0[] <- user()
+ICrit_GetICU_NoOx_NoMV_Die2_0[] <- user()
+ICrit_NoICU_NoOx_NoMV_Surv1_0[] <- user()
+ICrit_NoICU_NoOx_NoMV_Surv2_0[] <- user()
+ICrit_NoICU_NoOx_NoMV_Die1_0[] <- user()
+ICrit_NoICU_NoOx_NoMV_Die2_0[] <- user()
+
+##Dimensions of the different "vectors" used
+# For the State Variables
+dim(S) <- N_age
+dim(E1) <- N_age
+dim(E2) <- N_age
+dim(IAsymp) <- N_age
+dim(IMild) <- N_age
+dim(ICase1) <- N_age
+dim(ICase2) <- N_age
+dim(IRec1) <- N_age
+dim(IRec2) <- N_age
+dim(R) <- N_age
+dim(D_Community) <- N_age
+dim(D_Hospital) <- N_age
+
+dim(PS) <- N_age
+dim(PE1) <- N_age
+dim(PE2) <- N_age
+dim(IMild_Drug_5) <- N_age
+dim(ICase1_Drug_5) <- N_age
+dim(ICase2_Drug_5) <- N_age
+
+dim(IMod_GetHosp_GetOx_Surv1) <- N_age
+dim(IMod_GetHosp_GetOx_Surv2) <- N_age
+dim(IMod_GetHosp_GetOx_Die1) <- N_age
+dim(IMod_GetHosp_GetOx_Die2) <- N_age
+dim(IMod_GetHosp_NoOx_Surv1) <- N_age
+dim(IMod_GetHosp_NoOx_Surv2) <- N_age
+dim(IMod_GetHosp_NoOx_Die1) <- N_age
+dim(IMod_GetHosp_NoOx_Die2) <- N_age
+dim(IMod_NoHosp_NoOx_Surv1) <- N_age
+dim(IMod_NoHosp_NoOx_Surv2) <- N_age
+dim(IMod_NoHosp_NoOx_Die1) <- N_age
+dim(IMod_NoHosp_NoOx_Die2) <- N_age
+
+dim(ISev_GetICU_GetOx_Surv1) <- N_age
+dim(ISev_GetICU_GetOx_Surv2) <- N_age
+dim(ISev_GetICU_GetOx_Die1) <- N_age
+dim(ISev_GetICU_GetOx_Die2) <- N_age
+dim(ISev_GetICU_NoOx_Surv1) <- N_age
+dim(ISev_GetICU_NoOx_Surv2) <- N_age
+dim(ISev_GetICU_NoOx_Die1) <- N_age
+dim(ISev_GetICU_NoOx_Die2) <- N_age
+dim(ISev_NoICU_NoOx_Surv1) <- N_age
+dim(ISev_NoICU_NoOx_Surv2) <- N_age
+dim(ISev_NoICU_NoOx_Die1) <- N_age
+dim(ISev_NoICU_NoOx_Die2) <- N_age
+
+dim(ICrit_GetICU_GetOx_GetMV_Surv1) <- N_age
+dim(ICrit_GetICU_GetOx_GetMV_Surv2) <- N_age
+dim(ICrit_GetICU_GetOx_GetMV_Die1) <- N_age
+dim(ICrit_GetICU_GetOx_GetMV_Die2) <- N_age
+dim(ICrit_GetICU_GetOx_NoMV_Surv1) <- N_age
+dim(ICrit_GetICU_GetOx_NoMV_Surv2) <- N_age
+dim(ICrit_GetICU_GetOx_NoMV_Die1) <- N_age
+dim(ICrit_GetICU_GetOx_NoMV_Die2) <- N_age
+dim(ICrit_GetICU_NoOx_NoMV_Surv1) <- N_age
+dim(ICrit_GetICU_NoOx_NoMV_Surv2) <- N_age
+dim(ICrit_GetICU_NoOx_NoMV_Die1) <- N_age
+dim(ICrit_GetICU_NoOx_NoMV_Die2) <- N_age
+dim(ICrit_NoICU_NoOx_NoMV_Surv1) <- N_age
+dim(ICrit_NoICU_NoOx_NoMV_Surv2) <- N_age
+dim(ICrit_NoICU_NoOx_NoMV_Die1) <- N_age
+dim(ICrit_NoICU_NoOx_NoMV_Die2) <- N_age
+
+# For the Initial Values
+dim(S_0) <- N_age
+dim(E1_0) <- N_age
+dim(E2_0) <- N_age
+dim(IAsymp_0) <- N_age
+dim(IMild_0) <- N_age
+dim(ICase1_0) <- N_age
+dim(ICase2_0) <- N_age
+dim(IRec1_0) <- N_age
+dim(IRec2_0) <- N_age
+dim(R_0) <- N_age
+dim(D_Community_0) <- N_age
+dim(D_Hospital_0) <- N_age
+
+dim(PS_0) <- N_age
+dim(PE1_0) <- N_age
+dim(PE2_0) <- N_age
+dim(IMild_Drug_5_0) <- N_age
+dim(ICase1_Drug_5_0) <- N_age
+dim(ICase2_Drug_5_0) <- N_age
+
+dim(IMod_GetHosp_GetOx_Surv1_0) <- N_age
+dim(IMod_GetHosp_GetOx_Surv2_0) <- N_age
+dim(IMod_GetHosp_GetOx_Die1_0) <- N_age
+dim(IMod_GetHosp_GetOx_Die2_0) <- N_age
+dim(IMod_GetHosp_NoOx_Surv1_0) <- N_age
+dim(IMod_GetHosp_NoOx_Surv2_0) <- N_age
+dim(IMod_GetHosp_NoOx_Die1_0) <- N_age
+dim(IMod_GetHosp_NoOx_Die2_0) <- N_age
+dim(IMod_NoHosp_NoOx_Surv1_0) <- N_age
+dim(IMod_NoHosp_NoOx_Surv2_0) <- N_age
+dim(IMod_NoHosp_NoOx_Die1_0) <- N_age
+dim(IMod_NoHosp_NoOx_Die2_0) <- N_age
+
+dim(ISev_GetICU_GetOx_Surv1_0) <- N_age
+dim(ISev_GetICU_GetOx_Surv2_0) <- N_age
+dim(ISev_GetICU_GetOx_Die1_0) <- N_age
+dim(ISev_GetICU_GetOx_Die2_0) <- N_age
+dim(ISev_GetICU_NoOx_Surv1_0) <- N_age
+dim(ISev_GetICU_NoOx_Surv2_0) <- N_age
+dim(ISev_GetICU_NoOx_Die1_0) <- N_age
+dim(ISev_GetICU_NoOx_Die2_0) <- N_age
+dim(ISev_NoICU_NoOx_Surv1_0) <- N_age
+dim(ISev_NoICU_NoOx_Surv2_0) <- N_age
+dim(ISev_NoICU_NoOx_Die1_0) <- N_age
+dim(ISev_NoICU_NoOx_Die2_0) <- N_age
+
+dim(ICrit_GetICU_GetOx_GetMV_Surv1_0) <- N_age
+dim(ICrit_GetICU_GetOx_GetMV_Surv2_0) <- N_age
+dim(ICrit_GetICU_GetOx_GetMV_Die1_0) <- N_age
+dim(ICrit_GetICU_GetOx_GetMV_Die2_0) <- N_age
+dim(ICrit_GetICU_GetOx_NoMV_Surv1_0) <- N_age
+dim(ICrit_GetICU_GetOx_NoMV_Surv2_0) <- N_age
+dim(ICrit_GetICU_GetOx_NoMV_Die1_0) <- N_age
+dim(ICrit_GetICU_GetOx_NoMV_Die2_0) <- N_age
+dim(ICrit_GetICU_NoOx_NoMV_Surv1_0) <- N_age
+dim(ICrit_GetICU_NoOx_NoMV_Surv2_0) <- N_age
+dim(ICrit_GetICU_NoOx_NoMV_Die1_0) <- N_age
+dim(ICrit_GetICU_NoOx_NoMV_Die2_0) <- N_age
+dim(ICrit_NoICU_NoOx_NoMV_Surv1_0) <- N_age
+dim(ICrit_NoICU_NoOx_NoMV_Surv2_0) <- N_age
+dim(ICrit_NoICU_NoOx_NoMV_Die1_0) <- N_age
+dim(ICrit_NoICU_NoOx_NoMV_Die2_0) <- N_age
+
+# For the Number of People Moving In and Out of Compartments
+dim(n_E1_E2) <- N_age
+dim(n_E2_I) <- N_age
+dim(n_E2_ICase1) <- N_age
+dim(n_E2_IMild_or_IAsymp) <- N_age
+dim(n_E2_IAsymp) <- N_age
+dim(n_E2_IMild) <- N_age
+dim(n_IAsymp_R) <- N_age
+dim(n_IMild_R) <- N_age
+dim(n_ICase1_ICase2) <- N_age
+dim(n_ICase2_Hosp) <- N_age
+dim(n_IRec1_IRec2) <- N_age
+dim(n_IRec2_R) <- N_age
+
+dim(n_IMod_GetHosp_GetOx_Die1) <- N_age
+dim(n_IMod_GetHosp_GetOx_Die1_IMod_GetHosp_GetOx_Die2) <- N_age
+dim(n_IMod_GetHosp_GetOx_Die2_D_Hospital) <- N_age
+dim(n_IMod_GetHosp_GetOx_Surv1) <- N_age
+dim(n_IMod_GetHosp_GetOx_Surv1_IMod_GetHosp_GetOx_Surv2) <- N_age
+dim(n_IMod_GetHosp_GetOx_Surv2_R) <- N_age
+dim(n_IMod_GetHosp_NoOx_Die1) <- N_age
+dim(n_IMod_GetHosp_NoOx_Die1_IMod_GetHosp_NoOx_Die2) <- N_age
+dim(n_IMod_GetHosp_NoOx_Die2_D_Hospital) <- N_age
+dim(n_IMod_GetHosp_NoOx_Surv1) <- N_age
+dim(n_IMod_GetHosp_NoOx_Surv1_IMod_GetHosp_NoOx_Surv2) <- N_age
+dim(n_IMod_GetHosp_NoOx_Surv2_R) <- N_age
+dim(n_IMod_NoHosp_NoOx_Die1) <- N_age
+dim(n_IMod_NoHosp_NoOx_Die1_IMod_NoHosp_NoOx_Die2) <- N_age
+dim(n_IMod_NoHosp_NoOx_Die2_D_Community) <- N_age
+dim(n_IMod_NoHosp_NoOx_Surv1) <- N_age
+dim(n_IMod_NoHosp_NoOx_Surv1_IMod_NoHosp_NoOx_Surv2) <- N_age
+dim(n_IMod_NoHosp_NoOx_Surv2_R) <- N_age
+
+dim(n_ISev_GetICU_GetOx_Die1) <- N_age
+dim(n_ISev_GetICU_GetOx_Die1_ISev_GetICU_GetOx_Die2) <- N_age
+dim(n_ISev_GetICU_GetOx_Die2_D_Hospital) <- N_age
+dim(n_ISev_GetICU_GetOx_Surv1) <- N_age
+dim(n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2) <- N_age
+dim(n_ISev_GetICU_GetOx_Surv2_Rec) <- N_age
+dim(n_ISev_GetICU_NoOx_Die1) <- N_age
+dim(n_ISev_GetICU_NoOx_Die1_ISev_GetICU_NoOx_Die2) <- N_age
+dim(n_ISev_GetICU_NoOx_Die2_D_Hospital) <- N_age
+dim(n_ISev_GetICU_NoOx_Surv1) <- N_age
+dim(n_ISev_GetICU_NoOx_Surv1_ISev_GetICU_NoOx_Surv2) <- N_age
+dim(n_ISev_GetICU_NoOx_Surv2_Rec) <- N_age
+dim(n_ISev_NoICU_NoOx_Die1) <- N_age
+dim(n_ISev_NoICU_NoOx_Die1_ISev_NoICU_NoOx_Die2) <- N_age
+dim(n_ISev_NoICU_NoOx_Die2_D_Community) <- N_age
+dim(n_ISev_NoICU_NoOx_Surv1) <- N_age
+dim(n_ISev_NoICU_NoOx_Surv1_ISev_NoICU_NoOx_Surv2) <- N_age
+dim(n_ISev_NoICU_NoOx_Surv2_R) <- N_age
+
+dim(n_ICrit_GetICU_GetOx_GetMV_Die1) <- N_age
+dim(n_ICrit_GetICU_GetOx_GetMV_Die1_ICrit_GetICU_GetOx_GetMV_Die2) <- N_age
+dim(n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital) <- N_age
+dim(n_ICrit_GetICU_GetOx_GetMV_Surv1) <- N_age
+dim(n_ICrit_GetICU_GetOx_GetMV_Surv1_ICrit_GetICU_GetOx_GetMV_Surv2) <- N_age
+dim(n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec) <- N_age
+dim(n_ICrit_GetICU_GetOx_NoMV_Die1) <- N_age
+dim(n_ICrit_GetICU_GetOx_NoMV_Die1_ICrit_GetICU_GetOx_NoMV_Die2) <- N_age
+dim(n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital) <- N_age
+dim(n_ICrit_GetICU_GetOx_NoMV_Surv1) <- N_age
+dim(n_ICrit_GetICU_GetOx_NoMV_Surv1_ICrit_GetICU_GetOx_NoMV_Surv2) <- N_age
+dim(n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec) <- N_age
+dim(n_ICrit_GetICU_NoOx_NoMV_Die1) <- N_age
+dim(n_ICrit_GetICU_NoOx_NoMV_Die1_ICrit_GetICU_NoOx_NoMV_Die2) <- N_age
+dim(n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital) <- N_age
+dim(n_ICrit_GetICU_NoOx_NoMV_Surv1) <- N_age
+dim(n_ICrit_GetICU_NoOx_NoMV_Surv1_ICrit_GetICU_NoOx_NoMV_Surv2) <- N_age
+dim(n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec) <- N_age
+dim(n_ICrit_NoICU_NoOx_NoMV_Die1) <- N_age
+dim(n_ICrit_NoICU_NoOx_NoMV_Die1_ICrit_NoICU_NoOx_NoMV_Die2) <- N_age
+dim(n_ICrit_NoICU_NoOx_NoMV_Die2_D_Community) <- N_age
+dim(n_ICrit_NoICU_NoOx_NoMV_Surv1) <- N_age
+dim(n_ICrit_NoICU_NoOx_NoMV_Surv1_ICrit_NoICU_NoOx_NoMV_Surv2) <- N_age
+dim(n_ICrit_NoICU_NoOx_NoMV_Surv2_R) <- N_age
+
+dim(number_req_ICU) <- N_age
+dim(number_NotICU) <- N_age
+dim(number_NotICU_NotOx_NotMV) <- N_age
+dim(number_NotICU_NotOx) <- N_age
+dim(number_req_Hosp) <- N_age
+dim(number_NotHosp) <- N_age
+dim(number_GetHosp) <- N_age
+dim(number_GetHosp_Ox) <- N_age
+dim(number_GetHosp_NoOx) <- N_age
+dim(number_req_ICU_MV) <- N_age
+dim(number_req_ICU_Ox) <- N_age
+dim(number_GetICU) <- N_age
+dim(number_GetICU_GetOx_NoMV) <- N_age
+dim(number_GetICU_NoOx_NeedMV) <- N_age
+dim(number_GetICU_NoOx) <- N_age
+dim(number_GetICU_GetOx_GetMV) <- N_age
+dim(number_GetICU_GetOx_NeedMV) <- N_age
+dim(number_GetICU_GetOx) <- N_age
+
+# Related to Calculating Age-Structured Force of Infection
+dim(n_S_E1) <- N_age
+dim(lambda) <- N_age
+dim(s_ij) <- c(N_age,N_age)
+dim(temp) <- N_age
+
+# Severity Parameters
+dim(prob_asymp) <- N_age
+dim(prob_hosp) <- N_age
+dim(prob_severe) <- N_age
+dim(prob_critical) <- N_age
+
+dim(prob_moderate_death_get_hosp_get_ox_baseline) <- N_age
+dim(prob_moderate_death_get_hosp_get_ox_Drug_11) <- N_age
+dim(prob_moderate_death_get_hosp_get_ox) <- N_age
+
+dim(prob_moderate_death_get_hosp_no_ox_baseline) <- N_age
+dim(prob_moderate_death_get_hosp_no_ox_Drug_11) <- N_age
+dim(prob_moderate_death_get_hosp_no_ox) <- N_age
+
+dim(prob_moderate_death_no_hosp_no_ox) <- N_age
+
+dim(prob_severe_death_get_ICU_get_ox_baseline) <- N_age
+dim(prob_severe_death_get_ICU_get_ox_Drug_12) <- N_age
+dim(prob_severe_death_get_ICU_get_ox) <- N_age
+
+dim(prob_severe_death_get_ICU_no_ox_baseline) <- N_age
+dim(prob_severe_death_get_ICU_no_ox_Drug_12) <- N_age
+dim(prob_severe_death_get_ICU_no_ox) <- N_age
+
+dim(prob_severe_death_no_ICU_no_ox) <- N_age
+
+dim(prob_critical_death_get_ICU_get_ox_get_MV_baseline) <- N_age
+dim(prob_critical_death_get_ICU_get_ox_get_MV_Drug_13) <- N_age
+dim(prob_critical_death_get_ICU_get_ox_get_MV) <- N_age
+
+dim(prob_critical_death_get_ICU_get_ox_no_MV_baseline) <- N_age
+dim(prob_critical_death_get_ICU_get_ox_no_MV_Drug_13) <- N_age
+dim(prob_critical_death_get_ICU_get_ox_no_MV) <- N_age
+
+dim(prob_critical_death_get_ICU_no_ox_no_MV_baseline) <- N_age
+dim(prob_critical_death_get_ICU_no_ox_no_MV_Drug_13) <- N_age
+dim(prob_critical_death_get_ICU_no_ox_no_MV) <- N_age
+
+dim(prob_critical_death_no_ICU_no_ox_no_MV) <- N_age
+
+dim(n_S_PS) <- N_age
+dim(n_PS_PE1) <- N_age
+dim(n_PS_S) <- N_age
+dim(n_PE1_PE2) <- N_age
+dim(n_PE2_I) <- N_age
+dim(n_PE2_ICase1_initial) <- N_age
+dim(n_PE2_ICase1) <- N_age
+dim(n_PE2_ICase1_Drug_5) <- N_age
+dim(n_PE2_ICase1_No_Drug_5) <- N_age
+dim(n_E2_IMild_No_Drug_5) <- N_age
+dim(number_req_ICU_initial) <- N_age
+dim(number_req_ICU_MV_initial) <- N_age
+dim(n_PE2_IMild_or_IAsymp) <- N_age
+dim(n_PE2_IAsymp) <- N_age
+dim(n_PE2_IMild) <- N_age
+dim(n_PE2_IMild_Drug_5) <- N_age
+dim(n_PE2_IMild_No_Drug_5) <- N_age
+dim(n_E2_ICase1_initial) <- N_age
+dim(n_E2_ICase1_Drug_5) <- N_age
+dim(n_E2_ICase1_No_Drug_5) <- N_age
+dim(n_E2_IMild_Drug_5) <- N_age
+dim(n_IMild_Drug_5_R) <- N_age
+dim(n_ICase1_Drug_5_ICase2_Drug_5) <- N_age
+dim(n_ICase2_Drug_5_Hosp) <- N_age
 
 ## MODEL OUTPUTS
 ##------------------------------------------------------------------------------
@@ -520,3 +1005,157 @@ pop <- sum(S) + sum(E1) + sum(E2) + sum(IAsymp) + sum(IMild) + sum(ICase1) + sum
   sum(ICrit_GetICU_NoOx_NoMV_Surv1) + sum(ICrit_GetICU_NoOx_NoMV_Surv2) + sum(ICrit_GetICU_NoOx_NoMV_Die1) + sum(ICrit_GetICU_NoOx_NoMV_Die2) +
   sum(ICrit_NoICU_NoOx_NoMV_Surv1) + sum(ICrit_NoICU_NoOx_NoMV_Surv2) + sum(ICrit_NoICU_NoOx_NoMV_Die1) + sum(ICrit_NoICU_NoOx_NoMV_Die2)
 output(pop) <- TRUE
+
+# Variables to Check for Drug 1 and Drug 2
+output(n_S_PS) <- TRUE
+output(n_PS_PE1) <- TRUE
+output(n_PS_S) <- TRUE
+output(n_PE1_PE2) <- TRUE
+output(n_PE2_I) <- TRUE
+output(n_PE2_ICase1_initial) <- TRUE
+output(n_PE2_ICase1) <- TRUE
+
+# Variables to Check for Drug 3
+output(n_E2_ICase1_initial) <- TRUE
+output(n_E2_ICase1) <- TRUE
+output(n_E2_IAsymp) <- TRUE
+
+# Variables to Check for Drug 4
+output(gamma_IMild) <- TRUE
+output(gamma_IMild_Drug_4) <- TRUE
+
+# Variables to Check for Drug 5
+output(n_E2_IMild) <- TRUE
+output(n_E2_IMild_Drug_5) <- TRUE
+output(n_E2_IMild_No_Drug_5) <- TRUE
+output(n_PE2_IMild) <- TRUE
+output(n_PE2_IMild_Drug_5) <- TRUE
+output(n_PE2_IMild_No_Drug_5) <- TRUE
+output(n_E2_ICase1_Drug_5) <- TRUE
+output(n_E2_ICase1_No_Drug_5) <- TRUE
+output(n_PE2_ICase1_Drug_5) <- TRUE
+output(n_PE2_ICase1_No_Drug_5) <- TRUE
+
+# Variables to Check for Drug 6
+output(number_req_ICU_initial) <- TRUE
+output(number_req_ICU) <- TRUE
+
+# Variables to Check for Drug 7
+output(number_req_ICU_MV_initial) <- TRUE
+output(number_req_ICU_MV) <- TRUE
+
+# Variables to Check for Drug 8
+output(gamma_IMod_GetHosp_GetOx_Surv) <- TRUE
+output(gamma_IMod_GetHosp_GetOx_Surv_Drug_8) <- TRUE
+output(gamma_IMod_GetHosp_NoOx_Surv) <- TRUE
+output(gamma_IMod_GetHosp_NoOx_Surv_Drug_8) <- TRUE
+
+# Variables to Check for Drug 9
+output(gamma_ISev_GetICU_GetOx_Surv) <- TRUE
+output(gamma_ISev_GetICU_GetOx_Surv_Drug_9) <- TRUE
+output(gamma_ISev_GetICU_NoOx_Surv) <- TRUE
+output(gamma_ISev_GetICU_NoOx_Surv_Drug_9) <- TRUE
+output(n_ISev_GetICU_GetOx_Die1) <- TRUE
+output(n_ISev_GetICU_GetOx_Surv1) <- TRUE
+output(n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2) <- TRUE
+
+# Variables to Check for Drug 10
+output(gamma_ICrit_GetICU_GetOx_GetMV_Surv) <- TRUE
+output(gamma_ICrit_GetICU_GetOx_GetMV_Surv_Drug_10) <- TRUE
+output(gamma_ICrit_GetICU_GetOx_NoMV_Surv) <- TRUE
+output(gamma_ICrit_GetICU_GetOx_NoMV_Surv_Drug_10) <- TRUE
+output(gamma_ICrit_GetICU_NoOx_NoMV_Surv) <- TRUE
+output(gamma_ICrit_GetICU_NoOx_NoMV_Surv_Drug_10) <- TRUE
+
+# Variables to Check for Drug 11
+output(prob_moderate_death_get_hosp_get_ox_baseline) <- TRUE
+output(prob_moderate_death_get_hosp_get_ox_Drug_11) <- TRUE
+output(prob_moderate_death_get_hosp_get_ox) <- TRUE
+output(prob_moderate_death_get_hosp_no_ox_baseline) <- TRUE
+output(prob_moderate_death_get_hosp_no_ox_Drug_11) <- TRUE
+output(prob_moderate_death_get_hosp_no_ox) <- TRUE
+
+# Variables to Check for Drug 12
+output(prob_severe_death_get_ICU_get_ox_baseline) <- TRUE
+output(prob_severe_death_get_ICU_get_ox_Drug_12) <- TRUE
+output(prob_severe_death_get_ICU_get_ox) <- TRUE
+output(prob_severe_death_get_ICU_no_ox_baseline) <- TRUE
+output(prob_severe_death_get_ICU_no_ox_Drug_12) <- TRUE
+output(prob_severe_death_get_ICU_no_ox) <- TRUE
+
+# Variables to Check for Drug 13
+output(prob_critical_death_get_ICU_get_ox_get_MV_baseline) <- TRUE
+output(prob_critical_death_get_ICU_get_ox_get_MV_Drug_13) <- TRUE
+output(prob_critical_death_get_ICU_get_ox_get_MV) <- TRUE
+output(prob_critical_death_get_ICU_get_ox_no_MV_baseline) <- TRUE
+output(prob_critical_death_get_ICU_get_ox_no_MV_Drug_13) <- TRUE
+output(prob_critical_death_get_ICU_get_ox_no_MV) <- TRUE
+output(prob_critical_death_get_ICU_no_ox_no_MV_baseline) <- TRUE
+output(prob_critical_death_get_ICU_no_ox_no_MV_Drug_13) <- TRUE
+output(prob_critical_death_get_ICU_no_ox_no_MV) <- TRUE
+
+# Extra Non-State Variables Outputted by the Model
+output(n_S_E1) <- TRUE
+output(n_E1_E2) <- TRUE
+output(n_E2_I) <- TRUE
+output(n_IMild_R) <- TRUE
+output(n_ICase1_ICase2) <- TRUE
+output(n_ICase2_Hosp) <- TRUE
+output(n_IRec1_IRec2) <- TRUE
+output(n_IRec2_R) <- TRUE
+output(total_req_ICU) <- TRUE
+output(ICU_occ) <- TRUE
+output(current_free_ICU) <- TRUE
+output(total_GetICU) <- TRUE
+output(number_GetICU) <- TRUE
+output(number_NotICU) <- TRUE
+output(number_NotICU_NotOx_NotMV) <- TRUE
+output(number_NotICU_NotOx) <- TRUE
+output(number_req_Hosp) <- TRUE
+output(total_req_Hosp) <- TRUE
+output(hosp_occ) <- TRUE
+output(current_free_hosp) <- TRUE
+output(total_GetHosp) <- TRUE
+output(number_GetHosp) <- TRUE
+output(number_NotHosp) <- TRUE
+output(oxygen_supply) <- TRUE
+output(leftover) <- TRUE
+output(baseline_oxygen_demand) <- TRUE
+output(prop_ox_hosp_beds) <- TRUE
+output(available_oxygen_for_hosp_beds) <- TRUE
+output(available_oxygen_for_ICU_beds) <- TRUE
+output(total_GetHosp_GetOx) <- TRUE
+output(number_GetHosp_Ox) <- TRUE
+output(number_GetHosp_NoOx) <- TRUE
+output(number_req_ICU_Ox) <- TRUE
+output(total_req_ICU_MV) <- TRUE
+output(total_req_ICU_Ox) <- TRUE
+output(MV_occ) <- TRUE
+output(current_free_MV) <- TRUE
+output(available_oxygen_for_ICU_MV) <- TRUE
+output(available_oxygen_for_ICU_Ox) <- TRUE
+output(number_GetICU_GetOx_NeedMV) <-TRUE
+output(total_GetICU_GetOx_Need_MV) <- TRUE
+output(total_GetICU_GetOx_GetMV) <- TRUE
+output(number_GetICU_NoOx) <- TRUE
+output(number_GetICU_NoOx_NeedMV) <- TRUE
+output(number_GetICU_GetOx_GetMV) <- TRUE
+output(number_GetICU_GetOx_NoMV) <- TRUE
+output(oxygen_used) <- TRUE
+output(number_GetICU_GetOx) <- TRUE
+output(oxygen_needed_overall) <- TRUE
+output(temp_leftover) <- TRUE
+output(n_IMod_GetHosp_GetOx_Die2_D_Hospital) <- TRUE
+output(n_IMod_GetHosp_GetOx_Surv2_R) <- TRUE
+output(n_IMod_GetHosp_NoOx_Die2_D_Hospital) <- TRUE
+output(n_IMod_GetHosp_NoOx_Surv2_R) <- TRUE
+output(n_ISev_GetICU_GetOx_Die2_D_Hospital) <- TRUE
+output(n_ISev_GetICU_GetOx_Surv2_Rec) <- TRUE
+output(n_ISev_GetICU_NoOx_Die2_D_Hospital) <- TRUE
+output(n_ISev_GetICU_NoOx_Surv2_Rec) <- TRUE
+output(n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital) <- TRUE
+output(n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec) <- TRUE
+output(n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital) <- TRUE
+output(n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec) <- TRUE
+output(n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital) <- TRUE
+output(n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec) <- TRUE
