@@ -363,7 +363,7 @@ ICU_occ <- sum(ISev_GetICU_GetOx_Surv1) + sum(ISev_GetICU_GetOx_Surv2) + sum(ISe
   sum(ICrit_GetICU_GetOx_NoMV_Surv1) + sum(ICrit_GetICU_GetOx_NoMV_Surv2) + sum(ICrit_GetICU_GetOx_NoMV_Die1) + sum(ICrit_GetICU_GetOx_NoMV_Die2) +
   sum(ICrit_GetICU_NoOx_NoMV_Surv1) + sum(ICrit_GetICU_NoOx_NoMV_Surv2) + sum(ICrit_GetICU_NoOx_NoMV_Die1) + sum(ICrit_GetICU_NoOx_NoMV_Die2)
 # Calculating New Occupancy After Taking Into Account Individuals Leaving ICU Beds This Timestep
-current_free_ICU <- ICU_bed_capacity +
+current_free_ICU <- current_ICU_bed_capacity +
   sum(n_ISev_GetICU_GetOx_Surv2_Rec) + sum(n_ISev_GetICU_GetOx_Die2_D_Hospital) +
   sum(n_ISev_GetICU_NoOx_Surv2_Rec) + sum(n_ISev_GetICU_NoOx_Die2_D_Hospital) +
   sum(n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec) + sum(n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital) +
@@ -397,7 +397,7 @@ hosp_occ <- sum(IMod_GetHosp_GetOx_Surv1) + sum(IMod_GetHosp_GetOx_Surv2) + sum(
   sum(IRec1) + sum(IRec2)
 
 # Totting Hospital Bed Occupancy Up After Taking Account of Individuals Leaving Hospital Beds to Recovery and Entering from ICU
-current_free_hosp <- hosp_bed_capacity +
+current_free_hosp <- current_hosp_bed_capacity +
   sum(n_IMod_GetHosp_GetOx_Surv2_R) + sum(n_IMod_GetHosp_GetOx_Die2_D_Hospital) +
   sum(n_IMod_GetHosp_NoOx_Surv2_R) + sum(n_IMod_GetHosp_NoOx_Die2_D_Hospital) +
   sum(n_IRec2_R) -
@@ -449,7 +449,7 @@ number_GetICU_GetOx_NoMV[] <- number_GetICU_GetOx_NeedMV[i] - number_GetICU_GetO
 ## TALLYING UP USED AND REMAINING OXYGEN, INCLUDING ANY LEFTOVER, WHICH MAY OR MAY NOT BE CARRIED OVER INTO NEXT TIMESTEP
 ##-----------------------------------------------------------------------------------------------------------------------
 temp_leftover <- oxygen_supply - baseline_oxygen_demand - sum(number_GetHosp_Ox) - (sum(number_GetICU_GetOx_NeedMV) + sum(number_GetICU_GetOx)) * severe_critical_case_oxygen_consumption_multiplier
-leftover <- if (temp_leftover < 0) 0 else (if(temp_leftover >= max_leftover) max_leftover else temp_leftover)
+leftover <- if (temp_leftover < 0) 0 else (if(temp_leftover >= max_leftover) max_leftover else temp_leftover) # is it possible to go below 0? should we have a catch here to make sure we're not??
 oxygen_needed_overall <- sum(number_req_Hosp) + (sum(number_req_ICU_MV) + sum(number_req_ICU_Ox)) * severe_critical_case_oxygen_consumption_multiplier
 oxygen_used <- sum(number_GetHosp_Ox) + (sum(number_GetICU_GetOx_NeedMV) + sum(number_GetICU_GetOx)) * severe_critical_case_oxygen_consumption_multiplier
 
@@ -614,7 +614,7 @@ delta_ICrit_NoICU_NoOx_NoMV_Surv2[] <- n_ICrit_NoICU_NoOx_NoMV_Surv1_ICrit_NoICU
 ## UPDATING STATE VARIABLES WITH THE OVERALL TRANSITIONS IN AND OUT OF EACH COMPARTMENT
 ##-------------------------------------------------------------------------------------
 # Passage Through Initial Latent and Infection Stages
-update(S[]) <- S[i] + delta_S[i] # Susceptibles (1 comp) # CHANGE CONSIDER WRAPPING THIS INTO A DELTA_S TERM AS WELL!
+update(S[]) <- S[i] + delta_S[i] # Susceptibles (1 comp)
 update(E1[]) <- E1[i] + delta_E1[i] # First of the latent infection compartments (2 comps)
 update(E2[]) <- E2[i] + delta_E2[i]  # Second of the latent infection compartments (2 comps)
 update(IAsymp[]) <- IAsymp[i] + delta_IAsymp[i] # Asymptomatic infections (1 comp)
@@ -709,17 +709,17 @@ lambda[] <- beta * sum(s_ij[i, ])
 
 ## INTERPOLATION FOR CHANGING HOSPITAL AND ICU BED CAPACITY OVER TIME
 ##------------------------------------------------------------------------------
-hosp_bed_capacity <- interpolate(tt_hosp_beds, hosp_beds, "constant")
+current_hosp_bed_capacity <- interpolate(tt_hosp_beds, hosp_bed_capacity, "constant")
 tt_hosp_beds[] <- user()
-hosp_beds[] <- user()
+hosp_bed_capacity[] <- user()
 dim(tt_hosp_beds) <- user()
-dim(hosp_beds) <- length(tt_hosp_beds)
+dim(hosp_bed_capacity) <- length(tt_hosp_beds)
 
-ICU_bed_capacity <- interpolate(tt_ICU_beds, ICU_beds, "constant")
+current_ICU_bed_capacity <- interpolate(tt_ICU_beds, ICU_bed_capacity, "constant")
 tt_ICU_beds[] <- user()
-ICU_beds[] <- user()
+ICU_bed_capacity[] <- user()
 dim(tt_ICU_beds) <- user()
-dim(ICU_beds) <- length(tt_ICU_beds)
+dim(ICU_bed_capacity) <- length(tt_ICU_beds)
 
 ##  INTERPOLATION FOR PARAMETERS DESCRIBING THE AVAILABILITY OF HEALTHCARE MATERIALS LIKE OXYGEN OR MV
 ##----------------------------------------------------------------------------------------------------

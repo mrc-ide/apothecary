@@ -22,3 +22,4 @@ apothecary_explicit_model <- function() {
   explicit_model
 
 }
+

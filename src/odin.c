@@ -201,7 +201,7 @@ typedef struct apothecary_SEIR_internal {
   int dim_E1_0;
   int dim_E2;
   int dim_E2_0;
-  int dim_hosp_beds;
+  int dim_hosp_bed_capacity;
   int dim_IAsymp;
   int dim_IAsymp_0;
   int dim_ICase1;
@@ -244,7 +244,7 @@ typedef struct apothecary_SEIR_internal {
   int dim_ICrit_NoICU_NoOx_NoMV_Surv1_0;
   int dim_ICrit_NoICU_NoOx_NoMV_Surv2;
   int dim_ICrit_NoICU_NoOx_NoMV_Surv2_0;
-  int dim_ICU_beds;
+  int dim_ICU_bed_capacity;
   int dim_IMild;
   int dim_IMild_0;
   int dim_IMild_Drug_5;
@@ -569,7 +569,7 @@ typedef struct apothecary_SEIR_internal {
   double gamma_ISev_NoICU_NoOx_Die;
   double gamma_ISev_NoICU_NoOx_Surv;
   double gamma_rec;
-  double *hosp_beds;
+  double *hosp_bed_capacity;
   double *IAsymp_0;
   double *ICase1_0;
   double *ICase1_Drug_5_0;
@@ -591,7 +591,7 @@ typedef struct apothecary_SEIR_internal {
   double *ICrit_NoICU_NoOx_NoMV_Die2_0;
   double *ICrit_NoICU_NoOx_NoMV_Surv1_0;
   double *ICrit_NoICU_NoOx_NoMV_Surv2_0;
-  double *ICU_beds;
+  double *ICU_bed_capacity;
   double *IMild_0;
   double *IMild_Drug_5_0;
   double *IMod_GetHosp_GetOx_Die1_0;
@@ -669,8 +669,8 @@ typedef struct apothecary_SEIR_internal {
   double *input_oxygen_supply;
   void *interpolate_baseline_oxygen_demand;
   void *interpolate_beta;
-  void *interpolate_hosp_bed_capacity;
-  void *interpolate_ICU_bed_capacity;
+  void *interpolate_current_hosp_bed_capacity;
+  void *interpolate_current_ICU_bed_capacity;
   void *interpolate_m;
   void *interpolate_oxygen_supply;
   double *IRec1_0;
@@ -1094,14 +1094,14 @@ void apothecary_SEIR_finalise(SEXP internal_p) {
   if (internal_p) {
     cinterpolate_free(internal->interpolate_baseline_oxygen_demand);
     cinterpolate_free(internal->interpolate_beta);
-    cinterpolate_free(internal->interpolate_hosp_bed_capacity);
-    cinterpolate_free(internal->interpolate_ICU_bed_capacity);
+    cinterpolate_free(internal->interpolate_current_hosp_bed_capacity);
+    cinterpolate_free(internal->interpolate_current_ICU_bed_capacity);
     cinterpolate_free(internal->interpolate_m);
     cinterpolate_free(internal->interpolate_oxygen_supply);
     internal->interpolate_baseline_oxygen_demand = NULL;
     internal->interpolate_beta = NULL;
-    internal->interpolate_hosp_bed_capacity = NULL;
-    internal->interpolate_ICU_bed_capacity = NULL;
+    internal->interpolate_current_hosp_bed_capacity = NULL;
+    internal->interpolate_current_ICU_bed_capacity = NULL;
     internal->interpolate_m = NULL;
     internal->interpolate_oxygen_supply = NULL;
     Free(internal->beta_set);
@@ -1168,7 +1168,7 @@ void apothecary_SEIR_finalise(SEXP internal_p) {
     Free(internal->drug_lambda);
     Free(internal->E1_0);
     Free(internal->E2_0);
-    Free(internal->hosp_beds);
+    Free(internal->hosp_bed_capacity);
     Free(internal->IAsymp_0);
     Free(internal->ICase1_0);
     Free(internal->ICase1_Drug_5_0);
@@ -1190,7 +1190,7 @@ void apothecary_SEIR_finalise(SEXP internal_p) {
     Free(internal->ICrit_NoICU_NoOx_NoMV_Die2_0);
     Free(internal->ICrit_NoICU_NoOx_NoMV_Surv1_0);
     Free(internal->ICrit_NoICU_NoOx_NoMV_Surv2_0);
-    Free(internal->ICU_beds);
+    Free(internal->ICU_bed_capacity);
     Free(internal->IMild_0);
     Free(internal->IMild_Drug_5_0);
     Free(internal->IMod_GetHosp_GetOx_Die1_0);
@@ -1511,7 +1511,7 @@ SEXP apothecary_SEIR_create(SEXP user) {
   internal->drug_lambda = NULL;
   internal->E1_0 = NULL;
   internal->E2_0 = NULL;
-  internal->hosp_beds = NULL;
+  internal->hosp_bed_capacity = NULL;
   internal->IAsymp_0 = NULL;
   internal->ICase1_0 = NULL;
   internal->ICase1_Drug_5_0 = NULL;
@@ -1533,7 +1533,7 @@ SEXP apothecary_SEIR_create(SEXP user) {
   internal->ICrit_NoICU_NoOx_NoMV_Die2_0 = NULL;
   internal->ICrit_NoICU_NoOx_NoMV_Surv1_0 = NULL;
   internal->ICrit_NoICU_NoOx_NoMV_Surv2_0 = NULL;
-  internal->ICU_beds = NULL;
+  internal->ICU_bed_capacity = NULL;
   internal->IMild_0 = NULL;
   internal->IMild_Drug_5_0 = NULL;
   internal->IMod_GetHosp_GetOx_Die1_0 = NULL;
@@ -1870,7 +1870,7 @@ SEXP apothecary_SEIR_create(SEXP user) {
   internal->gamma_ISev_NoICU_NoOx_Die = NA_REAL;
   internal->gamma_ISev_NoICU_NoOx_Surv = NA_REAL;
   internal->gamma_rec = NA_REAL;
-  internal->hosp_beds = NULL;
+  internal->hosp_bed_capacity = NULL;
   internal->IAsymp_0 = NULL;
   internal->ICase1_0 = NULL;
   internal->ICase1_Drug_5_0 = NULL;
@@ -1892,7 +1892,7 @@ SEXP apothecary_SEIR_create(SEXP user) {
   internal->ICrit_NoICU_NoOx_NoMV_Die2_0 = NULL;
   internal->ICrit_NoICU_NoOx_NoMV_Surv1_0 = NULL;
   internal->ICrit_NoICU_NoOx_NoMV_Surv2_0 = NULL;
-  internal->ICU_beds = NULL;
+  internal->ICU_bed_capacity = NULL;
   internal->IMild_0 = NULL;
   internal->IMild_Drug_5_0 = NULL;
   internal->IMod_GetHosp_GetOx_Die1_0 = NULL;
@@ -2228,7 +2228,7 @@ SEXP apothecary_SEIR_contents(SEXP internal_p) {
   SET_VECTOR_ELT(contents, 126, ScalarInteger(internal->dim_E1_0));
   SET_VECTOR_ELT(contents, 127, ScalarInteger(internal->dim_E2));
   SET_VECTOR_ELT(contents, 128, ScalarInteger(internal->dim_E2_0));
-  SET_VECTOR_ELT(contents, 129, ScalarInteger(internal->dim_hosp_beds));
+  SET_VECTOR_ELT(contents, 129, ScalarInteger(internal->dim_hosp_bed_capacity));
   SET_VECTOR_ELT(contents, 130, ScalarInteger(internal->dim_IAsymp));
   SET_VECTOR_ELT(contents, 131, ScalarInteger(internal->dim_IAsymp_0));
   SET_VECTOR_ELT(contents, 132, ScalarInteger(internal->dim_ICase1));
@@ -2271,7 +2271,7 @@ SEXP apothecary_SEIR_contents(SEXP internal_p) {
   SET_VECTOR_ELT(contents, 169, ScalarInteger(internal->dim_ICrit_NoICU_NoOx_NoMV_Surv1_0));
   SET_VECTOR_ELT(contents, 170, ScalarInteger(internal->dim_ICrit_NoICU_NoOx_NoMV_Surv2));
   SET_VECTOR_ELT(contents, 171, ScalarInteger(internal->dim_ICrit_NoICU_NoOx_NoMV_Surv2_0));
-  SET_VECTOR_ELT(contents, 172, ScalarInteger(internal->dim_ICU_beds));
+  SET_VECTOR_ELT(contents, 172, ScalarInteger(internal->dim_ICU_bed_capacity));
   SET_VECTOR_ELT(contents, 173, ScalarInteger(internal->dim_IMild));
   SET_VECTOR_ELT(contents, 174, ScalarInteger(internal->dim_IMild_0));
   SET_VECTOR_ELT(contents, 175, ScalarInteger(internal->dim_IMild_Drug_5));
@@ -2602,9 +2602,9 @@ SEXP apothecary_SEIR_contents(SEXP internal_p) {
   SET_VECTOR_ELT(contents, 494, ScalarReal(internal->gamma_ISev_NoICU_NoOx_Die));
   SET_VECTOR_ELT(contents, 495, ScalarReal(internal->gamma_ISev_NoICU_NoOx_Surv));
   SET_VECTOR_ELT(contents, 496, ScalarReal(internal->gamma_rec));
-  SEXP hosp_beds = PROTECT(allocVector(REALSXP, internal->dim_hosp_beds));
-  memcpy(REAL(hosp_beds), internal->hosp_beds, internal->dim_hosp_beds * sizeof(double));
-  SET_VECTOR_ELT(contents, 497, hosp_beds);
+  SEXP hosp_bed_capacity = PROTECT(allocVector(REALSXP, internal->dim_hosp_bed_capacity));
+  memcpy(REAL(hosp_bed_capacity), internal->hosp_bed_capacity, internal->dim_hosp_bed_capacity * sizeof(double));
+  SET_VECTOR_ELT(contents, 497, hosp_bed_capacity);
   SEXP IAsymp_0 = PROTECT(allocVector(REALSXP, internal->dim_IAsymp_0));
   memcpy(REAL(IAsymp_0), internal->IAsymp_0, internal->dim_IAsymp_0 * sizeof(double));
   SET_VECTOR_ELT(contents, 498, IAsymp_0);
@@ -2668,9 +2668,9 @@ SEXP apothecary_SEIR_contents(SEXP internal_p) {
   SEXP ICrit_NoICU_NoOx_NoMV_Surv2_0 = PROTECT(allocVector(REALSXP, internal->dim_ICrit_NoICU_NoOx_NoMV_Surv2_0));
   memcpy(REAL(ICrit_NoICU_NoOx_NoMV_Surv2_0), internal->ICrit_NoICU_NoOx_NoMV_Surv2_0, internal->dim_ICrit_NoICU_NoOx_NoMV_Surv2_0 * sizeof(double));
   SET_VECTOR_ELT(contents, 518, ICrit_NoICU_NoOx_NoMV_Surv2_0);
-  SEXP ICU_beds = PROTECT(allocVector(REALSXP, internal->dim_ICU_beds));
-  memcpy(REAL(ICU_beds), internal->ICU_beds, internal->dim_ICU_beds * sizeof(double));
-  SET_VECTOR_ELT(contents, 519, ICU_beds);
+  SEXP ICU_bed_capacity = PROTECT(allocVector(REALSXP, internal->dim_ICU_bed_capacity));
+  memcpy(REAL(ICU_bed_capacity), internal->ICU_bed_capacity, internal->dim_ICU_bed_capacity * sizeof(double));
+  SET_VECTOR_ELT(contents, 519, ICU_bed_capacity);
   SEXP IMild_0 = PROTECT(allocVector(REALSXP, internal->dim_IMild_0));
   memcpy(REAL(IMild_0), internal->IMild_0, internal->dim_IMild_0 * sizeof(double));
   SET_VECTOR_ELT(contents, 520, IMild_0);
@@ -3742,7 +3742,7 @@ SEXP apothecary_SEIR_contents(SEXP internal_p) {
   SET_STRING_ELT(nms, 126, mkChar("dim_E1_0"));
   SET_STRING_ELT(nms, 127, mkChar("dim_E2"));
   SET_STRING_ELT(nms, 128, mkChar("dim_E2_0"));
-  SET_STRING_ELT(nms, 129, mkChar("dim_hosp_beds"));
+  SET_STRING_ELT(nms, 129, mkChar("dim_hosp_bed_capacity"));
   SET_STRING_ELT(nms, 130, mkChar("dim_IAsymp"));
   SET_STRING_ELT(nms, 131, mkChar("dim_IAsymp_0"));
   SET_STRING_ELT(nms, 132, mkChar("dim_ICase1"));
@@ -3785,7 +3785,7 @@ SEXP apothecary_SEIR_contents(SEXP internal_p) {
   SET_STRING_ELT(nms, 169, mkChar("dim_ICrit_NoICU_NoOx_NoMV_Surv1_0"));
   SET_STRING_ELT(nms, 170, mkChar("dim_ICrit_NoICU_NoOx_NoMV_Surv2"));
   SET_STRING_ELT(nms, 171, mkChar("dim_ICrit_NoICU_NoOx_NoMV_Surv2_0"));
-  SET_STRING_ELT(nms, 172, mkChar("dim_ICU_beds"));
+  SET_STRING_ELT(nms, 172, mkChar("dim_ICU_bed_capacity"));
   SET_STRING_ELT(nms, 173, mkChar("dim_IMild"));
   SET_STRING_ELT(nms, 174, mkChar("dim_IMild_0"));
   SET_STRING_ELT(nms, 175, mkChar("dim_IMild_Drug_5"));
@@ -4110,7 +4110,7 @@ SEXP apothecary_SEIR_contents(SEXP internal_p) {
   SET_STRING_ELT(nms, 494, mkChar("gamma_ISev_NoICU_NoOx_Die"));
   SET_STRING_ELT(nms, 495, mkChar("gamma_ISev_NoICU_NoOx_Surv"));
   SET_STRING_ELT(nms, 496, mkChar("gamma_rec"));
-  SET_STRING_ELT(nms, 497, mkChar("hosp_beds"));
+  SET_STRING_ELT(nms, 497, mkChar("hosp_bed_capacity"));
   SET_STRING_ELT(nms, 498, mkChar("IAsymp_0"));
   SET_STRING_ELT(nms, 499, mkChar("ICase1_0"));
   SET_STRING_ELT(nms, 500, mkChar("ICase1_Drug_5_0"));
@@ -4132,7 +4132,7 @@ SEXP apothecary_SEIR_contents(SEXP internal_p) {
   SET_STRING_ELT(nms, 516, mkChar("ICrit_NoICU_NoOx_NoMV_Die2_0"));
   SET_STRING_ELT(nms, 517, mkChar("ICrit_NoICU_NoOx_NoMV_Surv1_0"));
   SET_STRING_ELT(nms, 518, mkChar("ICrit_NoICU_NoOx_NoMV_Surv2_0"));
-  SET_STRING_ELT(nms, 519, mkChar("ICU_beds"));
+  SET_STRING_ELT(nms, 519, mkChar("ICU_bed_capacity"));
   SET_STRING_ELT(nms, 520, mkChar("IMild_0"));
   SET_STRING_ELT(nms, 521, mkChar("IMild_Drug_5_0"));
   SET_STRING_ELT(nms, 522, mkChar("IMod_GetHosp_GetOx_Die1_0"));
@@ -4210,8 +4210,8 @@ SEXP apothecary_SEIR_contents(SEXP internal_p) {
   SET_STRING_ELT(nms, 594, mkChar("input_oxygen_supply"));
   SET_STRING_ELT(nms, 595, mkChar("interpolate_baseline_oxygen_demand"));
   SET_STRING_ELT(nms, 596, mkChar("interpolate_beta"));
-  SET_STRING_ELT(nms, 597, mkChar("interpolate_hosp_bed_capacity"));
-  SET_STRING_ELT(nms, 598, mkChar("interpolate_ICU_bed_capacity"));
+  SET_STRING_ELT(nms, 597, mkChar("interpolate_current_hosp_bed_capacity"));
+  SET_STRING_ELT(nms, 598, mkChar("interpolate_current_ICU_bed_capacity"));
   SET_STRING_ELT(nms, 599, mkChar("interpolate_m"));
   SET_STRING_ELT(nms, 600, mkChar("interpolate_oxygen_supply"));
   SET_STRING_ELT(nms, 601, mkChar("IRec1_0"));
@@ -5541,8 +5541,8 @@ SEXP apothecary_SEIR_set_user(SEXP internal_p, SEXP user) {
   internal->D_Community_0 = (double*) user_get_array(user, false, internal->D_Community_0, "D_Community_0", NA_REAL, NA_REAL, 1, internal->dim_D_Community_0);
   internal->D_Hospital_0 = (double*) user_get_array(user, false, internal->D_Hospital_0, "D_Hospital_0", NA_REAL, NA_REAL, 1, internal->dim_D_Hospital_0);
   internal->dim_beta_set = internal->dim_tt_beta;
-  internal->dim_hosp_beds = internal->dim_tt_hosp_beds;
-  internal->dim_ICU_beds = internal->dim_tt_ICU_beds;
+  internal->dim_hosp_bed_capacity = internal->dim_tt_hosp_beds;
+  internal->dim_ICU_bed_capacity = internal->dim_tt_ICU_beds;
   internal->dim_input_baseline_oxygen_demand = internal->dim_tt_baseline_oxygen_demand;
   internal->dim_input_oxygen_supply = internal->dim_tt_oxygen_supply;
   internal->dim_m = internal->dim_m_1 * internal->dim_m_2;
@@ -5783,8 +5783,8 @@ SEXP apothecary_SEIR_set_user(SEXP internal_p, SEXP user) {
   internal->beta_set = (double*) user_get_array(user, false, internal->beta_set, "beta_set", NA_REAL, NA_REAL, 1, internal->dim_beta_set);
   internal->dim_mix_mat_set = internal->dim_mix_mat_set_1 * internal->dim_mix_mat_set_2 * internal->dim_mix_mat_set_3;
   internal->dim_mix_mat_set_12 = internal->dim_mix_mat_set_1 * internal->dim_mix_mat_set_2;
-  internal->hosp_beds = (double*) user_get_array(user, false, internal->hosp_beds, "hosp_beds", NA_REAL, NA_REAL, 1, internal->dim_hosp_beds);
-  internal->ICU_beds = (double*) user_get_array(user, false, internal->ICU_beds, "ICU_beds", NA_REAL, NA_REAL, 1, internal->dim_ICU_beds);
+  internal->hosp_bed_capacity = (double*) user_get_array(user, false, internal->hosp_bed_capacity, "hosp_bed_capacity", NA_REAL, NA_REAL, 1, internal->dim_hosp_bed_capacity);
+  internal->ICU_bed_capacity = (double*) user_get_array(user, false, internal->ICU_bed_capacity, "ICU_bed_capacity", NA_REAL, NA_REAL, 1, internal->dim_ICU_bed_capacity);
   for (int i = 1; i <= internal->dim_D_Community; ++i) {
     internal->initial_D_Community[i - 1] = internal->D_Community_0[i - 1];
   }
@@ -5988,12 +5988,12 @@ SEXP apothecary_SEIR_set_user(SEXP internal_p, SEXP user) {
   interpolate_check_y(internal->dim_tt_beta, internal->dim_beta_set, 0, "beta_set", "beta");
   cinterpolate_free(internal->interpolate_beta);
   internal->interpolate_beta = cinterpolate_alloc("constant", internal->dim_tt_beta, 1, internal->tt_beta, internal->beta_set, true, false);
-  interpolate_check_y(internal->dim_tt_hosp_beds, internal->dim_hosp_beds, 0, "hosp_beds", "hosp_bed_capacity");
-  cinterpolate_free(internal->interpolate_hosp_bed_capacity);
-  internal->interpolate_hosp_bed_capacity = cinterpolate_alloc("constant", internal->dim_tt_hosp_beds, 1, internal->tt_hosp_beds, internal->hosp_beds, true, false);
-  interpolate_check_y(internal->dim_tt_ICU_beds, internal->dim_ICU_beds, 0, "ICU_beds", "ICU_bed_capacity");
-  cinterpolate_free(internal->interpolate_ICU_bed_capacity);
-  internal->interpolate_ICU_bed_capacity = cinterpolate_alloc("constant", internal->dim_tt_ICU_beds, 1, internal->tt_ICU_beds, internal->ICU_beds, true, false);
+  interpolate_check_y(internal->dim_tt_hosp_beds, internal->dim_hosp_bed_capacity, 0, "hosp_bed_capacity", "current_hosp_bed_capacity");
+  cinterpolate_free(internal->interpolate_current_hosp_bed_capacity);
+  internal->interpolate_current_hosp_bed_capacity = cinterpolate_alloc("constant", internal->dim_tt_hosp_beds, 1, internal->tt_hosp_beds, internal->hosp_bed_capacity, true, false);
+  interpolate_check_y(internal->dim_tt_ICU_beds, internal->dim_ICU_bed_capacity, 0, "ICU_bed_capacity", "current_ICU_bed_capacity");
+  cinterpolate_free(internal->interpolate_current_ICU_bed_capacity);
+  internal->interpolate_current_ICU_bed_capacity = cinterpolate_alloc("constant", internal->dim_tt_ICU_beds, 1, internal->tt_ICU_beds, internal->ICU_bed_capacity, true, false);
   interpolate_check_y(internal->dim_tt_oxygen_supply, internal->dim_input_oxygen_supply, 0, "input_oxygen_supply", "oxygen_supply");
   cinterpolate_free(internal->interpolate_oxygen_supply);
   internal->interpolate_oxygen_supply = cinterpolate_alloc("constant", internal->dim_tt_oxygen_supply, 1, internal->tt_oxygen_supply, internal->input_oxygen_supply, true, false);
@@ -6860,10 +6860,10 @@ void apothecary_SEIR_rhs(apothecary_SEIR_internal* internal, size_t step, double
   cinterpolate_eval(step, internal->interpolate_baseline_oxygen_demand, &baseline_oxygen_demand);
   double beta = 0.0;
   cinterpolate_eval(step, internal->interpolate_beta, &beta);
-  double hosp_bed_capacity = 0.0;
-  cinterpolate_eval(step, internal->interpolate_hosp_bed_capacity, &hosp_bed_capacity);
-  double ICU_bed_capacity = 0.0;
-  cinterpolate_eval(step, internal->interpolate_ICU_bed_capacity, &ICU_bed_capacity);
+  double current_hosp_bed_capacity = 0.0;
+  cinterpolate_eval(step, internal->interpolate_current_hosp_bed_capacity, &current_hosp_bed_capacity);
+  double current_ICU_bed_capacity = 0.0;
+  cinterpolate_eval(step, internal->interpolate_current_ICU_bed_capacity, &current_ICU_bed_capacity);
   for (int i = 1; i <= internal->dim_n_E2_ICase1; ++i) {
     internal->n_E2_ICase1[i - 1] = (internal->drug_3_indic == 1 ? Rf_rbinom(round(internal->n_E2_ICase1_initial[i - 1]), 1 - (internal->drug_3_prop_treat * internal->drug_3_effect_size)) : internal->n_E2_ICase1_initial[i - 1]);
   }
@@ -6962,8 +6962,8 @@ void apothecary_SEIR_rhs(apothecary_SEIR_internal* internal, size_t step, double
   for (int i = 1; i <= internal->dim_R; ++i) {
     state_next[internal->offset_variable_R + i - 1] = R[i - 1] + internal->delta_R[i - 1];
   }
-  double current_free_hosp = hosp_bed_capacity + odin_sum1(internal->n_IMod_GetHosp_GetOx_Surv2_R, 0, internal->dim_n_IMod_GetHosp_GetOx_Surv2_R) + odin_sum1(internal->n_IMod_GetHosp_GetOx_Die2_D_Hospital, 0, internal->dim_n_IMod_GetHosp_GetOx_Die2_D_Hospital) + odin_sum1(internal->n_IMod_GetHosp_NoOx_Surv2_R, 0, internal->dim_n_IMod_GetHosp_NoOx_Surv2_R) + odin_sum1(internal->n_IMod_GetHosp_NoOx_Die2_D_Hospital, 0, internal->dim_n_IMod_GetHosp_NoOx_Die2_D_Hospital) + odin_sum1(internal->n_IRec2_R, 0, internal->dim_n_IRec2_R) - odin_sum1(internal->n_ISev_GetICU_GetOx_Surv2_Rec, 0, internal->dim_n_ISev_GetICU_GetOx_Surv2_Rec) - odin_sum1(internal->n_ISev_GetICU_NoOx_Surv2_Rec, 0, internal->dim_n_ISev_GetICU_NoOx_Surv2_Rec) - odin_sum1(internal->n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec, 0, internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec) - odin_sum1(internal->n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec, 0, internal->dim_n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec) - odin_sum1(internal->n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec, 0, internal->dim_n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec) - hosp_occ;
-  double current_free_ICU = ICU_bed_capacity + odin_sum1(internal->n_ISev_GetICU_GetOx_Surv2_Rec, 0, internal->dim_n_ISev_GetICU_GetOx_Surv2_Rec) + odin_sum1(internal->n_ISev_GetICU_GetOx_Die2_D_Hospital, 0, internal->dim_n_ISev_GetICU_GetOx_Die2_D_Hospital) + odin_sum1(internal->n_ISev_GetICU_NoOx_Surv2_Rec, 0, internal->dim_n_ISev_GetICU_NoOx_Surv2_Rec) + odin_sum1(internal->n_ISev_GetICU_NoOx_Die2_D_Hospital, 0, internal->dim_n_ISev_GetICU_NoOx_Die2_D_Hospital) + odin_sum1(internal->n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec, 0, internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec) + odin_sum1(internal->n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital, 0, internal->dim_n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital) + odin_sum1(internal->n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec, 0, internal->dim_n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec) + odin_sum1(internal->n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital, 0, internal->dim_n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital) + odin_sum1(internal->n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec, 0, internal->dim_n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec) + odin_sum1(internal->n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital, 0, internal->dim_n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital) - ICU_occ;
+  double current_free_hosp = current_hosp_bed_capacity + odin_sum1(internal->n_IMod_GetHosp_GetOx_Surv2_R, 0, internal->dim_n_IMod_GetHosp_GetOx_Surv2_R) + odin_sum1(internal->n_IMod_GetHosp_GetOx_Die2_D_Hospital, 0, internal->dim_n_IMod_GetHosp_GetOx_Die2_D_Hospital) + odin_sum1(internal->n_IMod_GetHosp_NoOx_Surv2_R, 0, internal->dim_n_IMod_GetHosp_NoOx_Surv2_R) + odin_sum1(internal->n_IMod_GetHosp_NoOx_Die2_D_Hospital, 0, internal->dim_n_IMod_GetHosp_NoOx_Die2_D_Hospital) + odin_sum1(internal->n_IRec2_R, 0, internal->dim_n_IRec2_R) - odin_sum1(internal->n_ISev_GetICU_GetOx_Surv2_Rec, 0, internal->dim_n_ISev_GetICU_GetOx_Surv2_Rec) - odin_sum1(internal->n_ISev_GetICU_NoOx_Surv2_Rec, 0, internal->dim_n_ISev_GetICU_NoOx_Surv2_Rec) - odin_sum1(internal->n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec, 0, internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec) - odin_sum1(internal->n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec, 0, internal->dim_n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec) - odin_sum1(internal->n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec, 0, internal->dim_n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec) - hosp_occ;
+  double current_free_ICU = current_ICU_bed_capacity + odin_sum1(internal->n_ISev_GetICU_GetOx_Surv2_Rec, 0, internal->dim_n_ISev_GetICU_GetOx_Surv2_Rec) + odin_sum1(internal->n_ISev_GetICU_GetOx_Die2_D_Hospital, 0, internal->dim_n_ISev_GetICU_GetOx_Die2_D_Hospital) + odin_sum1(internal->n_ISev_GetICU_NoOx_Surv2_Rec, 0, internal->dim_n_ISev_GetICU_NoOx_Surv2_Rec) + odin_sum1(internal->n_ISev_GetICU_NoOx_Die2_D_Hospital, 0, internal->dim_n_ISev_GetICU_NoOx_Die2_D_Hospital) + odin_sum1(internal->n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec, 0, internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec) + odin_sum1(internal->n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital, 0, internal->dim_n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital) + odin_sum1(internal->n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec, 0, internal->dim_n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec) + odin_sum1(internal->n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital, 0, internal->dim_n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital) + odin_sum1(internal->n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec, 0, internal->dim_n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec) + odin_sum1(internal->n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital, 0, internal->dim_n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital) - ICU_occ;
   cinterpolate_eval(step, internal->interpolate_m, internal->m);
   for (int i = 1; i <= internal->dim_n_E2_ICase1_Drug_5; ++i) {
     internal->n_E2_ICase1_Drug_5[i - 1] = (internal->drug_5_indic_ICase == 1 ? Rf_rbinom(round(internal->n_E2_ICase1[i - 1]), internal->drug_5_prop_treat) : 0);
