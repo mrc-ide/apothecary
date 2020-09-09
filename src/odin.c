@@ -1037,6 +1037,816 @@ typedef struct apothecary_SEIR_internal {
   double *tt_matrix;
   double *tt_oxygen_supply;
 } apothecary_SEIR_internal;
+typedef struct deterministic_apothecary_SEIR_internal {
+  double *beta_set;
+  double *D_Community_0;
+  double *D_Hospital_0;
+  int dim_beta_set;
+  int dim_D;
+  int dim_D_Community;
+  int dim_D_Community_0;
+  int dim_D_Hospital;
+  int dim_D_Hospital_0;
+  int dim_E1;
+  int dim_E1_0;
+  int dim_E2;
+  int dim_E2_0;
+  int dim_hosp_bed_capacity;
+  int dim_IAsymp;
+  int dim_IAsymp_0;
+  int dim_ICase1;
+  int dim_ICase1_0;
+  int dim_ICase1_Drug_5;
+  int dim_ICase1_Drug_5_0;
+  int dim_ICase2;
+  int dim_ICase2_0;
+  int dim_ICase2_Drug_5;
+  int dim_ICase2_Drug_5_0;
+  int dim_ICrit_GetICU_GetOx_GetMV_Die1;
+  int dim_ICrit_GetICU_GetOx_GetMV_Die1_0;
+  int dim_ICrit_GetICU_GetOx_GetMV_Die2;
+  int dim_ICrit_GetICU_GetOx_GetMV_Die2_0;
+  int dim_ICrit_GetICU_GetOx_GetMV_Surv1;
+  int dim_ICrit_GetICU_GetOx_GetMV_Surv1_0;
+  int dim_ICrit_GetICU_GetOx_GetMV_Surv2;
+  int dim_ICrit_GetICU_GetOx_GetMV_Surv2_0;
+  int dim_ICrit_GetICU_GetOx_NoMV_Die1;
+  int dim_ICrit_GetICU_GetOx_NoMV_Die1_0;
+  int dim_ICrit_GetICU_GetOx_NoMV_Die2;
+  int dim_ICrit_GetICU_GetOx_NoMV_Die2_0;
+  int dim_ICrit_GetICU_GetOx_NoMV_Surv1;
+  int dim_ICrit_GetICU_GetOx_NoMV_Surv1_0;
+  int dim_ICrit_GetICU_GetOx_NoMV_Surv2;
+  int dim_ICrit_GetICU_GetOx_NoMV_Surv2_0;
+  int dim_ICrit_GetICU_NoOx_NoMV_Die1;
+  int dim_ICrit_GetICU_NoOx_NoMV_Die1_0;
+  int dim_ICrit_GetICU_NoOx_NoMV_Die2;
+  int dim_ICrit_GetICU_NoOx_NoMV_Die2_0;
+  int dim_ICrit_GetICU_NoOx_NoMV_Surv1;
+  int dim_ICrit_GetICU_NoOx_NoMV_Surv1_0;
+  int dim_ICrit_GetICU_NoOx_NoMV_Surv2;
+  int dim_ICrit_GetICU_NoOx_NoMV_Surv2_0;
+  int dim_ICrit_NoICU_NoOx_NoMV_Die1;
+  int dim_ICrit_NoICU_NoOx_NoMV_Die1_0;
+  int dim_ICrit_NoICU_NoOx_NoMV_Die2;
+  int dim_ICrit_NoICU_NoOx_NoMV_Die2_0;
+  int dim_ICrit_NoICU_NoOx_NoMV_Surv1;
+  int dim_ICrit_NoICU_NoOx_NoMV_Surv1_0;
+  int dim_ICrit_NoICU_NoOx_NoMV_Surv2;
+  int dim_ICrit_NoICU_NoOx_NoMV_Surv2_0;
+  int dim_ICU_bed_capacity;
+  int dim_IMild;
+  int dim_IMild_0;
+  int dim_IMild_Drug_5;
+  int dim_IMild_Drug_5_0;
+  int dim_IMod_GetHosp_GetOx_Die1;
+  int dim_IMod_GetHosp_GetOx_Die1_0;
+  int dim_IMod_GetHosp_GetOx_Die2;
+  int dim_IMod_GetHosp_GetOx_Die2_0;
+  int dim_IMod_GetHosp_GetOx_Surv1;
+  int dim_IMod_GetHosp_GetOx_Surv1_0;
+  int dim_IMod_GetHosp_GetOx_Surv2;
+  int dim_IMod_GetHosp_GetOx_Surv2_0;
+  int dim_IMod_GetHosp_NoOx_Die1;
+  int dim_IMod_GetHosp_NoOx_Die1_0;
+  int dim_IMod_GetHosp_NoOx_Die2;
+  int dim_IMod_GetHosp_NoOx_Die2_0;
+  int dim_IMod_GetHosp_NoOx_Surv1;
+  int dim_IMod_GetHosp_NoOx_Surv1_0;
+  int dim_IMod_GetHosp_NoOx_Surv2;
+  int dim_IMod_GetHosp_NoOx_Surv2_0;
+  int dim_IMod_NoHosp_NoOx_Die1;
+  int dim_IMod_NoHosp_NoOx_Die1_0;
+  int dim_IMod_NoHosp_NoOx_Die2;
+  int dim_IMod_NoHosp_NoOx_Die2_0;
+  int dim_IMod_NoHosp_NoOx_Surv1;
+  int dim_IMod_NoHosp_NoOx_Surv1_0;
+  int dim_IMod_NoHosp_NoOx_Surv2;
+  int dim_IMod_NoHosp_NoOx_Surv2_0;
+  int dim_input_baseline_oxygen_demand;
+  int dim_input_oxygen_supply;
+  int dim_IRec1;
+  int dim_IRec1_0;
+  int dim_IRec2;
+  int dim_IRec2_0;
+  int dim_ISev_GetICU_GetOx_Die1;
+  int dim_ISev_GetICU_GetOx_Die1_0;
+  int dim_ISev_GetICU_GetOx_Die2;
+  int dim_ISev_GetICU_GetOx_Die2_0;
+  int dim_ISev_GetICU_GetOx_Surv1;
+  int dim_ISev_GetICU_GetOx_Surv1_0;
+  int dim_ISev_GetICU_GetOx_Surv2;
+  int dim_ISev_GetICU_GetOx_Surv2_0;
+  int dim_ISev_GetICU_NoOx_Die1;
+  int dim_ISev_GetICU_NoOx_Die1_0;
+  int dim_ISev_GetICU_NoOx_Die2;
+  int dim_ISev_GetICU_NoOx_Die2_0;
+  int dim_ISev_GetICU_NoOx_Surv1;
+  int dim_ISev_GetICU_NoOx_Surv1_0;
+  int dim_ISev_GetICU_NoOx_Surv2;
+  int dim_ISev_GetICU_NoOx_Surv2_0;
+  int dim_ISev_NoICU_NoOx_Die1;
+  int dim_ISev_NoICU_NoOx_Die1_0;
+  int dim_ISev_NoICU_NoOx_Die2;
+  int dim_ISev_NoICU_NoOx_Die2_0;
+  int dim_ISev_NoICU_NoOx_Surv1;
+  int dim_ISev_NoICU_NoOx_Surv1_0;
+  int dim_ISev_NoICU_NoOx_Surv2;
+  int dim_ISev_NoICU_NoOx_Surv2_0;
+  int dim_lambda;
+  int dim_m;
+  int dim_m_1;
+  int dim_m_2;
+  int dim_mix_mat_set;
+  int dim_mix_mat_set_1;
+  int dim_mix_mat_set_12;
+  int dim_mix_mat_set_2;
+  int dim_mix_mat_set_3;
+  int dim_n_E1_E2;
+  int dim_n_E2_I;
+  int dim_n_E2_IAsymp;
+  int dim_n_E2_ICase1;
+  int dim_n_E2_ICase1_Drug_5;
+  int dim_n_E2_ICase1_initial;
+  int dim_n_E2_ICase1_No_Drug_5;
+  int dim_n_E2_IMild;
+  int dim_n_E2_IMild_Drug_5;
+  int dim_n_E2_IMild_No_Drug_5;
+  int dim_n_E2_IMild_or_IAsymp;
+  int dim_n_IAsymp_R;
+  int dim_n_ICase1_Drug_5_ICase2_Drug_5;
+  int dim_n_ICase1_ICase2;
+  int dim_n_ICase2_Drug_5_Hosp;
+  int dim_n_ICase2_Hosp;
+  int dim_n_ICrit_GetICU_GetOx_GetMV_Die1;
+  int dim_n_ICrit_GetICU_GetOx_GetMV_Die1_ICrit_GetICU_GetOx_GetMV_Die2;
+  int dim_n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital;
+  int dim_n_ICrit_GetICU_GetOx_GetMV_Surv1;
+  int dim_n_ICrit_GetICU_GetOx_GetMV_Surv1_ICrit_GetICU_GetOx_GetMV_Surv2;
+  int dim_n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec;
+  int dim_n_ICrit_GetICU_GetOx_NoMV_Die1;
+  int dim_n_ICrit_GetICU_GetOx_NoMV_Die1_ICrit_GetICU_GetOx_NoMV_Die2;
+  int dim_n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital;
+  int dim_n_ICrit_GetICU_GetOx_NoMV_Surv1;
+  int dim_n_ICrit_GetICU_GetOx_NoMV_Surv1_ICrit_GetICU_GetOx_NoMV_Surv2;
+  int dim_n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec;
+  int dim_n_ICrit_GetICU_NoOx_NoMV_Die1;
+  int dim_n_ICrit_GetICU_NoOx_NoMV_Die1_ICrit_GetICU_NoOx_NoMV_Die2;
+  int dim_n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital;
+  int dim_n_ICrit_GetICU_NoOx_NoMV_Surv1;
+  int dim_n_ICrit_GetICU_NoOx_NoMV_Surv1_ICrit_GetICU_NoOx_NoMV_Surv2;
+  int dim_n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec;
+  int dim_n_ICrit_NoICU_NoOx_NoMV_Die1;
+  int dim_n_ICrit_NoICU_NoOx_NoMV_Die1_ICrit_NoICU_NoOx_NoMV_Die2;
+  int dim_n_ICrit_NoICU_NoOx_NoMV_Die2_D_Community;
+  int dim_n_ICrit_NoICU_NoOx_NoMV_Surv1;
+  int dim_n_ICrit_NoICU_NoOx_NoMV_Surv1_ICrit_NoICU_NoOx_NoMV_Surv2;
+  int dim_n_ICrit_NoICU_NoOx_NoMV_Surv2_R;
+  int dim_n_IMild_Drug_5_R;
+  int dim_n_IMild_R;
+  int dim_n_IMod_GetHosp_GetOx_Die1;
+  int dim_n_IMod_GetHosp_GetOx_Die1_IMod_GetHosp_GetOx_Die2;
+  int dim_n_IMod_GetHosp_GetOx_Die2_D_Hospital;
+  int dim_n_IMod_GetHosp_GetOx_Surv1;
+  int dim_n_IMod_GetHosp_GetOx_Surv1_IMod_GetHosp_GetOx_Surv2;
+  int dim_n_IMod_GetHosp_GetOx_Surv2_R;
+  int dim_n_IMod_GetHosp_NoOx_Die1;
+  int dim_n_IMod_GetHosp_NoOx_Die1_IMod_GetHosp_NoOx_Die2;
+  int dim_n_IMod_GetHosp_NoOx_Die2_D_Hospital;
+  int dim_n_IMod_GetHosp_NoOx_Surv1;
+  int dim_n_IMod_GetHosp_NoOx_Surv1_IMod_GetHosp_NoOx_Surv2;
+  int dim_n_IMod_GetHosp_NoOx_Surv2_R;
+  int dim_n_IMod_NoHosp_NoOx_Die1;
+  int dim_n_IMod_NoHosp_NoOx_Die1_IMod_NoHosp_NoOx_Die2;
+  int dim_n_IMod_NoHosp_NoOx_Die2_D_Community;
+  int dim_n_IMod_NoHosp_NoOx_Surv1;
+  int dim_n_IMod_NoHosp_NoOx_Surv1_IMod_NoHosp_NoOx_Surv2;
+  int dim_n_IMod_NoHosp_NoOx_Surv2_R;
+  int dim_n_IRec1_IRec2;
+  int dim_n_IRec2_R;
+  int dim_n_ISev_GetICU_GetOx_Die1;
+  int dim_n_ISev_GetICU_GetOx_Die1_ISev_GetICU_GetOx_Die2;
+  int dim_n_ISev_GetICU_GetOx_Die2_D_Hospital;
+  int dim_n_ISev_GetICU_GetOx_Surv1;
+  int dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2;
+  int dim_n_ISev_GetICU_GetOx_Surv2_Rec;
+  int dim_n_ISev_GetICU_NoOx_Die1;
+  int dim_n_ISev_GetICU_NoOx_Die1_ISev_GetICU_NoOx_Die2;
+  int dim_n_ISev_GetICU_NoOx_Die2_D_Hospital;
+  int dim_n_ISev_GetICU_NoOx_Surv1;
+  int dim_n_ISev_GetICU_NoOx_Surv1_ISev_GetICU_NoOx_Surv2;
+  int dim_n_ISev_GetICU_NoOx_Surv2_Rec;
+  int dim_n_ISev_NoICU_NoOx_Die1;
+  int dim_n_ISev_NoICU_NoOx_Die1_ISev_NoICU_NoOx_Die2;
+  int dim_n_ISev_NoICU_NoOx_Die2_D_Community;
+  int dim_n_ISev_NoICU_NoOx_Surv1;
+  int dim_n_ISev_NoICU_NoOx_Surv1_ISev_NoICU_NoOx_Surv2;
+  int dim_n_ISev_NoICU_NoOx_Surv2_R;
+  int dim_n_PE1_PE2;
+  int dim_n_PE2_I;
+  int dim_n_PE2_IAsymp;
+  int dim_n_PE2_ICase1;
+  int dim_n_PE2_ICase1_Drug_5;
+  int dim_n_PE2_ICase1_initial;
+  int dim_n_PE2_ICase1_No_Drug_5;
+  int dim_n_PE2_IMild;
+  int dim_n_PE2_IMild_Drug_5;
+  int dim_n_PE2_IMild_No_Drug_5;
+  int dim_n_PE2_IMild_or_IAsymp;
+  int dim_n_PS_PE1;
+  int dim_n_PS_S;
+  int dim_n_S_E1;
+  int dim_n_S_PS;
+  int dim_number_GetHosp;
+  int dim_number_GetHosp_NoOx;
+  int dim_number_GetHosp_Ox;
+  int dim_number_GetICU;
+  int dim_number_GetICU_GetOx;
+  int dim_number_GetICU_GetOx_GetMV;
+  int dim_number_GetICU_GetOx_NeedMV;
+  int dim_number_GetICU_GetOx_NoMV;
+  int dim_number_GetICU_NoOx;
+  int dim_number_GetICU_NoOx_NeedMV;
+  int dim_number_NotHosp;
+  int dim_number_NotICU;
+  int dim_number_NotICU_NotOx;
+  int dim_number_NotICU_NotOx_NotMV;
+  int dim_number_req_Hosp;
+  int dim_number_req_ICU;
+  int dim_number_req_ICU_initial;
+  int dim_number_req_ICU_MV;
+  int dim_number_req_ICU_MV_initial;
+  int dim_number_req_ICU_Ox;
+  int dim_PE1;
+  int dim_PE1_0;
+  int dim_PE2;
+  int dim_PE2_0;
+  int dim_prob_asymp;
+  int dim_prob_critical;
+  int dim_prob_critical_death_get_ICU_get_ox_get_MV;
+  int dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline;
+  int dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13;
+  int dim_prob_critical_death_get_ICU_get_ox_no_MV;
+  int dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline;
+  int dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13;
+  int dim_prob_critical_death_get_ICU_no_ox_no_MV;
+  int dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline;
+  int dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13;
+  int dim_prob_critical_death_no_ICU_no_ox_no_MV;
+  int dim_prob_hosp;
+  int dim_prob_moderate_death_get_hosp_get_ox;
+  int dim_prob_moderate_death_get_hosp_get_ox_baseline;
+  int dim_prob_moderate_death_get_hosp_get_ox_Drug_11;
+  int dim_prob_moderate_death_get_hosp_no_ox;
+  int dim_prob_moderate_death_get_hosp_no_ox_baseline;
+  int dim_prob_moderate_death_get_hosp_no_ox_Drug_11;
+  int dim_prob_moderate_death_no_hosp_no_ox;
+  int dim_prob_severe;
+  int dim_prob_severe_death_get_ICU_get_ox;
+  int dim_prob_severe_death_get_ICU_get_ox_baseline;
+  int dim_prob_severe_death_get_ICU_get_ox_Drug_12;
+  int dim_prob_severe_death_get_ICU_no_ox;
+  int dim_prob_severe_death_get_ICU_no_ox_baseline;
+  int dim_prob_severe_death_get_ICU_no_ox_Drug_12;
+  int dim_prob_severe_death_no_ICU_no_ox;
+  int dim_PS;
+  int dim_PS_0;
+  int dim_R;
+  int dim_R_0;
+  int dim_S;
+  int dim_S_0;
+  int dim_s_ij;
+  int dim_s_ij_1;
+  int dim_s_ij_2;
+  int dim_temp;
+  int dim_tt_baseline_oxygen_demand;
+  int dim_tt_beta;
+  int dim_tt_hosp_beds;
+  int dim_tt_ICU_beds;
+  int dim_tt_matrix;
+  int dim_tt_oxygen_supply;
+  double drug_1_effect_size;
+  double drug_1_indic;
+  double drug_10_GetOx_GetMV_effect_size;
+  double drug_10_GetOx_NoMV_effect_size;
+  double drug_10_indic_ICrit_GetICU_GetOx_GetMV;
+  double drug_10_indic_ICrit_GetICU_GetOx_NoMV;
+  double drug_10_indic_ICrit_GetICU_NoOx_NoMV;
+  double drug_10_NoOx_NoMV_effect_size;
+  double drug_10_prop_treat;
+  double drug_11_GetOx_effect_size;
+  double drug_11_indic_IMod_GetHosp_GetOx;
+  double drug_11_indic_IMod_GetHosp_NoOx;
+  double drug_11_NoOx_effect_size;
+  double drug_11_prop_treat;
+  double drug_12_GetOx_effect_size;
+  double drug_12_indic_ISev_GetICU_GetOx;
+  double drug_12_indic_ISev_GetICU_NoOx;
+  double drug_12_NoOx_effect_size;
+  double drug_12_prop_treat;
+  double drug_13_GetOx_GetMV_effect_size;
+  double drug_13_GetOx_NoMV_effect_size;
+  double drug_13_indic_ICrit_GetICU_GetOx_GetMV;
+  double drug_13_indic_ICrit_GetICU_GetOx_NoMV;
+  double drug_13_indic_ICrit_GetICU_NoOx_NoMV;
+  double drug_13_NoOx_NoMV_effect_size;
+  double drug_13_prop_treat;
+  double drug_2_effect_size;
+  double drug_2_indic;
+  double drug_3_effect_size;
+  double drug_3_indic;
+  double drug_3_prop_treat;
+  double drug_4_effect_size;
+  double drug_4_indic;
+  double drug_4_prop_treat;
+  double drug_5_effect_size;
+  double drug_5_indic_ICase;
+  double drug_5_indic_IMild;
+  double drug_5_prop_treat;
+  double drug_6_effect_size;
+  double drug_6_indic;
+  double drug_6_prop_treat;
+  double drug_7_effect_size;
+  double drug_7_indic;
+  double drug_7_prop_treat;
+  double drug_8_GetOx_effect_size;
+  double drug_8_indic_IMod_GetHosp_GetOx;
+  double drug_8_indic_IMod_GetHosp_NoOx;
+  double drug_8_NoOx_effect_size;
+  double drug_8_prop_treat;
+  double drug_9_GetOx_effect_size;
+  double drug_9_indic_ISev_GetICU_GetOx;
+  double drug_9_indic_ISev_GetICU_NoOx;
+  double drug_9_NoOx_effect_size;
+  double drug_9_prop_treat;
+  double *E1_0;
+  double *E2_0;
+  double gamma_E;
+  double gamma_IAsymp;
+  double gamma_ICase;
+  double gamma_ICrit_GetICU_GetOx_GetMV_Die;
+  double gamma_ICrit_GetICU_GetOx_GetMV_Surv;
+  double gamma_ICrit_GetICU_GetOx_GetMV_Surv_Drug_10;
+  double gamma_ICrit_GetICU_GetOx_NoMV_Die;
+  double gamma_ICrit_GetICU_GetOx_NoMV_Surv;
+  double gamma_ICrit_GetICU_GetOx_NoMV_Surv_Drug_10;
+  double gamma_ICrit_GetICU_NoOx_NoMV_Die;
+  double gamma_ICrit_GetICU_NoOx_NoMV_Surv;
+  double gamma_ICrit_GetICU_NoOx_NoMV_Surv_Drug_10;
+  double gamma_ICrit_NoICU_NoOx_NoMV_Die;
+  double gamma_ICrit_NoICU_NoOx_NoMV_Surv;
+  double gamma_IMild;
+  double gamma_IMild_Drug_4;
+  double gamma_IMod_GetHosp_GetOx_Die;
+  double gamma_IMod_GetHosp_GetOx_Surv;
+  double gamma_IMod_GetHosp_GetOx_Surv_Drug_8;
+  double gamma_IMod_GetHosp_NoOx_Die;
+  double gamma_IMod_GetHosp_NoOx_Surv;
+  double gamma_IMod_GetHosp_NoOx_Surv_Drug_8;
+  double gamma_IMod_NoHosp_NoOx_Die;
+  double gamma_IMod_NoHosp_NoOx_Surv;
+  double gamma_ISev_GetICU_GetOx_Die;
+  double gamma_ISev_GetICU_GetOx_Surv;
+  double gamma_ISev_GetICU_GetOx_Surv_Drug_9;
+  double gamma_ISev_GetICU_NoOx_Die;
+  double gamma_ISev_GetICU_NoOx_Surv;
+  double gamma_ISev_GetICU_NoOx_Surv_Drug_9;
+  double gamma_ISev_NoICU_NoOx_Die;
+  double gamma_ISev_NoICU_NoOx_Surv;
+  double gamma_rec;
+  double *hosp_bed_capacity;
+  double *IAsymp_0;
+  double *ICase1_0;
+  double *ICase1_Drug_5_0;
+  double *ICase2_0;
+  double *ICase2_Drug_5_0;
+  double *ICrit_GetICU_GetOx_GetMV_Die1_0;
+  double *ICrit_GetICU_GetOx_GetMV_Die2_0;
+  double *ICrit_GetICU_GetOx_GetMV_Surv1_0;
+  double *ICrit_GetICU_GetOx_GetMV_Surv2_0;
+  double *ICrit_GetICU_GetOx_NoMV_Die1_0;
+  double *ICrit_GetICU_GetOx_NoMV_Die2_0;
+  double *ICrit_GetICU_GetOx_NoMV_Surv1_0;
+  double *ICrit_GetICU_GetOx_NoMV_Surv2_0;
+  double *ICrit_GetICU_NoOx_NoMV_Die1_0;
+  double *ICrit_GetICU_NoOx_NoMV_Die2_0;
+  double *ICrit_GetICU_NoOx_NoMV_Surv1_0;
+  double *ICrit_GetICU_NoOx_NoMV_Surv2_0;
+  double *ICrit_NoICU_NoOx_NoMV_Die1_0;
+  double *ICrit_NoICU_NoOx_NoMV_Die2_0;
+  double *ICrit_NoICU_NoOx_NoMV_Surv1_0;
+  double *ICrit_NoICU_NoOx_NoMV_Surv2_0;
+  double *ICU_bed_capacity;
+  double *IMild_0;
+  double *IMild_Drug_5_0;
+  double *IMod_GetHosp_GetOx_Die1_0;
+  double *IMod_GetHosp_GetOx_Die2_0;
+  double *IMod_GetHosp_GetOx_Surv1_0;
+  double *IMod_GetHosp_GetOx_Surv2_0;
+  double *IMod_GetHosp_NoOx_Die1_0;
+  double *IMod_GetHosp_NoOx_Die2_0;
+  double *IMod_GetHosp_NoOx_Surv1_0;
+  double *IMod_GetHosp_NoOx_Surv2_0;
+  double *IMod_NoHosp_NoOx_Die1_0;
+  double *IMod_NoHosp_NoOx_Die2_0;
+  double *IMod_NoHosp_NoOx_Surv1_0;
+  double *IMod_NoHosp_NoOx_Surv2_0;
+  double *initial_D;
+  double *initial_D_Community;
+  double *initial_D_Hospital;
+  double *initial_E1;
+  double *initial_E2;
+  double *initial_IAsymp;
+  double *initial_ICase1;
+  double *initial_ICase1_Drug_5;
+  double *initial_ICase2;
+  double *initial_ICase2_Drug_5;
+  double *initial_ICrit_GetICU_GetOx_GetMV_Die1;
+  double *initial_ICrit_GetICU_GetOx_GetMV_Die2;
+  double *initial_ICrit_GetICU_GetOx_GetMV_Surv1;
+  double *initial_ICrit_GetICU_GetOx_GetMV_Surv2;
+  double *initial_ICrit_GetICU_GetOx_NoMV_Die1;
+  double *initial_ICrit_GetICU_GetOx_NoMV_Die2;
+  double *initial_ICrit_GetICU_GetOx_NoMV_Surv1;
+  double *initial_ICrit_GetICU_GetOx_NoMV_Surv2;
+  double *initial_ICrit_GetICU_NoOx_NoMV_Die1;
+  double *initial_ICrit_GetICU_NoOx_NoMV_Die2;
+  double *initial_ICrit_GetICU_NoOx_NoMV_Surv1;
+  double *initial_ICrit_GetICU_NoOx_NoMV_Surv2;
+  double *initial_ICrit_NoICU_NoOx_NoMV_Die1;
+  double *initial_ICrit_NoICU_NoOx_NoMV_Die2;
+  double *initial_ICrit_NoICU_NoOx_NoMV_Surv1;
+  double *initial_ICrit_NoICU_NoOx_NoMV_Surv2;
+  double *initial_IMild;
+  double *initial_IMild_Drug_5;
+  double *initial_IMod_GetHosp_GetOx_Die1;
+  double *initial_IMod_GetHosp_GetOx_Die2;
+  double *initial_IMod_GetHosp_GetOx_Surv1;
+  double *initial_IMod_GetHosp_GetOx_Surv2;
+  double *initial_IMod_GetHosp_NoOx_Die1;
+  double *initial_IMod_GetHosp_NoOx_Die2;
+  double *initial_IMod_GetHosp_NoOx_Surv1;
+  double *initial_IMod_GetHosp_NoOx_Surv2;
+  double *initial_IMod_NoHosp_NoOx_Die1;
+  double *initial_IMod_NoHosp_NoOx_Die2;
+  double *initial_IMod_NoHosp_NoOx_Surv1;
+  double *initial_IMod_NoHosp_NoOx_Surv2;
+  double *initial_IRec1;
+  double *initial_IRec2;
+  double *initial_ISev_GetICU_GetOx_Die1;
+  double *initial_ISev_GetICU_GetOx_Die2;
+  double *initial_ISev_GetICU_GetOx_Surv1;
+  double *initial_ISev_GetICU_GetOx_Surv2;
+  double *initial_ISev_GetICU_NoOx_Die1;
+  double *initial_ISev_GetICU_NoOx_Die2;
+  double *initial_ISev_GetICU_NoOx_Surv1;
+  double *initial_ISev_GetICU_NoOx_Surv2;
+  double *initial_ISev_NoICU_NoOx_Die1;
+  double *initial_ISev_NoICU_NoOx_Die2;
+  double *initial_ISev_NoICU_NoOx_Surv1;
+  double *initial_ISev_NoICU_NoOx_Surv2;
+  double initial_oxygen_availability;
+  double *initial_PE1;
+  double *initial_PE2;
+  double *initial_PS;
+  double *initial_R;
+  double *initial_S;
+  double *input_baseline_oxygen_demand;
+  double *input_oxygen_supply;
+  void *interpolate_baseline_oxygen_demand;
+  void *interpolate_beta;
+  void *interpolate_current_hosp_bed_capacity;
+  void *interpolate_current_ICU_bed_capacity;
+  void *interpolate_m;
+  void *interpolate_oxygen_supply;
+  double *IRec1_0;
+  double *IRec2_0;
+  double *ISev_GetICU_GetOx_Die1_0;
+  double *ISev_GetICU_GetOx_Die2_0;
+  double *ISev_GetICU_GetOx_Surv1_0;
+  double *ISev_GetICU_GetOx_Surv2_0;
+  double *ISev_GetICU_NoOx_Die1_0;
+  double *ISev_GetICU_NoOx_Die2_0;
+  double *ISev_GetICU_NoOx_Surv1_0;
+  double *ISev_GetICU_NoOx_Surv2_0;
+  double *ISev_NoICU_NoOx_Die1_0;
+  double *ISev_NoICU_NoOx_Die2_0;
+  double *ISev_NoICU_NoOx_Surv1_0;
+  double *ISev_NoICU_NoOx_Surv2_0;
+  double *lambda;
+  double *m;
+  double max_leftover;
+  double *mix_mat_set;
+  double MV_capacity;
+  int N_age;
+  double *n_E1_E2;
+  double *n_E2_I;
+  double *n_E2_IAsymp;
+  double *n_E2_ICase1;
+  double *n_E2_ICase1_Drug_5;
+  double *n_E2_ICase1_initial;
+  double *n_E2_ICase1_No_Drug_5;
+  double *n_E2_IMild;
+  double *n_E2_IMild_Drug_5;
+  double *n_E2_IMild_No_Drug_5;
+  double *n_E2_IMild_or_IAsymp;
+  double *n_IAsymp_R;
+  double *n_ICase1_Drug_5_ICase2_Drug_5;
+  double *n_ICase1_ICase2;
+  double *n_ICase2_Drug_5_Hosp;
+  double *n_ICase2_Hosp;
+  double *n_ICrit_GetICU_GetOx_GetMV_Die1;
+  double *n_ICrit_GetICU_GetOx_GetMV_Die1_ICrit_GetICU_GetOx_GetMV_Die2;
+  double *n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital;
+  double *n_ICrit_GetICU_GetOx_GetMV_Surv1;
+  double *n_ICrit_GetICU_GetOx_GetMV_Surv1_ICrit_GetICU_GetOx_GetMV_Surv2;
+  double *n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec;
+  double *n_ICrit_GetICU_GetOx_NoMV_Die1;
+  double *n_ICrit_GetICU_GetOx_NoMV_Die1_ICrit_GetICU_GetOx_NoMV_Die2;
+  double *n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital;
+  double *n_ICrit_GetICU_GetOx_NoMV_Surv1;
+  double *n_ICrit_GetICU_GetOx_NoMV_Surv1_ICrit_GetICU_GetOx_NoMV_Surv2;
+  double *n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec;
+  double *n_ICrit_GetICU_NoOx_NoMV_Die1;
+  double *n_ICrit_GetICU_NoOx_NoMV_Die1_ICrit_GetICU_NoOx_NoMV_Die2;
+  double *n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital;
+  double *n_ICrit_GetICU_NoOx_NoMV_Surv1;
+  double *n_ICrit_GetICU_NoOx_NoMV_Surv1_ICrit_GetICU_NoOx_NoMV_Surv2;
+  double *n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec;
+  double *n_ICrit_NoICU_NoOx_NoMV_Die1;
+  double *n_ICrit_NoICU_NoOx_NoMV_Die1_ICrit_NoICU_NoOx_NoMV_Die2;
+  double *n_ICrit_NoICU_NoOx_NoMV_Die2_D_Community;
+  double *n_ICrit_NoICU_NoOx_NoMV_Surv1;
+  double *n_ICrit_NoICU_NoOx_NoMV_Surv1_ICrit_NoICU_NoOx_NoMV_Surv2;
+  double *n_ICrit_NoICU_NoOx_NoMV_Surv2_R;
+  double *n_IMild_Drug_5_R;
+  double *n_IMild_R;
+  double *n_IMod_GetHosp_GetOx_Die1;
+  double *n_IMod_GetHosp_GetOx_Die1_IMod_GetHosp_GetOx_Die2;
+  double *n_IMod_GetHosp_GetOx_Die2_D_Hospital;
+  double *n_IMod_GetHosp_GetOx_Surv1;
+  double *n_IMod_GetHosp_GetOx_Surv1_IMod_GetHosp_GetOx_Surv2;
+  double *n_IMod_GetHosp_GetOx_Surv2_R;
+  double *n_IMod_GetHosp_NoOx_Die1;
+  double *n_IMod_GetHosp_NoOx_Die1_IMod_GetHosp_NoOx_Die2;
+  double *n_IMod_GetHosp_NoOx_Die2_D_Hospital;
+  double *n_IMod_GetHosp_NoOx_Surv1;
+  double *n_IMod_GetHosp_NoOx_Surv1_IMod_GetHosp_NoOx_Surv2;
+  double *n_IMod_GetHosp_NoOx_Surv2_R;
+  double *n_IMod_NoHosp_NoOx_Die1;
+  double *n_IMod_NoHosp_NoOx_Die1_IMod_NoHosp_NoOx_Die2;
+  double *n_IMod_NoHosp_NoOx_Die2_D_Community;
+  double *n_IMod_NoHosp_NoOx_Surv1;
+  double *n_IMod_NoHosp_NoOx_Surv1_IMod_NoHosp_NoOx_Surv2;
+  double *n_IMod_NoHosp_NoOx_Surv2_R;
+  double *n_IRec1_IRec2;
+  double *n_IRec2_R;
+  double *n_ISev_GetICU_GetOx_Die1;
+  double *n_ISev_GetICU_GetOx_Die1_ISev_GetICU_GetOx_Die2;
+  double *n_ISev_GetICU_GetOx_Die2_D_Hospital;
+  double *n_ISev_GetICU_GetOx_Surv1;
+  double *n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2;
+  double *n_ISev_GetICU_GetOx_Surv2_Rec;
+  double *n_ISev_GetICU_NoOx_Die1;
+  double *n_ISev_GetICU_NoOx_Die1_ISev_GetICU_NoOx_Die2;
+  double *n_ISev_GetICU_NoOx_Die2_D_Hospital;
+  double *n_ISev_GetICU_NoOx_Surv1;
+  double *n_ISev_GetICU_NoOx_Surv1_ISev_GetICU_NoOx_Surv2;
+  double *n_ISev_GetICU_NoOx_Surv2_Rec;
+  double *n_ISev_NoICU_NoOx_Die1;
+  double *n_ISev_NoICU_NoOx_Die1_ISev_NoICU_NoOx_Die2;
+  double *n_ISev_NoICU_NoOx_Die2_D_Community;
+  double *n_ISev_NoICU_NoOx_Surv1;
+  double *n_ISev_NoICU_NoOx_Surv1_ISev_NoICU_NoOx_Surv2;
+  double *n_ISev_NoICU_NoOx_Surv2_R;
+  double *n_PE1_PE2;
+  double *n_PE2_I;
+  double *n_PE2_IAsymp;
+  double *n_PE2_ICase1;
+  double *n_PE2_ICase1_Drug_5;
+  double *n_PE2_ICase1_initial;
+  double *n_PE2_ICase1_No_Drug_5;
+  double *n_PE2_IMild;
+  double *n_PE2_IMild_Drug_5;
+  double *n_PE2_IMild_No_Drug_5;
+  double *n_PE2_IMild_or_IAsymp;
+  double *n_PS_PE1;
+  double *n_PS_S;
+  double *n_S_E1;
+  double *n_S_PS;
+  double *number_GetHosp;
+  double *number_GetHosp_NoOx;
+  double *number_GetHosp_Ox;
+  double *number_GetICU;
+  double *number_GetICU_GetOx;
+  double *number_GetICU_GetOx_GetMV;
+  double *number_GetICU_GetOx_NeedMV;
+  double *number_GetICU_GetOx_NoMV;
+  double *number_GetICU_NoOx;
+  double *number_GetICU_NoOx_NeedMV;
+  double *number_NotHosp;
+  double *number_NotICU;
+  double *number_NotICU_NotOx;
+  double *number_NotICU_NotOx_NotMV;
+  double *number_req_Hosp;
+  double *number_req_ICU;
+  double *number_req_ICU_initial;
+  double *number_req_ICU_MV;
+  double *number_req_ICU_MV_initial;
+  double *number_req_ICU_Ox;
+  int offset_output_n_E1_E2;
+  int offset_output_n_E2_I;
+  int offset_output_n_E2_IAsymp;
+  int offset_output_n_E2_ICase1;
+  int offset_output_n_E2_ICase1_Drug_5;
+  int offset_output_n_E2_ICase1_initial;
+  int offset_output_n_E2_ICase1_No_Drug_5;
+  int offset_output_n_E2_IMild;
+  int offset_output_n_E2_IMild_Drug_5;
+  int offset_output_n_E2_IMild_No_Drug_5;
+  int offset_output_n_ICase1_ICase2;
+  int offset_output_n_ICase2_Hosp;
+  int offset_output_n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital;
+  int offset_output_n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec;
+  int offset_output_n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital;
+  int offset_output_n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec;
+  int offset_output_n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital;
+  int offset_output_n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec;
+  int offset_output_n_IMild_R;
+  int offset_output_n_IMod_GetHosp_GetOx_Die2_D_Hospital;
+  int offset_output_n_IMod_GetHosp_GetOx_Surv2_R;
+  int offset_output_n_IMod_GetHosp_NoOx_Die2_D_Hospital;
+  int offset_output_n_IMod_GetHosp_NoOx_Surv2_R;
+  int offset_output_n_IRec1_IRec2;
+  int offset_output_n_IRec2_R;
+  int offset_output_n_ISev_GetICU_GetOx_Die1;
+  int offset_output_n_ISev_GetICU_GetOx_Die2_D_Hospital;
+  int offset_output_n_ISev_GetICU_GetOx_Surv1;
+  int offset_output_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2;
+  int offset_output_n_ISev_GetICU_GetOx_Surv2_Rec;
+  int offset_output_n_ISev_GetICU_NoOx_Die2_D_Hospital;
+  int offset_output_n_ISev_GetICU_NoOx_Surv2_Rec;
+  int offset_output_n_PE1_PE2;
+  int offset_output_n_PE2_I;
+  int offset_output_n_PE2_ICase1;
+  int offset_output_n_PE2_ICase1_Drug_5;
+  int offset_output_n_PE2_ICase1_initial;
+  int offset_output_n_PE2_ICase1_No_Drug_5;
+  int offset_output_n_PE2_IMild;
+  int offset_output_n_PE2_IMild_Drug_5;
+  int offset_output_n_PE2_IMild_No_Drug_5;
+  int offset_output_n_PS_PE1;
+  int offset_output_n_PS_S;
+  int offset_output_n_S_E1;
+  int offset_output_number_GetHosp;
+  int offset_output_number_GetHosp_NoOx;
+  int offset_output_number_GetHosp_Ox;
+  int offset_output_number_GetICU;
+  int offset_output_number_GetICU_GetOx;
+  int offset_output_number_GetICU_GetOx_GetMV;
+  int offset_output_number_GetICU_GetOx_NeedMV;
+  int offset_output_number_GetICU_GetOx_NoMV;
+  int offset_output_number_GetICU_NoOx;
+  int offset_output_number_GetICU_NoOx_NeedMV;
+  int offset_output_number_NotHosp;
+  int offset_output_number_NotICU;
+  int offset_output_number_NotICU_NotOx;
+  int offset_output_number_NotICU_NotOx_NotMV;
+  int offset_output_number_req_Hosp;
+  int offset_output_number_req_ICU;
+  int offset_output_number_req_ICU_initial;
+  int offset_output_number_req_ICU_MV;
+  int offset_output_number_req_ICU_MV_initial;
+  int offset_output_number_req_ICU_Ox;
+  int offset_output_prob_critical_death_get_ICU_get_ox_get_MV;
+  int offset_output_prob_critical_death_get_ICU_get_ox_get_MV_baseline;
+  int offset_output_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13;
+  int offset_output_prob_critical_death_get_ICU_get_ox_no_MV;
+  int offset_output_prob_critical_death_get_ICU_get_ox_no_MV_baseline;
+  int offset_output_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13;
+  int offset_output_prob_critical_death_get_ICU_no_ox_no_MV;
+  int offset_output_prob_critical_death_get_ICU_no_ox_no_MV_baseline;
+  int offset_output_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13;
+  int offset_output_prob_moderate_death_get_hosp_get_ox;
+  int offset_output_prob_moderate_death_get_hosp_get_ox_baseline;
+  int offset_output_prob_moderate_death_get_hosp_get_ox_Drug_11;
+  int offset_output_prob_moderate_death_get_hosp_no_ox;
+  int offset_output_prob_moderate_death_get_hosp_no_ox_baseline;
+  int offset_output_prob_moderate_death_get_hosp_no_ox_Drug_11;
+  int offset_output_prob_severe_death_get_ICU_get_ox;
+  int offset_output_prob_severe_death_get_ICU_get_ox_baseline;
+  int offset_output_prob_severe_death_get_ICU_get_ox_Drug_12;
+  int offset_output_prob_severe_death_get_ICU_no_ox;
+  int offset_output_prob_severe_death_get_ICU_no_ox_baseline;
+  int offset_output_prob_severe_death_get_ICU_no_ox_Drug_12;
+  int offset_variable_D;
+  int offset_variable_D_Community;
+  int offset_variable_D_Hospital;
+  int offset_variable_E1;
+  int offset_variable_E2;
+  int offset_variable_IAsymp;
+  int offset_variable_ICase1;
+  int offset_variable_ICase1_Drug_5;
+  int offset_variable_ICase2;
+  int offset_variable_ICase2_Drug_5;
+  int offset_variable_ICrit_GetICU_GetOx_GetMV_Die1;
+  int offset_variable_ICrit_GetICU_GetOx_GetMV_Die2;
+  int offset_variable_ICrit_GetICU_GetOx_GetMV_Surv1;
+  int offset_variable_ICrit_GetICU_GetOx_GetMV_Surv2;
+  int offset_variable_ICrit_GetICU_GetOx_NoMV_Die1;
+  int offset_variable_ICrit_GetICU_GetOx_NoMV_Die2;
+  int offset_variable_ICrit_GetICU_GetOx_NoMV_Surv1;
+  int offset_variable_ICrit_GetICU_GetOx_NoMV_Surv2;
+  int offset_variable_ICrit_GetICU_NoOx_NoMV_Die1;
+  int offset_variable_ICrit_GetICU_NoOx_NoMV_Die2;
+  int offset_variable_ICrit_GetICU_NoOx_NoMV_Surv1;
+  int offset_variable_ICrit_GetICU_NoOx_NoMV_Surv2;
+  int offset_variable_ICrit_NoICU_NoOx_NoMV_Die1;
+  int offset_variable_ICrit_NoICU_NoOx_NoMV_Die2;
+  int offset_variable_ICrit_NoICU_NoOx_NoMV_Surv1;
+  int offset_variable_ICrit_NoICU_NoOx_NoMV_Surv2;
+  int offset_variable_IMild;
+  int offset_variable_IMild_Drug_5;
+  int offset_variable_IMod_GetHosp_GetOx_Die1;
+  int offset_variable_IMod_GetHosp_GetOx_Die2;
+  int offset_variable_IMod_GetHosp_GetOx_Surv1;
+  int offset_variable_IMod_GetHosp_GetOx_Surv2;
+  int offset_variable_IMod_GetHosp_NoOx_Die1;
+  int offset_variable_IMod_GetHosp_NoOx_Die2;
+  int offset_variable_IMod_GetHosp_NoOx_Surv1;
+  int offset_variable_IMod_GetHosp_NoOx_Surv2;
+  int offset_variable_IMod_NoHosp_NoOx_Die1;
+  int offset_variable_IMod_NoHosp_NoOx_Die2;
+  int offset_variable_IMod_NoHosp_NoOx_Surv1;
+  int offset_variable_IMod_NoHosp_NoOx_Surv2;
+  int offset_variable_IRec1;
+  int offset_variable_IRec2;
+  int offset_variable_ISev_GetICU_GetOx_Die1;
+  int offset_variable_ISev_GetICU_GetOx_Die2;
+  int offset_variable_ISev_GetICU_GetOx_Surv1;
+  int offset_variable_ISev_GetICU_GetOx_Surv2;
+  int offset_variable_ISev_GetICU_NoOx_Die1;
+  int offset_variable_ISev_GetICU_NoOx_Die2;
+  int offset_variable_ISev_GetICU_NoOx_Surv1;
+  int offset_variable_ISev_GetICU_NoOx_Surv2;
+  int offset_variable_ISev_NoICU_NoOx_Die1;
+  int offset_variable_ISev_NoICU_NoOx_Die2;
+  int offset_variable_ISev_NoICU_NoOx_Surv1;
+  int offset_variable_ISev_NoICU_NoOx_Surv2;
+  int offset_variable_PE1;
+  int offset_variable_PE2;
+  int offset_variable_PS;
+  int offset_variable_R;
+  double oxygen_availability_0;
+  double *PE1_0;
+  double *PE2_0;
+  double *prob_asymp;
+  double *prob_critical;
+  double *prob_critical_death_get_ICU_get_ox_get_MV;
+  double *prob_critical_death_get_ICU_get_ox_get_MV_baseline;
+  double *prob_critical_death_get_ICU_get_ox_get_MV_Drug_13;
+  double *prob_critical_death_get_ICU_get_ox_no_MV;
+  double *prob_critical_death_get_ICU_get_ox_no_MV_baseline;
+  double *prob_critical_death_get_ICU_get_ox_no_MV_Drug_13;
+  double *prob_critical_death_get_ICU_no_ox_no_MV;
+  double *prob_critical_death_get_ICU_no_ox_no_MV_baseline;
+  double *prob_critical_death_get_ICU_no_ox_no_MV_Drug_13;
+  double *prob_critical_death_no_ICU_no_ox_no_MV;
+  double *prob_hosp;
+  double *prob_moderate_death_get_hosp_get_ox;
+  double *prob_moderate_death_get_hosp_get_ox_baseline;
+  double *prob_moderate_death_get_hosp_get_ox_Drug_11;
+  double *prob_moderate_death_get_hosp_no_ox;
+  double *prob_moderate_death_get_hosp_no_ox_baseline;
+  double *prob_moderate_death_get_hosp_no_ox_Drug_11;
+  double *prob_moderate_death_no_hosp_no_ox;
+  double *prob_severe;
+  double *prob_severe_death_get_ICU_get_ox;
+  double *prob_severe_death_get_ICU_get_ox_baseline;
+  double *prob_severe_death_get_ICU_get_ox_Drug_12;
+  double *prob_severe_death_get_ICU_no_ox;
+  double *prob_severe_death_get_ICU_no_ox_baseline;
+  double *prob_severe_death_get_ICU_no_ox_Drug_12;
+  double *prob_severe_death_no_ICU_no_ox;
+  double prophylactic_drug_timing_1;
+  double prophylactic_drug_timing_2;
+  double prophylactic_drug_wane;
+  double prophylactic_prop_treat;
+  double *PS_0;
+  double *R_0;
+  double rel_inf_asymp;
+  double rel_inf_mild;
+  double *S_0;
+  double *s_ij;
+  double severe_critical_case_oxygen_consumption_multiplier;
+  double *temp;
+  double *tt_baseline_oxygen_demand;
+  double *tt_beta;
+  double *tt_hosp_beds;
+  double *tt_ICU_beds;
+  double *tt_matrix;
+  double *tt_oxygen_supply;
+} deterministic_apothecary_SEIR_internal;
 apothecary_SEIR_internal* apothecary_SEIR_get_internal(SEXP internal_p, int closed_error);
 static void apothecary_SEIR_finalise(SEXP internal_p);
 SEXP apothecary_SEIR_create(SEXP user);
@@ -1048,6 +1858,19 @@ SEXP apothecary_SEIR_initial_conditions(SEXP internal_p, SEXP step_ptr);
 void apothecary_SEIR_rhs(apothecary_SEIR_internal* internal, size_t step, double * state, double * state_next, double * output);
 void apothecary_SEIR_rhs_dde(size_t n_eq, size_t step, double * state, double * state_next, size_t n_out, double * output, void * internal);
 SEXP apothecary_SEIR_rhs_r(SEXP internal_p, SEXP step, SEXP state);
+deterministic_apothecary_SEIR_internal* deterministic_apothecary_SEIR_get_internal(SEXP internal_p, int closed_error);
+static void deterministic_apothecary_SEIR_finalise(SEXP internal_p);
+SEXP deterministic_apothecary_SEIR_create(SEXP user);
+void deterministic_apothecary_SEIR_initmod_desolve(void(* odeparms) (int *, double *));
+SEXP deterministic_apothecary_SEIR_contents(SEXP internal_p);
+SEXP deterministic_apothecary_SEIR_set_user(SEXP internal_p, SEXP user);
+SEXP deterministic_apothecary_SEIR_metadata(SEXP internal_p);
+SEXP deterministic_apothecary_SEIR_initial_conditions(SEXP internal_p, SEXP t_ptr);
+void deterministic_apothecary_SEIR_rhs(deterministic_apothecary_SEIR_internal* internal, double t, double * state, double * dstatedt, double * output);
+void deterministic_apothecary_SEIR_rhs_dde(size_t neq, double t, double * state, double * dstatedt, void * internal);
+void deterministic_apothecary_SEIR_rhs_desolve(int * neq, double * t, double * state, double * dstatedt, double * output, int * np);
+void deterministic_apothecary_SEIR_output_dde(size_t n_eq, double t, double * state, size_t n_output, double * output, void * internal_p);
+SEXP deterministic_apothecary_SEIR_rhs_r(SEXP internal_p, SEXP t, SEXP state);
 double user_get_scalar_double(SEXP user, const char *name,
                               double default_value, double min, double max);
 int user_get_scalar_int(SEXP user, const char *name,
@@ -7505,6 +8328,5892 @@ SEXP apothecary_SEIR_rhs_r(SEXP internal_p, SEXP step, SEXP state) {
   PutRNGstate();
   UNPROTECT(1);
   return state_next;
+}
+deterministic_apothecary_SEIR_internal* deterministic_apothecary_SEIR_get_internal(SEXP internal_p, int closed_error) {
+  deterministic_apothecary_SEIR_internal *internal = NULL;
+  if (TYPEOF(internal_p) != EXTPTRSXP) {
+    Rf_error("Expected an external pointer");
+  }
+  internal = (deterministic_apothecary_SEIR_internal*) R_ExternalPtrAddr(internal_p);
+  if (!internal && closed_error) {
+    Rf_error("Pointer has been invalidated");
+  }
+  return internal;
+}
+void deterministic_apothecary_SEIR_finalise(SEXP internal_p) {
+  deterministic_apothecary_SEIR_internal *internal = deterministic_apothecary_SEIR_get_internal(internal_p, 0);
+  if (internal_p) {
+    cinterpolate_free(internal->interpolate_baseline_oxygen_demand);
+    cinterpolate_free(internal->interpolate_beta);
+    cinterpolate_free(internal->interpolate_current_hosp_bed_capacity);
+    cinterpolate_free(internal->interpolate_current_ICU_bed_capacity);
+    cinterpolate_free(internal->interpolate_m);
+    cinterpolate_free(internal->interpolate_oxygen_supply);
+    internal->interpolate_baseline_oxygen_demand = NULL;
+    internal->interpolate_beta = NULL;
+    internal->interpolate_current_hosp_bed_capacity = NULL;
+    internal->interpolate_current_ICU_bed_capacity = NULL;
+    internal->interpolate_m = NULL;
+    internal->interpolate_oxygen_supply = NULL;
+    Free(internal->beta_set);
+    Free(internal->D_Community_0);
+    Free(internal->D_Hospital_0);
+    Free(internal->E1_0);
+    Free(internal->E2_0);
+    Free(internal->hosp_bed_capacity);
+    Free(internal->IAsymp_0);
+    Free(internal->ICase1_0);
+    Free(internal->ICase1_Drug_5_0);
+    Free(internal->ICase2_0);
+    Free(internal->ICase2_Drug_5_0);
+    Free(internal->ICrit_GetICU_GetOx_GetMV_Die1_0);
+    Free(internal->ICrit_GetICU_GetOx_GetMV_Die2_0);
+    Free(internal->ICrit_GetICU_GetOx_GetMV_Surv1_0);
+    Free(internal->ICrit_GetICU_GetOx_GetMV_Surv2_0);
+    Free(internal->ICrit_GetICU_GetOx_NoMV_Die1_0);
+    Free(internal->ICrit_GetICU_GetOx_NoMV_Die2_0);
+    Free(internal->ICrit_GetICU_GetOx_NoMV_Surv1_0);
+    Free(internal->ICrit_GetICU_GetOx_NoMV_Surv2_0);
+    Free(internal->ICrit_GetICU_NoOx_NoMV_Die1_0);
+    Free(internal->ICrit_GetICU_NoOx_NoMV_Die2_0);
+    Free(internal->ICrit_GetICU_NoOx_NoMV_Surv1_0);
+    Free(internal->ICrit_GetICU_NoOx_NoMV_Surv2_0);
+    Free(internal->ICrit_NoICU_NoOx_NoMV_Die1_0);
+    Free(internal->ICrit_NoICU_NoOx_NoMV_Die2_0);
+    Free(internal->ICrit_NoICU_NoOx_NoMV_Surv1_0);
+    Free(internal->ICrit_NoICU_NoOx_NoMV_Surv2_0);
+    Free(internal->ICU_bed_capacity);
+    Free(internal->IMild_0);
+    Free(internal->IMild_Drug_5_0);
+    Free(internal->IMod_GetHosp_GetOx_Die1_0);
+    Free(internal->IMod_GetHosp_GetOx_Die2_0);
+    Free(internal->IMod_GetHosp_GetOx_Surv1_0);
+    Free(internal->IMod_GetHosp_GetOx_Surv2_0);
+    Free(internal->IMod_GetHosp_NoOx_Die1_0);
+    Free(internal->IMod_GetHosp_NoOx_Die2_0);
+    Free(internal->IMod_GetHosp_NoOx_Surv1_0);
+    Free(internal->IMod_GetHosp_NoOx_Surv2_0);
+    Free(internal->IMod_NoHosp_NoOx_Die1_0);
+    Free(internal->IMod_NoHosp_NoOx_Die2_0);
+    Free(internal->IMod_NoHosp_NoOx_Surv1_0);
+    Free(internal->IMod_NoHosp_NoOx_Surv2_0);
+    Free(internal->initial_D);
+    Free(internal->initial_D_Community);
+    Free(internal->initial_D_Hospital);
+    Free(internal->initial_E1);
+    Free(internal->initial_E2);
+    Free(internal->initial_IAsymp);
+    Free(internal->initial_ICase1);
+    Free(internal->initial_ICase1_Drug_5);
+    Free(internal->initial_ICase2);
+    Free(internal->initial_ICase2_Drug_5);
+    Free(internal->initial_ICrit_GetICU_GetOx_GetMV_Die1);
+    Free(internal->initial_ICrit_GetICU_GetOx_GetMV_Die2);
+    Free(internal->initial_ICrit_GetICU_GetOx_GetMV_Surv1);
+    Free(internal->initial_ICrit_GetICU_GetOx_GetMV_Surv2);
+    Free(internal->initial_ICrit_GetICU_GetOx_NoMV_Die1);
+    Free(internal->initial_ICrit_GetICU_GetOx_NoMV_Die2);
+    Free(internal->initial_ICrit_GetICU_GetOx_NoMV_Surv1);
+    Free(internal->initial_ICrit_GetICU_GetOx_NoMV_Surv2);
+    Free(internal->initial_ICrit_GetICU_NoOx_NoMV_Die1);
+    Free(internal->initial_ICrit_GetICU_NoOx_NoMV_Die2);
+    Free(internal->initial_ICrit_GetICU_NoOx_NoMV_Surv1);
+    Free(internal->initial_ICrit_GetICU_NoOx_NoMV_Surv2);
+    Free(internal->initial_ICrit_NoICU_NoOx_NoMV_Die1);
+    Free(internal->initial_ICrit_NoICU_NoOx_NoMV_Die2);
+    Free(internal->initial_ICrit_NoICU_NoOx_NoMV_Surv1);
+    Free(internal->initial_ICrit_NoICU_NoOx_NoMV_Surv2);
+    Free(internal->initial_IMild);
+    Free(internal->initial_IMild_Drug_5);
+    Free(internal->initial_IMod_GetHosp_GetOx_Die1);
+    Free(internal->initial_IMod_GetHosp_GetOx_Die2);
+    Free(internal->initial_IMod_GetHosp_GetOx_Surv1);
+    Free(internal->initial_IMod_GetHosp_GetOx_Surv2);
+    Free(internal->initial_IMod_GetHosp_NoOx_Die1);
+    Free(internal->initial_IMod_GetHosp_NoOx_Die2);
+    Free(internal->initial_IMod_GetHosp_NoOx_Surv1);
+    Free(internal->initial_IMod_GetHosp_NoOx_Surv2);
+    Free(internal->initial_IMod_NoHosp_NoOx_Die1);
+    Free(internal->initial_IMod_NoHosp_NoOx_Die2);
+    Free(internal->initial_IMod_NoHosp_NoOx_Surv1);
+    Free(internal->initial_IMod_NoHosp_NoOx_Surv2);
+    Free(internal->initial_IRec1);
+    Free(internal->initial_IRec2);
+    Free(internal->initial_ISev_GetICU_GetOx_Die1);
+    Free(internal->initial_ISev_GetICU_GetOx_Die2);
+    Free(internal->initial_ISev_GetICU_GetOx_Surv1);
+    Free(internal->initial_ISev_GetICU_GetOx_Surv2);
+    Free(internal->initial_ISev_GetICU_NoOx_Die1);
+    Free(internal->initial_ISev_GetICU_NoOx_Die2);
+    Free(internal->initial_ISev_GetICU_NoOx_Surv1);
+    Free(internal->initial_ISev_GetICU_NoOx_Surv2);
+    Free(internal->initial_ISev_NoICU_NoOx_Die1);
+    Free(internal->initial_ISev_NoICU_NoOx_Die2);
+    Free(internal->initial_ISev_NoICU_NoOx_Surv1);
+    Free(internal->initial_ISev_NoICU_NoOx_Surv2);
+    Free(internal->initial_PE1);
+    Free(internal->initial_PE2);
+    Free(internal->initial_PS);
+    Free(internal->initial_R);
+    Free(internal->initial_S);
+    Free(internal->input_baseline_oxygen_demand);
+    Free(internal->input_oxygen_supply);
+    Free(internal->IRec1_0);
+    Free(internal->IRec2_0);
+    Free(internal->ISev_GetICU_GetOx_Die1_0);
+    Free(internal->ISev_GetICU_GetOx_Die2_0);
+    Free(internal->ISev_GetICU_GetOx_Surv1_0);
+    Free(internal->ISev_GetICU_GetOx_Surv2_0);
+    Free(internal->ISev_GetICU_NoOx_Die1_0);
+    Free(internal->ISev_GetICU_NoOx_Die2_0);
+    Free(internal->ISev_GetICU_NoOx_Surv1_0);
+    Free(internal->ISev_GetICU_NoOx_Surv2_0);
+    Free(internal->ISev_NoICU_NoOx_Die1_0);
+    Free(internal->ISev_NoICU_NoOx_Die2_0);
+    Free(internal->ISev_NoICU_NoOx_Surv1_0);
+    Free(internal->ISev_NoICU_NoOx_Surv2_0);
+    Free(internal->lambda);
+    Free(internal->m);
+    Free(internal->mix_mat_set);
+    Free(internal->n_E1_E2);
+    Free(internal->n_E2_I);
+    Free(internal->n_E2_IAsymp);
+    Free(internal->n_E2_ICase1);
+    Free(internal->n_E2_ICase1_Drug_5);
+    Free(internal->n_E2_ICase1_initial);
+    Free(internal->n_E2_ICase1_No_Drug_5);
+    Free(internal->n_E2_IMild);
+    Free(internal->n_E2_IMild_Drug_5);
+    Free(internal->n_E2_IMild_No_Drug_5);
+    Free(internal->n_E2_IMild_or_IAsymp);
+    Free(internal->n_IAsymp_R);
+    Free(internal->n_ICase1_Drug_5_ICase2_Drug_5);
+    Free(internal->n_ICase1_ICase2);
+    Free(internal->n_ICase2_Drug_5_Hosp);
+    Free(internal->n_ICase2_Hosp);
+    Free(internal->n_ICrit_GetICU_GetOx_GetMV_Die1);
+    Free(internal->n_ICrit_GetICU_GetOx_GetMV_Die1_ICrit_GetICU_GetOx_GetMV_Die2);
+    Free(internal->n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital);
+    Free(internal->n_ICrit_GetICU_GetOx_GetMV_Surv1);
+    Free(internal->n_ICrit_GetICU_GetOx_GetMV_Surv1_ICrit_GetICU_GetOx_GetMV_Surv2);
+    Free(internal->n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec);
+    Free(internal->n_ICrit_GetICU_GetOx_NoMV_Die1);
+    Free(internal->n_ICrit_GetICU_GetOx_NoMV_Die1_ICrit_GetICU_GetOx_NoMV_Die2);
+    Free(internal->n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital);
+    Free(internal->n_ICrit_GetICU_GetOx_NoMV_Surv1);
+    Free(internal->n_ICrit_GetICU_GetOx_NoMV_Surv1_ICrit_GetICU_GetOx_NoMV_Surv2);
+    Free(internal->n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec);
+    Free(internal->n_ICrit_GetICU_NoOx_NoMV_Die1);
+    Free(internal->n_ICrit_GetICU_NoOx_NoMV_Die1_ICrit_GetICU_NoOx_NoMV_Die2);
+    Free(internal->n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital);
+    Free(internal->n_ICrit_GetICU_NoOx_NoMV_Surv1);
+    Free(internal->n_ICrit_GetICU_NoOx_NoMV_Surv1_ICrit_GetICU_NoOx_NoMV_Surv2);
+    Free(internal->n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec);
+    Free(internal->n_ICrit_NoICU_NoOx_NoMV_Die1);
+    Free(internal->n_ICrit_NoICU_NoOx_NoMV_Die1_ICrit_NoICU_NoOx_NoMV_Die2);
+    Free(internal->n_ICrit_NoICU_NoOx_NoMV_Die2_D_Community);
+    Free(internal->n_ICrit_NoICU_NoOx_NoMV_Surv1);
+    Free(internal->n_ICrit_NoICU_NoOx_NoMV_Surv1_ICrit_NoICU_NoOx_NoMV_Surv2);
+    Free(internal->n_ICrit_NoICU_NoOx_NoMV_Surv2_R);
+    Free(internal->n_IMild_Drug_5_R);
+    Free(internal->n_IMild_R);
+    Free(internal->n_IMod_GetHosp_GetOx_Die1);
+    Free(internal->n_IMod_GetHosp_GetOx_Die1_IMod_GetHosp_GetOx_Die2);
+    Free(internal->n_IMod_GetHosp_GetOx_Die2_D_Hospital);
+    Free(internal->n_IMod_GetHosp_GetOx_Surv1);
+    Free(internal->n_IMod_GetHosp_GetOx_Surv1_IMod_GetHosp_GetOx_Surv2);
+    Free(internal->n_IMod_GetHosp_GetOx_Surv2_R);
+    Free(internal->n_IMod_GetHosp_NoOx_Die1);
+    Free(internal->n_IMod_GetHosp_NoOx_Die1_IMod_GetHosp_NoOx_Die2);
+    Free(internal->n_IMod_GetHosp_NoOx_Die2_D_Hospital);
+    Free(internal->n_IMod_GetHosp_NoOx_Surv1);
+    Free(internal->n_IMod_GetHosp_NoOx_Surv1_IMod_GetHosp_NoOx_Surv2);
+    Free(internal->n_IMod_GetHosp_NoOx_Surv2_R);
+    Free(internal->n_IMod_NoHosp_NoOx_Die1);
+    Free(internal->n_IMod_NoHosp_NoOx_Die1_IMod_NoHosp_NoOx_Die2);
+    Free(internal->n_IMod_NoHosp_NoOx_Die2_D_Community);
+    Free(internal->n_IMod_NoHosp_NoOx_Surv1);
+    Free(internal->n_IMod_NoHosp_NoOx_Surv1_IMod_NoHosp_NoOx_Surv2);
+    Free(internal->n_IMod_NoHosp_NoOx_Surv2_R);
+    Free(internal->n_IRec1_IRec2);
+    Free(internal->n_IRec2_R);
+    Free(internal->n_ISev_GetICU_GetOx_Die1);
+    Free(internal->n_ISev_GetICU_GetOx_Die1_ISev_GetICU_GetOx_Die2);
+    Free(internal->n_ISev_GetICU_GetOx_Die2_D_Hospital);
+    Free(internal->n_ISev_GetICU_GetOx_Surv1);
+    Free(internal->n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2);
+    Free(internal->n_ISev_GetICU_GetOx_Surv2_Rec);
+    Free(internal->n_ISev_GetICU_NoOx_Die1);
+    Free(internal->n_ISev_GetICU_NoOx_Die1_ISev_GetICU_NoOx_Die2);
+    Free(internal->n_ISev_GetICU_NoOx_Die2_D_Hospital);
+    Free(internal->n_ISev_GetICU_NoOx_Surv1);
+    Free(internal->n_ISev_GetICU_NoOx_Surv1_ISev_GetICU_NoOx_Surv2);
+    Free(internal->n_ISev_GetICU_NoOx_Surv2_Rec);
+    Free(internal->n_ISev_NoICU_NoOx_Die1);
+    Free(internal->n_ISev_NoICU_NoOx_Die1_ISev_NoICU_NoOx_Die2);
+    Free(internal->n_ISev_NoICU_NoOx_Die2_D_Community);
+    Free(internal->n_ISev_NoICU_NoOx_Surv1);
+    Free(internal->n_ISev_NoICU_NoOx_Surv1_ISev_NoICU_NoOx_Surv2);
+    Free(internal->n_ISev_NoICU_NoOx_Surv2_R);
+    Free(internal->n_PE1_PE2);
+    Free(internal->n_PE2_I);
+    Free(internal->n_PE2_IAsymp);
+    Free(internal->n_PE2_ICase1);
+    Free(internal->n_PE2_ICase1_Drug_5);
+    Free(internal->n_PE2_ICase1_initial);
+    Free(internal->n_PE2_ICase1_No_Drug_5);
+    Free(internal->n_PE2_IMild);
+    Free(internal->n_PE2_IMild_Drug_5);
+    Free(internal->n_PE2_IMild_No_Drug_5);
+    Free(internal->n_PE2_IMild_or_IAsymp);
+    Free(internal->n_PS_PE1);
+    Free(internal->n_PS_S);
+    Free(internal->n_S_E1);
+    Free(internal->n_S_PS);
+    Free(internal->number_GetHosp);
+    Free(internal->number_GetHosp_NoOx);
+    Free(internal->number_GetHosp_Ox);
+    Free(internal->number_GetICU);
+    Free(internal->number_GetICU_GetOx);
+    Free(internal->number_GetICU_GetOx_GetMV);
+    Free(internal->number_GetICU_GetOx_NeedMV);
+    Free(internal->number_GetICU_GetOx_NoMV);
+    Free(internal->number_GetICU_NoOx);
+    Free(internal->number_GetICU_NoOx_NeedMV);
+    Free(internal->number_NotHosp);
+    Free(internal->number_NotICU);
+    Free(internal->number_NotICU_NotOx);
+    Free(internal->number_NotICU_NotOx_NotMV);
+    Free(internal->number_req_Hosp);
+    Free(internal->number_req_ICU);
+    Free(internal->number_req_ICU_initial);
+    Free(internal->number_req_ICU_MV);
+    Free(internal->number_req_ICU_MV_initial);
+    Free(internal->number_req_ICU_Ox);
+    Free(internal->PE1_0);
+    Free(internal->PE2_0);
+    Free(internal->prob_asymp);
+    Free(internal->prob_critical);
+    Free(internal->prob_critical_death_get_ICU_get_ox_get_MV);
+    Free(internal->prob_critical_death_get_ICU_get_ox_get_MV_baseline);
+    Free(internal->prob_critical_death_get_ICU_get_ox_get_MV_Drug_13);
+    Free(internal->prob_critical_death_get_ICU_get_ox_no_MV);
+    Free(internal->prob_critical_death_get_ICU_get_ox_no_MV_baseline);
+    Free(internal->prob_critical_death_get_ICU_get_ox_no_MV_Drug_13);
+    Free(internal->prob_critical_death_get_ICU_no_ox_no_MV);
+    Free(internal->prob_critical_death_get_ICU_no_ox_no_MV_baseline);
+    Free(internal->prob_critical_death_get_ICU_no_ox_no_MV_Drug_13);
+    Free(internal->prob_critical_death_no_ICU_no_ox_no_MV);
+    Free(internal->prob_hosp);
+    Free(internal->prob_moderate_death_get_hosp_get_ox);
+    Free(internal->prob_moderate_death_get_hosp_get_ox_baseline);
+    Free(internal->prob_moderate_death_get_hosp_get_ox_Drug_11);
+    Free(internal->prob_moderate_death_get_hosp_no_ox);
+    Free(internal->prob_moderate_death_get_hosp_no_ox_baseline);
+    Free(internal->prob_moderate_death_get_hosp_no_ox_Drug_11);
+    Free(internal->prob_moderate_death_no_hosp_no_ox);
+    Free(internal->prob_severe);
+    Free(internal->prob_severe_death_get_ICU_get_ox);
+    Free(internal->prob_severe_death_get_ICU_get_ox_baseline);
+    Free(internal->prob_severe_death_get_ICU_get_ox_Drug_12);
+    Free(internal->prob_severe_death_get_ICU_no_ox);
+    Free(internal->prob_severe_death_get_ICU_no_ox_baseline);
+    Free(internal->prob_severe_death_get_ICU_no_ox_Drug_12);
+    Free(internal->prob_severe_death_no_ICU_no_ox);
+    Free(internal->PS_0);
+    Free(internal->R_0);
+    Free(internal->S_0);
+    Free(internal->s_ij);
+    Free(internal->temp);
+    Free(internal->tt_baseline_oxygen_demand);
+    Free(internal->tt_beta);
+    Free(internal->tt_hosp_beds);
+    Free(internal->tt_ICU_beds);
+    Free(internal->tt_matrix);
+    Free(internal->tt_oxygen_supply);
+    Free(internal);
+    R_ClearExternalPtr(internal_p);
+  }
+}
+SEXP deterministic_apothecary_SEIR_create(SEXP user) {
+  deterministic_apothecary_SEIR_internal *internal = (deterministic_apothecary_SEIR_internal*) Calloc(1, deterministic_apothecary_SEIR_internal);
+  internal->beta_set = NULL;
+  internal->D_Community_0 = NULL;
+  internal->D_Hospital_0 = NULL;
+  internal->E1_0 = NULL;
+  internal->E2_0 = NULL;
+  internal->hosp_bed_capacity = NULL;
+  internal->IAsymp_0 = NULL;
+  internal->ICase1_0 = NULL;
+  internal->ICase1_Drug_5_0 = NULL;
+  internal->ICase2_0 = NULL;
+  internal->ICase2_Drug_5_0 = NULL;
+  internal->ICrit_GetICU_GetOx_GetMV_Die1_0 = NULL;
+  internal->ICrit_GetICU_GetOx_GetMV_Die2_0 = NULL;
+  internal->ICrit_GetICU_GetOx_GetMV_Surv1_0 = NULL;
+  internal->ICrit_GetICU_GetOx_GetMV_Surv2_0 = NULL;
+  internal->ICrit_GetICU_GetOx_NoMV_Die1_0 = NULL;
+  internal->ICrit_GetICU_GetOx_NoMV_Die2_0 = NULL;
+  internal->ICrit_GetICU_GetOx_NoMV_Surv1_0 = NULL;
+  internal->ICrit_GetICU_GetOx_NoMV_Surv2_0 = NULL;
+  internal->ICrit_GetICU_NoOx_NoMV_Die1_0 = NULL;
+  internal->ICrit_GetICU_NoOx_NoMV_Die2_0 = NULL;
+  internal->ICrit_GetICU_NoOx_NoMV_Surv1_0 = NULL;
+  internal->ICrit_GetICU_NoOx_NoMV_Surv2_0 = NULL;
+  internal->ICrit_NoICU_NoOx_NoMV_Die1_0 = NULL;
+  internal->ICrit_NoICU_NoOx_NoMV_Die2_0 = NULL;
+  internal->ICrit_NoICU_NoOx_NoMV_Surv1_0 = NULL;
+  internal->ICrit_NoICU_NoOx_NoMV_Surv2_0 = NULL;
+  internal->ICU_bed_capacity = NULL;
+  internal->IMild_0 = NULL;
+  internal->IMild_Drug_5_0 = NULL;
+  internal->IMod_GetHosp_GetOx_Die1_0 = NULL;
+  internal->IMod_GetHosp_GetOx_Die2_0 = NULL;
+  internal->IMod_GetHosp_GetOx_Surv1_0 = NULL;
+  internal->IMod_GetHosp_GetOx_Surv2_0 = NULL;
+  internal->IMod_GetHosp_NoOx_Die1_0 = NULL;
+  internal->IMod_GetHosp_NoOx_Die2_0 = NULL;
+  internal->IMod_GetHosp_NoOx_Surv1_0 = NULL;
+  internal->IMod_GetHosp_NoOx_Surv2_0 = NULL;
+  internal->IMod_NoHosp_NoOx_Die1_0 = NULL;
+  internal->IMod_NoHosp_NoOx_Die2_0 = NULL;
+  internal->IMod_NoHosp_NoOx_Surv1_0 = NULL;
+  internal->IMod_NoHosp_NoOx_Surv2_0 = NULL;
+  internal->initial_D = NULL;
+  internal->initial_D_Community = NULL;
+  internal->initial_D_Hospital = NULL;
+  internal->initial_E1 = NULL;
+  internal->initial_E2 = NULL;
+  internal->initial_IAsymp = NULL;
+  internal->initial_ICase1 = NULL;
+  internal->initial_ICase1_Drug_5 = NULL;
+  internal->initial_ICase2 = NULL;
+  internal->initial_ICase2_Drug_5 = NULL;
+  internal->initial_ICrit_GetICU_GetOx_GetMV_Die1 = NULL;
+  internal->initial_ICrit_GetICU_GetOx_GetMV_Die2 = NULL;
+  internal->initial_ICrit_GetICU_GetOx_GetMV_Surv1 = NULL;
+  internal->initial_ICrit_GetICU_GetOx_GetMV_Surv2 = NULL;
+  internal->initial_ICrit_GetICU_GetOx_NoMV_Die1 = NULL;
+  internal->initial_ICrit_GetICU_GetOx_NoMV_Die2 = NULL;
+  internal->initial_ICrit_GetICU_GetOx_NoMV_Surv1 = NULL;
+  internal->initial_ICrit_GetICU_GetOx_NoMV_Surv2 = NULL;
+  internal->initial_ICrit_GetICU_NoOx_NoMV_Die1 = NULL;
+  internal->initial_ICrit_GetICU_NoOx_NoMV_Die2 = NULL;
+  internal->initial_ICrit_GetICU_NoOx_NoMV_Surv1 = NULL;
+  internal->initial_ICrit_GetICU_NoOx_NoMV_Surv2 = NULL;
+  internal->initial_ICrit_NoICU_NoOx_NoMV_Die1 = NULL;
+  internal->initial_ICrit_NoICU_NoOx_NoMV_Die2 = NULL;
+  internal->initial_ICrit_NoICU_NoOx_NoMV_Surv1 = NULL;
+  internal->initial_ICrit_NoICU_NoOx_NoMV_Surv2 = NULL;
+  internal->initial_IMild = NULL;
+  internal->initial_IMild_Drug_5 = NULL;
+  internal->initial_IMod_GetHosp_GetOx_Die1 = NULL;
+  internal->initial_IMod_GetHosp_GetOx_Die2 = NULL;
+  internal->initial_IMod_GetHosp_GetOx_Surv1 = NULL;
+  internal->initial_IMod_GetHosp_GetOx_Surv2 = NULL;
+  internal->initial_IMod_GetHosp_NoOx_Die1 = NULL;
+  internal->initial_IMod_GetHosp_NoOx_Die2 = NULL;
+  internal->initial_IMod_GetHosp_NoOx_Surv1 = NULL;
+  internal->initial_IMod_GetHosp_NoOx_Surv2 = NULL;
+  internal->initial_IMod_NoHosp_NoOx_Die1 = NULL;
+  internal->initial_IMod_NoHosp_NoOx_Die2 = NULL;
+  internal->initial_IMod_NoHosp_NoOx_Surv1 = NULL;
+  internal->initial_IMod_NoHosp_NoOx_Surv2 = NULL;
+  internal->initial_IRec1 = NULL;
+  internal->initial_IRec2 = NULL;
+  internal->initial_ISev_GetICU_GetOx_Die1 = NULL;
+  internal->initial_ISev_GetICU_GetOx_Die2 = NULL;
+  internal->initial_ISev_GetICU_GetOx_Surv1 = NULL;
+  internal->initial_ISev_GetICU_GetOx_Surv2 = NULL;
+  internal->initial_ISev_GetICU_NoOx_Die1 = NULL;
+  internal->initial_ISev_GetICU_NoOx_Die2 = NULL;
+  internal->initial_ISev_GetICU_NoOx_Surv1 = NULL;
+  internal->initial_ISev_GetICU_NoOx_Surv2 = NULL;
+  internal->initial_ISev_NoICU_NoOx_Die1 = NULL;
+  internal->initial_ISev_NoICU_NoOx_Die2 = NULL;
+  internal->initial_ISev_NoICU_NoOx_Surv1 = NULL;
+  internal->initial_ISev_NoICU_NoOx_Surv2 = NULL;
+  internal->initial_PE1 = NULL;
+  internal->initial_PE2 = NULL;
+  internal->initial_PS = NULL;
+  internal->initial_R = NULL;
+  internal->initial_S = NULL;
+  internal->input_baseline_oxygen_demand = NULL;
+  internal->input_oxygen_supply = NULL;
+  internal->interpolate_m = NULL;
+  internal->IRec1_0 = NULL;
+  internal->IRec2_0 = NULL;
+  internal->ISev_GetICU_GetOx_Die1_0 = NULL;
+  internal->ISev_GetICU_GetOx_Die2_0 = NULL;
+  internal->ISev_GetICU_GetOx_Surv1_0 = NULL;
+  internal->ISev_GetICU_GetOx_Surv2_0 = NULL;
+  internal->ISev_GetICU_NoOx_Die1_0 = NULL;
+  internal->ISev_GetICU_NoOx_Die2_0 = NULL;
+  internal->ISev_GetICU_NoOx_Surv1_0 = NULL;
+  internal->ISev_GetICU_NoOx_Surv2_0 = NULL;
+  internal->ISev_NoICU_NoOx_Die1_0 = NULL;
+  internal->ISev_NoICU_NoOx_Die2_0 = NULL;
+  internal->ISev_NoICU_NoOx_Surv1_0 = NULL;
+  internal->ISev_NoICU_NoOx_Surv2_0 = NULL;
+  internal->lambda = NULL;
+  internal->m = NULL;
+  internal->mix_mat_set = NULL;
+  internal->n_E1_E2 = NULL;
+  internal->n_E2_I = NULL;
+  internal->n_E2_IAsymp = NULL;
+  internal->n_E2_ICase1 = NULL;
+  internal->n_E2_ICase1_Drug_5 = NULL;
+  internal->n_E2_ICase1_initial = NULL;
+  internal->n_E2_ICase1_No_Drug_5 = NULL;
+  internal->n_E2_IMild = NULL;
+  internal->n_E2_IMild_Drug_5 = NULL;
+  internal->n_E2_IMild_No_Drug_5 = NULL;
+  internal->n_E2_IMild_or_IAsymp = NULL;
+  internal->n_IAsymp_R = NULL;
+  internal->n_ICase1_Drug_5_ICase2_Drug_5 = NULL;
+  internal->n_ICase1_ICase2 = NULL;
+  internal->n_ICase2_Drug_5_Hosp = NULL;
+  internal->n_ICase2_Hosp = NULL;
+  internal->n_ICrit_GetICU_GetOx_GetMV_Die1 = NULL;
+  internal->n_ICrit_GetICU_GetOx_GetMV_Die1_ICrit_GetICU_GetOx_GetMV_Die2 = NULL;
+  internal->n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital = NULL;
+  internal->n_ICrit_GetICU_GetOx_GetMV_Surv1 = NULL;
+  internal->n_ICrit_GetICU_GetOx_GetMV_Surv1_ICrit_GetICU_GetOx_GetMV_Surv2 = NULL;
+  internal->n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec = NULL;
+  internal->n_ICrit_GetICU_GetOx_NoMV_Die1 = NULL;
+  internal->n_ICrit_GetICU_GetOx_NoMV_Die1_ICrit_GetICU_GetOx_NoMV_Die2 = NULL;
+  internal->n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital = NULL;
+  internal->n_ICrit_GetICU_GetOx_NoMV_Surv1 = NULL;
+  internal->n_ICrit_GetICU_GetOx_NoMV_Surv1_ICrit_GetICU_GetOx_NoMV_Surv2 = NULL;
+  internal->n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec = NULL;
+  internal->n_ICrit_GetICU_NoOx_NoMV_Die1 = NULL;
+  internal->n_ICrit_GetICU_NoOx_NoMV_Die1_ICrit_GetICU_NoOx_NoMV_Die2 = NULL;
+  internal->n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital = NULL;
+  internal->n_ICrit_GetICU_NoOx_NoMV_Surv1 = NULL;
+  internal->n_ICrit_GetICU_NoOx_NoMV_Surv1_ICrit_GetICU_NoOx_NoMV_Surv2 = NULL;
+  internal->n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec = NULL;
+  internal->n_ICrit_NoICU_NoOx_NoMV_Die1 = NULL;
+  internal->n_ICrit_NoICU_NoOx_NoMV_Die1_ICrit_NoICU_NoOx_NoMV_Die2 = NULL;
+  internal->n_ICrit_NoICU_NoOx_NoMV_Die2_D_Community = NULL;
+  internal->n_ICrit_NoICU_NoOx_NoMV_Surv1 = NULL;
+  internal->n_ICrit_NoICU_NoOx_NoMV_Surv1_ICrit_NoICU_NoOx_NoMV_Surv2 = NULL;
+  internal->n_ICrit_NoICU_NoOx_NoMV_Surv2_R = NULL;
+  internal->n_IMild_Drug_5_R = NULL;
+  internal->n_IMild_R = NULL;
+  internal->n_IMod_GetHosp_GetOx_Die1 = NULL;
+  internal->n_IMod_GetHosp_GetOx_Die1_IMod_GetHosp_GetOx_Die2 = NULL;
+  internal->n_IMod_GetHosp_GetOx_Die2_D_Hospital = NULL;
+  internal->n_IMod_GetHosp_GetOx_Surv1 = NULL;
+  internal->n_IMod_GetHosp_GetOx_Surv1_IMod_GetHosp_GetOx_Surv2 = NULL;
+  internal->n_IMod_GetHosp_GetOx_Surv2_R = NULL;
+  internal->n_IMod_GetHosp_NoOx_Die1 = NULL;
+  internal->n_IMod_GetHosp_NoOx_Die1_IMod_GetHosp_NoOx_Die2 = NULL;
+  internal->n_IMod_GetHosp_NoOx_Die2_D_Hospital = NULL;
+  internal->n_IMod_GetHosp_NoOx_Surv1 = NULL;
+  internal->n_IMod_GetHosp_NoOx_Surv1_IMod_GetHosp_NoOx_Surv2 = NULL;
+  internal->n_IMod_GetHosp_NoOx_Surv2_R = NULL;
+  internal->n_IMod_NoHosp_NoOx_Die1 = NULL;
+  internal->n_IMod_NoHosp_NoOx_Die1_IMod_NoHosp_NoOx_Die2 = NULL;
+  internal->n_IMod_NoHosp_NoOx_Die2_D_Community = NULL;
+  internal->n_IMod_NoHosp_NoOx_Surv1 = NULL;
+  internal->n_IMod_NoHosp_NoOx_Surv1_IMod_NoHosp_NoOx_Surv2 = NULL;
+  internal->n_IMod_NoHosp_NoOx_Surv2_R = NULL;
+  internal->n_IRec1_IRec2 = NULL;
+  internal->n_IRec2_R = NULL;
+  internal->n_ISev_GetICU_GetOx_Die1 = NULL;
+  internal->n_ISev_GetICU_GetOx_Die1_ISev_GetICU_GetOx_Die2 = NULL;
+  internal->n_ISev_GetICU_GetOx_Die2_D_Hospital = NULL;
+  internal->n_ISev_GetICU_GetOx_Surv1 = NULL;
+  internal->n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 = NULL;
+  internal->n_ISev_GetICU_GetOx_Surv2_Rec = NULL;
+  internal->n_ISev_GetICU_NoOx_Die1 = NULL;
+  internal->n_ISev_GetICU_NoOx_Die1_ISev_GetICU_NoOx_Die2 = NULL;
+  internal->n_ISev_GetICU_NoOx_Die2_D_Hospital = NULL;
+  internal->n_ISev_GetICU_NoOx_Surv1 = NULL;
+  internal->n_ISev_GetICU_NoOx_Surv1_ISev_GetICU_NoOx_Surv2 = NULL;
+  internal->n_ISev_GetICU_NoOx_Surv2_Rec = NULL;
+  internal->n_ISev_NoICU_NoOx_Die1 = NULL;
+  internal->n_ISev_NoICU_NoOx_Die1_ISev_NoICU_NoOx_Die2 = NULL;
+  internal->n_ISev_NoICU_NoOx_Die2_D_Community = NULL;
+  internal->n_ISev_NoICU_NoOx_Surv1 = NULL;
+  internal->n_ISev_NoICU_NoOx_Surv1_ISev_NoICU_NoOx_Surv2 = NULL;
+  internal->n_ISev_NoICU_NoOx_Surv2_R = NULL;
+  internal->n_PE1_PE2 = NULL;
+  internal->n_PE2_I = NULL;
+  internal->n_PE2_IAsymp = NULL;
+  internal->n_PE2_ICase1 = NULL;
+  internal->n_PE2_ICase1_Drug_5 = NULL;
+  internal->n_PE2_ICase1_initial = NULL;
+  internal->n_PE2_ICase1_No_Drug_5 = NULL;
+  internal->n_PE2_IMild = NULL;
+  internal->n_PE2_IMild_Drug_5 = NULL;
+  internal->n_PE2_IMild_No_Drug_5 = NULL;
+  internal->n_PE2_IMild_or_IAsymp = NULL;
+  internal->n_PS_PE1 = NULL;
+  internal->n_PS_S = NULL;
+  internal->n_S_E1 = NULL;
+  internal->n_S_PS = NULL;
+  internal->number_GetHosp = NULL;
+  internal->number_GetHosp_NoOx = NULL;
+  internal->number_GetHosp_Ox = NULL;
+  internal->number_GetICU = NULL;
+  internal->number_GetICU_GetOx = NULL;
+  internal->number_GetICU_GetOx_GetMV = NULL;
+  internal->number_GetICU_GetOx_NeedMV = NULL;
+  internal->number_GetICU_GetOx_NoMV = NULL;
+  internal->number_GetICU_NoOx = NULL;
+  internal->number_GetICU_NoOx_NeedMV = NULL;
+  internal->number_NotHosp = NULL;
+  internal->number_NotICU = NULL;
+  internal->number_NotICU_NotOx = NULL;
+  internal->number_NotICU_NotOx_NotMV = NULL;
+  internal->number_req_Hosp = NULL;
+  internal->number_req_ICU = NULL;
+  internal->number_req_ICU_initial = NULL;
+  internal->number_req_ICU_MV = NULL;
+  internal->number_req_ICU_MV_initial = NULL;
+  internal->number_req_ICU_Ox = NULL;
+  internal->PE1_0 = NULL;
+  internal->PE2_0 = NULL;
+  internal->prob_asymp = NULL;
+  internal->prob_critical = NULL;
+  internal->prob_critical_death_get_ICU_get_ox_get_MV = NULL;
+  internal->prob_critical_death_get_ICU_get_ox_get_MV_baseline = NULL;
+  internal->prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 = NULL;
+  internal->prob_critical_death_get_ICU_get_ox_no_MV = NULL;
+  internal->prob_critical_death_get_ICU_get_ox_no_MV_baseline = NULL;
+  internal->prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 = NULL;
+  internal->prob_critical_death_get_ICU_no_ox_no_MV = NULL;
+  internal->prob_critical_death_get_ICU_no_ox_no_MV_baseline = NULL;
+  internal->prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 = NULL;
+  internal->prob_critical_death_no_ICU_no_ox_no_MV = NULL;
+  internal->prob_hosp = NULL;
+  internal->prob_moderate_death_get_hosp_get_ox = NULL;
+  internal->prob_moderate_death_get_hosp_get_ox_baseline = NULL;
+  internal->prob_moderate_death_get_hosp_get_ox_Drug_11 = NULL;
+  internal->prob_moderate_death_get_hosp_no_ox = NULL;
+  internal->prob_moderate_death_get_hosp_no_ox_baseline = NULL;
+  internal->prob_moderate_death_get_hosp_no_ox_Drug_11 = NULL;
+  internal->prob_moderate_death_no_hosp_no_ox = NULL;
+  internal->prob_severe = NULL;
+  internal->prob_severe_death_get_ICU_get_ox = NULL;
+  internal->prob_severe_death_get_ICU_get_ox_baseline = NULL;
+  internal->prob_severe_death_get_ICU_get_ox_Drug_12 = NULL;
+  internal->prob_severe_death_get_ICU_no_ox = NULL;
+  internal->prob_severe_death_get_ICU_no_ox_baseline = NULL;
+  internal->prob_severe_death_get_ICU_no_ox_Drug_12 = NULL;
+  internal->prob_severe_death_no_ICU_no_ox = NULL;
+  internal->PS_0 = NULL;
+  internal->R_0 = NULL;
+  internal->S_0 = NULL;
+  internal->s_ij = NULL;
+  internal->temp = NULL;
+  internal->tt_baseline_oxygen_demand = NULL;
+  internal->tt_beta = NULL;
+  internal->tt_hosp_beds = NULL;
+  internal->tt_ICU_beds = NULL;
+  internal->tt_matrix = NULL;
+  internal->tt_oxygen_supply = NULL;
+  internal->beta_set = NULL;
+  internal->D_Community_0 = NULL;
+  internal->D_Hospital_0 = NULL;
+  internal->drug_1_effect_size = NA_REAL;
+  internal->drug_1_indic = NA_REAL;
+  internal->drug_10_GetOx_GetMV_effect_size = NA_REAL;
+  internal->drug_10_GetOx_NoMV_effect_size = NA_REAL;
+  internal->drug_10_indic_ICrit_GetICU_GetOx_GetMV = NA_REAL;
+  internal->drug_10_indic_ICrit_GetICU_GetOx_NoMV = NA_REAL;
+  internal->drug_10_indic_ICrit_GetICU_NoOx_NoMV = NA_REAL;
+  internal->drug_10_NoOx_NoMV_effect_size = NA_REAL;
+  internal->drug_10_prop_treat = NA_REAL;
+  internal->drug_11_GetOx_effect_size = NA_REAL;
+  internal->drug_11_indic_IMod_GetHosp_GetOx = NA_REAL;
+  internal->drug_11_indic_IMod_GetHosp_NoOx = NA_REAL;
+  internal->drug_11_NoOx_effect_size = NA_REAL;
+  internal->drug_11_prop_treat = NA_REAL;
+  internal->drug_12_GetOx_effect_size = NA_REAL;
+  internal->drug_12_indic_ISev_GetICU_GetOx = NA_REAL;
+  internal->drug_12_indic_ISev_GetICU_NoOx = NA_REAL;
+  internal->drug_12_NoOx_effect_size = NA_REAL;
+  internal->drug_12_prop_treat = NA_REAL;
+  internal->drug_13_GetOx_GetMV_effect_size = NA_REAL;
+  internal->drug_13_GetOx_NoMV_effect_size = NA_REAL;
+  internal->drug_13_indic_ICrit_GetICU_GetOx_GetMV = NA_REAL;
+  internal->drug_13_indic_ICrit_GetICU_GetOx_NoMV = NA_REAL;
+  internal->drug_13_indic_ICrit_GetICU_NoOx_NoMV = NA_REAL;
+  internal->drug_13_NoOx_NoMV_effect_size = NA_REAL;
+  internal->drug_13_prop_treat = NA_REAL;
+  internal->drug_2_effect_size = NA_REAL;
+  internal->drug_2_indic = NA_REAL;
+  internal->drug_3_effect_size = NA_REAL;
+  internal->drug_3_indic = NA_REAL;
+  internal->drug_3_prop_treat = NA_REAL;
+  internal->drug_4_effect_size = NA_REAL;
+  internal->drug_4_indic = NA_REAL;
+  internal->drug_4_prop_treat = NA_REAL;
+  internal->drug_5_effect_size = NA_REAL;
+  internal->drug_5_indic_ICase = NA_REAL;
+  internal->drug_5_indic_IMild = NA_REAL;
+  internal->drug_5_prop_treat = NA_REAL;
+  internal->drug_6_effect_size = NA_REAL;
+  internal->drug_6_indic = NA_REAL;
+  internal->drug_6_prop_treat = NA_REAL;
+  internal->drug_7_effect_size = NA_REAL;
+  internal->drug_7_indic = NA_REAL;
+  internal->drug_7_prop_treat = NA_REAL;
+  internal->drug_8_GetOx_effect_size = NA_REAL;
+  internal->drug_8_indic_IMod_GetHosp_GetOx = NA_REAL;
+  internal->drug_8_indic_IMod_GetHosp_NoOx = NA_REAL;
+  internal->drug_8_NoOx_effect_size = NA_REAL;
+  internal->drug_8_prop_treat = NA_REAL;
+  internal->drug_9_GetOx_effect_size = NA_REAL;
+  internal->drug_9_indic_ISev_GetICU_GetOx = NA_REAL;
+  internal->drug_9_indic_ISev_GetICU_NoOx = NA_REAL;
+  internal->drug_9_NoOx_effect_size = NA_REAL;
+  internal->drug_9_prop_treat = NA_REAL;
+  internal->E1_0 = NULL;
+  internal->E2_0 = NULL;
+  internal->gamma_E = NA_REAL;
+  internal->gamma_IAsymp = NA_REAL;
+  internal->gamma_ICase = NA_REAL;
+  internal->gamma_ICrit_GetICU_GetOx_GetMV_Die = NA_REAL;
+  internal->gamma_ICrit_GetICU_GetOx_GetMV_Surv = NA_REAL;
+  internal->gamma_ICrit_GetICU_GetOx_NoMV_Die = NA_REAL;
+  internal->gamma_ICrit_GetICU_GetOx_NoMV_Surv = NA_REAL;
+  internal->gamma_ICrit_GetICU_NoOx_NoMV_Die = NA_REAL;
+  internal->gamma_ICrit_GetICU_NoOx_NoMV_Surv = NA_REAL;
+  internal->gamma_ICrit_NoICU_NoOx_NoMV_Die = NA_REAL;
+  internal->gamma_ICrit_NoICU_NoOx_NoMV_Surv = NA_REAL;
+  internal->gamma_IMild = NA_REAL;
+  internal->gamma_IMod_GetHosp_GetOx_Die = NA_REAL;
+  internal->gamma_IMod_GetHosp_GetOx_Surv = NA_REAL;
+  internal->gamma_IMod_GetHosp_NoOx_Die = NA_REAL;
+  internal->gamma_IMod_GetHosp_NoOx_Surv = NA_REAL;
+  internal->gamma_IMod_NoHosp_NoOx_Die = NA_REAL;
+  internal->gamma_IMod_NoHosp_NoOx_Surv = NA_REAL;
+  internal->gamma_ISev_GetICU_GetOx_Die = NA_REAL;
+  internal->gamma_ISev_GetICU_GetOx_Surv = NA_REAL;
+  internal->gamma_ISev_GetICU_NoOx_Die = NA_REAL;
+  internal->gamma_ISev_GetICU_NoOx_Surv = NA_REAL;
+  internal->gamma_ISev_NoICU_NoOx_Die = NA_REAL;
+  internal->gamma_ISev_NoICU_NoOx_Surv = NA_REAL;
+  internal->gamma_rec = NA_REAL;
+  internal->hosp_bed_capacity = NULL;
+  internal->IAsymp_0 = NULL;
+  internal->ICase1_0 = NULL;
+  internal->ICase1_Drug_5_0 = NULL;
+  internal->ICase2_0 = NULL;
+  internal->ICase2_Drug_5_0 = NULL;
+  internal->ICrit_GetICU_GetOx_GetMV_Die1_0 = NULL;
+  internal->ICrit_GetICU_GetOx_GetMV_Die2_0 = NULL;
+  internal->ICrit_GetICU_GetOx_GetMV_Surv1_0 = NULL;
+  internal->ICrit_GetICU_GetOx_GetMV_Surv2_0 = NULL;
+  internal->ICrit_GetICU_GetOx_NoMV_Die1_0 = NULL;
+  internal->ICrit_GetICU_GetOx_NoMV_Die2_0 = NULL;
+  internal->ICrit_GetICU_GetOx_NoMV_Surv1_0 = NULL;
+  internal->ICrit_GetICU_GetOx_NoMV_Surv2_0 = NULL;
+  internal->ICrit_GetICU_NoOx_NoMV_Die1_0 = NULL;
+  internal->ICrit_GetICU_NoOx_NoMV_Die2_0 = NULL;
+  internal->ICrit_GetICU_NoOx_NoMV_Surv1_0 = NULL;
+  internal->ICrit_GetICU_NoOx_NoMV_Surv2_0 = NULL;
+  internal->ICrit_NoICU_NoOx_NoMV_Die1_0 = NULL;
+  internal->ICrit_NoICU_NoOx_NoMV_Die2_0 = NULL;
+  internal->ICrit_NoICU_NoOx_NoMV_Surv1_0 = NULL;
+  internal->ICrit_NoICU_NoOx_NoMV_Surv2_0 = NULL;
+  internal->ICU_bed_capacity = NULL;
+  internal->IMild_0 = NULL;
+  internal->IMild_Drug_5_0 = NULL;
+  internal->IMod_GetHosp_GetOx_Die1_0 = NULL;
+  internal->IMod_GetHosp_GetOx_Die2_0 = NULL;
+  internal->IMod_GetHosp_GetOx_Surv1_0 = NULL;
+  internal->IMod_GetHosp_GetOx_Surv2_0 = NULL;
+  internal->IMod_GetHosp_NoOx_Die1_0 = NULL;
+  internal->IMod_GetHosp_NoOx_Die2_0 = NULL;
+  internal->IMod_GetHosp_NoOx_Surv1_0 = NULL;
+  internal->IMod_GetHosp_NoOx_Surv2_0 = NULL;
+  internal->IMod_NoHosp_NoOx_Die1_0 = NULL;
+  internal->IMod_NoHosp_NoOx_Die2_0 = NULL;
+  internal->IMod_NoHosp_NoOx_Surv1_0 = NULL;
+  internal->IMod_NoHosp_NoOx_Surv2_0 = NULL;
+  internal->input_baseline_oxygen_demand = NULL;
+  internal->input_oxygen_supply = NULL;
+  internal->IRec1_0 = NULL;
+  internal->IRec2_0 = NULL;
+  internal->ISev_GetICU_GetOx_Die1_0 = NULL;
+  internal->ISev_GetICU_GetOx_Die2_0 = NULL;
+  internal->ISev_GetICU_GetOx_Surv1_0 = NULL;
+  internal->ISev_GetICU_GetOx_Surv2_0 = NULL;
+  internal->ISev_GetICU_NoOx_Die1_0 = NULL;
+  internal->ISev_GetICU_NoOx_Die2_0 = NULL;
+  internal->ISev_GetICU_NoOx_Surv1_0 = NULL;
+  internal->ISev_GetICU_NoOx_Surv2_0 = NULL;
+  internal->ISev_NoICU_NoOx_Die1_0 = NULL;
+  internal->ISev_NoICU_NoOx_Die2_0 = NULL;
+  internal->ISev_NoICU_NoOx_Surv1_0 = NULL;
+  internal->ISev_NoICU_NoOx_Surv2_0 = NULL;
+  internal->max_leftover = NA_REAL;
+  internal->mix_mat_set = NULL;
+  internal->MV_capacity = NA_REAL;
+  internal->N_age = NA_INTEGER;
+  internal->oxygen_availability_0 = NA_REAL;
+  internal->PE1_0 = NULL;
+  internal->PE2_0 = NULL;
+  internal->prob_asymp = NULL;
+  internal->prob_critical = NULL;
+  internal->prob_critical_death_get_ICU_get_ox_get_MV_baseline = NULL;
+  internal->prob_critical_death_get_ICU_get_ox_no_MV_baseline = NULL;
+  internal->prob_critical_death_get_ICU_no_ox_no_MV_baseline = NULL;
+  internal->prob_critical_death_no_ICU_no_ox_no_MV = NULL;
+  internal->prob_hosp = NULL;
+  internal->prob_moderate_death_get_hosp_get_ox_baseline = NULL;
+  internal->prob_moderate_death_get_hosp_no_ox_baseline = NULL;
+  internal->prob_moderate_death_no_hosp_no_ox = NULL;
+  internal->prob_severe = NULL;
+  internal->prob_severe_death_get_ICU_get_ox_baseline = NULL;
+  internal->prob_severe_death_get_ICU_no_ox_baseline = NULL;
+  internal->prob_severe_death_no_ICU_no_ox = NULL;
+  internal->prophylactic_drug_timing_1 = NA_REAL;
+  internal->prophylactic_drug_timing_2 = NA_REAL;
+  internal->prophylactic_drug_wane = NA_REAL;
+  internal->prophylactic_prop_treat = NA_REAL;
+  internal->PS_0 = NULL;
+  internal->R_0 = NULL;
+  internal->rel_inf_asymp = NA_REAL;
+  internal->rel_inf_mild = NA_REAL;
+  internal->S_0 = NULL;
+  internal->severe_critical_case_oxygen_consumption_multiplier = NA_REAL;
+  internal->tt_baseline_oxygen_demand = NULL;
+  internal->tt_beta = NULL;
+  internal->tt_hosp_beds = NULL;
+  internal->tt_ICU_beds = NULL;
+  internal->tt_matrix = NULL;
+  internal->tt_oxygen_supply = NULL;
+  SEXP ptr = PROTECT(R_MakeExternalPtr(internal, R_NilValue, R_NilValue));
+  R_RegisterCFinalizer(ptr, deterministic_apothecary_SEIR_finalise);
+  UNPROTECT(1);
+  return ptr;
+}
+static deterministic_apothecary_SEIR_internal *deterministic_apothecary_SEIR_internal_ds;
+void deterministic_apothecary_SEIR_initmod_desolve(void(* odeparms) (int *, double *)) {
+  static DL_FUNC get_desolve_gparms = NULL;
+  if (get_desolve_gparms == NULL) {
+    get_desolve_gparms =
+      R_GetCCallable("deSolve", "get_deSolve_gparms");
+  }
+  deterministic_apothecary_SEIR_internal_ds = deterministic_apothecary_SEIR_get_internal(get_desolve_gparms(), 1);
+}
+SEXP deterministic_apothecary_SEIR_contents(SEXP internal_p) {
+  deterministic_apothecary_SEIR_internal *internal = deterministic_apothecary_SEIR_get_internal(internal_p, 1);
+  SEXP contents = PROTECT(allocVector(VECSXP, 808));
+  SEXP beta_set = PROTECT(allocVector(REALSXP, internal->dim_beta_set));
+  memcpy(REAL(beta_set), internal->beta_set, internal->dim_beta_set * sizeof(double));
+  SET_VECTOR_ELT(contents, 0, beta_set);
+  SEXP D_Community_0 = PROTECT(allocVector(REALSXP, internal->dim_D_Community_0));
+  memcpy(REAL(D_Community_0), internal->D_Community_0, internal->dim_D_Community_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 1, D_Community_0);
+  SEXP D_Hospital_0 = PROTECT(allocVector(REALSXP, internal->dim_D_Hospital_0));
+  memcpy(REAL(D_Hospital_0), internal->D_Hospital_0, internal->dim_D_Hospital_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 2, D_Hospital_0);
+  SET_VECTOR_ELT(contents, 3, ScalarInteger(internal->dim_beta_set));
+  SET_VECTOR_ELT(contents, 4, ScalarInteger(internal->dim_D));
+  SET_VECTOR_ELT(contents, 5, ScalarInteger(internal->dim_D_Community));
+  SET_VECTOR_ELT(contents, 6, ScalarInteger(internal->dim_D_Community_0));
+  SET_VECTOR_ELT(contents, 7, ScalarInteger(internal->dim_D_Hospital));
+  SET_VECTOR_ELT(contents, 8, ScalarInteger(internal->dim_D_Hospital_0));
+  SET_VECTOR_ELT(contents, 9, ScalarInteger(internal->dim_E1));
+  SET_VECTOR_ELT(contents, 10, ScalarInteger(internal->dim_E1_0));
+  SET_VECTOR_ELT(contents, 11, ScalarInteger(internal->dim_E2));
+  SET_VECTOR_ELT(contents, 12, ScalarInteger(internal->dim_E2_0));
+  SET_VECTOR_ELT(contents, 13, ScalarInteger(internal->dim_hosp_bed_capacity));
+  SET_VECTOR_ELT(contents, 14, ScalarInteger(internal->dim_IAsymp));
+  SET_VECTOR_ELT(contents, 15, ScalarInteger(internal->dim_IAsymp_0));
+  SET_VECTOR_ELT(contents, 16, ScalarInteger(internal->dim_ICase1));
+  SET_VECTOR_ELT(contents, 17, ScalarInteger(internal->dim_ICase1_0));
+  SET_VECTOR_ELT(contents, 18, ScalarInteger(internal->dim_ICase1_Drug_5));
+  SET_VECTOR_ELT(contents, 19, ScalarInteger(internal->dim_ICase1_Drug_5_0));
+  SET_VECTOR_ELT(contents, 20, ScalarInteger(internal->dim_ICase2));
+  SET_VECTOR_ELT(contents, 21, ScalarInteger(internal->dim_ICase2_0));
+  SET_VECTOR_ELT(contents, 22, ScalarInteger(internal->dim_ICase2_Drug_5));
+  SET_VECTOR_ELT(contents, 23, ScalarInteger(internal->dim_ICase2_Drug_5_0));
+  SET_VECTOR_ELT(contents, 24, ScalarInteger(internal->dim_ICrit_GetICU_GetOx_GetMV_Die1));
+  SET_VECTOR_ELT(contents, 25, ScalarInteger(internal->dim_ICrit_GetICU_GetOx_GetMV_Die1_0));
+  SET_VECTOR_ELT(contents, 26, ScalarInteger(internal->dim_ICrit_GetICU_GetOx_GetMV_Die2));
+  SET_VECTOR_ELT(contents, 27, ScalarInteger(internal->dim_ICrit_GetICU_GetOx_GetMV_Die2_0));
+  SET_VECTOR_ELT(contents, 28, ScalarInteger(internal->dim_ICrit_GetICU_GetOx_GetMV_Surv1));
+  SET_VECTOR_ELT(contents, 29, ScalarInteger(internal->dim_ICrit_GetICU_GetOx_GetMV_Surv1_0));
+  SET_VECTOR_ELT(contents, 30, ScalarInteger(internal->dim_ICrit_GetICU_GetOx_GetMV_Surv2));
+  SET_VECTOR_ELT(contents, 31, ScalarInteger(internal->dim_ICrit_GetICU_GetOx_GetMV_Surv2_0));
+  SET_VECTOR_ELT(contents, 32, ScalarInteger(internal->dim_ICrit_GetICU_GetOx_NoMV_Die1));
+  SET_VECTOR_ELT(contents, 33, ScalarInteger(internal->dim_ICrit_GetICU_GetOx_NoMV_Die1_0));
+  SET_VECTOR_ELT(contents, 34, ScalarInteger(internal->dim_ICrit_GetICU_GetOx_NoMV_Die2));
+  SET_VECTOR_ELT(contents, 35, ScalarInteger(internal->dim_ICrit_GetICU_GetOx_NoMV_Die2_0));
+  SET_VECTOR_ELT(contents, 36, ScalarInteger(internal->dim_ICrit_GetICU_GetOx_NoMV_Surv1));
+  SET_VECTOR_ELT(contents, 37, ScalarInteger(internal->dim_ICrit_GetICU_GetOx_NoMV_Surv1_0));
+  SET_VECTOR_ELT(contents, 38, ScalarInteger(internal->dim_ICrit_GetICU_GetOx_NoMV_Surv2));
+  SET_VECTOR_ELT(contents, 39, ScalarInteger(internal->dim_ICrit_GetICU_GetOx_NoMV_Surv2_0));
+  SET_VECTOR_ELT(contents, 40, ScalarInteger(internal->dim_ICrit_GetICU_NoOx_NoMV_Die1));
+  SET_VECTOR_ELT(contents, 41, ScalarInteger(internal->dim_ICrit_GetICU_NoOx_NoMV_Die1_0));
+  SET_VECTOR_ELT(contents, 42, ScalarInteger(internal->dim_ICrit_GetICU_NoOx_NoMV_Die2));
+  SET_VECTOR_ELT(contents, 43, ScalarInteger(internal->dim_ICrit_GetICU_NoOx_NoMV_Die2_0));
+  SET_VECTOR_ELT(contents, 44, ScalarInteger(internal->dim_ICrit_GetICU_NoOx_NoMV_Surv1));
+  SET_VECTOR_ELT(contents, 45, ScalarInteger(internal->dim_ICrit_GetICU_NoOx_NoMV_Surv1_0));
+  SET_VECTOR_ELT(contents, 46, ScalarInteger(internal->dim_ICrit_GetICU_NoOx_NoMV_Surv2));
+  SET_VECTOR_ELT(contents, 47, ScalarInteger(internal->dim_ICrit_GetICU_NoOx_NoMV_Surv2_0));
+  SET_VECTOR_ELT(contents, 48, ScalarInteger(internal->dim_ICrit_NoICU_NoOx_NoMV_Die1));
+  SET_VECTOR_ELT(contents, 49, ScalarInteger(internal->dim_ICrit_NoICU_NoOx_NoMV_Die1_0));
+  SET_VECTOR_ELT(contents, 50, ScalarInteger(internal->dim_ICrit_NoICU_NoOx_NoMV_Die2));
+  SET_VECTOR_ELT(contents, 51, ScalarInteger(internal->dim_ICrit_NoICU_NoOx_NoMV_Die2_0));
+  SET_VECTOR_ELT(contents, 52, ScalarInteger(internal->dim_ICrit_NoICU_NoOx_NoMV_Surv1));
+  SET_VECTOR_ELT(contents, 53, ScalarInteger(internal->dim_ICrit_NoICU_NoOx_NoMV_Surv1_0));
+  SET_VECTOR_ELT(contents, 54, ScalarInteger(internal->dim_ICrit_NoICU_NoOx_NoMV_Surv2));
+  SET_VECTOR_ELT(contents, 55, ScalarInteger(internal->dim_ICrit_NoICU_NoOx_NoMV_Surv2_0));
+  SET_VECTOR_ELT(contents, 56, ScalarInteger(internal->dim_ICU_bed_capacity));
+  SET_VECTOR_ELT(contents, 57, ScalarInteger(internal->dim_IMild));
+  SET_VECTOR_ELT(contents, 58, ScalarInteger(internal->dim_IMild_0));
+  SET_VECTOR_ELT(contents, 59, ScalarInteger(internal->dim_IMild_Drug_5));
+  SET_VECTOR_ELT(contents, 60, ScalarInteger(internal->dim_IMild_Drug_5_0));
+  SET_VECTOR_ELT(contents, 61, ScalarInteger(internal->dim_IMod_GetHosp_GetOx_Die1));
+  SET_VECTOR_ELT(contents, 62, ScalarInteger(internal->dim_IMod_GetHosp_GetOx_Die1_0));
+  SET_VECTOR_ELT(contents, 63, ScalarInteger(internal->dim_IMod_GetHosp_GetOx_Die2));
+  SET_VECTOR_ELT(contents, 64, ScalarInteger(internal->dim_IMod_GetHosp_GetOx_Die2_0));
+  SET_VECTOR_ELT(contents, 65, ScalarInteger(internal->dim_IMod_GetHosp_GetOx_Surv1));
+  SET_VECTOR_ELT(contents, 66, ScalarInteger(internal->dim_IMod_GetHosp_GetOx_Surv1_0));
+  SET_VECTOR_ELT(contents, 67, ScalarInteger(internal->dim_IMod_GetHosp_GetOx_Surv2));
+  SET_VECTOR_ELT(contents, 68, ScalarInteger(internal->dim_IMod_GetHosp_GetOx_Surv2_0));
+  SET_VECTOR_ELT(contents, 69, ScalarInteger(internal->dim_IMod_GetHosp_NoOx_Die1));
+  SET_VECTOR_ELT(contents, 70, ScalarInteger(internal->dim_IMod_GetHosp_NoOx_Die1_0));
+  SET_VECTOR_ELT(contents, 71, ScalarInteger(internal->dim_IMod_GetHosp_NoOx_Die2));
+  SET_VECTOR_ELT(contents, 72, ScalarInteger(internal->dim_IMod_GetHosp_NoOx_Die2_0));
+  SET_VECTOR_ELT(contents, 73, ScalarInteger(internal->dim_IMod_GetHosp_NoOx_Surv1));
+  SET_VECTOR_ELT(contents, 74, ScalarInteger(internal->dim_IMod_GetHosp_NoOx_Surv1_0));
+  SET_VECTOR_ELT(contents, 75, ScalarInteger(internal->dim_IMod_GetHosp_NoOx_Surv2));
+  SET_VECTOR_ELT(contents, 76, ScalarInteger(internal->dim_IMod_GetHosp_NoOx_Surv2_0));
+  SET_VECTOR_ELT(contents, 77, ScalarInteger(internal->dim_IMod_NoHosp_NoOx_Die1));
+  SET_VECTOR_ELT(contents, 78, ScalarInteger(internal->dim_IMod_NoHosp_NoOx_Die1_0));
+  SET_VECTOR_ELT(contents, 79, ScalarInteger(internal->dim_IMod_NoHosp_NoOx_Die2));
+  SET_VECTOR_ELT(contents, 80, ScalarInteger(internal->dim_IMod_NoHosp_NoOx_Die2_0));
+  SET_VECTOR_ELT(contents, 81, ScalarInteger(internal->dim_IMod_NoHosp_NoOx_Surv1));
+  SET_VECTOR_ELT(contents, 82, ScalarInteger(internal->dim_IMod_NoHosp_NoOx_Surv1_0));
+  SET_VECTOR_ELT(contents, 83, ScalarInteger(internal->dim_IMod_NoHosp_NoOx_Surv2));
+  SET_VECTOR_ELT(contents, 84, ScalarInteger(internal->dim_IMod_NoHosp_NoOx_Surv2_0));
+  SET_VECTOR_ELT(contents, 85, ScalarInteger(internal->dim_input_baseline_oxygen_demand));
+  SET_VECTOR_ELT(contents, 86, ScalarInteger(internal->dim_input_oxygen_supply));
+  SET_VECTOR_ELT(contents, 87, ScalarInteger(internal->dim_IRec1));
+  SET_VECTOR_ELT(contents, 88, ScalarInteger(internal->dim_IRec1_0));
+  SET_VECTOR_ELT(contents, 89, ScalarInteger(internal->dim_IRec2));
+  SET_VECTOR_ELT(contents, 90, ScalarInteger(internal->dim_IRec2_0));
+  SET_VECTOR_ELT(contents, 91, ScalarInteger(internal->dim_ISev_GetICU_GetOx_Die1));
+  SET_VECTOR_ELT(contents, 92, ScalarInteger(internal->dim_ISev_GetICU_GetOx_Die1_0));
+  SET_VECTOR_ELT(contents, 93, ScalarInteger(internal->dim_ISev_GetICU_GetOx_Die2));
+  SET_VECTOR_ELT(contents, 94, ScalarInteger(internal->dim_ISev_GetICU_GetOx_Die2_0));
+  SET_VECTOR_ELT(contents, 95, ScalarInteger(internal->dim_ISev_GetICU_GetOx_Surv1));
+  SET_VECTOR_ELT(contents, 96, ScalarInteger(internal->dim_ISev_GetICU_GetOx_Surv1_0));
+  SET_VECTOR_ELT(contents, 97, ScalarInteger(internal->dim_ISev_GetICU_GetOx_Surv2));
+  SET_VECTOR_ELT(contents, 98, ScalarInteger(internal->dim_ISev_GetICU_GetOx_Surv2_0));
+  SET_VECTOR_ELT(contents, 99, ScalarInteger(internal->dim_ISev_GetICU_NoOx_Die1));
+  SET_VECTOR_ELT(contents, 100, ScalarInteger(internal->dim_ISev_GetICU_NoOx_Die1_0));
+  SET_VECTOR_ELT(contents, 101, ScalarInteger(internal->dim_ISev_GetICU_NoOx_Die2));
+  SET_VECTOR_ELT(contents, 102, ScalarInteger(internal->dim_ISev_GetICU_NoOx_Die2_0));
+  SET_VECTOR_ELT(contents, 103, ScalarInteger(internal->dim_ISev_GetICU_NoOx_Surv1));
+  SET_VECTOR_ELT(contents, 104, ScalarInteger(internal->dim_ISev_GetICU_NoOx_Surv1_0));
+  SET_VECTOR_ELT(contents, 105, ScalarInteger(internal->dim_ISev_GetICU_NoOx_Surv2));
+  SET_VECTOR_ELT(contents, 106, ScalarInteger(internal->dim_ISev_GetICU_NoOx_Surv2_0));
+  SET_VECTOR_ELT(contents, 107, ScalarInteger(internal->dim_ISev_NoICU_NoOx_Die1));
+  SET_VECTOR_ELT(contents, 108, ScalarInteger(internal->dim_ISev_NoICU_NoOx_Die1_0));
+  SET_VECTOR_ELT(contents, 109, ScalarInteger(internal->dim_ISev_NoICU_NoOx_Die2));
+  SET_VECTOR_ELT(contents, 110, ScalarInteger(internal->dim_ISev_NoICU_NoOx_Die2_0));
+  SET_VECTOR_ELT(contents, 111, ScalarInteger(internal->dim_ISev_NoICU_NoOx_Surv1));
+  SET_VECTOR_ELT(contents, 112, ScalarInteger(internal->dim_ISev_NoICU_NoOx_Surv1_0));
+  SET_VECTOR_ELT(contents, 113, ScalarInteger(internal->dim_ISev_NoICU_NoOx_Surv2));
+  SET_VECTOR_ELT(contents, 114, ScalarInteger(internal->dim_ISev_NoICU_NoOx_Surv2_0));
+  SET_VECTOR_ELT(contents, 115, ScalarInteger(internal->dim_lambda));
+  SET_VECTOR_ELT(contents, 116, ScalarInteger(internal->dim_m));
+  SET_VECTOR_ELT(contents, 117, ScalarInteger(internal->dim_m_1));
+  SET_VECTOR_ELT(contents, 118, ScalarInteger(internal->dim_m_2));
+  SET_VECTOR_ELT(contents, 119, ScalarInteger(internal->dim_mix_mat_set));
+  SET_VECTOR_ELT(contents, 120, ScalarInteger(internal->dim_mix_mat_set_1));
+  SET_VECTOR_ELT(contents, 121, ScalarInteger(internal->dim_mix_mat_set_12));
+  SET_VECTOR_ELT(contents, 122, ScalarInteger(internal->dim_mix_mat_set_2));
+  SET_VECTOR_ELT(contents, 123, ScalarInteger(internal->dim_mix_mat_set_3));
+  SET_VECTOR_ELT(contents, 124, ScalarInteger(internal->dim_n_E1_E2));
+  SET_VECTOR_ELT(contents, 125, ScalarInteger(internal->dim_n_E2_I));
+  SET_VECTOR_ELT(contents, 126, ScalarInteger(internal->dim_n_E2_IAsymp));
+  SET_VECTOR_ELT(contents, 127, ScalarInteger(internal->dim_n_E2_ICase1));
+  SET_VECTOR_ELT(contents, 128, ScalarInteger(internal->dim_n_E2_ICase1_Drug_5));
+  SET_VECTOR_ELT(contents, 129, ScalarInteger(internal->dim_n_E2_ICase1_initial));
+  SET_VECTOR_ELT(contents, 130, ScalarInteger(internal->dim_n_E2_ICase1_No_Drug_5));
+  SET_VECTOR_ELT(contents, 131, ScalarInteger(internal->dim_n_E2_IMild));
+  SET_VECTOR_ELT(contents, 132, ScalarInteger(internal->dim_n_E2_IMild_Drug_5));
+  SET_VECTOR_ELT(contents, 133, ScalarInteger(internal->dim_n_E2_IMild_No_Drug_5));
+  SET_VECTOR_ELT(contents, 134, ScalarInteger(internal->dim_n_E2_IMild_or_IAsymp));
+  SET_VECTOR_ELT(contents, 135, ScalarInteger(internal->dim_n_IAsymp_R));
+  SET_VECTOR_ELT(contents, 136, ScalarInteger(internal->dim_n_ICase1_Drug_5_ICase2_Drug_5));
+  SET_VECTOR_ELT(contents, 137, ScalarInteger(internal->dim_n_ICase1_ICase2));
+  SET_VECTOR_ELT(contents, 138, ScalarInteger(internal->dim_n_ICase2_Drug_5_Hosp));
+  SET_VECTOR_ELT(contents, 139, ScalarInteger(internal->dim_n_ICase2_Hosp));
+  SET_VECTOR_ELT(contents, 140, ScalarInteger(internal->dim_n_ICrit_GetICU_GetOx_GetMV_Die1));
+  SET_VECTOR_ELT(contents, 141, ScalarInteger(internal->dim_n_ICrit_GetICU_GetOx_GetMV_Die1_ICrit_GetICU_GetOx_GetMV_Die2));
+  SET_VECTOR_ELT(contents, 142, ScalarInteger(internal->dim_n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital));
+  SET_VECTOR_ELT(contents, 143, ScalarInteger(internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv1));
+  SET_VECTOR_ELT(contents, 144, ScalarInteger(internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv1_ICrit_GetICU_GetOx_GetMV_Surv2));
+  SET_VECTOR_ELT(contents, 145, ScalarInteger(internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec));
+  SET_VECTOR_ELT(contents, 146, ScalarInteger(internal->dim_n_ICrit_GetICU_GetOx_NoMV_Die1));
+  SET_VECTOR_ELT(contents, 147, ScalarInteger(internal->dim_n_ICrit_GetICU_GetOx_NoMV_Die1_ICrit_GetICU_GetOx_NoMV_Die2));
+  SET_VECTOR_ELT(contents, 148, ScalarInteger(internal->dim_n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital));
+  SET_VECTOR_ELT(contents, 149, ScalarInteger(internal->dim_n_ICrit_GetICU_GetOx_NoMV_Surv1));
+  SET_VECTOR_ELT(contents, 150, ScalarInteger(internal->dim_n_ICrit_GetICU_GetOx_NoMV_Surv1_ICrit_GetICU_GetOx_NoMV_Surv2));
+  SET_VECTOR_ELT(contents, 151, ScalarInteger(internal->dim_n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec));
+  SET_VECTOR_ELT(contents, 152, ScalarInteger(internal->dim_n_ICrit_GetICU_NoOx_NoMV_Die1));
+  SET_VECTOR_ELT(contents, 153, ScalarInteger(internal->dim_n_ICrit_GetICU_NoOx_NoMV_Die1_ICrit_GetICU_NoOx_NoMV_Die2));
+  SET_VECTOR_ELT(contents, 154, ScalarInteger(internal->dim_n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital));
+  SET_VECTOR_ELT(contents, 155, ScalarInteger(internal->dim_n_ICrit_GetICU_NoOx_NoMV_Surv1));
+  SET_VECTOR_ELT(contents, 156, ScalarInteger(internal->dim_n_ICrit_GetICU_NoOx_NoMV_Surv1_ICrit_GetICU_NoOx_NoMV_Surv2));
+  SET_VECTOR_ELT(contents, 157, ScalarInteger(internal->dim_n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec));
+  SET_VECTOR_ELT(contents, 158, ScalarInteger(internal->dim_n_ICrit_NoICU_NoOx_NoMV_Die1));
+  SET_VECTOR_ELT(contents, 159, ScalarInteger(internal->dim_n_ICrit_NoICU_NoOx_NoMV_Die1_ICrit_NoICU_NoOx_NoMV_Die2));
+  SET_VECTOR_ELT(contents, 160, ScalarInteger(internal->dim_n_ICrit_NoICU_NoOx_NoMV_Die2_D_Community));
+  SET_VECTOR_ELT(contents, 161, ScalarInteger(internal->dim_n_ICrit_NoICU_NoOx_NoMV_Surv1));
+  SET_VECTOR_ELT(contents, 162, ScalarInteger(internal->dim_n_ICrit_NoICU_NoOx_NoMV_Surv1_ICrit_NoICU_NoOx_NoMV_Surv2));
+  SET_VECTOR_ELT(contents, 163, ScalarInteger(internal->dim_n_ICrit_NoICU_NoOx_NoMV_Surv2_R));
+  SET_VECTOR_ELT(contents, 164, ScalarInteger(internal->dim_n_IMild_Drug_5_R));
+  SET_VECTOR_ELT(contents, 165, ScalarInteger(internal->dim_n_IMild_R));
+  SET_VECTOR_ELT(contents, 166, ScalarInteger(internal->dim_n_IMod_GetHosp_GetOx_Die1));
+  SET_VECTOR_ELT(contents, 167, ScalarInteger(internal->dim_n_IMod_GetHosp_GetOx_Die1_IMod_GetHosp_GetOx_Die2));
+  SET_VECTOR_ELT(contents, 168, ScalarInteger(internal->dim_n_IMod_GetHosp_GetOx_Die2_D_Hospital));
+  SET_VECTOR_ELT(contents, 169, ScalarInteger(internal->dim_n_IMod_GetHosp_GetOx_Surv1));
+  SET_VECTOR_ELT(contents, 170, ScalarInteger(internal->dim_n_IMod_GetHosp_GetOx_Surv1_IMod_GetHosp_GetOx_Surv2));
+  SET_VECTOR_ELT(contents, 171, ScalarInteger(internal->dim_n_IMod_GetHosp_GetOx_Surv2_R));
+  SET_VECTOR_ELT(contents, 172, ScalarInteger(internal->dim_n_IMod_GetHosp_NoOx_Die1));
+  SET_VECTOR_ELT(contents, 173, ScalarInteger(internal->dim_n_IMod_GetHosp_NoOx_Die1_IMod_GetHosp_NoOx_Die2));
+  SET_VECTOR_ELT(contents, 174, ScalarInteger(internal->dim_n_IMod_GetHosp_NoOx_Die2_D_Hospital));
+  SET_VECTOR_ELT(contents, 175, ScalarInteger(internal->dim_n_IMod_GetHosp_NoOx_Surv1));
+  SET_VECTOR_ELT(contents, 176, ScalarInteger(internal->dim_n_IMod_GetHosp_NoOx_Surv1_IMod_GetHosp_NoOx_Surv2));
+  SET_VECTOR_ELT(contents, 177, ScalarInteger(internal->dim_n_IMod_GetHosp_NoOx_Surv2_R));
+  SET_VECTOR_ELT(contents, 178, ScalarInteger(internal->dim_n_IMod_NoHosp_NoOx_Die1));
+  SET_VECTOR_ELT(contents, 179, ScalarInteger(internal->dim_n_IMod_NoHosp_NoOx_Die1_IMod_NoHosp_NoOx_Die2));
+  SET_VECTOR_ELT(contents, 180, ScalarInteger(internal->dim_n_IMod_NoHosp_NoOx_Die2_D_Community));
+  SET_VECTOR_ELT(contents, 181, ScalarInteger(internal->dim_n_IMod_NoHosp_NoOx_Surv1));
+  SET_VECTOR_ELT(contents, 182, ScalarInteger(internal->dim_n_IMod_NoHosp_NoOx_Surv1_IMod_NoHosp_NoOx_Surv2));
+  SET_VECTOR_ELT(contents, 183, ScalarInteger(internal->dim_n_IMod_NoHosp_NoOx_Surv2_R));
+  SET_VECTOR_ELT(contents, 184, ScalarInteger(internal->dim_n_IRec1_IRec2));
+  SET_VECTOR_ELT(contents, 185, ScalarInteger(internal->dim_n_IRec2_R));
+  SET_VECTOR_ELT(contents, 186, ScalarInteger(internal->dim_n_ISev_GetICU_GetOx_Die1));
+  SET_VECTOR_ELT(contents, 187, ScalarInteger(internal->dim_n_ISev_GetICU_GetOx_Die1_ISev_GetICU_GetOx_Die2));
+  SET_VECTOR_ELT(contents, 188, ScalarInteger(internal->dim_n_ISev_GetICU_GetOx_Die2_D_Hospital));
+  SET_VECTOR_ELT(contents, 189, ScalarInteger(internal->dim_n_ISev_GetICU_GetOx_Surv1));
+  SET_VECTOR_ELT(contents, 190, ScalarInteger(internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2));
+  SET_VECTOR_ELT(contents, 191, ScalarInteger(internal->dim_n_ISev_GetICU_GetOx_Surv2_Rec));
+  SET_VECTOR_ELT(contents, 192, ScalarInteger(internal->dim_n_ISev_GetICU_NoOx_Die1));
+  SET_VECTOR_ELT(contents, 193, ScalarInteger(internal->dim_n_ISev_GetICU_NoOx_Die1_ISev_GetICU_NoOx_Die2));
+  SET_VECTOR_ELT(contents, 194, ScalarInteger(internal->dim_n_ISev_GetICU_NoOx_Die2_D_Hospital));
+  SET_VECTOR_ELT(contents, 195, ScalarInteger(internal->dim_n_ISev_GetICU_NoOx_Surv1));
+  SET_VECTOR_ELT(contents, 196, ScalarInteger(internal->dim_n_ISev_GetICU_NoOx_Surv1_ISev_GetICU_NoOx_Surv2));
+  SET_VECTOR_ELT(contents, 197, ScalarInteger(internal->dim_n_ISev_GetICU_NoOx_Surv2_Rec));
+  SET_VECTOR_ELT(contents, 198, ScalarInteger(internal->dim_n_ISev_NoICU_NoOx_Die1));
+  SET_VECTOR_ELT(contents, 199, ScalarInteger(internal->dim_n_ISev_NoICU_NoOx_Die1_ISev_NoICU_NoOx_Die2));
+  SET_VECTOR_ELT(contents, 200, ScalarInteger(internal->dim_n_ISev_NoICU_NoOx_Die2_D_Community));
+  SET_VECTOR_ELT(contents, 201, ScalarInteger(internal->dim_n_ISev_NoICU_NoOx_Surv1));
+  SET_VECTOR_ELT(contents, 202, ScalarInteger(internal->dim_n_ISev_NoICU_NoOx_Surv1_ISev_NoICU_NoOx_Surv2));
+  SET_VECTOR_ELT(contents, 203, ScalarInteger(internal->dim_n_ISev_NoICU_NoOx_Surv2_R));
+  SET_VECTOR_ELT(contents, 204, ScalarInteger(internal->dim_n_PE1_PE2));
+  SET_VECTOR_ELT(contents, 205, ScalarInteger(internal->dim_n_PE2_I));
+  SET_VECTOR_ELT(contents, 206, ScalarInteger(internal->dim_n_PE2_IAsymp));
+  SET_VECTOR_ELT(contents, 207, ScalarInteger(internal->dim_n_PE2_ICase1));
+  SET_VECTOR_ELT(contents, 208, ScalarInteger(internal->dim_n_PE2_ICase1_Drug_5));
+  SET_VECTOR_ELT(contents, 209, ScalarInteger(internal->dim_n_PE2_ICase1_initial));
+  SET_VECTOR_ELT(contents, 210, ScalarInteger(internal->dim_n_PE2_ICase1_No_Drug_5));
+  SET_VECTOR_ELT(contents, 211, ScalarInteger(internal->dim_n_PE2_IMild));
+  SET_VECTOR_ELT(contents, 212, ScalarInteger(internal->dim_n_PE2_IMild_Drug_5));
+  SET_VECTOR_ELT(contents, 213, ScalarInteger(internal->dim_n_PE2_IMild_No_Drug_5));
+  SET_VECTOR_ELT(contents, 214, ScalarInteger(internal->dim_n_PE2_IMild_or_IAsymp));
+  SET_VECTOR_ELT(contents, 215, ScalarInteger(internal->dim_n_PS_PE1));
+  SET_VECTOR_ELT(contents, 216, ScalarInteger(internal->dim_n_PS_S));
+  SET_VECTOR_ELT(contents, 217, ScalarInteger(internal->dim_n_S_E1));
+  SET_VECTOR_ELT(contents, 218, ScalarInteger(internal->dim_n_S_PS));
+  SET_VECTOR_ELT(contents, 219, ScalarInteger(internal->dim_number_GetHosp));
+  SET_VECTOR_ELT(contents, 220, ScalarInteger(internal->dim_number_GetHosp_NoOx));
+  SET_VECTOR_ELT(contents, 221, ScalarInteger(internal->dim_number_GetHosp_Ox));
+  SET_VECTOR_ELT(contents, 222, ScalarInteger(internal->dim_number_GetICU));
+  SET_VECTOR_ELT(contents, 223, ScalarInteger(internal->dim_number_GetICU_GetOx));
+  SET_VECTOR_ELT(contents, 224, ScalarInteger(internal->dim_number_GetICU_GetOx_GetMV));
+  SET_VECTOR_ELT(contents, 225, ScalarInteger(internal->dim_number_GetICU_GetOx_NeedMV));
+  SET_VECTOR_ELT(contents, 226, ScalarInteger(internal->dim_number_GetICU_GetOx_NoMV));
+  SET_VECTOR_ELT(contents, 227, ScalarInteger(internal->dim_number_GetICU_NoOx));
+  SET_VECTOR_ELT(contents, 228, ScalarInteger(internal->dim_number_GetICU_NoOx_NeedMV));
+  SET_VECTOR_ELT(contents, 229, ScalarInteger(internal->dim_number_NotHosp));
+  SET_VECTOR_ELT(contents, 230, ScalarInteger(internal->dim_number_NotICU));
+  SET_VECTOR_ELT(contents, 231, ScalarInteger(internal->dim_number_NotICU_NotOx));
+  SET_VECTOR_ELT(contents, 232, ScalarInteger(internal->dim_number_NotICU_NotOx_NotMV));
+  SET_VECTOR_ELT(contents, 233, ScalarInteger(internal->dim_number_req_Hosp));
+  SET_VECTOR_ELT(contents, 234, ScalarInteger(internal->dim_number_req_ICU));
+  SET_VECTOR_ELT(contents, 235, ScalarInteger(internal->dim_number_req_ICU_initial));
+  SET_VECTOR_ELT(contents, 236, ScalarInteger(internal->dim_number_req_ICU_MV));
+  SET_VECTOR_ELT(contents, 237, ScalarInteger(internal->dim_number_req_ICU_MV_initial));
+  SET_VECTOR_ELT(contents, 238, ScalarInteger(internal->dim_number_req_ICU_Ox));
+  SET_VECTOR_ELT(contents, 239, ScalarInteger(internal->dim_PE1));
+  SET_VECTOR_ELT(contents, 240, ScalarInteger(internal->dim_PE1_0));
+  SET_VECTOR_ELT(contents, 241, ScalarInteger(internal->dim_PE2));
+  SET_VECTOR_ELT(contents, 242, ScalarInteger(internal->dim_PE2_0));
+  SET_VECTOR_ELT(contents, 243, ScalarInteger(internal->dim_prob_asymp));
+  SET_VECTOR_ELT(contents, 244, ScalarInteger(internal->dim_prob_critical));
+  SET_VECTOR_ELT(contents, 245, ScalarInteger(internal->dim_prob_critical_death_get_ICU_get_ox_get_MV));
+  SET_VECTOR_ELT(contents, 246, ScalarInteger(internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline));
+  SET_VECTOR_ELT(contents, 247, ScalarInteger(internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13));
+  SET_VECTOR_ELT(contents, 248, ScalarInteger(internal->dim_prob_critical_death_get_ICU_get_ox_no_MV));
+  SET_VECTOR_ELT(contents, 249, ScalarInteger(internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline));
+  SET_VECTOR_ELT(contents, 250, ScalarInteger(internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13));
+  SET_VECTOR_ELT(contents, 251, ScalarInteger(internal->dim_prob_critical_death_get_ICU_no_ox_no_MV));
+  SET_VECTOR_ELT(contents, 252, ScalarInteger(internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline));
+  SET_VECTOR_ELT(contents, 253, ScalarInteger(internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13));
+  SET_VECTOR_ELT(contents, 254, ScalarInteger(internal->dim_prob_critical_death_no_ICU_no_ox_no_MV));
+  SET_VECTOR_ELT(contents, 255, ScalarInteger(internal->dim_prob_hosp));
+  SET_VECTOR_ELT(contents, 256, ScalarInteger(internal->dim_prob_moderate_death_get_hosp_get_ox));
+  SET_VECTOR_ELT(contents, 257, ScalarInteger(internal->dim_prob_moderate_death_get_hosp_get_ox_baseline));
+  SET_VECTOR_ELT(contents, 258, ScalarInteger(internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11));
+  SET_VECTOR_ELT(contents, 259, ScalarInteger(internal->dim_prob_moderate_death_get_hosp_no_ox));
+  SET_VECTOR_ELT(contents, 260, ScalarInteger(internal->dim_prob_moderate_death_get_hosp_no_ox_baseline));
+  SET_VECTOR_ELT(contents, 261, ScalarInteger(internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11));
+  SET_VECTOR_ELT(contents, 262, ScalarInteger(internal->dim_prob_moderate_death_no_hosp_no_ox));
+  SET_VECTOR_ELT(contents, 263, ScalarInteger(internal->dim_prob_severe));
+  SET_VECTOR_ELT(contents, 264, ScalarInteger(internal->dim_prob_severe_death_get_ICU_get_ox));
+  SET_VECTOR_ELT(contents, 265, ScalarInteger(internal->dim_prob_severe_death_get_ICU_get_ox_baseline));
+  SET_VECTOR_ELT(contents, 266, ScalarInteger(internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12));
+  SET_VECTOR_ELT(contents, 267, ScalarInteger(internal->dim_prob_severe_death_get_ICU_no_ox));
+  SET_VECTOR_ELT(contents, 268, ScalarInteger(internal->dim_prob_severe_death_get_ICU_no_ox_baseline));
+  SET_VECTOR_ELT(contents, 269, ScalarInteger(internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12));
+  SET_VECTOR_ELT(contents, 270, ScalarInteger(internal->dim_prob_severe_death_no_ICU_no_ox));
+  SET_VECTOR_ELT(contents, 271, ScalarInteger(internal->dim_PS));
+  SET_VECTOR_ELT(contents, 272, ScalarInteger(internal->dim_PS_0));
+  SET_VECTOR_ELT(contents, 273, ScalarInteger(internal->dim_R));
+  SET_VECTOR_ELT(contents, 274, ScalarInteger(internal->dim_R_0));
+  SET_VECTOR_ELT(contents, 275, ScalarInteger(internal->dim_S));
+  SET_VECTOR_ELT(contents, 276, ScalarInteger(internal->dim_S_0));
+  SET_VECTOR_ELT(contents, 277, ScalarInteger(internal->dim_s_ij));
+  SET_VECTOR_ELT(contents, 278, ScalarInteger(internal->dim_s_ij_1));
+  SET_VECTOR_ELT(contents, 279, ScalarInteger(internal->dim_s_ij_2));
+  SET_VECTOR_ELT(contents, 280, ScalarInteger(internal->dim_temp));
+  SET_VECTOR_ELT(contents, 281, ScalarInteger(internal->dim_tt_baseline_oxygen_demand));
+  SET_VECTOR_ELT(contents, 282, ScalarInteger(internal->dim_tt_beta));
+  SET_VECTOR_ELT(contents, 283, ScalarInteger(internal->dim_tt_hosp_beds));
+  SET_VECTOR_ELT(contents, 284, ScalarInteger(internal->dim_tt_ICU_beds));
+  SET_VECTOR_ELT(contents, 285, ScalarInteger(internal->dim_tt_matrix));
+  SET_VECTOR_ELT(contents, 286, ScalarInteger(internal->dim_tt_oxygen_supply));
+  SET_VECTOR_ELT(contents, 287, ScalarReal(internal->drug_1_effect_size));
+  SET_VECTOR_ELT(contents, 288, ScalarReal(internal->drug_1_indic));
+  SET_VECTOR_ELT(contents, 289, ScalarReal(internal->drug_10_GetOx_GetMV_effect_size));
+  SET_VECTOR_ELT(contents, 290, ScalarReal(internal->drug_10_GetOx_NoMV_effect_size));
+  SET_VECTOR_ELT(contents, 291, ScalarReal(internal->drug_10_indic_ICrit_GetICU_GetOx_GetMV));
+  SET_VECTOR_ELT(contents, 292, ScalarReal(internal->drug_10_indic_ICrit_GetICU_GetOx_NoMV));
+  SET_VECTOR_ELT(contents, 293, ScalarReal(internal->drug_10_indic_ICrit_GetICU_NoOx_NoMV));
+  SET_VECTOR_ELT(contents, 294, ScalarReal(internal->drug_10_NoOx_NoMV_effect_size));
+  SET_VECTOR_ELT(contents, 295, ScalarReal(internal->drug_10_prop_treat));
+  SET_VECTOR_ELT(contents, 296, ScalarReal(internal->drug_11_GetOx_effect_size));
+  SET_VECTOR_ELT(contents, 297, ScalarReal(internal->drug_11_indic_IMod_GetHosp_GetOx));
+  SET_VECTOR_ELT(contents, 298, ScalarReal(internal->drug_11_indic_IMod_GetHosp_NoOx));
+  SET_VECTOR_ELT(contents, 299, ScalarReal(internal->drug_11_NoOx_effect_size));
+  SET_VECTOR_ELT(contents, 300, ScalarReal(internal->drug_11_prop_treat));
+  SET_VECTOR_ELT(contents, 301, ScalarReal(internal->drug_12_GetOx_effect_size));
+  SET_VECTOR_ELT(contents, 302, ScalarReal(internal->drug_12_indic_ISev_GetICU_GetOx));
+  SET_VECTOR_ELT(contents, 303, ScalarReal(internal->drug_12_indic_ISev_GetICU_NoOx));
+  SET_VECTOR_ELT(contents, 304, ScalarReal(internal->drug_12_NoOx_effect_size));
+  SET_VECTOR_ELT(contents, 305, ScalarReal(internal->drug_12_prop_treat));
+  SET_VECTOR_ELT(contents, 306, ScalarReal(internal->drug_13_GetOx_GetMV_effect_size));
+  SET_VECTOR_ELT(contents, 307, ScalarReal(internal->drug_13_GetOx_NoMV_effect_size));
+  SET_VECTOR_ELT(contents, 308, ScalarReal(internal->drug_13_indic_ICrit_GetICU_GetOx_GetMV));
+  SET_VECTOR_ELT(contents, 309, ScalarReal(internal->drug_13_indic_ICrit_GetICU_GetOx_NoMV));
+  SET_VECTOR_ELT(contents, 310, ScalarReal(internal->drug_13_indic_ICrit_GetICU_NoOx_NoMV));
+  SET_VECTOR_ELT(contents, 311, ScalarReal(internal->drug_13_NoOx_NoMV_effect_size));
+  SET_VECTOR_ELT(contents, 312, ScalarReal(internal->drug_13_prop_treat));
+  SET_VECTOR_ELT(contents, 313, ScalarReal(internal->drug_2_effect_size));
+  SET_VECTOR_ELT(contents, 314, ScalarReal(internal->drug_2_indic));
+  SET_VECTOR_ELT(contents, 315, ScalarReal(internal->drug_3_effect_size));
+  SET_VECTOR_ELT(contents, 316, ScalarReal(internal->drug_3_indic));
+  SET_VECTOR_ELT(contents, 317, ScalarReal(internal->drug_3_prop_treat));
+  SET_VECTOR_ELT(contents, 318, ScalarReal(internal->drug_4_effect_size));
+  SET_VECTOR_ELT(contents, 319, ScalarReal(internal->drug_4_indic));
+  SET_VECTOR_ELT(contents, 320, ScalarReal(internal->drug_4_prop_treat));
+  SET_VECTOR_ELT(contents, 321, ScalarReal(internal->drug_5_effect_size));
+  SET_VECTOR_ELT(contents, 322, ScalarReal(internal->drug_5_indic_ICase));
+  SET_VECTOR_ELT(contents, 323, ScalarReal(internal->drug_5_indic_IMild));
+  SET_VECTOR_ELT(contents, 324, ScalarReal(internal->drug_5_prop_treat));
+  SET_VECTOR_ELT(contents, 325, ScalarReal(internal->drug_6_effect_size));
+  SET_VECTOR_ELT(contents, 326, ScalarReal(internal->drug_6_indic));
+  SET_VECTOR_ELT(contents, 327, ScalarReal(internal->drug_6_prop_treat));
+  SET_VECTOR_ELT(contents, 328, ScalarReal(internal->drug_7_effect_size));
+  SET_VECTOR_ELT(contents, 329, ScalarReal(internal->drug_7_indic));
+  SET_VECTOR_ELT(contents, 330, ScalarReal(internal->drug_7_prop_treat));
+  SET_VECTOR_ELT(contents, 331, ScalarReal(internal->drug_8_GetOx_effect_size));
+  SET_VECTOR_ELT(contents, 332, ScalarReal(internal->drug_8_indic_IMod_GetHosp_GetOx));
+  SET_VECTOR_ELT(contents, 333, ScalarReal(internal->drug_8_indic_IMod_GetHosp_NoOx));
+  SET_VECTOR_ELT(contents, 334, ScalarReal(internal->drug_8_NoOx_effect_size));
+  SET_VECTOR_ELT(contents, 335, ScalarReal(internal->drug_8_prop_treat));
+  SET_VECTOR_ELT(contents, 336, ScalarReal(internal->drug_9_GetOx_effect_size));
+  SET_VECTOR_ELT(contents, 337, ScalarReal(internal->drug_9_indic_ISev_GetICU_GetOx));
+  SET_VECTOR_ELT(contents, 338, ScalarReal(internal->drug_9_indic_ISev_GetICU_NoOx));
+  SET_VECTOR_ELT(contents, 339, ScalarReal(internal->drug_9_NoOx_effect_size));
+  SET_VECTOR_ELT(contents, 340, ScalarReal(internal->drug_9_prop_treat));
+  SEXP E1_0 = PROTECT(allocVector(REALSXP, internal->dim_E1_0));
+  memcpy(REAL(E1_0), internal->E1_0, internal->dim_E1_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 341, E1_0);
+  SEXP E2_0 = PROTECT(allocVector(REALSXP, internal->dim_E2_0));
+  memcpy(REAL(E2_0), internal->E2_0, internal->dim_E2_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 342, E2_0);
+  SET_VECTOR_ELT(contents, 343, ScalarReal(internal->gamma_E));
+  SET_VECTOR_ELT(contents, 344, ScalarReal(internal->gamma_IAsymp));
+  SET_VECTOR_ELT(contents, 345, ScalarReal(internal->gamma_ICase));
+  SET_VECTOR_ELT(contents, 346, ScalarReal(internal->gamma_ICrit_GetICU_GetOx_GetMV_Die));
+  SET_VECTOR_ELT(contents, 347, ScalarReal(internal->gamma_ICrit_GetICU_GetOx_GetMV_Surv));
+  SET_VECTOR_ELT(contents, 348, ScalarReal(internal->gamma_ICrit_GetICU_GetOx_GetMV_Surv_Drug_10));
+  SET_VECTOR_ELT(contents, 349, ScalarReal(internal->gamma_ICrit_GetICU_GetOx_NoMV_Die));
+  SET_VECTOR_ELT(contents, 350, ScalarReal(internal->gamma_ICrit_GetICU_GetOx_NoMV_Surv));
+  SET_VECTOR_ELT(contents, 351, ScalarReal(internal->gamma_ICrit_GetICU_GetOx_NoMV_Surv_Drug_10));
+  SET_VECTOR_ELT(contents, 352, ScalarReal(internal->gamma_ICrit_GetICU_NoOx_NoMV_Die));
+  SET_VECTOR_ELT(contents, 353, ScalarReal(internal->gamma_ICrit_GetICU_NoOx_NoMV_Surv));
+  SET_VECTOR_ELT(contents, 354, ScalarReal(internal->gamma_ICrit_GetICU_NoOx_NoMV_Surv_Drug_10));
+  SET_VECTOR_ELT(contents, 355, ScalarReal(internal->gamma_ICrit_NoICU_NoOx_NoMV_Die));
+  SET_VECTOR_ELT(contents, 356, ScalarReal(internal->gamma_ICrit_NoICU_NoOx_NoMV_Surv));
+  SET_VECTOR_ELT(contents, 357, ScalarReal(internal->gamma_IMild));
+  SET_VECTOR_ELT(contents, 358, ScalarReal(internal->gamma_IMild_Drug_4));
+  SET_VECTOR_ELT(contents, 359, ScalarReal(internal->gamma_IMod_GetHosp_GetOx_Die));
+  SET_VECTOR_ELT(contents, 360, ScalarReal(internal->gamma_IMod_GetHosp_GetOx_Surv));
+  SET_VECTOR_ELT(contents, 361, ScalarReal(internal->gamma_IMod_GetHosp_GetOx_Surv_Drug_8));
+  SET_VECTOR_ELT(contents, 362, ScalarReal(internal->gamma_IMod_GetHosp_NoOx_Die));
+  SET_VECTOR_ELT(contents, 363, ScalarReal(internal->gamma_IMod_GetHosp_NoOx_Surv));
+  SET_VECTOR_ELT(contents, 364, ScalarReal(internal->gamma_IMod_GetHosp_NoOx_Surv_Drug_8));
+  SET_VECTOR_ELT(contents, 365, ScalarReal(internal->gamma_IMod_NoHosp_NoOx_Die));
+  SET_VECTOR_ELT(contents, 366, ScalarReal(internal->gamma_IMod_NoHosp_NoOx_Surv));
+  SET_VECTOR_ELT(contents, 367, ScalarReal(internal->gamma_ISev_GetICU_GetOx_Die));
+  SET_VECTOR_ELT(contents, 368, ScalarReal(internal->gamma_ISev_GetICU_GetOx_Surv));
+  SET_VECTOR_ELT(contents, 369, ScalarReal(internal->gamma_ISev_GetICU_GetOx_Surv_Drug_9));
+  SET_VECTOR_ELT(contents, 370, ScalarReal(internal->gamma_ISev_GetICU_NoOx_Die));
+  SET_VECTOR_ELT(contents, 371, ScalarReal(internal->gamma_ISev_GetICU_NoOx_Surv));
+  SET_VECTOR_ELT(contents, 372, ScalarReal(internal->gamma_ISev_GetICU_NoOx_Surv_Drug_9));
+  SET_VECTOR_ELT(contents, 373, ScalarReal(internal->gamma_ISev_NoICU_NoOx_Die));
+  SET_VECTOR_ELT(contents, 374, ScalarReal(internal->gamma_ISev_NoICU_NoOx_Surv));
+  SET_VECTOR_ELT(contents, 375, ScalarReal(internal->gamma_rec));
+  SEXP hosp_bed_capacity = PROTECT(allocVector(REALSXP, internal->dim_hosp_bed_capacity));
+  memcpy(REAL(hosp_bed_capacity), internal->hosp_bed_capacity, internal->dim_hosp_bed_capacity * sizeof(double));
+  SET_VECTOR_ELT(contents, 376, hosp_bed_capacity);
+  SEXP IAsymp_0 = PROTECT(allocVector(REALSXP, internal->dim_IAsymp_0));
+  memcpy(REAL(IAsymp_0), internal->IAsymp_0, internal->dim_IAsymp_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 377, IAsymp_0);
+  SEXP ICase1_0 = PROTECT(allocVector(REALSXP, internal->dim_ICase1_0));
+  memcpy(REAL(ICase1_0), internal->ICase1_0, internal->dim_ICase1_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 378, ICase1_0);
+  SEXP ICase1_Drug_5_0 = PROTECT(allocVector(REALSXP, internal->dim_ICase1_Drug_5_0));
+  memcpy(REAL(ICase1_Drug_5_0), internal->ICase1_Drug_5_0, internal->dim_ICase1_Drug_5_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 379, ICase1_Drug_5_0);
+  SEXP ICase2_0 = PROTECT(allocVector(REALSXP, internal->dim_ICase2_0));
+  memcpy(REAL(ICase2_0), internal->ICase2_0, internal->dim_ICase2_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 380, ICase2_0);
+  SEXP ICase2_Drug_5_0 = PROTECT(allocVector(REALSXP, internal->dim_ICase2_Drug_5_0));
+  memcpy(REAL(ICase2_Drug_5_0), internal->ICase2_Drug_5_0, internal->dim_ICase2_Drug_5_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 381, ICase2_Drug_5_0);
+  SEXP ICrit_GetICU_GetOx_GetMV_Die1_0 = PROTECT(allocVector(REALSXP, internal->dim_ICrit_GetICU_GetOx_GetMV_Die1_0));
+  memcpy(REAL(ICrit_GetICU_GetOx_GetMV_Die1_0), internal->ICrit_GetICU_GetOx_GetMV_Die1_0, internal->dim_ICrit_GetICU_GetOx_GetMV_Die1_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 382, ICrit_GetICU_GetOx_GetMV_Die1_0);
+  SEXP ICrit_GetICU_GetOx_GetMV_Die2_0 = PROTECT(allocVector(REALSXP, internal->dim_ICrit_GetICU_GetOx_GetMV_Die2_0));
+  memcpy(REAL(ICrit_GetICU_GetOx_GetMV_Die2_0), internal->ICrit_GetICU_GetOx_GetMV_Die2_0, internal->dim_ICrit_GetICU_GetOx_GetMV_Die2_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 383, ICrit_GetICU_GetOx_GetMV_Die2_0);
+  SEXP ICrit_GetICU_GetOx_GetMV_Surv1_0 = PROTECT(allocVector(REALSXP, internal->dim_ICrit_GetICU_GetOx_GetMV_Surv1_0));
+  memcpy(REAL(ICrit_GetICU_GetOx_GetMV_Surv1_0), internal->ICrit_GetICU_GetOx_GetMV_Surv1_0, internal->dim_ICrit_GetICU_GetOx_GetMV_Surv1_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 384, ICrit_GetICU_GetOx_GetMV_Surv1_0);
+  SEXP ICrit_GetICU_GetOx_GetMV_Surv2_0 = PROTECT(allocVector(REALSXP, internal->dim_ICrit_GetICU_GetOx_GetMV_Surv2_0));
+  memcpy(REAL(ICrit_GetICU_GetOx_GetMV_Surv2_0), internal->ICrit_GetICU_GetOx_GetMV_Surv2_0, internal->dim_ICrit_GetICU_GetOx_GetMV_Surv2_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 385, ICrit_GetICU_GetOx_GetMV_Surv2_0);
+  SEXP ICrit_GetICU_GetOx_NoMV_Die1_0 = PROTECT(allocVector(REALSXP, internal->dim_ICrit_GetICU_GetOx_NoMV_Die1_0));
+  memcpy(REAL(ICrit_GetICU_GetOx_NoMV_Die1_0), internal->ICrit_GetICU_GetOx_NoMV_Die1_0, internal->dim_ICrit_GetICU_GetOx_NoMV_Die1_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 386, ICrit_GetICU_GetOx_NoMV_Die1_0);
+  SEXP ICrit_GetICU_GetOx_NoMV_Die2_0 = PROTECT(allocVector(REALSXP, internal->dim_ICrit_GetICU_GetOx_NoMV_Die2_0));
+  memcpy(REAL(ICrit_GetICU_GetOx_NoMV_Die2_0), internal->ICrit_GetICU_GetOx_NoMV_Die2_0, internal->dim_ICrit_GetICU_GetOx_NoMV_Die2_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 387, ICrit_GetICU_GetOx_NoMV_Die2_0);
+  SEXP ICrit_GetICU_GetOx_NoMV_Surv1_0 = PROTECT(allocVector(REALSXP, internal->dim_ICrit_GetICU_GetOx_NoMV_Surv1_0));
+  memcpy(REAL(ICrit_GetICU_GetOx_NoMV_Surv1_0), internal->ICrit_GetICU_GetOx_NoMV_Surv1_0, internal->dim_ICrit_GetICU_GetOx_NoMV_Surv1_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 388, ICrit_GetICU_GetOx_NoMV_Surv1_0);
+  SEXP ICrit_GetICU_GetOx_NoMV_Surv2_0 = PROTECT(allocVector(REALSXP, internal->dim_ICrit_GetICU_GetOx_NoMV_Surv2_0));
+  memcpy(REAL(ICrit_GetICU_GetOx_NoMV_Surv2_0), internal->ICrit_GetICU_GetOx_NoMV_Surv2_0, internal->dim_ICrit_GetICU_GetOx_NoMV_Surv2_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 389, ICrit_GetICU_GetOx_NoMV_Surv2_0);
+  SEXP ICrit_GetICU_NoOx_NoMV_Die1_0 = PROTECT(allocVector(REALSXP, internal->dim_ICrit_GetICU_NoOx_NoMV_Die1_0));
+  memcpy(REAL(ICrit_GetICU_NoOx_NoMV_Die1_0), internal->ICrit_GetICU_NoOx_NoMV_Die1_0, internal->dim_ICrit_GetICU_NoOx_NoMV_Die1_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 390, ICrit_GetICU_NoOx_NoMV_Die1_0);
+  SEXP ICrit_GetICU_NoOx_NoMV_Die2_0 = PROTECT(allocVector(REALSXP, internal->dim_ICrit_GetICU_NoOx_NoMV_Die2_0));
+  memcpy(REAL(ICrit_GetICU_NoOx_NoMV_Die2_0), internal->ICrit_GetICU_NoOx_NoMV_Die2_0, internal->dim_ICrit_GetICU_NoOx_NoMV_Die2_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 391, ICrit_GetICU_NoOx_NoMV_Die2_0);
+  SEXP ICrit_GetICU_NoOx_NoMV_Surv1_0 = PROTECT(allocVector(REALSXP, internal->dim_ICrit_GetICU_NoOx_NoMV_Surv1_0));
+  memcpy(REAL(ICrit_GetICU_NoOx_NoMV_Surv1_0), internal->ICrit_GetICU_NoOx_NoMV_Surv1_0, internal->dim_ICrit_GetICU_NoOx_NoMV_Surv1_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 392, ICrit_GetICU_NoOx_NoMV_Surv1_0);
+  SEXP ICrit_GetICU_NoOx_NoMV_Surv2_0 = PROTECT(allocVector(REALSXP, internal->dim_ICrit_GetICU_NoOx_NoMV_Surv2_0));
+  memcpy(REAL(ICrit_GetICU_NoOx_NoMV_Surv2_0), internal->ICrit_GetICU_NoOx_NoMV_Surv2_0, internal->dim_ICrit_GetICU_NoOx_NoMV_Surv2_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 393, ICrit_GetICU_NoOx_NoMV_Surv2_0);
+  SEXP ICrit_NoICU_NoOx_NoMV_Die1_0 = PROTECT(allocVector(REALSXP, internal->dim_ICrit_NoICU_NoOx_NoMV_Die1_0));
+  memcpy(REAL(ICrit_NoICU_NoOx_NoMV_Die1_0), internal->ICrit_NoICU_NoOx_NoMV_Die1_0, internal->dim_ICrit_NoICU_NoOx_NoMV_Die1_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 394, ICrit_NoICU_NoOx_NoMV_Die1_0);
+  SEXP ICrit_NoICU_NoOx_NoMV_Die2_0 = PROTECT(allocVector(REALSXP, internal->dim_ICrit_NoICU_NoOx_NoMV_Die2_0));
+  memcpy(REAL(ICrit_NoICU_NoOx_NoMV_Die2_0), internal->ICrit_NoICU_NoOx_NoMV_Die2_0, internal->dim_ICrit_NoICU_NoOx_NoMV_Die2_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 395, ICrit_NoICU_NoOx_NoMV_Die2_0);
+  SEXP ICrit_NoICU_NoOx_NoMV_Surv1_0 = PROTECT(allocVector(REALSXP, internal->dim_ICrit_NoICU_NoOx_NoMV_Surv1_0));
+  memcpy(REAL(ICrit_NoICU_NoOx_NoMV_Surv1_0), internal->ICrit_NoICU_NoOx_NoMV_Surv1_0, internal->dim_ICrit_NoICU_NoOx_NoMV_Surv1_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 396, ICrit_NoICU_NoOx_NoMV_Surv1_0);
+  SEXP ICrit_NoICU_NoOx_NoMV_Surv2_0 = PROTECT(allocVector(REALSXP, internal->dim_ICrit_NoICU_NoOx_NoMV_Surv2_0));
+  memcpy(REAL(ICrit_NoICU_NoOx_NoMV_Surv2_0), internal->ICrit_NoICU_NoOx_NoMV_Surv2_0, internal->dim_ICrit_NoICU_NoOx_NoMV_Surv2_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 397, ICrit_NoICU_NoOx_NoMV_Surv2_0);
+  SEXP ICU_bed_capacity = PROTECT(allocVector(REALSXP, internal->dim_ICU_bed_capacity));
+  memcpy(REAL(ICU_bed_capacity), internal->ICU_bed_capacity, internal->dim_ICU_bed_capacity * sizeof(double));
+  SET_VECTOR_ELT(contents, 398, ICU_bed_capacity);
+  SEXP IMild_0 = PROTECT(allocVector(REALSXP, internal->dim_IMild_0));
+  memcpy(REAL(IMild_0), internal->IMild_0, internal->dim_IMild_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 399, IMild_0);
+  SEXP IMild_Drug_5_0 = PROTECT(allocVector(REALSXP, internal->dim_IMild_Drug_5_0));
+  memcpy(REAL(IMild_Drug_5_0), internal->IMild_Drug_5_0, internal->dim_IMild_Drug_5_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 400, IMild_Drug_5_0);
+  SEXP IMod_GetHosp_GetOx_Die1_0 = PROTECT(allocVector(REALSXP, internal->dim_IMod_GetHosp_GetOx_Die1_0));
+  memcpy(REAL(IMod_GetHosp_GetOx_Die1_0), internal->IMod_GetHosp_GetOx_Die1_0, internal->dim_IMod_GetHosp_GetOx_Die1_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 401, IMod_GetHosp_GetOx_Die1_0);
+  SEXP IMod_GetHosp_GetOx_Die2_0 = PROTECT(allocVector(REALSXP, internal->dim_IMod_GetHosp_GetOx_Die2_0));
+  memcpy(REAL(IMod_GetHosp_GetOx_Die2_0), internal->IMod_GetHosp_GetOx_Die2_0, internal->dim_IMod_GetHosp_GetOx_Die2_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 402, IMod_GetHosp_GetOx_Die2_0);
+  SEXP IMod_GetHosp_GetOx_Surv1_0 = PROTECT(allocVector(REALSXP, internal->dim_IMod_GetHosp_GetOx_Surv1_0));
+  memcpy(REAL(IMod_GetHosp_GetOx_Surv1_0), internal->IMod_GetHosp_GetOx_Surv1_0, internal->dim_IMod_GetHosp_GetOx_Surv1_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 403, IMod_GetHosp_GetOx_Surv1_0);
+  SEXP IMod_GetHosp_GetOx_Surv2_0 = PROTECT(allocVector(REALSXP, internal->dim_IMod_GetHosp_GetOx_Surv2_0));
+  memcpy(REAL(IMod_GetHosp_GetOx_Surv2_0), internal->IMod_GetHosp_GetOx_Surv2_0, internal->dim_IMod_GetHosp_GetOx_Surv2_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 404, IMod_GetHosp_GetOx_Surv2_0);
+  SEXP IMod_GetHosp_NoOx_Die1_0 = PROTECT(allocVector(REALSXP, internal->dim_IMod_GetHosp_NoOx_Die1_0));
+  memcpy(REAL(IMod_GetHosp_NoOx_Die1_0), internal->IMod_GetHosp_NoOx_Die1_0, internal->dim_IMod_GetHosp_NoOx_Die1_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 405, IMod_GetHosp_NoOx_Die1_0);
+  SEXP IMod_GetHosp_NoOx_Die2_0 = PROTECT(allocVector(REALSXP, internal->dim_IMod_GetHosp_NoOx_Die2_0));
+  memcpy(REAL(IMod_GetHosp_NoOx_Die2_0), internal->IMod_GetHosp_NoOx_Die2_0, internal->dim_IMod_GetHosp_NoOx_Die2_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 406, IMod_GetHosp_NoOx_Die2_0);
+  SEXP IMod_GetHosp_NoOx_Surv1_0 = PROTECT(allocVector(REALSXP, internal->dim_IMod_GetHosp_NoOx_Surv1_0));
+  memcpy(REAL(IMod_GetHosp_NoOx_Surv1_0), internal->IMod_GetHosp_NoOx_Surv1_0, internal->dim_IMod_GetHosp_NoOx_Surv1_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 407, IMod_GetHosp_NoOx_Surv1_0);
+  SEXP IMod_GetHosp_NoOx_Surv2_0 = PROTECT(allocVector(REALSXP, internal->dim_IMod_GetHosp_NoOx_Surv2_0));
+  memcpy(REAL(IMod_GetHosp_NoOx_Surv2_0), internal->IMod_GetHosp_NoOx_Surv2_0, internal->dim_IMod_GetHosp_NoOx_Surv2_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 408, IMod_GetHosp_NoOx_Surv2_0);
+  SEXP IMod_NoHosp_NoOx_Die1_0 = PROTECT(allocVector(REALSXP, internal->dim_IMod_NoHosp_NoOx_Die1_0));
+  memcpy(REAL(IMod_NoHosp_NoOx_Die1_0), internal->IMod_NoHosp_NoOx_Die1_0, internal->dim_IMod_NoHosp_NoOx_Die1_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 409, IMod_NoHosp_NoOx_Die1_0);
+  SEXP IMod_NoHosp_NoOx_Die2_0 = PROTECT(allocVector(REALSXP, internal->dim_IMod_NoHosp_NoOx_Die2_0));
+  memcpy(REAL(IMod_NoHosp_NoOx_Die2_0), internal->IMod_NoHosp_NoOx_Die2_0, internal->dim_IMod_NoHosp_NoOx_Die2_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 410, IMod_NoHosp_NoOx_Die2_0);
+  SEXP IMod_NoHosp_NoOx_Surv1_0 = PROTECT(allocVector(REALSXP, internal->dim_IMod_NoHosp_NoOx_Surv1_0));
+  memcpy(REAL(IMod_NoHosp_NoOx_Surv1_0), internal->IMod_NoHosp_NoOx_Surv1_0, internal->dim_IMod_NoHosp_NoOx_Surv1_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 411, IMod_NoHosp_NoOx_Surv1_0);
+  SEXP IMod_NoHosp_NoOx_Surv2_0 = PROTECT(allocVector(REALSXP, internal->dim_IMod_NoHosp_NoOx_Surv2_0));
+  memcpy(REAL(IMod_NoHosp_NoOx_Surv2_0), internal->IMod_NoHosp_NoOx_Surv2_0, internal->dim_IMod_NoHosp_NoOx_Surv2_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 412, IMod_NoHosp_NoOx_Surv2_0);
+  SEXP initial_D = PROTECT(allocVector(REALSXP, internal->dim_D));
+  memcpy(REAL(initial_D), internal->initial_D, internal->dim_D * sizeof(double));
+  SET_VECTOR_ELT(contents, 413, initial_D);
+  SEXP initial_D_Community = PROTECT(allocVector(REALSXP, internal->dim_D_Community));
+  memcpy(REAL(initial_D_Community), internal->initial_D_Community, internal->dim_D_Community * sizeof(double));
+  SET_VECTOR_ELT(contents, 414, initial_D_Community);
+  SEXP initial_D_Hospital = PROTECT(allocVector(REALSXP, internal->dim_D_Hospital));
+  memcpy(REAL(initial_D_Hospital), internal->initial_D_Hospital, internal->dim_D_Hospital * sizeof(double));
+  SET_VECTOR_ELT(contents, 415, initial_D_Hospital);
+  SEXP initial_E1 = PROTECT(allocVector(REALSXP, internal->dim_E1));
+  memcpy(REAL(initial_E1), internal->initial_E1, internal->dim_E1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 416, initial_E1);
+  SEXP initial_E2 = PROTECT(allocVector(REALSXP, internal->dim_E2));
+  memcpy(REAL(initial_E2), internal->initial_E2, internal->dim_E2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 417, initial_E2);
+  SEXP initial_IAsymp = PROTECT(allocVector(REALSXP, internal->dim_IAsymp));
+  memcpy(REAL(initial_IAsymp), internal->initial_IAsymp, internal->dim_IAsymp * sizeof(double));
+  SET_VECTOR_ELT(contents, 418, initial_IAsymp);
+  SEXP initial_ICase1 = PROTECT(allocVector(REALSXP, internal->dim_ICase1));
+  memcpy(REAL(initial_ICase1), internal->initial_ICase1, internal->dim_ICase1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 419, initial_ICase1);
+  SEXP initial_ICase1_Drug_5 = PROTECT(allocVector(REALSXP, internal->dim_ICase1_Drug_5));
+  memcpy(REAL(initial_ICase1_Drug_5), internal->initial_ICase1_Drug_5, internal->dim_ICase1_Drug_5 * sizeof(double));
+  SET_VECTOR_ELT(contents, 420, initial_ICase1_Drug_5);
+  SEXP initial_ICase2 = PROTECT(allocVector(REALSXP, internal->dim_ICase2));
+  memcpy(REAL(initial_ICase2), internal->initial_ICase2, internal->dim_ICase2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 421, initial_ICase2);
+  SEXP initial_ICase2_Drug_5 = PROTECT(allocVector(REALSXP, internal->dim_ICase2_Drug_5));
+  memcpy(REAL(initial_ICase2_Drug_5), internal->initial_ICase2_Drug_5, internal->dim_ICase2_Drug_5 * sizeof(double));
+  SET_VECTOR_ELT(contents, 422, initial_ICase2_Drug_5);
+  SEXP initial_ICrit_GetICU_GetOx_GetMV_Die1 = PROTECT(allocVector(REALSXP, internal->dim_ICrit_GetICU_GetOx_GetMV_Die1));
+  memcpy(REAL(initial_ICrit_GetICU_GetOx_GetMV_Die1), internal->initial_ICrit_GetICU_GetOx_GetMV_Die1, internal->dim_ICrit_GetICU_GetOx_GetMV_Die1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 423, initial_ICrit_GetICU_GetOx_GetMV_Die1);
+  SEXP initial_ICrit_GetICU_GetOx_GetMV_Die2 = PROTECT(allocVector(REALSXP, internal->dim_ICrit_GetICU_GetOx_GetMV_Die2));
+  memcpy(REAL(initial_ICrit_GetICU_GetOx_GetMV_Die2), internal->initial_ICrit_GetICU_GetOx_GetMV_Die2, internal->dim_ICrit_GetICU_GetOx_GetMV_Die2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 424, initial_ICrit_GetICU_GetOx_GetMV_Die2);
+  SEXP initial_ICrit_GetICU_GetOx_GetMV_Surv1 = PROTECT(allocVector(REALSXP, internal->dim_ICrit_GetICU_GetOx_GetMV_Surv1));
+  memcpy(REAL(initial_ICrit_GetICU_GetOx_GetMV_Surv1), internal->initial_ICrit_GetICU_GetOx_GetMV_Surv1, internal->dim_ICrit_GetICU_GetOx_GetMV_Surv1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 425, initial_ICrit_GetICU_GetOx_GetMV_Surv1);
+  SEXP initial_ICrit_GetICU_GetOx_GetMV_Surv2 = PROTECT(allocVector(REALSXP, internal->dim_ICrit_GetICU_GetOx_GetMV_Surv2));
+  memcpy(REAL(initial_ICrit_GetICU_GetOx_GetMV_Surv2), internal->initial_ICrit_GetICU_GetOx_GetMV_Surv2, internal->dim_ICrit_GetICU_GetOx_GetMV_Surv2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 426, initial_ICrit_GetICU_GetOx_GetMV_Surv2);
+  SEXP initial_ICrit_GetICU_GetOx_NoMV_Die1 = PROTECT(allocVector(REALSXP, internal->dim_ICrit_GetICU_GetOx_NoMV_Die1));
+  memcpy(REAL(initial_ICrit_GetICU_GetOx_NoMV_Die1), internal->initial_ICrit_GetICU_GetOx_NoMV_Die1, internal->dim_ICrit_GetICU_GetOx_NoMV_Die1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 427, initial_ICrit_GetICU_GetOx_NoMV_Die1);
+  SEXP initial_ICrit_GetICU_GetOx_NoMV_Die2 = PROTECT(allocVector(REALSXP, internal->dim_ICrit_GetICU_GetOx_NoMV_Die2));
+  memcpy(REAL(initial_ICrit_GetICU_GetOx_NoMV_Die2), internal->initial_ICrit_GetICU_GetOx_NoMV_Die2, internal->dim_ICrit_GetICU_GetOx_NoMV_Die2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 428, initial_ICrit_GetICU_GetOx_NoMV_Die2);
+  SEXP initial_ICrit_GetICU_GetOx_NoMV_Surv1 = PROTECT(allocVector(REALSXP, internal->dim_ICrit_GetICU_GetOx_NoMV_Surv1));
+  memcpy(REAL(initial_ICrit_GetICU_GetOx_NoMV_Surv1), internal->initial_ICrit_GetICU_GetOx_NoMV_Surv1, internal->dim_ICrit_GetICU_GetOx_NoMV_Surv1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 429, initial_ICrit_GetICU_GetOx_NoMV_Surv1);
+  SEXP initial_ICrit_GetICU_GetOx_NoMV_Surv2 = PROTECT(allocVector(REALSXP, internal->dim_ICrit_GetICU_GetOx_NoMV_Surv2));
+  memcpy(REAL(initial_ICrit_GetICU_GetOx_NoMV_Surv2), internal->initial_ICrit_GetICU_GetOx_NoMV_Surv2, internal->dim_ICrit_GetICU_GetOx_NoMV_Surv2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 430, initial_ICrit_GetICU_GetOx_NoMV_Surv2);
+  SEXP initial_ICrit_GetICU_NoOx_NoMV_Die1 = PROTECT(allocVector(REALSXP, internal->dim_ICrit_GetICU_NoOx_NoMV_Die1));
+  memcpy(REAL(initial_ICrit_GetICU_NoOx_NoMV_Die1), internal->initial_ICrit_GetICU_NoOx_NoMV_Die1, internal->dim_ICrit_GetICU_NoOx_NoMV_Die1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 431, initial_ICrit_GetICU_NoOx_NoMV_Die1);
+  SEXP initial_ICrit_GetICU_NoOx_NoMV_Die2 = PROTECT(allocVector(REALSXP, internal->dim_ICrit_GetICU_NoOx_NoMV_Die2));
+  memcpy(REAL(initial_ICrit_GetICU_NoOx_NoMV_Die2), internal->initial_ICrit_GetICU_NoOx_NoMV_Die2, internal->dim_ICrit_GetICU_NoOx_NoMV_Die2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 432, initial_ICrit_GetICU_NoOx_NoMV_Die2);
+  SEXP initial_ICrit_GetICU_NoOx_NoMV_Surv1 = PROTECT(allocVector(REALSXP, internal->dim_ICrit_GetICU_NoOx_NoMV_Surv1));
+  memcpy(REAL(initial_ICrit_GetICU_NoOx_NoMV_Surv1), internal->initial_ICrit_GetICU_NoOx_NoMV_Surv1, internal->dim_ICrit_GetICU_NoOx_NoMV_Surv1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 433, initial_ICrit_GetICU_NoOx_NoMV_Surv1);
+  SEXP initial_ICrit_GetICU_NoOx_NoMV_Surv2 = PROTECT(allocVector(REALSXP, internal->dim_ICrit_GetICU_NoOx_NoMV_Surv2));
+  memcpy(REAL(initial_ICrit_GetICU_NoOx_NoMV_Surv2), internal->initial_ICrit_GetICU_NoOx_NoMV_Surv2, internal->dim_ICrit_GetICU_NoOx_NoMV_Surv2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 434, initial_ICrit_GetICU_NoOx_NoMV_Surv2);
+  SEXP initial_ICrit_NoICU_NoOx_NoMV_Die1 = PROTECT(allocVector(REALSXP, internal->dim_ICrit_NoICU_NoOx_NoMV_Die1));
+  memcpy(REAL(initial_ICrit_NoICU_NoOx_NoMV_Die1), internal->initial_ICrit_NoICU_NoOx_NoMV_Die1, internal->dim_ICrit_NoICU_NoOx_NoMV_Die1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 435, initial_ICrit_NoICU_NoOx_NoMV_Die1);
+  SEXP initial_ICrit_NoICU_NoOx_NoMV_Die2 = PROTECT(allocVector(REALSXP, internal->dim_ICrit_NoICU_NoOx_NoMV_Die2));
+  memcpy(REAL(initial_ICrit_NoICU_NoOx_NoMV_Die2), internal->initial_ICrit_NoICU_NoOx_NoMV_Die2, internal->dim_ICrit_NoICU_NoOx_NoMV_Die2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 436, initial_ICrit_NoICU_NoOx_NoMV_Die2);
+  SEXP initial_ICrit_NoICU_NoOx_NoMV_Surv1 = PROTECT(allocVector(REALSXP, internal->dim_ICrit_NoICU_NoOx_NoMV_Surv1));
+  memcpy(REAL(initial_ICrit_NoICU_NoOx_NoMV_Surv1), internal->initial_ICrit_NoICU_NoOx_NoMV_Surv1, internal->dim_ICrit_NoICU_NoOx_NoMV_Surv1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 437, initial_ICrit_NoICU_NoOx_NoMV_Surv1);
+  SEXP initial_ICrit_NoICU_NoOx_NoMV_Surv2 = PROTECT(allocVector(REALSXP, internal->dim_ICrit_NoICU_NoOx_NoMV_Surv2));
+  memcpy(REAL(initial_ICrit_NoICU_NoOx_NoMV_Surv2), internal->initial_ICrit_NoICU_NoOx_NoMV_Surv2, internal->dim_ICrit_NoICU_NoOx_NoMV_Surv2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 438, initial_ICrit_NoICU_NoOx_NoMV_Surv2);
+  SEXP initial_IMild = PROTECT(allocVector(REALSXP, internal->dim_IMild));
+  memcpy(REAL(initial_IMild), internal->initial_IMild, internal->dim_IMild * sizeof(double));
+  SET_VECTOR_ELT(contents, 439, initial_IMild);
+  SEXP initial_IMild_Drug_5 = PROTECT(allocVector(REALSXP, internal->dim_IMild_Drug_5));
+  memcpy(REAL(initial_IMild_Drug_5), internal->initial_IMild_Drug_5, internal->dim_IMild_Drug_5 * sizeof(double));
+  SET_VECTOR_ELT(contents, 440, initial_IMild_Drug_5);
+  SEXP initial_IMod_GetHosp_GetOx_Die1 = PROTECT(allocVector(REALSXP, internal->dim_IMod_GetHosp_GetOx_Die1));
+  memcpy(REAL(initial_IMod_GetHosp_GetOx_Die1), internal->initial_IMod_GetHosp_GetOx_Die1, internal->dim_IMod_GetHosp_GetOx_Die1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 441, initial_IMod_GetHosp_GetOx_Die1);
+  SEXP initial_IMod_GetHosp_GetOx_Die2 = PROTECT(allocVector(REALSXP, internal->dim_IMod_GetHosp_GetOx_Die2));
+  memcpy(REAL(initial_IMod_GetHosp_GetOx_Die2), internal->initial_IMod_GetHosp_GetOx_Die2, internal->dim_IMod_GetHosp_GetOx_Die2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 442, initial_IMod_GetHosp_GetOx_Die2);
+  SEXP initial_IMod_GetHosp_GetOx_Surv1 = PROTECT(allocVector(REALSXP, internal->dim_IMod_GetHosp_GetOx_Surv1));
+  memcpy(REAL(initial_IMod_GetHosp_GetOx_Surv1), internal->initial_IMod_GetHosp_GetOx_Surv1, internal->dim_IMod_GetHosp_GetOx_Surv1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 443, initial_IMod_GetHosp_GetOx_Surv1);
+  SEXP initial_IMod_GetHosp_GetOx_Surv2 = PROTECT(allocVector(REALSXP, internal->dim_IMod_GetHosp_GetOx_Surv2));
+  memcpy(REAL(initial_IMod_GetHosp_GetOx_Surv2), internal->initial_IMod_GetHosp_GetOx_Surv2, internal->dim_IMod_GetHosp_GetOx_Surv2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 444, initial_IMod_GetHosp_GetOx_Surv2);
+  SEXP initial_IMod_GetHosp_NoOx_Die1 = PROTECT(allocVector(REALSXP, internal->dim_IMod_GetHosp_NoOx_Die1));
+  memcpy(REAL(initial_IMod_GetHosp_NoOx_Die1), internal->initial_IMod_GetHosp_NoOx_Die1, internal->dim_IMod_GetHosp_NoOx_Die1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 445, initial_IMod_GetHosp_NoOx_Die1);
+  SEXP initial_IMod_GetHosp_NoOx_Die2 = PROTECT(allocVector(REALSXP, internal->dim_IMod_GetHosp_NoOx_Die2));
+  memcpy(REAL(initial_IMod_GetHosp_NoOx_Die2), internal->initial_IMod_GetHosp_NoOx_Die2, internal->dim_IMod_GetHosp_NoOx_Die2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 446, initial_IMod_GetHosp_NoOx_Die2);
+  SEXP initial_IMod_GetHosp_NoOx_Surv1 = PROTECT(allocVector(REALSXP, internal->dim_IMod_GetHosp_NoOx_Surv1));
+  memcpy(REAL(initial_IMod_GetHosp_NoOx_Surv1), internal->initial_IMod_GetHosp_NoOx_Surv1, internal->dim_IMod_GetHosp_NoOx_Surv1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 447, initial_IMod_GetHosp_NoOx_Surv1);
+  SEXP initial_IMod_GetHosp_NoOx_Surv2 = PROTECT(allocVector(REALSXP, internal->dim_IMod_GetHosp_NoOx_Surv2));
+  memcpy(REAL(initial_IMod_GetHosp_NoOx_Surv2), internal->initial_IMod_GetHosp_NoOx_Surv2, internal->dim_IMod_GetHosp_NoOx_Surv2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 448, initial_IMod_GetHosp_NoOx_Surv2);
+  SEXP initial_IMod_NoHosp_NoOx_Die1 = PROTECT(allocVector(REALSXP, internal->dim_IMod_NoHosp_NoOx_Die1));
+  memcpy(REAL(initial_IMod_NoHosp_NoOx_Die1), internal->initial_IMod_NoHosp_NoOx_Die1, internal->dim_IMod_NoHosp_NoOx_Die1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 449, initial_IMod_NoHosp_NoOx_Die1);
+  SEXP initial_IMod_NoHosp_NoOx_Die2 = PROTECT(allocVector(REALSXP, internal->dim_IMod_NoHosp_NoOx_Die2));
+  memcpy(REAL(initial_IMod_NoHosp_NoOx_Die2), internal->initial_IMod_NoHosp_NoOx_Die2, internal->dim_IMod_NoHosp_NoOx_Die2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 450, initial_IMod_NoHosp_NoOx_Die2);
+  SEXP initial_IMod_NoHosp_NoOx_Surv1 = PROTECT(allocVector(REALSXP, internal->dim_IMod_NoHosp_NoOx_Surv1));
+  memcpy(REAL(initial_IMod_NoHosp_NoOx_Surv1), internal->initial_IMod_NoHosp_NoOx_Surv1, internal->dim_IMod_NoHosp_NoOx_Surv1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 451, initial_IMod_NoHosp_NoOx_Surv1);
+  SEXP initial_IMod_NoHosp_NoOx_Surv2 = PROTECT(allocVector(REALSXP, internal->dim_IMod_NoHosp_NoOx_Surv2));
+  memcpy(REAL(initial_IMod_NoHosp_NoOx_Surv2), internal->initial_IMod_NoHosp_NoOx_Surv2, internal->dim_IMod_NoHosp_NoOx_Surv2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 452, initial_IMod_NoHosp_NoOx_Surv2);
+  SEXP initial_IRec1 = PROTECT(allocVector(REALSXP, internal->dim_IRec1));
+  memcpy(REAL(initial_IRec1), internal->initial_IRec1, internal->dim_IRec1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 453, initial_IRec1);
+  SEXP initial_IRec2 = PROTECT(allocVector(REALSXP, internal->dim_IRec2));
+  memcpy(REAL(initial_IRec2), internal->initial_IRec2, internal->dim_IRec2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 454, initial_IRec2);
+  SEXP initial_ISev_GetICU_GetOx_Die1 = PROTECT(allocVector(REALSXP, internal->dim_ISev_GetICU_GetOx_Die1));
+  memcpy(REAL(initial_ISev_GetICU_GetOx_Die1), internal->initial_ISev_GetICU_GetOx_Die1, internal->dim_ISev_GetICU_GetOx_Die1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 455, initial_ISev_GetICU_GetOx_Die1);
+  SEXP initial_ISev_GetICU_GetOx_Die2 = PROTECT(allocVector(REALSXP, internal->dim_ISev_GetICU_GetOx_Die2));
+  memcpy(REAL(initial_ISev_GetICU_GetOx_Die2), internal->initial_ISev_GetICU_GetOx_Die2, internal->dim_ISev_GetICU_GetOx_Die2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 456, initial_ISev_GetICU_GetOx_Die2);
+  SEXP initial_ISev_GetICU_GetOx_Surv1 = PROTECT(allocVector(REALSXP, internal->dim_ISev_GetICU_GetOx_Surv1));
+  memcpy(REAL(initial_ISev_GetICU_GetOx_Surv1), internal->initial_ISev_GetICU_GetOx_Surv1, internal->dim_ISev_GetICU_GetOx_Surv1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 457, initial_ISev_GetICU_GetOx_Surv1);
+  SEXP initial_ISev_GetICU_GetOx_Surv2 = PROTECT(allocVector(REALSXP, internal->dim_ISev_GetICU_GetOx_Surv2));
+  memcpy(REAL(initial_ISev_GetICU_GetOx_Surv2), internal->initial_ISev_GetICU_GetOx_Surv2, internal->dim_ISev_GetICU_GetOx_Surv2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 458, initial_ISev_GetICU_GetOx_Surv2);
+  SEXP initial_ISev_GetICU_NoOx_Die1 = PROTECT(allocVector(REALSXP, internal->dim_ISev_GetICU_NoOx_Die1));
+  memcpy(REAL(initial_ISev_GetICU_NoOx_Die1), internal->initial_ISev_GetICU_NoOx_Die1, internal->dim_ISev_GetICU_NoOx_Die1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 459, initial_ISev_GetICU_NoOx_Die1);
+  SEXP initial_ISev_GetICU_NoOx_Die2 = PROTECT(allocVector(REALSXP, internal->dim_ISev_GetICU_NoOx_Die2));
+  memcpy(REAL(initial_ISev_GetICU_NoOx_Die2), internal->initial_ISev_GetICU_NoOx_Die2, internal->dim_ISev_GetICU_NoOx_Die2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 460, initial_ISev_GetICU_NoOx_Die2);
+  SEXP initial_ISev_GetICU_NoOx_Surv1 = PROTECT(allocVector(REALSXP, internal->dim_ISev_GetICU_NoOx_Surv1));
+  memcpy(REAL(initial_ISev_GetICU_NoOx_Surv1), internal->initial_ISev_GetICU_NoOx_Surv1, internal->dim_ISev_GetICU_NoOx_Surv1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 461, initial_ISev_GetICU_NoOx_Surv1);
+  SEXP initial_ISev_GetICU_NoOx_Surv2 = PROTECT(allocVector(REALSXP, internal->dim_ISev_GetICU_NoOx_Surv2));
+  memcpy(REAL(initial_ISev_GetICU_NoOx_Surv2), internal->initial_ISev_GetICU_NoOx_Surv2, internal->dim_ISev_GetICU_NoOx_Surv2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 462, initial_ISev_GetICU_NoOx_Surv2);
+  SEXP initial_ISev_NoICU_NoOx_Die1 = PROTECT(allocVector(REALSXP, internal->dim_ISev_NoICU_NoOx_Die1));
+  memcpy(REAL(initial_ISev_NoICU_NoOx_Die1), internal->initial_ISev_NoICU_NoOx_Die1, internal->dim_ISev_NoICU_NoOx_Die1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 463, initial_ISev_NoICU_NoOx_Die1);
+  SEXP initial_ISev_NoICU_NoOx_Die2 = PROTECT(allocVector(REALSXP, internal->dim_ISev_NoICU_NoOx_Die2));
+  memcpy(REAL(initial_ISev_NoICU_NoOx_Die2), internal->initial_ISev_NoICU_NoOx_Die2, internal->dim_ISev_NoICU_NoOx_Die2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 464, initial_ISev_NoICU_NoOx_Die2);
+  SEXP initial_ISev_NoICU_NoOx_Surv1 = PROTECT(allocVector(REALSXP, internal->dim_ISev_NoICU_NoOx_Surv1));
+  memcpy(REAL(initial_ISev_NoICU_NoOx_Surv1), internal->initial_ISev_NoICU_NoOx_Surv1, internal->dim_ISev_NoICU_NoOx_Surv1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 465, initial_ISev_NoICU_NoOx_Surv1);
+  SEXP initial_ISev_NoICU_NoOx_Surv2 = PROTECT(allocVector(REALSXP, internal->dim_ISev_NoICU_NoOx_Surv2));
+  memcpy(REAL(initial_ISev_NoICU_NoOx_Surv2), internal->initial_ISev_NoICU_NoOx_Surv2, internal->dim_ISev_NoICU_NoOx_Surv2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 466, initial_ISev_NoICU_NoOx_Surv2);
+  SET_VECTOR_ELT(contents, 467, ScalarReal(internal->initial_oxygen_availability));
+  SEXP initial_PE1 = PROTECT(allocVector(REALSXP, internal->dim_PE1));
+  memcpy(REAL(initial_PE1), internal->initial_PE1, internal->dim_PE1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 468, initial_PE1);
+  SEXP initial_PE2 = PROTECT(allocVector(REALSXP, internal->dim_PE2));
+  memcpy(REAL(initial_PE2), internal->initial_PE2, internal->dim_PE2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 469, initial_PE2);
+  SEXP initial_PS = PROTECT(allocVector(REALSXP, internal->dim_PS));
+  memcpy(REAL(initial_PS), internal->initial_PS, internal->dim_PS * sizeof(double));
+  SET_VECTOR_ELT(contents, 470, initial_PS);
+  SEXP initial_R = PROTECT(allocVector(REALSXP, internal->dim_R));
+  memcpy(REAL(initial_R), internal->initial_R, internal->dim_R * sizeof(double));
+  SET_VECTOR_ELT(contents, 471, initial_R);
+  SEXP initial_S = PROTECT(allocVector(REALSXP, internal->dim_S));
+  memcpy(REAL(initial_S), internal->initial_S, internal->dim_S * sizeof(double));
+  SET_VECTOR_ELT(contents, 472, initial_S);
+  SEXP input_baseline_oxygen_demand = PROTECT(allocVector(REALSXP, internal->dim_input_baseline_oxygen_demand));
+  memcpy(REAL(input_baseline_oxygen_demand), internal->input_baseline_oxygen_demand, internal->dim_input_baseline_oxygen_demand * sizeof(double));
+  SET_VECTOR_ELT(contents, 473, input_baseline_oxygen_demand);
+  SEXP input_oxygen_supply = PROTECT(allocVector(REALSXP, internal->dim_input_oxygen_supply));
+  memcpy(REAL(input_oxygen_supply), internal->input_oxygen_supply, internal->dim_input_oxygen_supply * sizeof(double));
+  SET_VECTOR_ELT(contents, 474, input_oxygen_supply);
+  SEXP IRec1_0 = PROTECT(allocVector(REALSXP, internal->dim_IRec1_0));
+  memcpy(REAL(IRec1_0), internal->IRec1_0, internal->dim_IRec1_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 481, IRec1_0);
+  SEXP IRec2_0 = PROTECT(allocVector(REALSXP, internal->dim_IRec2_0));
+  memcpy(REAL(IRec2_0), internal->IRec2_0, internal->dim_IRec2_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 482, IRec2_0);
+  SEXP ISev_GetICU_GetOx_Die1_0 = PROTECT(allocVector(REALSXP, internal->dim_ISev_GetICU_GetOx_Die1_0));
+  memcpy(REAL(ISev_GetICU_GetOx_Die1_0), internal->ISev_GetICU_GetOx_Die1_0, internal->dim_ISev_GetICU_GetOx_Die1_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 483, ISev_GetICU_GetOx_Die1_0);
+  SEXP ISev_GetICU_GetOx_Die2_0 = PROTECT(allocVector(REALSXP, internal->dim_ISev_GetICU_GetOx_Die2_0));
+  memcpy(REAL(ISev_GetICU_GetOx_Die2_0), internal->ISev_GetICU_GetOx_Die2_0, internal->dim_ISev_GetICU_GetOx_Die2_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 484, ISev_GetICU_GetOx_Die2_0);
+  SEXP ISev_GetICU_GetOx_Surv1_0 = PROTECT(allocVector(REALSXP, internal->dim_ISev_GetICU_GetOx_Surv1_0));
+  memcpy(REAL(ISev_GetICU_GetOx_Surv1_0), internal->ISev_GetICU_GetOx_Surv1_0, internal->dim_ISev_GetICU_GetOx_Surv1_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 485, ISev_GetICU_GetOx_Surv1_0);
+  SEXP ISev_GetICU_GetOx_Surv2_0 = PROTECT(allocVector(REALSXP, internal->dim_ISev_GetICU_GetOx_Surv2_0));
+  memcpy(REAL(ISev_GetICU_GetOx_Surv2_0), internal->ISev_GetICU_GetOx_Surv2_0, internal->dim_ISev_GetICU_GetOx_Surv2_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 486, ISev_GetICU_GetOx_Surv2_0);
+  SEXP ISev_GetICU_NoOx_Die1_0 = PROTECT(allocVector(REALSXP, internal->dim_ISev_GetICU_NoOx_Die1_0));
+  memcpy(REAL(ISev_GetICU_NoOx_Die1_0), internal->ISev_GetICU_NoOx_Die1_0, internal->dim_ISev_GetICU_NoOx_Die1_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 487, ISev_GetICU_NoOx_Die1_0);
+  SEXP ISev_GetICU_NoOx_Die2_0 = PROTECT(allocVector(REALSXP, internal->dim_ISev_GetICU_NoOx_Die2_0));
+  memcpy(REAL(ISev_GetICU_NoOx_Die2_0), internal->ISev_GetICU_NoOx_Die2_0, internal->dim_ISev_GetICU_NoOx_Die2_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 488, ISev_GetICU_NoOx_Die2_0);
+  SEXP ISev_GetICU_NoOx_Surv1_0 = PROTECT(allocVector(REALSXP, internal->dim_ISev_GetICU_NoOx_Surv1_0));
+  memcpy(REAL(ISev_GetICU_NoOx_Surv1_0), internal->ISev_GetICU_NoOx_Surv1_0, internal->dim_ISev_GetICU_NoOx_Surv1_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 489, ISev_GetICU_NoOx_Surv1_0);
+  SEXP ISev_GetICU_NoOx_Surv2_0 = PROTECT(allocVector(REALSXP, internal->dim_ISev_GetICU_NoOx_Surv2_0));
+  memcpy(REAL(ISev_GetICU_NoOx_Surv2_0), internal->ISev_GetICU_NoOx_Surv2_0, internal->dim_ISev_GetICU_NoOx_Surv2_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 490, ISev_GetICU_NoOx_Surv2_0);
+  SEXP ISev_NoICU_NoOx_Die1_0 = PROTECT(allocVector(REALSXP, internal->dim_ISev_NoICU_NoOx_Die1_0));
+  memcpy(REAL(ISev_NoICU_NoOx_Die1_0), internal->ISev_NoICU_NoOx_Die1_0, internal->dim_ISev_NoICU_NoOx_Die1_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 491, ISev_NoICU_NoOx_Die1_0);
+  SEXP ISev_NoICU_NoOx_Die2_0 = PROTECT(allocVector(REALSXP, internal->dim_ISev_NoICU_NoOx_Die2_0));
+  memcpy(REAL(ISev_NoICU_NoOx_Die2_0), internal->ISev_NoICU_NoOx_Die2_0, internal->dim_ISev_NoICU_NoOx_Die2_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 492, ISev_NoICU_NoOx_Die2_0);
+  SEXP ISev_NoICU_NoOx_Surv1_0 = PROTECT(allocVector(REALSXP, internal->dim_ISev_NoICU_NoOx_Surv1_0));
+  memcpy(REAL(ISev_NoICU_NoOx_Surv1_0), internal->ISev_NoICU_NoOx_Surv1_0, internal->dim_ISev_NoICU_NoOx_Surv1_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 493, ISev_NoICU_NoOx_Surv1_0);
+  SEXP ISev_NoICU_NoOx_Surv2_0 = PROTECT(allocVector(REALSXP, internal->dim_ISev_NoICU_NoOx_Surv2_0));
+  memcpy(REAL(ISev_NoICU_NoOx_Surv2_0), internal->ISev_NoICU_NoOx_Surv2_0, internal->dim_ISev_NoICU_NoOx_Surv2_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 494, ISev_NoICU_NoOx_Surv2_0);
+  SEXP lambda = PROTECT(allocVector(REALSXP, internal->dim_lambda));
+  memcpy(REAL(lambda), internal->lambda, internal->dim_lambda * sizeof(double));
+  SET_VECTOR_ELT(contents, 495, lambda);
+  SEXP m = PROTECT(allocVector(REALSXP, internal->dim_m));
+  memcpy(REAL(m), internal->m, internal->dim_m * sizeof(double));
+  odin_set_dim(m, 2, internal->dim_m_1, internal->dim_m_2);
+  SET_VECTOR_ELT(contents, 496, m);
+  SET_VECTOR_ELT(contents, 497, ScalarReal(internal->max_leftover));
+  SEXP mix_mat_set = PROTECT(allocVector(REALSXP, internal->dim_mix_mat_set));
+  memcpy(REAL(mix_mat_set), internal->mix_mat_set, internal->dim_mix_mat_set * sizeof(double));
+  odin_set_dim(mix_mat_set, 3, internal->dim_mix_mat_set_1, internal->dim_mix_mat_set_2, internal->dim_mix_mat_set_3);
+  SET_VECTOR_ELT(contents, 498, mix_mat_set);
+  SET_VECTOR_ELT(contents, 499, ScalarReal(internal->MV_capacity));
+  SET_VECTOR_ELT(contents, 500, ScalarInteger(internal->N_age));
+  SEXP n_E1_E2 = PROTECT(allocVector(REALSXP, internal->dim_n_E1_E2));
+  memcpy(REAL(n_E1_E2), internal->n_E1_E2, internal->dim_n_E1_E2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 501, n_E1_E2);
+  SEXP n_E2_I = PROTECT(allocVector(REALSXP, internal->dim_n_E2_I));
+  memcpy(REAL(n_E2_I), internal->n_E2_I, internal->dim_n_E2_I * sizeof(double));
+  SET_VECTOR_ELT(contents, 502, n_E2_I);
+  SEXP n_E2_IAsymp = PROTECT(allocVector(REALSXP, internal->dim_n_E2_IAsymp));
+  memcpy(REAL(n_E2_IAsymp), internal->n_E2_IAsymp, internal->dim_n_E2_IAsymp * sizeof(double));
+  SET_VECTOR_ELT(contents, 503, n_E2_IAsymp);
+  SEXP n_E2_ICase1 = PROTECT(allocVector(REALSXP, internal->dim_n_E2_ICase1));
+  memcpy(REAL(n_E2_ICase1), internal->n_E2_ICase1, internal->dim_n_E2_ICase1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 504, n_E2_ICase1);
+  SEXP n_E2_ICase1_Drug_5 = PROTECT(allocVector(REALSXP, internal->dim_n_E2_ICase1_Drug_5));
+  memcpy(REAL(n_E2_ICase1_Drug_5), internal->n_E2_ICase1_Drug_5, internal->dim_n_E2_ICase1_Drug_5 * sizeof(double));
+  SET_VECTOR_ELT(contents, 505, n_E2_ICase1_Drug_5);
+  SEXP n_E2_ICase1_initial = PROTECT(allocVector(REALSXP, internal->dim_n_E2_ICase1_initial));
+  memcpy(REAL(n_E2_ICase1_initial), internal->n_E2_ICase1_initial, internal->dim_n_E2_ICase1_initial * sizeof(double));
+  SET_VECTOR_ELT(contents, 506, n_E2_ICase1_initial);
+  SEXP n_E2_ICase1_No_Drug_5 = PROTECT(allocVector(REALSXP, internal->dim_n_E2_ICase1_No_Drug_5));
+  memcpy(REAL(n_E2_ICase1_No_Drug_5), internal->n_E2_ICase1_No_Drug_5, internal->dim_n_E2_ICase1_No_Drug_5 * sizeof(double));
+  SET_VECTOR_ELT(contents, 507, n_E2_ICase1_No_Drug_5);
+  SEXP n_E2_IMild = PROTECT(allocVector(REALSXP, internal->dim_n_E2_IMild));
+  memcpy(REAL(n_E2_IMild), internal->n_E2_IMild, internal->dim_n_E2_IMild * sizeof(double));
+  SET_VECTOR_ELT(contents, 508, n_E2_IMild);
+  SEXP n_E2_IMild_Drug_5 = PROTECT(allocVector(REALSXP, internal->dim_n_E2_IMild_Drug_5));
+  memcpy(REAL(n_E2_IMild_Drug_5), internal->n_E2_IMild_Drug_5, internal->dim_n_E2_IMild_Drug_5 * sizeof(double));
+  SET_VECTOR_ELT(contents, 509, n_E2_IMild_Drug_5);
+  SEXP n_E2_IMild_No_Drug_5 = PROTECT(allocVector(REALSXP, internal->dim_n_E2_IMild_No_Drug_5));
+  memcpy(REAL(n_E2_IMild_No_Drug_5), internal->n_E2_IMild_No_Drug_5, internal->dim_n_E2_IMild_No_Drug_5 * sizeof(double));
+  SET_VECTOR_ELT(contents, 510, n_E2_IMild_No_Drug_5);
+  SEXP n_E2_IMild_or_IAsymp = PROTECT(allocVector(REALSXP, internal->dim_n_E2_IMild_or_IAsymp));
+  memcpy(REAL(n_E2_IMild_or_IAsymp), internal->n_E2_IMild_or_IAsymp, internal->dim_n_E2_IMild_or_IAsymp * sizeof(double));
+  SET_VECTOR_ELT(contents, 511, n_E2_IMild_or_IAsymp);
+  SEXP n_IAsymp_R = PROTECT(allocVector(REALSXP, internal->dim_n_IAsymp_R));
+  memcpy(REAL(n_IAsymp_R), internal->n_IAsymp_R, internal->dim_n_IAsymp_R * sizeof(double));
+  SET_VECTOR_ELT(contents, 512, n_IAsymp_R);
+  SEXP n_ICase1_Drug_5_ICase2_Drug_5 = PROTECT(allocVector(REALSXP, internal->dim_n_ICase1_Drug_5_ICase2_Drug_5));
+  memcpy(REAL(n_ICase1_Drug_5_ICase2_Drug_5), internal->n_ICase1_Drug_5_ICase2_Drug_5, internal->dim_n_ICase1_Drug_5_ICase2_Drug_5 * sizeof(double));
+  SET_VECTOR_ELT(contents, 513, n_ICase1_Drug_5_ICase2_Drug_5);
+  SEXP n_ICase1_ICase2 = PROTECT(allocVector(REALSXP, internal->dim_n_ICase1_ICase2));
+  memcpy(REAL(n_ICase1_ICase2), internal->n_ICase1_ICase2, internal->dim_n_ICase1_ICase2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 514, n_ICase1_ICase2);
+  SEXP n_ICase2_Drug_5_Hosp = PROTECT(allocVector(REALSXP, internal->dim_n_ICase2_Drug_5_Hosp));
+  memcpy(REAL(n_ICase2_Drug_5_Hosp), internal->n_ICase2_Drug_5_Hosp, internal->dim_n_ICase2_Drug_5_Hosp * sizeof(double));
+  SET_VECTOR_ELT(contents, 515, n_ICase2_Drug_5_Hosp);
+  SEXP n_ICase2_Hosp = PROTECT(allocVector(REALSXP, internal->dim_n_ICase2_Hosp));
+  memcpy(REAL(n_ICase2_Hosp), internal->n_ICase2_Hosp, internal->dim_n_ICase2_Hosp * sizeof(double));
+  SET_VECTOR_ELT(contents, 516, n_ICase2_Hosp);
+  SEXP n_ICrit_GetICU_GetOx_GetMV_Die1 = PROTECT(allocVector(REALSXP, internal->dim_n_ICrit_GetICU_GetOx_GetMV_Die1));
+  memcpy(REAL(n_ICrit_GetICU_GetOx_GetMV_Die1), internal->n_ICrit_GetICU_GetOx_GetMV_Die1, internal->dim_n_ICrit_GetICU_GetOx_GetMV_Die1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 517, n_ICrit_GetICU_GetOx_GetMV_Die1);
+  SEXP n_ICrit_GetICU_GetOx_GetMV_Die1_ICrit_GetICU_GetOx_GetMV_Die2 = PROTECT(allocVector(REALSXP, internal->dim_n_ICrit_GetICU_GetOx_GetMV_Die1_ICrit_GetICU_GetOx_GetMV_Die2));
+  memcpy(REAL(n_ICrit_GetICU_GetOx_GetMV_Die1_ICrit_GetICU_GetOx_GetMV_Die2), internal->n_ICrit_GetICU_GetOx_GetMV_Die1_ICrit_GetICU_GetOx_GetMV_Die2, internal->dim_n_ICrit_GetICU_GetOx_GetMV_Die1_ICrit_GetICU_GetOx_GetMV_Die2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 518, n_ICrit_GetICU_GetOx_GetMV_Die1_ICrit_GetICU_GetOx_GetMV_Die2);
+  SEXP n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital = PROTECT(allocVector(REALSXP, internal->dim_n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital));
+  memcpy(REAL(n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital), internal->n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital, internal->dim_n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital * sizeof(double));
+  SET_VECTOR_ELT(contents, 519, n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital);
+  SEXP n_ICrit_GetICU_GetOx_GetMV_Surv1 = PROTECT(allocVector(REALSXP, internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv1));
+  memcpy(REAL(n_ICrit_GetICU_GetOx_GetMV_Surv1), internal->n_ICrit_GetICU_GetOx_GetMV_Surv1, internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 520, n_ICrit_GetICU_GetOx_GetMV_Surv1);
+  SEXP n_ICrit_GetICU_GetOx_GetMV_Surv1_ICrit_GetICU_GetOx_GetMV_Surv2 = PROTECT(allocVector(REALSXP, internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv1_ICrit_GetICU_GetOx_GetMV_Surv2));
+  memcpy(REAL(n_ICrit_GetICU_GetOx_GetMV_Surv1_ICrit_GetICU_GetOx_GetMV_Surv2), internal->n_ICrit_GetICU_GetOx_GetMV_Surv1_ICrit_GetICU_GetOx_GetMV_Surv2, internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv1_ICrit_GetICU_GetOx_GetMV_Surv2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 521, n_ICrit_GetICU_GetOx_GetMV_Surv1_ICrit_GetICU_GetOx_GetMV_Surv2);
+  SEXP n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec = PROTECT(allocVector(REALSXP, internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec));
+  memcpy(REAL(n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec), internal->n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec, internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec * sizeof(double));
+  SET_VECTOR_ELT(contents, 522, n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec);
+  SEXP n_ICrit_GetICU_GetOx_NoMV_Die1 = PROTECT(allocVector(REALSXP, internal->dim_n_ICrit_GetICU_GetOx_NoMV_Die1));
+  memcpy(REAL(n_ICrit_GetICU_GetOx_NoMV_Die1), internal->n_ICrit_GetICU_GetOx_NoMV_Die1, internal->dim_n_ICrit_GetICU_GetOx_NoMV_Die1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 523, n_ICrit_GetICU_GetOx_NoMV_Die1);
+  SEXP n_ICrit_GetICU_GetOx_NoMV_Die1_ICrit_GetICU_GetOx_NoMV_Die2 = PROTECT(allocVector(REALSXP, internal->dim_n_ICrit_GetICU_GetOx_NoMV_Die1_ICrit_GetICU_GetOx_NoMV_Die2));
+  memcpy(REAL(n_ICrit_GetICU_GetOx_NoMV_Die1_ICrit_GetICU_GetOx_NoMV_Die2), internal->n_ICrit_GetICU_GetOx_NoMV_Die1_ICrit_GetICU_GetOx_NoMV_Die2, internal->dim_n_ICrit_GetICU_GetOx_NoMV_Die1_ICrit_GetICU_GetOx_NoMV_Die2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 524, n_ICrit_GetICU_GetOx_NoMV_Die1_ICrit_GetICU_GetOx_NoMV_Die2);
+  SEXP n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital = PROTECT(allocVector(REALSXP, internal->dim_n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital));
+  memcpy(REAL(n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital), internal->n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital, internal->dim_n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital * sizeof(double));
+  SET_VECTOR_ELT(contents, 525, n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital);
+  SEXP n_ICrit_GetICU_GetOx_NoMV_Surv1 = PROTECT(allocVector(REALSXP, internal->dim_n_ICrit_GetICU_GetOx_NoMV_Surv1));
+  memcpy(REAL(n_ICrit_GetICU_GetOx_NoMV_Surv1), internal->n_ICrit_GetICU_GetOx_NoMV_Surv1, internal->dim_n_ICrit_GetICU_GetOx_NoMV_Surv1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 526, n_ICrit_GetICU_GetOx_NoMV_Surv1);
+  SEXP n_ICrit_GetICU_GetOx_NoMV_Surv1_ICrit_GetICU_GetOx_NoMV_Surv2 = PROTECT(allocVector(REALSXP, internal->dim_n_ICrit_GetICU_GetOx_NoMV_Surv1_ICrit_GetICU_GetOx_NoMV_Surv2));
+  memcpy(REAL(n_ICrit_GetICU_GetOx_NoMV_Surv1_ICrit_GetICU_GetOx_NoMV_Surv2), internal->n_ICrit_GetICU_GetOx_NoMV_Surv1_ICrit_GetICU_GetOx_NoMV_Surv2, internal->dim_n_ICrit_GetICU_GetOx_NoMV_Surv1_ICrit_GetICU_GetOx_NoMV_Surv2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 527, n_ICrit_GetICU_GetOx_NoMV_Surv1_ICrit_GetICU_GetOx_NoMV_Surv2);
+  SEXP n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec = PROTECT(allocVector(REALSXP, internal->dim_n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec));
+  memcpy(REAL(n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec), internal->n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec, internal->dim_n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec * sizeof(double));
+  SET_VECTOR_ELT(contents, 528, n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec);
+  SEXP n_ICrit_GetICU_NoOx_NoMV_Die1 = PROTECT(allocVector(REALSXP, internal->dim_n_ICrit_GetICU_NoOx_NoMV_Die1));
+  memcpy(REAL(n_ICrit_GetICU_NoOx_NoMV_Die1), internal->n_ICrit_GetICU_NoOx_NoMV_Die1, internal->dim_n_ICrit_GetICU_NoOx_NoMV_Die1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 529, n_ICrit_GetICU_NoOx_NoMV_Die1);
+  SEXP n_ICrit_GetICU_NoOx_NoMV_Die1_ICrit_GetICU_NoOx_NoMV_Die2 = PROTECT(allocVector(REALSXP, internal->dim_n_ICrit_GetICU_NoOx_NoMV_Die1_ICrit_GetICU_NoOx_NoMV_Die2));
+  memcpy(REAL(n_ICrit_GetICU_NoOx_NoMV_Die1_ICrit_GetICU_NoOx_NoMV_Die2), internal->n_ICrit_GetICU_NoOx_NoMV_Die1_ICrit_GetICU_NoOx_NoMV_Die2, internal->dim_n_ICrit_GetICU_NoOx_NoMV_Die1_ICrit_GetICU_NoOx_NoMV_Die2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 530, n_ICrit_GetICU_NoOx_NoMV_Die1_ICrit_GetICU_NoOx_NoMV_Die2);
+  SEXP n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital = PROTECT(allocVector(REALSXP, internal->dim_n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital));
+  memcpy(REAL(n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital), internal->n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital, internal->dim_n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital * sizeof(double));
+  SET_VECTOR_ELT(contents, 531, n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital);
+  SEXP n_ICrit_GetICU_NoOx_NoMV_Surv1 = PROTECT(allocVector(REALSXP, internal->dim_n_ICrit_GetICU_NoOx_NoMV_Surv1));
+  memcpy(REAL(n_ICrit_GetICU_NoOx_NoMV_Surv1), internal->n_ICrit_GetICU_NoOx_NoMV_Surv1, internal->dim_n_ICrit_GetICU_NoOx_NoMV_Surv1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 532, n_ICrit_GetICU_NoOx_NoMV_Surv1);
+  SEXP n_ICrit_GetICU_NoOx_NoMV_Surv1_ICrit_GetICU_NoOx_NoMV_Surv2 = PROTECT(allocVector(REALSXP, internal->dim_n_ICrit_GetICU_NoOx_NoMV_Surv1_ICrit_GetICU_NoOx_NoMV_Surv2));
+  memcpy(REAL(n_ICrit_GetICU_NoOx_NoMV_Surv1_ICrit_GetICU_NoOx_NoMV_Surv2), internal->n_ICrit_GetICU_NoOx_NoMV_Surv1_ICrit_GetICU_NoOx_NoMV_Surv2, internal->dim_n_ICrit_GetICU_NoOx_NoMV_Surv1_ICrit_GetICU_NoOx_NoMV_Surv2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 533, n_ICrit_GetICU_NoOx_NoMV_Surv1_ICrit_GetICU_NoOx_NoMV_Surv2);
+  SEXP n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec = PROTECT(allocVector(REALSXP, internal->dim_n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec));
+  memcpy(REAL(n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec), internal->n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec, internal->dim_n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec * sizeof(double));
+  SET_VECTOR_ELT(contents, 534, n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec);
+  SEXP n_ICrit_NoICU_NoOx_NoMV_Die1 = PROTECT(allocVector(REALSXP, internal->dim_n_ICrit_NoICU_NoOx_NoMV_Die1));
+  memcpy(REAL(n_ICrit_NoICU_NoOx_NoMV_Die1), internal->n_ICrit_NoICU_NoOx_NoMV_Die1, internal->dim_n_ICrit_NoICU_NoOx_NoMV_Die1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 535, n_ICrit_NoICU_NoOx_NoMV_Die1);
+  SEXP n_ICrit_NoICU_NoOx_NoMV_Die1_ICrit_NoICU_NoOx_NoMV_Die2 = PROTECT(allocVector(REALSXP, internal->dim_n_ICrit_NoICU_NoOx_NoMV_Die1_ICrit_NoICU_NoOx_NoMV_Die2));
+  memcpy(REAL(n_ICrit_NoICU_NoOx_NoMV_Die1_ICrit_NoICU_NoOx_NoMV_Die2), internal->n_ICrit_NoICU_NoOx_NoMV_Die1_ICrit_NoICU_NoOx_NoMV_Die2, internal->dim_n_ICrit_NoICU_NoOx_NoMV_Die1_ICrit_NoICU_NoOx_NoMV_Die2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 536, n_ICrit_NoICU_NoOx_NoMV_Die1_ICrit_NoICU_NoOx_NoMV_Die2);
+  SEXP n_ICrit_NoICU_NoOx_NoMV_Die2_D_Community = PROTECT(allocVector(REALSXP, internal->dim_n_ICrit_NoICU_NoOx_NoMV_Die2_D_Community));
+  memcpy(REAL(n_ICrit_NoICU_NoOx_NoMV_Die2_D_Community), internal->n_ICrit_NoICU_NoOx_NoMV_Die2_D_Community, internal->dim_n_ICrit_NoICU_NoOx_NoMV_Die2_D_Community * sizeof(double));
+  SET_VECTOR_ELT(contents, 537, n_ICrit_NoICU_NoOx_NoMV_Die2_D_Community);
+  SEXP n_ICrit_NoICU_NoOx_NoMV_Surv1 = PROTECT(allocVector(REALSXP, internal->dim_n_ICrit_NoICU_NoOx_NoMV_Surv1));
+  memcpy(REAL(n_ICrit_NoICU_NoOx_NoMV_Surv1), internal->n_ICrit_NoICU_NoOx_NoMV_Surv1, internal->dim_n_ICrit_NoICU_NoOx_NoMV_Surv1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 538, n_ICrit_NoICU_NoOx_NoMV_Surv1);
+  SEXP n_ICrit_NoICU_NoOx_NoMV_Surv1_ICrit_NoICU_NoOx_NoMV_Surv2 = PROTECT(allocVector(REALSXP, internal->dim_n_ICrit_NoICU_NoOx_NoMV_Surv1_ICrit_NoICU_NoOx_NoMV_Surv2));
+  memcpy(REAL(n_ICrit_NoICU_NoOx_NoMV_Surv1_ICrit_NoICU_NoOx_NoMV_Surv2), internal->n_ICrit_NoICU_NoOx_NoMV_Surv1_ICrit_NoICU_NoOx_NoMV_Surv2, internal->dim_n_ICrit_NoICU_NoOx_NoMV_Surv1_ICrit_NoICU_NoOx_NoMV_Surv2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 539, n_ICrit_NoICU_NoOx_NoMV_Surv1_ICrit_NoICU_NoOx_NoMV_Surv2);
+  SEXP n_ICrit_NoICU_NoOx_NoMV_Surv2_R = PROTECT(allocVector(REALSXP, internal->dim_n_ICrit_NoICU_NoOx_NoMV_Surv2_R));
+  memcpy(REAL(n_ICrit_NoICU_NoOx_NoMV_Surv2_R), internal->n_ICrit_NoICU_NoOx_NoMV_Surv2_R, internal->dim_n_ICrit_NoICU_NoOx_NoMV_Surv2_R * sizeof(double));
+  SET_VECTOR_ELT(contents, 540, n_ICrit_NoICU_NoOx_NoMV_Surv2_R);
+  SEXP n_IMild_Drug_5_R = PROTECT(allocVector(REALSXP, internal->dim_n_IMild_Drug_5_R));
+  memcpy(REAL(n_IMild_Drug_5_R), internal->n_IMild_Drug_5_R, internal->dim_n_IMild_Drug_5_R * sizeof(double));
+  SET_VECTOR_ELT(contents, 541, n_IMild_Drug_5_R);
+  SEXP n_IMild_R = PROTECT(allocVector(REALSXP, internal->dim_n_IMild_R));
+  memcpy(REAL(n_IMild_R), internal->n_IMild_R, internal->dim_n_IMild_R * sizeof(double));
+  SET_VECTOR_ELT(contents, 542, n_IMild_R);
+  SEXP n_IMod_GetHosp_GetOx_Die1 = PROTECT(allocVector(REALSXP, internal->dim_n_IMod_GetHosp_GetOx_Die1));
+  memcpy(REAL(n_IMod_GetHosp_GetOx_Die1), internal->n_IMod_GetHosp_GetOx_Die1, internal->dim_n_IMod_GetHosp_GetOx_Die1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 543, n_IMod_GetHosp_GetOx_Die1);
+  SEXP n_IMod_GetHosp_GetOx_Die1_IMod_GetHosp_GetOx_Die2 = PROTECT(allocVector(REALSXP, internal->dim_n_IMod_GetHosp_GetOx_Die1_IMod_GetHosp_GetOx_Die2));
+  memcpy(REAL(n_IMod_GetHosp_GetOx_Die1_IMod_GetHosp_GetOx_Die2), internal->n_IMod_GetHosp_GetOx_Die1_IMod_GetHosp_GetOx_Die2, internal->dim_n_IMod_GetHosp_GetOx_Die1_IMod_GetHosp_GetOx_Die2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 544, n_IMod_GetHosp_GetOx_Die1_IMod_GetHosp_GetOx_Die2);
+  SEXP n_IMod_GetHosp_GetOx_Die2_D_Hospital = PROTECT(allocVector(REALSXP, internal->dim_n_IMod_GetHosp_GetOx_Die2_D_Hospital));
+  memcpy(REAL(n_IMod_GetHosp_GetOx_Die2_D_Hospital), internal->n_IMod_GetHosp_GetOx_Die2_D_Hospital, internal->dim_n_IMod_GetHosp_GetOx_Die2_D_Hospital * sizeof(double));
+  SET_VECTOR_ELT(contents, 545, n_IMod_GetHosp_GetOx_Die2_D_Hospital);
+  SEXP n_IMod_GetHosp_GetOx_Surv1 = PROTECT(allocVector(REALSXP, internal->dim_n_IMod_GetHosp_GetOx_Surv1));
+  memcpy(REAL(n_IMod_GetHosp_GetOx_Surv1), internal->n_IMod_GetHosp_GetOx_Surv1, internal->dim_n_IMod_GetHosp_GetOx_Surv1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 546, n_IMod_GetHosp_GetOx_Surv1);
+  SEXP n_IMod_GetHosp_GetOx_Surv1_IMod_GetHosp_GetOx_Surv2 = PROTECT(allocVector(REALSXP, internal->dim_n_IMod_GetHosp_GetOx_Surv1_IMod_GetHosp_GetOx_Surv2));
+  memcpy(REAL(n_IMod_GetHosp_GetOx_Surv1_IMod_GetHosp_GetOx_Surv2), internal->n_IMod_GetHosp_GetOx_Surv1_IMod_GetHosp_GetOx_Surv2, internal->dim_n_IMod_GetHosp_GetOx_Surv1_IMod_GetHosp_GetOx_Surv2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 547, n_IMod_GetHosp_GetOx_Surv1_IMod_GetHosp_GetOx_Surv2);
+  SEXP n_IMod_GetHosp_GetOx_Surv2_R = PROTECT(allocVector(REALSXP, internal->dim_n_IMod_GetHosp_GetOx_Surv2_R));
+  memcpy(REAL(n_IMod_GetHosp_GetOx_Surv2_R), internal->n_IMod_GetHosp_GetOx_Surv2_R, internal->dim_n_IMod_GetHosp_GetOx_Surv2_R * sizeof(double));
+  SET_VECTOR_ELT(contents, 548, n_IMod_GetHosp_GetOx_Surv2_R);
+  SEXP n_IMod_GetHosp_NoOx_Die1 = PROTECT(allocVector(REALSXP, internal->dim_n_IMod_GetHosp_NoOx_Die1));
+  memcpy(REAL(n_IMod_GetHosp_NoOx_Die1), internal->n_IMod_GetHosp_NoOx_Die1, internal->dim_n_IMod_GetHosp_NoOx_Die1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 549, n_IMod_GetHosp_NoOx_Die1);
+  SEXP n_IMod_GetHosp_NoOx_Die1_IMod_GetHosp_NoOx_Die2 = PROTECT(allocVector(REALSXP, internal->dim_n_IMod_GetHosp_NoOx_Die1_IMod_GetHosp_NoOx_Die2));
+  memcpy(REAL(n_IMod_GetHosp_NoOx_Die1_IMod_GetHosp_NoOx_Die2), internal->n_IMod_GetHosp_NoOx_Die1_IMod_GetHosp_NoOx_Die2, internal->dim_n_IMod_GetHosp_NoOx_Die1_IMod_GetHosp_NoOx_Die2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 550, n_IMod_GetHosp_NoOx_Die1_IMod_GetHosp_NoOx_Die2);
+  SEXP n_IMod_GetHosp_NoOx_Die2_D_Hospital = PROTECT(allocVector(REALSXP, internal->dim_n_IMod_GetHosp_NoOx_Die2_D_Hospital));
+  memcpy(REAL(n_IMod_GetHosp_NoOx_Die2_D_Hospital), internal->n_IMod_GetHosp_NoOx_Die2_D_Hospital, internal->dim_n_IMod_GetHosp_NoOx_Die2_D_Hospital * sizeof(double));
+  SET_VECTOR_ELT(contents, 551, n_IMod_GetHosp_NoOx_Die2_D_Hospital);
+  SEXP n_IMod_GetHosp_NoOx_Surv1 = PROTECT(allocVector(REALSXP, internal->dim_n_IMod_GetHosp_NoOx_Surv1));
+  memcpy(REAL(n_IMod_GetHosp_NoOx_Surv1), internal->n_IMod_GetHosp_NoOx_Surv1, internal->dim_n_IMod_GetHosp_NoOx_Surv1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 552, n_IMod_GetHosp_NoOx_Surv1);
+  SEXP n_IMod_GetHosp_NoOx_Surv1_IMod_GetHosp_NoOx_Surv2 = PROTECT(allocVector(REALSXP, internal->dim_n_IMod_GetHosp_NoOx_Surv1_IMod_GetHosp_NoOx_Surv2));
+  memcpy(REAL(n_IMod_GetHosp_NoOx_Surv1_IMod_GetHosp_NoOx_Surv2), internal->n_IMod_GetHosp_NoOx_Surv1_IMod_GetHosp_NoOx_Surv2, internal->dim_n_IMod_GetHosp_NoOx_Surv1_IMod_GetHosp_NoOx_Surv2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 553, n_IMod_GetHosp_NoOx_Surv1_IMod_GetHosp_NoOx_Surv2);
+  SEXP n_IMod_GetHosp_NoOx_Surv2_R = PROTECT(allocVector(REALSXP, internal->dim_n_IMod_GetHosp_NoOx_Surv2_R));
+  memcpy(REAL(n_IMod_GetHosp_NoOx_Surv2_R), internal->n_IMod_GetHosp_NoOx_Surv2_R, internal->dim_n_IMod_GetHosp_NoOx_Surv2_R * sizeof(double));
+  SET_VECTOR_ELT(contents, 554, n_IMod_GetHosp_NoOx_Surv2_R);
+  SEXP n_IMod_NoHosp_NoOx_Die1 = PROTECT(allocVector(REALSXP, internal->dim_n_IMod_NoHosp_NoOx_Die1));
+  memcpy(REAL(n_IMod_NoHosp_NoOx_Die1), internal->n_IMod_NoHosp_NoOx_Die1, internal->dim_n_IMod_NoHosp_NoOx_Die1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 555, n_IMod_NoHosp_NoOx_Die1);
+  SEXP n_IMod_NoHosp_NoOx_Die1_IMod_NoHosp_NoOx_Die2 = PROTECT(allocVector(REALSXP, internal->dim_n_IMod_NoHosp_NoOx_Die1_IMod_NoHosp_NoOx_Die2));
+  memcpy(REAL(n_IMod_NoHosp_NoOx_Die1_IMod_NoHosp_NoOx_Die2), internal->n_IMod_NoHosp_NoOx_Die1_IMod_NoHosp_NoOx_Die2, internal->dim_n_IMod_NoHosp_NoOx_Die1_IMod_NoHosp_NoOx_Die2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 556, n_IMod_NoHosp_NoOx_Die1_IMod_NoHosp_NoOx_Die2);
+  SEXP n_IMod_NoHosp_NoOx_Die2_D_Community = PROTECT(allocVector(REALSXP, internal->dim_n_IMod_NoHosp_NoOx_Die2_D_Community));
+  memcpy(REAL(n_IMod_NoHosp_NoOx_Die2_D_Community), internal->n_IMod_NoHosp_NoOx_Die2_D_Community, internal->dim_n_IMod_NoHosp_NoOx_Die2_D_Community * sizeof(double));
+  SET_VECTOR_ELT(contents, 557, n_IMod_NoHosp_NoOx_Die2_D_Community);
+  SEXP n_IMod_NoHosp_NoOx_Surv1 = PROTECT(allocVector(REALSXP, internal->dim_n_IMod_NoHosp_NoOx_Surv1));
+  memcpy(REAL(n_IMod_NoHosp_NoOx_Surv1), internal->n_IMod_NoHosp_NoOx_Surv1, internal->dim_n_IMod_NoHosp_NoOx_Surv1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 558, n_IMod_NoHosp_NoOx_Surv1);
+  SEXP n_IMod_NoHosp_NoOx_Surv1_IMod_NoHosp_NoOx_Surv2 = PROTECT(allocVector(REALSXP, internal->dim_n_IMod_NoHosp_NoOx_Surv1_IMod_NoHosp_NoOx_Surv2));
+  memcpy(REAL(n_IMod_NoHosp_NoOx_Surv1_IMod_NoHosp_NoOx_Surv2), internal->n_IMod_NoHosp_NoOx_Surv1_IMod_NoHosp_NoOx_Surv2, internal->dim_n_IMod_NoHosp_NoOx_Surv1_IMod_NoHosp_NoOx_Surv2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 559, n_IMod_NoHosp_NoOx_Surv1_IMod_NoHosp_NoOx_Surv2);
+  SEXP n_IMod_NoHosp_NoOx_Surv2_R = PROTECT(allocVector(REALSXP, internal->dim_n_IMod_NoHosp_NoOx_Surv2_R));
+  memcpy(REAL(n_IMod_NoHosp_NoOx_Surv2_R), internal->n_IMod_NoHosp_NoOx_Surv2_R, internal->dim_n_IMod_NoHosp_NoOx_Surv2_R * sizeof(double));
+  SET_VECTOR_ELT(contents, 560, n_IMod_NoHosp_NoOx_Surv2_R);
+  SEXP n_IRec1_IRec2 = PROTECT(allocVector(REALSXP, internal->dim_n_IRec1_IRec2));
+  memcpy(REAL(n_IRec1_IRec2), internal->n_IRec1_IRec2, internal->dim_n_IRec1_IRec2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 561, n_IRec1_IRec2);
+  SEXP n_IRec2_R = PROTECT(allocVector(REALSXP, internal->dim_n_IRec2_R));
+  memcpy(REAL(n_IRec2_R), internal->n_IRec2_R, internal->dim_n_IRec2_R * sizeof(double));
+  SET_VECTOR_ELT(contents, 562, n_IRec2_R);
+  SEXP n_ISev_GetICU_GetOx_Die1 = PROTECT(allocVector(REALSXP, internal->dim_n_ISev_GetICU_GetOx_Die1));
+  memcpy(REAL(n_ISev_GetICU_GetOx_Die1), internal->n_ISev_GetICU_GetOx_Die1, internal->dim_n_ISev_GetICU_GetOx_Die1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 563, n_ISev_GetICU_GetOx_Die1);
+  SEXP n_ISev_GetICU_GetOx_Die1_ISev_GetICU_GetOx_Die2 = PROTECT(allocVector(REALSXP, internal->dim_n_ISev_GetICU_GetOx_Die1_ISev_GetICU_GetOx_Die2));
+  memcpy(REAL(n_ISev_GetICU_GetOx_Die1_ISev_GetICU_GetOx_Die2), internal->n_ISev_GetICU_GetOx_Die1_ISev_GetICU_GetOx_Die2, internal->dim_n_ISev_GetICU_GetOx_Die1_ISev_GetICU_GetOx_Die2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 564, n_ISev_GetICU_GetOx_Die1_ISev_GetICU_GetOx_Die2);
+  SEXP n_ISev_GetICU_GetOx_Die2_D_Hospital = PROTECT(allocVector(REALSXP, internal->dim_n_ISev_GetICU_GetOx_Die2_D_Hospital));
+  memcpy(REAL(n_ISev_GetICU_GetOx_Die2_D_Hospital), internal->n_ISev_GetICU_GetOx_Die2_D_Hospital, internal->dim_n_ISev_GetICU_GetOx_Die2_D_Hospital * sizeof(double));
+  SET_VECTOR_ELT(contents, 565, n_ISev_GetICU_GetOx_Die2_D_Hospital);
+  SEXP n_ISev_GetICU_GetOx_Surv1 = PROTECT(allocVector(REALSXP, internal->dim_n_ISev_GetICU_GetOx_Surv1));
+  memcpy(REAL(n_ISev_GetICU_GetOx_Surv1), internal->n_ISev_GetICU_GetOx_Surv1, internal->dim_n_ISev_GetICU_GetOx_Surv1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 566, n_ISev_GetICU_GetOx_Surv1);
+  SEXP n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 = PROTECT(allocVector(REALSXP, internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2));
+  memcpy(REAL(n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2), internal->n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2, internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 567, n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2);
+  SEXP n_ISev_GetICU_GetOx_Surv2_Rec = PROTECT(allocVector(REALSXP, internal->dim_n_ISev_GetICU_GetOx_Surv2_Rec));
+  memcpy(REAL(n_ISev_GetICU_GetOx_Surv2_Rec), internal->n_ISev_GetICU_GetOx_Surv2_Rec, internal->dim_n_ISev_GetICU_GetOx_Surv2_Rec * sizeof(double));
+  SET_VECTOR_ELT(contents, 568, n_ISev_GetICU_GetOx_Surv2_Rec);
+  SEXP n_ISev_GetICU_NoOx_Die1 = PROTECT(allocVector(REALSXP, internal->dim_n_ISev_GetICU_NoOx_Die1));
+  memcpy(REAL(n_ISev_GetICU_NoOx_Die1), internal->n_ISev_GetICU_NoOx_Die1, internal->dim_n_ISev_GetICU_NoOx_Die1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 569, n_ISev_GetICU_NoOx_Die1);
+  SEXP n_ISev_GetICU_NoOx_Die1_ISev_GetICU_NoOx_Die2 = PROTECT(allocVector(REALSXP, internal->dim_n_ISev_GetICU_NoOx_Die1_ISev_GetICU_NoOx_Die2));
+  memcpy(REAL(n_ISev_GetICU_NoOx_Die1_ISev_GetICU_NoOx_Die2), internal->n_ISev_GetICU_NoOx_Die1_ISev_GetICU_NoOx_Die2, internal->dim_n_ISev_GetICU_NoOx_Die1_ISev_GetICU_NoOx_Die2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 570, n_ISev_GetICU_NoOx_Die1_ISev_GetICU_NoOx_Die2);
+  SEXP n_ISev_GetICU_NoOx_Die2_D_Hospital = PROTECT(allocVector(REALSXP, internal->dim_n_ISev_GetICU_NoOx_Die2_D_Hospital));
+  memcpy(REAL(n_ISev_GetICU_NoOx_Die2_D_Hospital), internal->n_ISev_GetICU_NoOx_Die2_D_Hospital, internal->dim_n_ISev_GetICU_NoOx_Die2_D_Hospital * sizeof(double));
+  SET_VECTOR_ELT(contents, 571, n_ISev_GetICU_NoOx_Die2_D_Hospital);
+  SEXP n_ISev_GetICU_NoOx_Surv1 = PROTECT(allocVector(REALSXP, internal->dim_n_ISev_GetICU_NoOx_Surv1));
+  memcpy(REAL(n_ISev_GetICU_NoOx_Surv1), internal->n_ISev_GetICU_NoOx_Surv1, internal->dim_n_ISev_GetICU_NoOx_Surv1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 572, n_ISev_GetICU_NoOx_Surv1);
+  SEXP n_ISev_GetICU_NoOx_Surv1_ISev_GetICU_NoOx_Surv2 = PROTECT(allocVector(REALSXP, internal->dim_n_ISev_GetICU_NoOx_Surv1_ISev_GetICU_NoOx_Surv2));
+  memcpy(REAL(n_ISev_GetICU_NoOx_Surv1_ISev_GetICU_NoOx_Surv2), internal->n_ISev_GetICU_NoOx_Surv1_ISev_GetICU_NoOx_Surv2, internal->dim_n_ISev_GetICU_NoOx_Surv1_ISev_GetICU_NoOx_Surv2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 573, n_ISev_GetICU_NoOx_Surv1_ISev_GetICU_NoOx_Surv2);
+  SEXP n_ISev_GetICU_NoOx_Surv2_Rec = PROTECT(allocVector(REALSXP, internal->dim_n_ISev_GetICU_NoOx_Surv2_Rec));
+  memcpy(REAL(n_ISev_GetICU_NoOx_Surv2_Rec), internal->n_ISev_GetICU_NoOx_Surv2_Rec, internal->dim_n_ISev_GetICU_NoOx_Surv2_Rec * sizeof(double));
+  SET_VECTOR_ELT(contents, 574, n_ISev_GetICU_NoOx_Surv2_Rec);
+  SEXP n_ISev_NoICU_NoOx_Die1 = PROTECT(allocVector(REALSXP, internal->dim_n_ISev_NoICU_NoOx_Die1));
+  memcpy(REAL(n_ISev_NoICU_NoOx_Die1), internal->n_ISev_NoICU_NoOx_Die1, internal->dim_n_ISev_NoICU_NoOx_Die1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 575, n_ISev_NoICU_NoOx_Die1);
+  SEXP n_ISev_NoICU_NoOx_Die1_ISev_NoICU_NoOx_Die2 = PROTECT(allocVector(REALSXP, internal->dim_n_ISev_NoICU_NoOx_Die1_ISev_NoICU_NoOx_Die2));
+  memcpy(REAL(n_ISev_NoICU_NoOx_Die1_ISev_NoICU_NoOx_Die2), internal->n_ISev_NoICU_NoOx_Die1_ISev_NoICU_NoOx_Die2, internal->dim_n_ISev_NoICU_NoOx_Die1_ISev_NoICU_NoOx_Die2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 576, n_ISev_NoICU_NoOx_Die1_ISev_NoICU_NoOx_Die2);
+  SEXP n_ISev_NoICU_NoOx_Die2_D_Community = PROTECT(allocVector(REALSXP, internal->dim_n_ISev_NoICU_NoOx_Die2_D_Community));
+  memcpy(REAL(n_ISev_NoICU_NoOx_Die2_D_Community), internal->n_ISev_NoICU_NoOx_Die2_D_Community, internal->dim_n_ISev_NoICU_NoOx_Die2_D_Community * sizeof(double));
+  SET_VECTOR_ELT(contents, 577, n_ISev_NoICU_NoOx_Die2_D_Community);
+  SEXP n_ISev_NoICU_NoOx_Surv1 = PROTECT(allocVector(REALSXP, internal->dim_n_ISev_NoICU_NoOx_Surv1));
+  memcpy(REAL(n_ISev_NoICU_NoOx_Surv1), internal->n_ISev_NoICU_NoOx_Surv1, internal->dim_n_ISev_NoICU_NoOx_Surv1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 578, n_ISev_NoICU_NoOx_Surv1);
+  SEXP n_ISev_NoICU_NoOx_Surv1_ISev_NoICU_NoOx_Surv2 = PROTECT(allocVector(REALSXP, internal->dim_n_ISev_NoICU_NoOx_Surv1_ISev_NoICU_NoOx_Surv2));
+  memcpy(REAL(n_ISev_NoICU_NoOx_Surv1_ISev_NoICU_NoOx_Surv2), internal->n_ISev_NoICU_NoOx_Surv1_ISev_NoICU_NoOx_Surv2, internal->dim_n_ISev_NoICU_NoOx_Surv1_ISev_NoICU_NoOx_Surv2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 579, n_ISev_NoICU_NoOx_Surv1_ISev_NoICU_NoOx_Surv2);
+  SEXP n_ISev_NoICU_NoOx_Surv2_R = PROTECT(allocVector(REALSXP, internal->dim_n_ISev_NoICU_NoOx_Surv2_R));
+  memcpy(REAL(n_ISev_NoICU_NoOx_Surv2_R), internal->n_ISev_NoICU_NoOx_Surv2_R, internal->dim_n_ISev_NoICU_NoOx_Surv2_R * sizeof(double));
+  SET_VECTOR_ELT(contents, 580, n_ISev_NoICU_NoOx_Surv2_R);
+  SEXP n_PE1_PE2 = PROTECT(allocVector(REALSXP, internal->dim_n_PE1_PE2));
+  memcpy(REAL(n_PE1_PE2), internal->n_PE1_PE2, internal->dim_n_PE1_PE2 * sizeof(double));
+  SET_VECTOR_ELT(contents, 581, n_PE1_PE2);
+  SEXP n_PE2_I = PROTECT(allocVector(REALSXP, internal->dim_n_PE2_I));
+  memcpy(REAL(n_PE2_I), internal->n_PE2_I, internal->dim_n_PE2_I * sizeof(double));
+  SET_VECTOR_ELT(contents, 582, n_PE2_I);
+  SEXP n_PE2_IAsymp = PROTECT(allocVector(REALSXP, internal->dim_n_PE2_IAsymp));
+  memcpy(REAL(n_PE2_IAsymp), internal->n_PE2_IAsymp, internal->dim_n_PE2_IAsymp * sizeof(double));
+  SET_VECTOR_ELT(contents, 583, n_PE2_IAsymp);
+  SEXP n_PE2_ICase1 = PROTECT(allocVector(REALSXP, internal->dim_n_PE2_ICase1));
+  memcpy(REAL(n_PE2_ICase1), internal->n_PE2_ICase1, internal->dim_n_PE2_ICase1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 584, n_PE2_ICase1);
+  SEXP n_PE2_ICase1_Drug_5 = PROTECT(allocVector(REALSXP, internal->dim_n_PE2_ICase1_Drug_5));
+  memcpy(REAL(n_PE2_ICase1_Drug_5), internal->n_PE2_ICase1_Drug_5, internal->dim_n_PE2_ICase1_Drug_5 * sizeof(double));
+  SET_VECTOR_ELT(contents, 585, n_PE2_ICase1_Drug_5);
+  SEXP n_PE2_ICase1_initial = PROTECT(allocVector(REALSXP, internal->dim_n_PE2_ICase1_initial));
+  memcpy(REAL(n_PE2_ICase1_initial), internal->n_PE2_ICase1_initial, internal->dim_n_PE2_ICase1_initial * sizeof(double));
+  SET_VECTOR_ELT(contents, 586, n_PE2_ICase1_initial);
+  SEXP n_PE2_ICase1_No_Drug_5 = PROTECT(allocVector(REALSXP, internal->dim_n_PE2_ICase1_No_Drug_5));
+  memcpy(REAL(n_PE2_ICase1_No_Drug_5), internal->n_PE2_ICase1_No_Drug_5, internal->dim_n_PE2_ICase1_No_Drug_5 * sizeof(double));
+  SET_VECTOR_ELT(contents, 587, n_PE2_ICase1_No_Drug_5);
+  SEXP n_PE2_IMild = PROTECT(allocVector(REALSXP, internal->dim_n_PE2_IMild));
+  memcpy(REAL(n_PE2_IMild), internal->n_PE2_IMild, internal->dim_n_PE2_IMild * sizeof(double));
+  SET_VECTOR_ELT(contents, 588, n_PE2_IMild);
+  SEXP n_PE2_IMild_Drug_5 = PROTECT(allocVector(REALSXP, internal->dim_n_PE2_IMild_Drug_5));
+  memcpy(REAL(n_PE2_IMild_Drug_5), internal->n_PE2_IMild_Drug_5, internal->dim_n_PE2_IMild_Drug_5 * sizeof(double));
+  SET_VECTOR_ELT(contents, 589, n_PE2_IMild_Drug_5);
+  SEXP n_PE2_IMild_No_Drug_5 = PROTECT(allocVector(REALSXP, internal->dim_n_PE2_IMild_No_Drug_5));
+  memcpy(REAL(n_PE2_IMild_No_Drug_5), internal->n_PE2_IMild_No_Drug_5, internal->dim_n_PE2_IMild_No_Drug_5 * sizeof(double));
+  SET_VECTOR_ELT(contents, 590, n_PE2_IMild_No_Drug_5);
+  SEXP n_PE2_IMild_or_IAsymp = PROTECT(allocVector(REALSXP, internal->dim_n_PE2_IMild_or_IAsymp));
+  memcpy(REAL(n_PE2_IMild_or_IAsymp), internal->n_PE2_IMild_or_IAsymp, internal->dim_n_PE2_IMild_or_IAsymp * sizeof(double));
+  SET_VECTOR_ELT(contents, 591, n_PE2_IMild_or_IAsymp);
+  SEXP n_PS_PE1 = PROTECT(allocVector(REALSXP, internal->dim_n_PS_PE1));
+  memcpy(REAL(n_PS_PE1), internal->n_PS_PE1, internal->dim_n_PS_PE1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 592, n_PS_PE1);
+  SEXP n_PS_S = PROTECT(allocVector(REALSXP, internal->dim_n_PS_S));
+  memcpy(REAL(n_PS_S), internal->n_PS_S, internal->dim_n_PS_S * sizeof(double));
+  SET_VECTOR_ELT(contents, 593, n_PS_S);
+  SEXP n_S_E1 = PROTECT(allocVector(REALSXP, internal->dim_n_S_E1));
+  memcpy(REAL(n_S_E1), internal->n_S_E1, internal->dim_n_S_E1 * sizeof(double));
+  SET_VECTOR_ELT(contents, 594, n_S_E1);
+  SEXP n_S_PS = PROTECT(allocVector(REALSXP, internal->dim_n_S_PS));
+  memcpy(REAL(n_S_PS), internal->n_S_PS, internal->dim_n_S_PS * sizeof(double));
+  SET_VECTOR_ELT(contents, 595, n_S_PS);
+  SEXP number_GetHosp = PROTECT(allocVector(REALSXP, internal->dim_number_GetHosp));
+  memcpy(REAL(number_GetHosp), internal->number_GetHosp, internal->dim_number_GetHosp * sizeof(double));
+  SET_VECTOR_ELT(contents, 596, number_GetHosp);
+  SEXP number_GetHosp_NoOx = PROTECT(allocVector(REALSXP, internal->dim_number_GetHosp_NoOx));
+  memcpy(REAL(number_GetHosp_NoOx), internal->number_GetHosp_NoOx, internal->dim_number_GetHosp_NoOx * sizeof(double));
+  SET_VECTOR_ELT(contents, 597, number_GetHosp_NoOx);
+  SEXP number_GetHosp_Ox = PROTECT(allocVector(REALSXP, internal->dim_number_GetHosp_Ox));
+  memcpy(REAL(number_GetHosp_Ox), internal->number_GetHosp_Ox, internal->dim_number_GetHosp_Ox * sizeof(double));
+  SET_VECTOR_ELT(contents, 598, number_GetHosp_Ox);
+  SEXP number_GetICU = PROTECT(allocVector(REALSXP, internal->dim_number_GetICU));
+  memcpy(REAL(number_GetICU), internal->number_GetICU, internal->dim_number_GetICU * sizeof(double));
+  SET_VECTOR_ELT(contents, 599, number_GetICU);
+  SEXP number_GetICU_GetOx = PROTECT(allocVector(REALSXP, internal->dim_number_GetICU_GetOx));
+  memcpy(REAL(number_GetICU_GetOx), internal->number_GetICU_GetOx, internal->dim_number_GetICU_GetOx * sizeof(double));
+  SET_VECTOR_ELT(contents, 600, number_GetICU_GetOx);
+  SEXP number_GetICU_GetOx_GetMV = PROTECT(allocVector(REALSXP, internal->dim_number_GetICU_GetOx_GetMV));
+  memcpy(REAL(number_GetICU_GetOx_GetMV), internal->number_GetICU_GetOx_GetMV, internal->dim_number_GetICU_GetOx_GetMV * sizeof(double));
+  SET_VECTOR_ELT(contents, 601, number_GetICU_GetOx_GetMV);
+  SEXP number_GetICU_GetOx_NeedMV = PROTECT(allocVector(REALSXP, internal->dim_number_GetICU_GetOx_NeedMV));
+  memcpy(REAL(number_GetICU_GetOx_NeedMV), internal->number_GetICU_GetOx_NeedMV, internal->dim_number_GetICU_GetOx_NeedMV * sizeof(double));
+  SET_VECTOR_ELT(contents, 602, number_GetICU_GetOx_NeedMV);
+  SEXP number_GetICU_GetOx_NoMV = PROTECT(allocVector(REALSXP, internal->dim_number_GetICU_GetOx_NoMV));
+  memcpy(REAL(number_GetICU_GetOx_NoMV), internal->number_GetICU_GetOx_NoMV, internal->dim_number_GetICU_GetOx_NoMV * sizeof(double));
+  SET_VECTOR_ELT(contents, 603, number_GetICU_GetOx_NoMV);
+  SEXP number_GetICU_NoOx = PROTECT(allocVector(REALSXP, internal->dim_number_GetICU_NoOx));
+  memcpy(REAL(number_GetICU_NoOx), internal->number_GetICU_NoOx, internal->dim_number_GetICU_NoOx * sizeof(double));
+  SET_VECTOR_ELT(contents, 604, number_GetICU_NoOx);
+  SEXP number_GetICU_NoOx_NeedMV = PROTECT(allocVector(REALSXP, internal->dim_number_GetICU_NoOx_NeedMV));
+  memcpy(REAL(number_GetICU_NoOx_NeedMV), internal->number_GetICU_NoOx_NeedMV, internal->dim_number_GetICU_NoOx_NeedMV * sizeof(double));
+  SET_VECTOR_ELT(contents, 605, number_GetICU_NoOx_NeedMV);
+  SEXP number_NotHosp = PROTECT(allocVector(REALSXP, internal->dim_number_NotHosp));
+  memcpy(REAL(number_NotHosp), internal->number_NotHosp, internal->dim_number_NotHosp * sizeof(double));
+  SET_VECTOR_ELT(contents, 606, number_NotHosp);
+  SEXP number_NotICU = PROTECT(allocVector(REALSXP, internal->dim_number_NotICU));
+  memcpy(REAL(number_NotICU), internal->number_NotICU, internal->dim_number_NotICU * sizeof(double));
+  SET_VECTOR_ELT(contents, 607, number_NotICU);
+  SEXP number_NotICU_NotOx = PROTECT(allocVector(REALSXP, internal->dim_number_NotICU_NotOx));
+  memcpy(REAL(number_NotICU_NotOx), internal->number_NotICU_NotOx, internal->dim_number_NotICU_NotOx * sizeof(double));
+  SET_VECTOR_ELT(contents, 608, number_NotICU_NotOx);
+  SEXP number_NotICU_NotOx_NotMV = PROTECT(allocVector(REALSXP, internal->dim_number_NotICU_NotOx_NotMV));
+  memcpy(REAL(number_NotICU_NotOx_NotMV), internal->number_NotICU_NotOx_NotMV, internal->dim_number_NotICU_NotOx_NotMV * sizeof(double));
+  SET_VECTOR_ELT(contents, 609, number_NotICU_NotOx_NotMV);
+  SEXP number_req_Hosp = PROTECT(allocVector(REALSXP, internal->dim_number_req_Hosp));
+  memcpy(REAL(number_req_Hosp), internal->number_req_Hosp, internal->dim_number_req_Hosp * sizeof(double));
+  SET_VECTOR_ELT(contents, 610, number_req_Hosp);
+  SEXP number_req_ICU = PROTECT(allocVector(REALSXP, internal->dim_number_req_ICU));
+  memcpy(REAL(number_req_ICU), internal->number_req_ICU, internal->dim_number_req_ICU * sizeof(double));
+  SET_VECTOR_ELT(contents, 611, number_req_ICU);
+  SEXP number_req_ICU_initial = PROTECT(allocVector(REALSXP, internal->dim_number_req_ICU_initial));
+  memcpy(REAL(number_req_ICU_initial), internal->number_req_ICU_initial, internal->dim_number_req_ICU_initial * sizeof(double));
+  SET_VECTOR_ELT(contents, 612, number_req_ICU_initial);
+  SEXP number_req_ICU_MV = PROTECT(allocVector(REALSXP, internal->dim_number_req_ICU_MV));
+  memcpy(REAL(number_req_ICU_MV), internal->number_req_ICU_MV, internal->dim_number_req_ICU_MV * sizeof(double));
+  SET_VECTOR_ELT(contents, 613, number_req_ICU_MV);
+  SEXP number_req_ICU_MV_initial = PROTECT(allocVector(REALSXP, internal->dim_number_req_ICU_MV_initial));
+  memcpy(REAL(number_req_ICU_MV_initial), internal->number_req_ICU_MV_initial, internal->dim_number_req_ICU_MV_initial * sizeof(double));
+  SET_VECTOR_ELT(contents, 614, number_req_ICU_MV_initial);
+  SEXP number_req_ICU_Ox = PROTECT(allocVector(REALSXP, internal->dim_number_req_ICU_Ox));
+  memcpy(REAL(number_req_ICU_Ox), internal->number_req_ICU_Ox, internal->dim_number_req_ICU_Ox * sizeof(double));
+  SET_VECTOR_ELT(contents, 615, number_req_ICU_Ox);
+  SET_VECTOR_ELT(contents, 616, ScalarInteger(internal->offset_output_n_E1_E2));
+  SET_VECTOR_ELT(contents, 617, ScalarInteger(internal->offset_output_n_E2_I));
+  SET_VECTOR_ELT(contents, 618, ScalarInteger(internal->offset_output_n_E2_IAsymp));
+  SET_VECTOR_ELT(contents, 619, ScalarInteger(internal->offset_output_n_E2_ICase1));
+  SET_VECTOR_ELT(contents, 620, ScalarInteger(internal->offset_output_n_E2_ICase1_Drug_5));
+  SET_VECTOR_ELT(contents, 621, ScalarInteger(internal->offset_output_n_E2_ICase1_initial));
+  SET_VECTOR_ELT(contents, 622, ScalarInteger(internal->offset_output_n_E2_ICase1_No_Drug_5));
+  SET_VECTOR_ELT(contents, 623, ScalarInteger(internal->offset_output_n_E2_IMild));
+  SET_VECTOR_ELT(contents, 624, ScalarInteger(internal->offset_output_n_E2_IMild_Drug_5));
+  SET_VECTOR_ELT(contents, 625, ScalarInteger(internal->offset_output_n_E2_IMild_No_Drug_5));
+  SET_VECTOR_ELT(contents, 626, ScalarInteger(internal->offset_output_n_ICase1_ICase2));
+  SET_VECTOR_ELT(contents, 627, ScalarInteger(internal->offset_output_n_ICase2_Hosp));
+  SET_VECTOR_ELT(contents, 628, ScalarInteger(internal->offset_output_n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital));
+  SET_VECTOR_ELT(contents, 629, ScalarInteger(internal->offset_output_n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec));
+  SET_VECTOR_ELT(contents, 630, ScalarInteger(internal->offset_output_n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital));
+  SET_VECTOR_ELT(contents, 631, ScalarInteger(internal->offset_output_n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec));
+  SET_VECTOR_ELT(contents, 632, ScalarInteger(internal->offset_output_n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital));
+  SET_VECTOR_ELT(contents, 633, ScalarInteger(internal->offset_output_n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec));
+  SET_VECTOR_ELT(contents, 634, ScalarInteger(internal->offset_output_n_IMild_R));
+  SET_VECTOR_ELT(contents, 635, ScalarInteger(internal->offset_output_n_IMod_GetHosp_GetOx_Die2_D_Hospital));
+  SET_VECTOR_ELT(contents, 636, ScalarInteger(internal->offset_output_n_IMod_GetHosp_GetOx_Surv2_R));
+  SET_VECTOR_ELT(contents, 637, ScalarInteger(internal->offset_output_n_IMod_GetHosp_NoOx_Die2_D_Hospital));
+  SET_VECTOR_ELT(contents, 638, ScalarInteger(internal->offset_output_n_IMod_GetHosp_NoOx_Surv2_R));
+  SET_VECTOR_ELT(contents, 639, ScalarInteger(internal->offset_output_n_IRec1_IRec2));
+  SET_VECTOR_ELT(contents, 640, ScalarInteger(internal->offset_output_n_IRec2_R));
+  SET_VECTOR_ELT(contents, 641, ScalarInteger(internal->offset_output_n_ISev_GetICU_GetOx_Die1));
+  SET_VECTOR_ELT(contents, 642, ScalarInteger(internal->offset_output_n_ISev_GetICU_GetOx_Die2_D_Hospital));
+  SET_VECTOR_ELT(contents, 643, ScalarInteger(internal->offset_output_n_ISev_GetICU_GetOx_Surv1));
+  SET_VECTOR_ELT(contents, 644, ScalarInteger(internal->offset_output_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2));
+  SET_VECTOR_ELT(contents, 645, ScalarInteger(internal->offset_output_n_ISev_GetICU_GetOx_Surv2_Rec));
+  SET_VECTOR_ELT(contents, 646, ScalarInteger(internal->offset_output_n_ISev_GetICU_NoOx_Die2_D_Hospital));
+  SET_VECTOR_ELT(contents, 647, ScalarInteger(internal->offset_output_n_ISev_GetICU_NoOx_Surv2_Rec));
+  SET_VECTOR_ELT(contents, 648, ScalarInteger(internal->offset_output_n_PE1_PE2));
+  SET_VECTOR_ELT(contents, 649, ScalarInteger(internal->offset_output_n_PE2_I));
+  SET_VECTOR_ELT(contents, 650, ScalarInteger(internal->offset_output_n_PE2_ICase1));
+  SET_VECTOR_ELT(contents, 651, ScalarInteger(internal->offset_output_n_PE2_ICase1_Drug_5));
+  SET_VECTOR_ELT(contents, 652, ScalarInteger(internal->offset_output_n_PE2_ICase1_initial));
+  SET_VECTOR_ELT(contents, 653, ScalarInteger(internal->offset_output_n_PE2_ICase1_No_Drug_5));
+  SET_VECTOR_ELT(contents, 654, ScalarInteger(internal->offset_output_n_PE2_IMild));
+  SET_VECTOR_ELT(contents, 655, ScalarInteger(internal->offset_output_n_PE2_IMild_Drug_5));
+  SET_VECTOR_ELT(contents, 656, ScalarInteger(internal->offset_output_n_PE2_IMild_No_Drug_5));
+  SET_VECTOR_ELT(contents, 657, ScalarInteger(internal->offset_output_n_PS_PE1));
+  SET_VECTOR_ELT(contents, 658, ScalarInteger(internal->offset_output_n_PS_S));
+  SET_VECTOR_ELT(contents, 659, ScalarInteger(internal->offset_output_n_S_E1));
+  SET_VECTOR_ELT(contents, 660, ScalarInteger(internal->offset_output_number_GetHosp));
+  SET_VECTOR_ELT(contents, 661, ScalarInteger(internal->offset_output_number_GetHosp_NoOx));
+  SET_VECTOR_ELT(contents, 662, ScalarInteger(internal->offset_output_number_GetHosp_Ox));
+  SET_VECTOR_ELT(contents, 663, ScalarInteger(internal->offset_output_number_GetICU));
+  SET_VECTOR_ELT(contents, 664, ScalarInteger(internal->offset_output_number_GetICU_GetOx));
+  SET_VECTOR_ELT(contents, 665, ScalarInteger(internal->offset_output_number_GetICU_GetOx_GetMV));
+  SET_VECTOR_ELT(contents, 666, ScalarInteger(internal->offset_output_number_GetICU_GetOx_NeedMV));
+  SET_VECTOR_ELT(contents, 667, ScalarInteger(internal->offset_output_number_GetICU_GetOx_NoMV));
+  SET_VECTOR_ELT(contents, 668, ScalarInteger(internal->offset_output_number_GetICU_NoOx));
+  SET_VECTOR_ELT(contents, 669, ScalarInteger(internal->offset_output_number_GetICU_NoOx_NeedMV));
+  SET_VECTOR_ELT(contents, 670, ScalarInteger(internal->offset_output_number_NotHosp));
+  SET_VECTOR_ELT(contents, 671, ScalarInteger(internal->offset_output_number_NotICU));
+  SET_VECTOR_ELT(contents, 672, ScalarInteger(internal->offset_output_number_NotICU_NotOx));
+  SET_VECTOR_ELT(contents, 673, ScalarInteger(internal->offset_output_number_NotICU_NotOx_NotMV));
+  SET_VECTOR_ELT(contents, 674, ScalarInteger(internal->offset_output_number_req_Hosp));
+  SET_VECTOR_ELT(contents, 675, ScalarInteger(internal->offset_output_number_req_ICU));
+  SET_VECTOR_ELT(contents, 676, ScalarInteger(internal->offset_output_number_req_ICU_initial));
+  SET_VECTOR_ELT(contents, 677, ScalarInteger(internal->offset_output_number_req_ICU_MV));
+  SET_VECTOR_ELT(contents, 678, ScalarInteger(internal->offset_output_number_req_ICU_MV_initial));
+  SET_VECTOR_ELT(contents, 679, ScalarInteger(internal->offset_output_number_req_ICU_Ox));
+  SET_VECTOR_ELT(contents, 680, ScalarInteger(internal->offset_output_prob_critical_death_get_ICU_get_ox_get_MV));
+  SET_VECTOR_ELT(contents, 681, ScalarInteger(internal->offset_output_prob_critical_death_get_ICU_get_ox_get_MV_baseline));
+  SET_VECTOR_ELT(contents, 682, ScalarInteger(internal->offset_output_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13));
+  SET_VECTOR_ELT(contents, 683, ScalarInteger(internal->offset_output_prob_critical_death_get_ICU_get_ox_no_MV));
+  SET_VECTOR_ELT(contents, 684, ScalarInteger(internal->offset_output_prob_critical_death_get_ICU_get_ox_no_MV_baseline));
+  SET_VECTOR_ELT(contents, 685, ScalarInteger(internal->offset_output_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13));
+  SET_VECTOR_ELT(contents, 686, ScalarInteger(internal->offset_output_prob_critical_death_get_ICU_no_ox_no_MV));
+  SET_VECTOR_ELT(contents, 687, ScalarInteger(internal->offset_output_prob_critical_death_get_ICU_no_ox_no_MV_baseline));
+  SET_VECTOR_ELT(contents, 688, ScalarInteger(internal->offset_output_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13));
+  SET_VECTOR_ELT(contents, 689, ScalarInteger(internal->offset_output_prob_moderate_death_get_hosp_get_ox));
+  SET_VECTOR_ELT(contents, 690, ScalarInteger(internal->offset_output_prob_moderate_death_get_hosp_get_ox_baseline));
+  SET_VECTOR_ELT(contents, 691, ScalarInteger(internal->offset_output_prob_moderate_death_get_hosp_get_ox_Drug_11));
+  SET_VECTOR_ELT(contents, 692, ScalarInteger(internal->offset_output_prob_moderate_death_get_hosp_no_ox));
+  SET_VECTOR_ELT(contents, 693, ScalarInteger(internal->offset_output_prob_moderate_death_get_hosp_no_ox_baseline));
+  SET_VECTOR_ELT(contents, 694, ScalarInteger(internal->offset_output_prob_moderate_death_get_hosp_no_ox_Drug_11));
+  SET_VECTOR_ELT(contents, 695, ScalarInteger(internal->offset_output_prob_severe_death_get_ICU_get_ox));
+  SET_VECTOR_ELT(contents, 696, ScalarInteger(internal->offset_output_prob_severe_death_get_ICU_get_ox_baseline));
+  SET_VECTOR_ELT(contents, 697, ScalarInteger(internal->offset_output_prob_severe_death_get_ICU_get_ox_Drug_12));
+  SET_VECTOR_ELT(contents, 698, ScalarInteger(internal->offset_output_prob_severe_death_get_ICU_no_ox));
+  SET_VECTOR_ELT(contents, 699, ScalarInteger(internal->offset_output_prob_severe_death_get_ICU_no_ox_baseline));
+  SET_VECTOR_ELT(contents, 700, ScalarInteger(internal->offset_output_prob_severe_death_get_ICU_no_ox_Drug_12));
+  SET_VECTOR_ELT(contents, 701, ScalarInteger(internal->offset_variable_D));
+  SET_VECTOR_ELT(contents, 702, ScalarInteger(internal->offset_variable_D_Community));
+  SET_VECTOR_ELT(contents, 703, ScalarInteger(internal->offset_variable_D_Hospital));
+  SET_VECTOR_ELT(contents, 704, ScalarInteger(internal->offset_variable_E1));
+  SET_VECTOR_ELT(contents, 705, ScalarInteger(internal->offset_variable_E2));
+  SET_VECTOR_ELT(contents, 706, ScalarInteger(internal->offset_variable_IAsymp));
+  SET_VECTOR_ELT(contents, 707, ScalarInteger(internal->offset_variable_ICase1));
+  SET_VECTOR_ELT(contents, 708, ScalarInteger(internal->offset_variable_ICase1_Drug_5));
+  SET_VECTOR_ELT(contents, 709, ScalarInteger(internal->offset_variable_ICase2));
+  SET_VECTOR_ELT(contents, 710, ScalarInteger(internal->offset_variable_ICase2_Drug_5));
+  SET_VECTOR_ELT(contents, 711, ScalarInteger(internal->offset_variable_ICrit_GetICU_GetOx_GetMV_Die1));
+  SET_VECTOR_ELT(contents, 712, ScalarInteger(internal->offset_variable_ICrit_GetICU_GetOx_GetMV_Die2));
+  SET_VECTOR_ELT(contents, 713, ScalarInteger(internal->offset_variable_ICrit_GetICU_GetOx_GetMV_Surv1));
+  SET_VECTOR_ELT(contents, 714, ScalarInteger(internal->offset_variable_ICrit_GetICU_GetOx_GetMV_Surv2));
+  SET_VECTOR_ELT(contents, 715, ScalarInteger(internal->offset_variable_ICrit_GetICU_GetOx_NoMV_Die1));
+  SET_VECTOR_ELT(contents, 716, ScalarInteger(internal->offset_variable_ICrit_GetICU_GetOx_NoMV_Die2));
+  SET_VECTOR_ELT(contents, 717, ScalarInteger(internal->offset_variable_ICrit_GetICU_GetOx_NoMV_Surv1));
+  SET_VECTOR_ELT(contents, 718, ScalarInteger(internal->offset_variable_ICrit_GetICU_GetOx_NoMV_Surv2));
+  SET_VECTOR_ELT(contents, 719, ScalarInteger(internal->offset_variable_ICrit_GetICU_NoOx_NoMV_Die1));
+  SET_VECTOR_ELT(contents, 720, ScalarInteger(internal->offset_variable_ICrit_GetICU_NoOx_NoMV_Die2));
+  SET_VECTOR_ELT(contents, 721, ScalarInteger(internal->offset_variable_ICrit_GetICU_NoOx_NoMV_Surv1));
+  SET_VECTOR_ELT(contents, 722, ScalarInteger(internal->offset_variable_ICrit_GetICU_NoOx_NoMV_Surv2));
+  SET_VECTOR_ELT(contents, 723, ScalarInteger(internal->offset_variable_ICrit_NoICU_NoOx_NoMV_Die1));
+  SET_VECTOR_ELT(contents, 724, ScalarInteger(internal->offset_variable_ICrit_NoICU_NoOx_NoMV_Die2));
+  SET_VECTOR_ELT(contents, 725, ScalarInteger(internal->offset_variable_ICrit_NoICU_NoOx_NoMV_Surv1));
+  SET_VECTOR_ELT(contents, 726, ScalarInteger(internal->offset_variable_ICrit_NoICU_NoOx_NoMV_Surv2));
+  SET_VECTOR_ELT(contents, 727, ScalarInteger(internal->offset_variable_IMild));
+  SET_VECTOR_ELT(contents, 728, ScalarInteger(internal->offset_variable_IMild_Drug_5));
+  SET_VECTOR_ELT(contents, 729, ScalarInteger(internal->offset_variable_IMod_GetHosp_GetOx_Die1));
+  SET_VECTOR_ELT(contents, 730, ScalarInteger(internal->offset_variable_IMod_GetHosp_GetOx_Die2));
+  SET_VECTOR_ELT(contents, 731, ScalarInteger(internal->offset_variable_IMod_GetHosp_GetOx_Surv1));
+  SET_VECTOR_ELT(contents, 732, ScalarInteger(internal->offset_variable_IMod_GetHosp_GetOx_Surv2));
+  SET_VECTOR_ELT(contents, 733, ScalarInteger(internal->offset_variable_IMod_GetHosp_NoOx_Die1));
+  SET_VECTOR_ELT(contents, 734, ScalarInteger(internal->offset_variable_IMod_GetHosp_NoOx_Die2));
+  SET_VECTOR_ELT(contents, 735, ScalarInteger(internal->offset_variable_IMod_GetHosp_NoOx_Surv1));
+  SET_VECTOR_ELT(contents, 736, ScalarInteger(internal->offset_variable_IMod_GetHosp_NoOx_Surv2));
+  SET_VECTOR_ELT(contents, 737, ScalarInteger(internal->offset_variable_IMod_NoHosp_NoOx_Die1));
+  SET_VECTOR_ELT(contents, 738, ScalarInteger(internal->offset_variable_IMod_NoHosp_NoOx_Die2));
+  SET_VECTOR_ELT(contents, 739, ScalarInteger(internal->offset_variable_IMod_NoHosp_NoOx_Surv1));
+  SET_VECTOR_ELT(contents, 740, ScalarInteger(internal->offset_variable_IMod_NoHosp_NoOx_Surv2));
+  SET_VECTOR_ELT(contents, 741, ScalarInteger(internal->offset_variable_IRec1));
+  SET_VECTOR_ELT(contents, 742, ScalarInteger(internal->offset_variable_IRec2));
+  SET_VECTOR_ELT(contents, 743, ScalarInteger(internal->offset_variable_ISev_GetICU_GetOx_Die1));
+  SET_VECTOR_ELT(contents, 744, ScalarInteger(internal->offset_variable_ISev_GetICU_GetOx_Die2));
+  SET_VECTOR_ELT(contents, 745, ScalarInteger(internal->offset_variable_ISev_GetICU_GetOx_Surv1));
+  SET_VECTOR_ELT(contents, 746, ScalarInteger(internal->offset_variable_ISev_GetICU_GetOx_Surv2));
+  SET_VECTOR_ELT(contents, 747, ScalarInteger(internal->offset_variable_ISev_GetICU_NoOx_Die1));
+  SET_VECTOR_ELT(contents, 748, ScalarInteger(internal->offset_variable_ISev_GetICU_NoOx_Die2));
+  SET_VECTOR_ELT(contents, 749, ScalarInteger(internal->offset_variable_ISev_GetICU_NoOx_Surv1));
+  SET_VECTOR_ELT(contents, 750, ScalarInteger(internal->offset_variable_ISev_GetICU_NoOx_Surv2));
+  SET_VECTOR_ELT(contents, 751, ScalarInteger(internal->offset_variable_ISev_NoICU_NoOx_Die1));
+  SET_VECTOR_ELT(contents, 752, ScalarInteger(internal->offset_variable_ISev_NoICU_NoOx_Die2));
+  SET_VECTOR_ELT(contents, 753, ScalarInteger(internal->offset_variable_ISev_NoICU_NoOx_Surv1));
+  SET_VECTOR_ELT(contents, 754, ScalarInteger(internal->offset_variable_ISev_NoICU_NoOx_Surv2));
+  SET_VECTOR_ELT(contents, 755, ScalarInteger(internal->offset_variable_PE1));
+  SET_VECTOR_ELT(contents, 756, ScalarInteger(internal->offset_variable_PE2));
+  SET_VECTOR_ELT(contents, 757, ScalarInteger(internal->offset_variable_PS));
+  SET_VECTOR_ELT(contents, 758, ScalarInteger(internal->offset_variable_R));
+  SET_VECTOR_ELT(contents, 759, ScalarReal(internal->oxygen_availability_0));
+  SEXP PE1_0 = PROTECT(allocVector(REALSXP, internal->dim_PE1_0));
+  memcpy(REAL(PE1_0), internal->PE1_0, internal->dim_PE1_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 760, PE1_0);
+  SEXP PE2_0 = PROTECT(allocVector(REALSXP, internal->dim_PE2_0));
+  memcpy(REAL(PE2_0), internal->PE2_0, internal->dim_PE2_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 761, PE2_0);
+  SEXP prob_asymp = PROTECT(allocVector(REALSXP, internal->dim_prob_asymp));
+  memcpy(REAL(prob_asymp), internal->prob_asymp, internal->dim_prob_asymp * sizeof(double));
+  SET_VECTOR_ELT(contents, 762, prob_asymp);
+  SEXP prob_critical = PROTECT(allocVector(REALSXP, internal->dim_prob_critical));
+  memcpy(REAL(prob_critical), internal->prob_critical, internal->dim_prob_critical * sizeof(double));
+  SET_VECTOR_ELT(contents, 763, prob_critical);
+  SEXP prob_critical_death_get_ICU_get_ox_get_MV = PROTECT(allocVector(REALSXP, internal->dim_prob_critical_death_get_ICU_get_ox_get_MV));
+  memcpy(REAL(prob_critical_death_get_ICU_get_ox_get_MV), internal->prob_critical_death_get_ICU_get_ox_get_MV, internal->dim_prob_critical_death_get_ICU_get_ox_get_MV * sizeof(double));
+  SET_VECTOR_ELT(contents, 764, prob_critical_death_get_ICU_get_ox_get_MV);
+  SEXP prob_critical_death_get_ICU_get_ox_get_MV_baseline = PROTECT(allocVector(REALSXP, internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline));
+  memcpy(REAL(prob_critical_death_get_ICU_get_ox_get_MV_baseline), internal->prob_critical_death_get_ICU_get_ox_get_MV_baseline, internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline * sizeof(double));
+  SET_VECTOR_ELT(contents, 765, prob_critical_death_get_ICU_get_ox_get_MV_baseline);
+  SEXP prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 = PROTECT(allocVector(REALSXP, internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13));
+  memcpy(REAL(prob_critical_death_get_ICU_get_ox_get_MV_Drug_13), internal->prob_critical_death_get_ICU_get_ox_get_MV_Drug_13, internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 * sizeof(double));
+  SET_VECTOR_ELT(contents, 766, prob_critical_death_get_ICU_get_ox_get_MV_Drug_13);
+  SEXP prob_critical_death_get_ICU_get_ox_no_MV = PROTECT(allocVector(REALSXP, internal->dim_prob_critical_death_get_ICU_get_ox_no_MV));
+  memcpy(REAL(prob_critical_death_get_ICU_get_ox_no_MV), internal->prob_critical_death_get_ICU_get_ox_no_MV, internal->dim_prob_critical_death_get_ICU_get_ox_no_MV * sizeof(double));
+  SET_VECTOR_ELT(contents, 767, prob_critical_death_get_ICU_get_ox_no_MV);
+  SEXP prob_critical_death_get_ICU_get_ox_no_MV_baseline = PROTECT(allocVector(REALSXP, internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline));
+  memcpy(REAL(prob_critical_death_get_ICU_get_ox_no_MV_baseline), internal->prob_critical_death_get_ICU_get_ox_no_MV_baseline, internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline * sizeof(double));
+  SET_VECTOR_ELT(contents, 768, prob_critical_death_get_ICU_get_ox_no_MV_baseline);
+  SEXP prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 = PROTECT(allocVector(REALSXP, internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13));
+  memcpy(REAL(prob_critical_death_get_ICU_get_ox_no_MV_Drug_13), internal->prob_critical_death_get_ICU_get_ox_no_MV_Drug_13, internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 * sizeof(double));
+  SET_VECTOR_ELT(contents, 769, prob_critical_death_get_ICU_get_ox_no_MV_Drug_13);
+  SEXP prob_critical_death_get_ICU_no_ox_no_MV = PROTECT(allocVector(REALSXP, internal->dim_prob_critical_death_get_ICU_no_ox_no_MV));
+  memcpy(REAL(prob_critical_death_get_ICU_no_ox_no_MV), internal->prob_critical_death_get_ICU_no_ox_no_MV, internal->dim_prob_critical_death_get_ICU_no_ox_no_MV * sizeof(double));
+  SET_VECTOR_ELT(contents, 770, prob_critical_death_get_ICU_no_ox_no_MV);
+  SEXP prob_critical_death_get_ICU_no_ox_no_MV_baseline = PROTECT(allocVector(REALSXP, internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline));
+  memcpy(REAL(prob_critical_death_get_ICU_no_ox_no_MV_baseline), internal->prob_critical_death_get_ICU_no_ox_no_MV_baseline, internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline * sizeof(double));
+  SET_VECTOR_ELT(contents, 771, prob_critical_death_get_ICU_no_ox_no_MV_baseline);
+  SEXP prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 = PROTECT(allocVector(REALSXP, internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13));
+  memcpy(REAL(prob_critical_death_get_ICU_no_ox_no_MV_Drug_13), internal->prob_critical_death_get_ICU_no_ox_no_MV_Drug_13, internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 * sizeof(double));
+  SET_VECTOR_ELT(contents, 772, prob_critical_death_get_ICU_no_ox_no_MV_Drug_13);
+  SEXP prob_critical_death_no_ICU_no_ox_no_MV = PROTECT(allocVector(REALSXP, internal->dim_prob_critical_death_no_ICU_no_ox_no_MV));
+  memcpy(REAL(prob_critical_death_no_ICU_no_ox_no_MV), internal->prob_critical_death_no_ICU_no_ox_no_MV, internal->dim_prob_critical_death_no_ICU_no_ox_no_MV * sizeof(double));
+  SET_VECTOR_ELT(contents, 773, prob_critical_death_no_ICU_no_ox_no_MV);
+  SEXP prob_hosp = PROTECT(allocVector(REALSXP, internal->dim_prob_hosp));
+  memcpy(REAL(prob_hosp), internal->prob_hosp, internal->dim_prob_hosp * sizeof(double));
+  SET_VECTOR_ELT(contents, 774, prob_hosp);
+  SEXP prob_moderate_death_get_hosp_get_ox = PROTECT(allocVector(REALSXP, internal->dim_prob_moderate_death_get_hosp_get_ox));
+  memcpy(REAL(prob_moderate_death_get_hosp_get_ox), internal->prob_moderate_death_get_hosp_get_ox, internal->dim_prob_moderate_death_get_hosp_get_ox * sizeof(double));
+  SET_VECTOR_ELT(contents, 775, prob_moderate_death_get_hosp_get_ox);
+  SEXP prob_moderate_death_get_hosp_get_ox_baseline = PROTECT(allocVector(REALSXP, internal->dim_prob_moderate_death_get_hosp_get_ox_baseline));
+  memcpy(REAL(prob_moderate_death_get_hosp_get_ox_baseline), internal->prob_moderate_death_get_hosp_get_ox_baseline, internal->dim_prob_moderate_death_get_hosp_get_ox_baseline * sizeof(double));
+  SET_VECTOR_ELT(contents, 776, prob_moderate_death_get_hosp_get_ox_baseline);
+  SEXP prob_moderate_death_get_hosp_get_ox_Drug_11 = PROTECT(allocVector(REALSXP, internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11));
+  memcpy(REAL(prob_moderate_death_get_hosp_get_ox_Drug_11), internal->prob_moderate_death_get_hosp_get_ox_Drug_11, internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 * sizeof(double));
+  SET_VECTOR_ELT(contents, 777, prob_moderate_death_get_hosp_get_ox_Drug_11);
+  SEXP prob_moderate_death_get_hosp_no_ox = PROTECT(allocVector(REALSXP, internal->dim_prob_moderate_death_get_hosp_no_ox));
+  memcpy(REAL(prob_moderate_death_get_hosp_no_ox), internal->prob_moderate_death_get_hosp_no_ox, internal->dim_prob_moderate_death_get_hosp_no_ox * sizeof(double));
+  SET_VECTOR_ELT(contents, 778, prob_moderate_death_get_hosp_no_ox);
+  SEXP prob_moderate_death_get_hosp_no_ox_baseline = PROTECT(allocVector(REALSXP, internal->dim_prob_moderate_death_get_hosp_no_ox_baseline));
+  memcpy(REAL(prob_moderate_death_get_hosp_no_ox_baseline), internal->prob_moderate_death_get_hosp_no_ox_baseline, internal->dim_prob_moderate_death_get_hosp_no_ox_baseline * sizeof(double));
+  SET_VECTOR_ELT(contents, 779, prob_moderate_death_get_hosp_no_ox_baseline);
+  SEXP prob_moderate_death_get_hosp_no_ox_Drug_11 = PROTECT(allocVector(REALSXP, internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11));
+  memcpy(REAL(prob_moderate_death_get_hosp_no_ox_Drug_11), internal->prob_moderate_death_get_hosp_no_ox_Drug_11, internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 * sizeof(double));
+  SET_VECTOR_ELT(contents, 780, prob_moderate_death_get_hosp_no_ox_Drug_11);
+  SEXP prob_moderate_death_no_hosp_no_ox = PROTECT(allocVector(REALSXP, internal->dim_prob_moderate_death_no_hosp_no_ox));
+  memcpy(REAL(prob_moderate_death_no_hosp_no_ox), internal->prob_moderate_death_no_hosp_no_ox, internal->dim_prob_moderate_death_no_hosp_no_ox * sizeof(double));
+  SET_VECTOR_ELT(contents, 781, prob_moderate_death_no_hosp_no_ox);
+  SEXP prob_severe = PROTECT(allocVector(REALSXP, internal->dim_prob_severe));
+  memcpy(REAL(prob_severe), internal->prob_severe, internal->dim_prob_severe * sizeof(double));
+  SET_VECTOR_ELT(contents, 782, prob_severe);
+  SEXP prob_severe_death_get_ICU_get_ox = PROTECT(allocVector(REALSXP, internal->dim_prob_severe_death_get_ICU_get_ox));
+  memcpy(REAL(prob_severe_death_get_ICU_get_ox), internal->prob_severe_death_get_ICU_get_ox, internal->dim_prob_severe_death_get_ICU_get_ox * sizeof(double));
+  SET_VECTOR_ELT(contents, 783, prob_severe_death_get_ICU_get_ox);
+  SEXP prob_severe_death_get_ICU_get_ox_baseline = PROTECT(allocVector(REALSXP, internal->dim_prob_severe_death_get_ICU_get_ox_baseline));
+  memcpy(REAL(prob_severe_death_get_ICU_get_ox_baseline), internal->prob_severe_death_get_ICU_get_ox_baseline, internal->dim_prob_severe_death_get_ICU_get_ox_baseline * sizeof(double));
+  SET_VECTOR_ELT(contents, 784, prob_severe_death_get_ICU_get_ox_baseline);
+  SEXP prob_severe_death_get_ICU_get_ox_Drug_12 = PROTECT(allocVector(REALSXP, internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12));
+  memcpy(REAL(prob_severe_death_get_ICU_get_ox_Drug_12), internal->prob_severe_death_get_ICU_get_ox_Drug_12, internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 * sizeof(double));
+  SET_VECTOR_ELT(contents, 785, prob_severe_death_get_ICU_get_ox_Drug_12);
+  SEXP prob_severe_death_get_ICU_no_ox = PROTECT(allocVector(REALSXP, internal->dim_prob_severe_death_get_ICU_no_ox));
+  memcpy(REAL(prob_severe_death_get_ICU_no_ox), internal->prob_severe_death_get_ICU_no_ox, internal->dim_prob_severe_death_get_ICU_no_ox * sizeof(double));
+  SET_VECTOR_ELT(contents, 786, prob_severe_death_get_ICU_no_ox);
+  SEXP prob_severe_death_get_ICU_no_ox_baseline = PROTECT(allocVector(REALSXP, internal->dim_prob_severe_death_get_ICU_no_ox_baseline));
+  memcpy(REAL(prob_severe_death_get_ICU_no_ox_baseline), internal->prob_severe_death_get_ICU_no_ox_baseline, internal->dim_prob_severe_death_get_ICU_no_ox_baseline * sizeof(double));
+  SET_VECTOR_ELT(contents, 787, prob_severe_death_get_ICU_no_ox_baseline);
+  SEXP prob_severe_death_get_ICU_no_ox_Drug_12 = PROTECT(allocVector(REALSXP, internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12));
+  memcpy(REAL(prob_severe_death_get_ICU_no_ox_Drug_12), internal->prob_severe_death_get_ICU_no_ox_Drug_12, internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 * sizeof(double));
+  SET_VECTOR_ELT(contents, 788, prob_severe_death_get_ICU_no_ox_Drug_12);
+  SEXP prob_severe_death_no_ICU_no_ox = PROTECT(allocVector(REALSXP, internal->dim_prob_severe_death_no_ICU_no_ox));
+  memcpy(REAL(prob_severe_death_no_ICU_no_ox), internal->prob_severe_death_no_ICU_no_ox, internal->dim_prob_severe_death_no_ICU_no_ox * sizeof(double));
+  SET_VECTOR_ELT(contents, 789, prob_severe_death_no_ICU_no_ox);
+  SET_VECTOR_ELT(contents, 790, ScalarReal(internal->prophylactic_drug_timing_1));
+  SET_VECTOR_ELT(contents, 791, ScalarReal(internal->prophylactic_drug_timing_2));
+  SET_VECTOR_ELT(contents, 792, ScalarReal(internal->prophylactic_drug_wane));
+  SET_VECTOR_ELT(contents, 793, ScalarReal(internal->prophylactic_prop_treat));
+  SEXP PS_0 = PROTECT(allocVector(REALSXP, internal->dim_PS_0));
+  memcpy(REAL(PS_0), internal->PS_0, internal->dim_PS_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 794, PS_0);
+  SEXP R_0 = PROTECT(allocVector(REALSXP, internal->dim_R_0));
+  memcpy(REAL(R_0), internal->R_0, internal->dim_R_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 795, R_0);
+  SET_VECTOR_ELT(contents, 796, ScalarReal(internal->rel_inf_asymp));
+  SET_VECTOR_ELT(contents, 797, ScalarReal(internal->rel_inf_mild));
+  SEXP S_0 = PROTECT(allocVector(REALSXP, internal->dim_S_0));
+  memcpy(REAL(S_0), internal->S_0, internal->dim_S_0 * sizeof(double));
+  SET_VECTOR_ELT(contents, 798, S_0);
+  SEXP s_ij = PROTECT(allocVector(REALSXP, internal->dim_s_ij));
+  memcpy(REAL(s_ij), internal->s_ij, internal->dim_s_ij * sizeof(double));
+  odin_set_dim(s_ij, 2, internal->dim_s_ij_1, internal->dim_s_ij_2);
+  SET_VECTOR_ELT(contents, 799, s_ij);
+  SET_VECTOR_ELT(contents, 800, ScalarReal(internal->severe_critical_case_oxygen_consumption_multiplier));
+  SEXP temp = PROTECT(allocVector(REALSXP, internal->dim_temp));
+  memcpy(REAL(temp), internal->temp, internal->dim_temp * sizeof(double));
+  SET_VECTOR_ELT(contents, 801, temp);
+  SEXP tt_baseline_oxygen_demand = PROTECT(allocVector(REALSXP, internal->dim_tt_baseline_oxygen_demand));
+  memcpy(REAL(tt_baseline_oxygen_demand), internal->tt_baseline_oxygen_demand, internal->dim_tt_baseline_oxygen_demand * sizeof(double));
+  SET_VECTOR_ELT(contents, 802, tt_baseline_oxygen_demand);
+  SEXP tt_beta = PROTECT(allocVector(REALSXP, internal->dim_tt_beta));
+  memcpy(REAL(tt_beta), internal->tt_beta, internal->dim_tt_beta * sizeof(double));
+  SET_VECTOR_ELT(contents, 803, tt_beta);
+  SEXP tt_hosp_beds = PROTECT(allocVector(REALSXP, internal->dim_tt_hosp_beds));
+  memcpy(REAL(tt_hosp_beds), internal->tt_hosp_beds, internal->dim_tt_hosp_beds * sizeof(double));
+  SET_VECTOR_ELT(contents, 804, tt_hosp_beds);
+  SEXP tt_ICU_beds = PROTECT(allocVector(REALSXP, internal->dim_tt_ICU_beds));
+  memcpy(REAL(tt_ICU_beds), internal->tt_ICU_beds, internal->dim_tt_ICU_beds * sizeof(double));
+  SET_VECTOR_ELT(contents, 805, tt_ICU_beds);
+  SEXP tt_matrix = PROTECT(allocVector(REALSXP, internal->dim_tt_matrix));
+  memcpy(REAL(tt_matrix), internal->tt_matrix, internal->dim_tt_matrix * sizeof(double));
+  SET_VECTOR_ELT(contents, 806, tt_matrix);
+  SEXP tt_oxygen_supply = PROTECT(allocVector(REALSXP, internal->dim_tt_oxygen_supply));
+  memcpy(REAL(tt_oxygen_supply), internal->tt_oxygen_supply, internal->dim_tt_oxygen_supply * sizeof(double));
+  SET_VECTOR_ELT(contents, 807, tt_oxygen_supply);
+  SEXP nms = PROTECT(allocVector(STRSXP, 808));
+  SET_STRING_ELT(nms, 0, mkChar("beta_set"));
+  SET_STRING_ELT(nms, 1, mkChar("D_Community_0"));
+  SET_STRING_ELT(nms, 2, mkChar("D_Hospital_0"));
+  SET_STRING_ELT(nms, 3, mkChar("dim_beta_set"));
+  SET_STRING_ELT(nms, 4, mkChar("dim_D"));
+  SET_STRING_ELT(nms, 5, mkChar("dim_D_Community"));
+  SET_STRING_ELT(nms, 6, mkChar("dim_D_Community_0"));
+  SET_STRING_ELT(nms, 7, mkChar("dim_D_Hospital"));
+  SET_STRING_ELT(nms, 8, mkChar("dim_D_Hospital_0"));
+  SET_STRING_ELT(nms, 9, mkChar("dim_E1"));
+  SET_STRING_ELT(nms, 10, mkChar("dim_E1_0"));
+  SET_STRING_ELT(nms, 11, mkChar("dim_E2"));
+  SET_STRING_ELT(nms, 12, mkChar("dim_E2_0"));
+  SET_STRING_ELT(nms, 13, mkChar("dim_hosp_bed_capacity"));
+  SET_STRING_ELT(nms, 14, mkChar("dim_IAsymp"));
+  SET_STRING_ELT(nms, 15, mkChar("dim_IAsymp_0"));
+  SET_STRING_ELT(nms, 16, mkChar("dim_ICase1"));
+  SET_STRING_ELT(nms, 17, mkChar("dim_ICase1_0"));
+  SET_STRING_ELT(nms, 18, mkChar("dim_ICase1_Drug_5"));
+  SET_STRING_ELT(nms, 19, mkChar("dim_ICase1_Drug_5_0"));
+  SET_STRING_ELT(nms, 20, mkChar("dim_ICase2"));
+  SET_STRING_ELT(nms, 21, mkChar("dim_ICase2_0"));
+  SET_STRING_ELT(nms, 22, mkChar("dim_ICase2_Drug_5"));
+  SET_STRING_ELT(nms, 23, mkChar("dim_ICase2_Drug_5_0"));
+  SET_STRING_ELT(nms, 24, mkChar("dim_ICrit_GetICU_GetOx_GetMV_Die1"));
+  SET_STRING_ELT(nms, 25, mkChar("dim_ICrit_GetICU_GetOx_GetMV_Die1_0"));
+  SET_STRING_ELT(nms, 26, mkChar("dim_ICrit_GetICU_GetOx_GetMV_Die2"));
+  SET_STRING_ELT(nms, 27, mkChar("dim_ICrit_GetICU_GetOx_GetMV_Die2_0"));
+  SET_STRING_ELT(nms, 28, mkChar("dim_ICrit_GetICU_GetOx_GetMV_Surv1"));
+  SET_STRING_ELT(nms, 29, mkChar("dim_ICrit_GetICU_GetOx_GetMV_Surv1_0"));
+  SET_STRING_ELT(nms, 30, mkChar("dim_ICrit_GetICU_GetOx_GetMV_Surv2"));
+  SET_STRING_ELT(nms, 31, mkChar("dim_ICrit_GetICU_GetOx_GetMV_Surv2_0"));
+  SET_STRING_ELT(nms, 32, mkChar("dim_ICrit_GetICU_GetOx_NoMV_Die1"));
+  SET_STRING_ELT(nms, 33, mkChar("dim_ICrit_GetICU_GetOx_NoMV_Die1_0"));
+  SET_STRING_ELT(nms, 34, mkChar("dim_ICrit_GetICU_GetOx_NoMV_Die2"));
+  SET_STRING_ELT(nms, 35, mkChar("dim_ICrit_GetICU_GetOx_NoMV_Die2_0"));
+  SET_STRING_ELT(nms, 36, mkChar("dim_ICrit_GetICU_GetOx_NoMV_Surv1"));
+  SET_STRING_ELT(nms, 37, mkChar("dim_ICrit_GetICU_GetOx_NoMV_Surv1_0"));
+  SET_STRING_ELT(nms, 38, mkChar("dim_ICrit_GetICU_GetOx_NoMV_Surv2"));
+  SET_STRING_ELT(nms, 39, mkChar("dim_ICrit_GetICU_GetOx_NoMV_Surv2_0"));
+  SET_STRING_ELT(nms, 40, mkChar("dim_ICrit_GetICU_NoOx_NoMV_Die1"));
+  SET_STRING_ELT(nms, 41, mkChar("dim_ICrit_GetICU_NoOx_NoMV_Die1_0"));
+  SET_STRING_ELT(nms, 42, mkChar("dim_ICrit_GetICU_NoOx_NoMV_Die2"));
+  SET_STRING_ELT(nms, 43, mkChar("dim_ICrit_GetICU_NoOx_NoMV_Die2_0"));
+  SET_STRING_ELT(nms, 44, mkChar("dim_ICrit_GetICU_NoOx_NoMV_Surv1"));
+  SET_STRING_ELT(nms, 45, mkChar("dim_ICrit_GetICU_NoOx_NoMV_Surv1_0"));
+  SET_STRING_ELT(nms, 46, mkChar("dim_ICrit_GetICU_NoOx_NoMV_Surv2"));
+  SET_STRING_ELT(nms, 47, mkChar("dim_ICrit_GetICU_NoOx_NoMV_Surv2_0"));
+  SET_STRING_ELT(nms, 48, mkChar("dim_ICrit_NoICU_NoOx_NoMV_Die1"));
+  SET_STRING_ELT(nms, 49, mkChar("dim_ICrit_NoICU_NoOx_NoMV_Die1_0"));
+  SET_STRING_ELT(nms, 50, mkChar("dim_ICrit_NoICU_NoOx_NoMV_Die2"));
+  SET_STRING_ELT(nms, 51, mkChar("dim_ICrit_NoICU_NoOx_NoMV_Die2_0"));
+  SET_STRING_ELT(nms, 52, mkChar("dim_ICrit_NoICU_NoOx_NoMV_Surv1"));
+  SET_STRING_ELT(nms, 53, mkChar("dim_ICrit_NoICU_NoOx_NoMV_Surv1_0"));
+  SET_STRING_ELT(nms, 54, mkChar("dim_ICrit_NoICU_NoOx_NoMV_Surv2"));
+  SET_STRING_ELT(nms, 55, mkChar("dim_ICrit_NoICU_NoOx_NoMV_Surv2_0"));
+  SET_STRING_ELT(nms, 56, mkChar("dim_ICU_bed_capacity"));
+  SET_STRING_ELT(nms, 57, mkChar("dim_IMild"));
+  SET_STRING_ELT(nms, 58, mkChar("dim_IMild_0"));
+  SET_STRING_ELT(nms, 59, mkChar("dim_IMild_Drug_5"));
+  SET_STRING_ELT(nms, 60, mkChar("dim_IMild_Drug_5_0"));
+  SET_STRING_ELT(nms, 61, mkChar("dim_IMod_GetHosp_GetOx_Die1"));
+  SET_STRING_ELT(nms, 62, mkChar("dim_IMod_GetHosp_GetOx_Die1_0"));
+  SET_STRING_ELT(nms, 63, mkChar("dim_IMod_GetHosp_GetOx_Die2"));
+  SET_STRING_ELT(nms, 64, mkChar("dim_IMod_GetHosp_GetOx_Die2_0"));
+  SET_STRING_ELT(nms, 65, mkChar("dim_IMod_GetHosp_GetOx_Surv1"));
+  SET_STRING_ELT(nms, 66, mkChar("dim_IMod_GetHosp_GetOx_Surv1_0"));
+  SET_STRING_ELT(nms, 67, mkChar("dim_IMod_GetHosp_GetOx_Surv2"));
+  SET_STRING_ELT(nms, 68, mkChar("dim_IMod_GetHosp_GetOx_Surv2_0"));
+  SET_STRING_ELT(nms, 69, mkChar("dim_IMod_GetHosp_NoOx_Die1"));
+  SET_STRING_ELT(nms, 70, mkChar("dim_IMod_GetHosp_NoOx_Die1_0"));
+  SET_STRING_ELT(nms, 71, mkChar("dim_IMod_GetHosp_NoOx_Die2"));
+  SET_STRING_ELT(nms, 72, mkChar("dim_IMod_GetHosp_NoOx_Die2_0"));
+  SET_STRING_ELT(nms, 73, mkChar("dim_IMod_GetHosp_NoOx_Surv1"));
+  SET_STRING_ELT(nms, 74, mkChar("dim_IMod_GetHosp_NoOx_Surv1_0"));
+  SET_STRING_ELT(nms, 75, mkChar("dim_IMod_GetHosp_NoOx_Surv2"));
+  SET_STRING_ELT(nms, 76, mkChar("dim_IMod_GetHosp_NoOx_Surv2_0"));
+  SET_STRING_ELT(nms, 77, mkChar("dim_IMod_NoHosp_NoOx_Die1"));
+  SET_STRING_ELT(nms, 78, mkChar("dim_IMod_NoHosp_NoOx_Die1_0"));
+  SET_STRING_ELT(nms, 79, mkChar("dim_IMod_NoHosp_NoOx_Die2"));
+  SET_STRING_ELT(nms, 80, mkChar("dim_IMod_NoHosp_NoOx_Die2_0"));
+  SET_STRING_ELT(nms, 81, mkChar("dim_IMod_NoHosp_NoOx_Surv1"));
+  SET_STRING_ELT(nms, 82, mkChar("dim_IMod_NoHosp_NoOx_Surv1_0"));
+  SET_STRING_ELT(nms, 83, mkChar("dim_IMod_NoHosp_NoOx_Surv2"));
+  SET_STRING_ELT(nms, 84, mkChar("dim_IMod_NoHosp_NoOx_Surv2_0"));
+  SET_STRING_ELT(nms, 85, mkChar("dim_input_baseline_oxygen_demand"));
+  SET_STRING_ELT(nms, 86, mkChar("dim_input_oxygen_supply"));
+  SET_STRING_ELT(nms, 87, mkChar("dim_IRec1"));
+  SET_STRING_ELT(nms, 88, mkChar("dim_IRec1_0"));
+  SET_STRING_ELT(nms, 89, mkChar("dim_IRec2"));
+  SET_STRING_ELT(nms, 90, mkChar("dim_IRec2_0"));
+  SET_STRING_ELT(nms, 91, mkChar("dim_ISev_GetICU_GetOx_Die1"));
+  SET_STRING_ELT(nms, 92, mkChar("dim_ISev_GetICU_GetOx_Die1_0"));
+  SET_STRING_ELT(nms, 93, mkChar("dim_ISev_GetICU_GetOx_Die2"));
+  SET_STRING_ELT(nms, 94, mkChar("dim_ISev_GetICU_GetOx_Die2_0"));
+  SET_STRING_ELT(nms, 95, mkChar("dim_ISev_GetICU_GetOx_Surv1"));
+  SET_STRING_ELT(nms, 96, mkChar("dim_ISev_GetICU_GetOx_Surv1_0"));
+  SET_STRING_ELT(nms, 97, mkChar("dim_ISev_GetICU_GetOx_Surv2"));
+  SET_STRING_ELT(nms, 98, mkChar("dim_ISev_GetICU_GetOx_Surv2_0"));
+  SET_STRING_ELT(nms, 99, mkChar("dim_ISev_GetICU_NoOx_Die1"));
+  SET_STRING_ELT(nms, 100, mkChar("dim_ISev_GetICU_NoOx_Die1_0"));
+  SET_STRING_ELT(nms, 101, mkChar("dim_ISev_GetICU_NoOx_Die2"));
+  SET_STRING_ELT(nms, 102, mkChar("dim_ISev_GetICU_NoOx_Die2_0"));
+  SET_STRING_ELT(nms, 103, mkChar("dim_ISev_GetICU_NoOx_Surv1"));
+  SET_STRING_ELT(nms, 104, mkChar("dim_ISev_GetICU_NoOx_Surv1_0"));
+  SET_STRING_ELT(nms, 105, mkChar("dim_ISev_GetICU_NoOx_Surv2"));
+  SET_STRING_ELT(nms, 106, mkChar("dim_ISev_GetICU_NoOx_Surv2_0"));
+  SET_STRING_ELT(nms, 107, mkChar("dim_ISev_NoICU_NoOx_Die1"));
+  SET_STRING_ELT(nms, 108, mkChar("dim_ISev_NoICU_NoOx_Die1_0"));
+  SET_STRING_ELT(nms, 109, mkChar("dim_ISev_NoICU_NoOx_Die2"));
+  SET_STRING_ELT(nms, 110, mkChar("dim_ISev_NoICU_NoOx_Die2_0"));
+  SET_STRING_ELT(nms, 111, mkChar("dim_ISev_NoICU_NoOx_Surv1"));
+  SET_STRING_ELT(nms, 112, mkChar("dim_ISev_NoICU_NoOx_Surv1_0"));
+  SET_STRING_ELT(nms, 113, mkChar("dim_ISev_NoICU_NoOx_Surv2"));
+  SET_STRING_ELT(nms, 114, mkChar("dim_ISev_NoICU_NoOx_Surv2_0"));
+  SET_STRING_ELT(nms, 115, mkChar("dim_lambda"));
+  SET_STRING_ELT(nms, 116, mkChar("dim_m"));
+  SET_STRING_ELT(nms, 117, mkChar("dim_m_1"));
+  SET_STRING_ELT(nms, 118, mkChar("dim_m_2"));
+  SET_STRING_ELT(nms, 119, mkChar("dim_mix_mat_set"));
+  SET_STRING_ELT(nms, 120, mkChar("dim_mix_mat_set_1"));
+  SET_STRING_ELT(nms, 121, mkChar("dim_mix_mat_set_12"));
+  SET_STRING_ELT(nms, 122, mkChar("dim_mix_mat_set_2"));
+  SET_STRING_ELT(nms, 123, mkChar("dim_mix_mat_set_3"));
+  SET_STRING_ELT(nms, 124, mkChar("dim_n_E1_E2"));
+  SET_STRING_ELT(nms, 125, mkChar("dim_n_E2_I"));
+  SET_STRING_ELT(nms, 126, mkChar("dim_n_E2_IAsymp"));
+  SET_STRING_ELT(nms, 127, mkChar("dim_n_E2_ICase1"));
+  SET_STRING_ELT(nms, 128, mkChar("dim_n_E2_ICase1_Drug_5"));
+  SET_STRING_ELT(nms, 129, mkChar("dim_n_E2_ICase1_initial"));
+  SET_STRING_ELT(nms, 130, mkChar("dim_n_E2_ICase1_No_Drug_5"));
+  SET_STRING_ELT(nms, 131, mkChar("dim_n_E2_IMild"));
+  SET_STRING_ELT(nms, 132, mkChar("dim_n_E2_IMild_Drug_5"));
+  SET_STRING_ELT(nms, 133, mkChar("dim_n_E2_IMild_No_Drug_5"));
+  SET_STRING_ELT(nms, 134, mkChar("dim_n_E2_IMild_or_IAsymp"));
+  SET_STRING_ELT(nms, 135, mkChar("dim_n_IAsymp_R"));
+  SET_STRING_ELT(nms, 136, mkChar("dim_n_ICase1_Drug_5_ICase2_Drug_5"));
+  SET_STRING_ELT(nms, 137, mkChar("dim_n_ICase1_ICase2"));
+  SET_STRING_ELT(nms, 138, mkChar("dim_n_ICase2_Drug_5_Hosp"));
+  SET_STRING_ELT(nms, 139, mkChar("dim_n_ICase2_Hosp"));
+  SET_STRING_ELT(nms, 140, mkChar("dim_n_ICrit_GetICU_GetOx_GetMV_Die1"));
+  SET_STRING_ELT(nms, 141, mkChar("dim_n_ICrit_GetICU_GetOx_GetMV_Die1_ICrit_GetICU_GetOx_GetMV_Die2"));
+  SET_STRING_ELT(nms, 142, mkChar("dim_n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital"));
+  SET_STRING_ELT(nms, 143, mkChar("dim_n_ICrit_GetICU_GetOx_GetMV_Surv1"));
+  SET_STRING_ELT(nms, 144, mkChar("dim_n_ICrit_GetICU_GetOx_GetMV_Surv1_ICrit_GetICU_GetOx_GetMV_Surv2"));
+  SET_STRING_ELT(nms, 145, mkChar("dim_n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec"));
+  SET_STRING_ELT(nms, 146, mkChar("dim_n_ICrit_GetICU_GetOx_NoMV_Die1"));
+  SET_STRING_ELT(nms, 147, mkChar("dim_n_ICrit_GetICU_GetOx_NoMV_Die1_ICrit_GetICU_GetOx_NoMV_Die2"));
+  SET_STRING_ELT(nms, 148, mkChar("dim_n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital"));
+  SET_STRING_ELT(nms, 149, mkChar("dim_n_ICrit_GetICU_GetOx_NoMV_Surv1"));
+  SET_STRING_ELT(nms, 150, mkChar("dim_n_ICrit_GetICU_GetOx_NoMV_Surv1_ICrit_GetICU_GetOx_NoMV_Surv2"));
+  SET_STRING_ELT(nms, 151, mkChar("dim_n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec"));
+  SET_STRING_ELT(nms, 152, mkChar("dim_n_ICrit_GetICU_NoOx_NoMV_Die1"));
+  SET_STRING_ELT(nms, 153, mkChar("dim_n_ICrit_GetICU_NoOx_NoMV_Die1_ICrit_GetICU_NoOx_NoMV_Die2"));
+  SET_STRING_ELT(nms, 154, mkChar("dim_n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital"));
+  SET_STRING_ELT(nms, 155, mkChar("dim_n_ICrit_GetICU_NoOx_NoMV_Surv1"));
+  SET_STRING_ELT(nms, 156, mkChar("dim_n_ICrit_GetICU_NoOx_NoMV_Surv1_ICrit_GetICU_NoOx_NoMV_Surv2"));
+  SET_STRING_ELT(nms, 157, mkChar("dim_n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec"));
+  SET_STRING_ELT(nms, 158, mkChar("dim_n_ICrit_NoICU_NoOx_NoMV_Die1"));
+  SET_STRING_ELT(nms, 159, mkChar("dim_n_ICrit_NoICU_NoOx_NoMV_Die1_ICrit_NoICU_NoOx_NoMV_Die2"));
+  SET_STRING_ELT(nms, 160, mkChar("dim_n_ICrit_NoICU_NoOx_NoMV_Die2_D_Community"));
+  SET_STRING_ELT(nms, 161, mkChar("dim_n_ICrit_NoICU_NoOx_NoMV_Surv1"));
+  SET_STRING_ELT(nms, 162, mkChar("dim_n_ICrit_NoICU_NoOx_NoMV_Surv1_ICrit_NoICU_NoOx_NoMV_Surv2"));
+  SET_STRING_ELT(nms, 163, mkChar("dim_n_ICrit_NoICU_NoOx_NoMV_Surv2_R"));
+  SET_STRING_ELT(nms, 164, mkChar("dim_n_IMild_Drug_5_R"));
+  SET_STRING_ELT(nms, 165, mkChar("dim_n_IMild_R"));
+  SET_STRING_ELT(nms, 166, mkChar("dim_n_IMod_GetHosp_GetOx_Die1"));
+  SET_STRING_ELT(nms, 167, mkChar("dim_n_IMod_GetHosp_GetOx_Die1_IMod_GetHosp_GetOx_Die2"));
+  SET_STRING_ELT(nms, 168, mkChar("dim_n_IMod_GetHosp_GetOx_Die2_D_Hospital"));
+  SET_STRING_ELT(nms, 169, mkChar("dim_n_IMod_GetHosp_GetOx_Surv1"));
+  SET_STRING_ELT(nms, 170, mkChar("dim_n_IMod_GetHosp_GetOx_Surv1_IMod_GetHosp_GetOx_Surv2"));
+  SET_STRING_ELT(nms, 171, mkChar("dim_n_IMod_GetHosp_GetOx_Surv2_R"));
+  SET_STRING_ELT(nms, 172, mkChar("dim_n_IMod_GetHosp_NoOx_Die1"));
+  SET_STRING_ELT(nms, 173, mkChar("dim_n_IMod_GetHosp_NoOx_Die1_IMod_GetHosp_NoOx_Die2"));
+  SET_STRING_ELT(nms, 174, mkChar("dim_n_IMod_GetHosp_NoOx_Die2_D_Hospital"));
+  SET_STRING_ELT(nms, 175, mkChar("dim_n_IMod_GetHosp_NoOx_Surv1"));
+  SET_STRING_ELT(nms, 176, mkChar("dim_n_IMod_GetHosp_NoOx_Surv1_IMod_GetHosp_NoOx_Surv2"));
+  SET_STRING_ELT(nms, 177, mkChar("dim_n_IMod_GetHosp_NoOx_Surv2_R"));
+  SET_STRING_ELT(nms, 178, mkChar("dim_n_IMod_NoHosp_NoOx_Die1"));
+  SET_STRING_ELT(nms, 179, mkChar("dim_n_IMod_NoHosp_NoOx_Die1_IMod_NoHosp_NoOx_Die2"));
+  SET_STRING_ELT(nms, 180, mkChar("dim_n_IMod_NoHosp_NoOx_Die2_D_Community"));
+  SET_STRING_ELT(nms, 181, mkChar("dim_n_IMod_NoHosp_NoOx_Surv1"));
+  SET_STRING_ELT(nms, 182, mkChar("dim_n_IMod_NoHosp_NoOx_Surv1_IMod_NoHosp_NoOx_Surv2"));
+  SET_STRING_ELT(nms, 183, mkChar("dim_n_IMod_NoHosp_NoOx_Surv2_R"));
+  SET_STRING_ELT(nms, 184, mkChar("dim_n_IRec1_IRec2"));
+  SET_STRING_ELT(nms, 185, mkChar("dim_n_IRec2_R"));
+  SET_STRING_ELT(nms, 186, mkChar("dim_n_ISev_GetICU_GetOx_Die1"));
+  SET_STRING_ELT(nms, 187, mkChar("dim_n_ISev_GetICU_GetOx_Die1_ISev_GetICU_GetOx_Die2"));
+  SET_STRING_ELT(nms, 188, mkChar("dim_n_ISev_GetICU_GetOx_Die2_D_Hospital"));
+  SET_STRING_ELT(nms, 189, mkChar("dim_n_ISev_GetICU_GetOx_Surv1"));
+  SET_STRING_ELT(nms, 190, mkChar("dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2"));
+  SET_STRING_ELT(nms, 191, mkChar("dim_n_ISev_GetICU_GetOx_Surv2_Rec"));
+  SET_STRING_ELT(nms, 192, mkChar("dim_n_ISev_GetICU_NoOx_Die1"));
+  SET_STRING_ELT(nms, 193, mkChar("dim_n_ISev_GetICU_NoOx_Die1_ISev_GetICU_NoOx_Die2"));
+  SET_STRING_ELT(nms, 194, mkChar("dim_n_ISev_GetICU_NoOx_Die2_D_Hospital"));
+  SET_STRING_ELT(nms, 195, mkChar("dim_n_ISev_GetICU_NoOx_Surv1"));
+  SET_STRING_ELT(nms, 196, mkChar("dim_n_ISev_GetICU_NoOx_Surv1_ISev_GetICU_NoOx_Surv2"));
+  SET_STRING_ELT(nms, 197, mkChar("dim_n_ISev_GetICU_NoOx_Surv2_Rec"));
+  SET_STRING_ELT(nms, 198, mkChar("dim_n_ISev_NoICU_NoOx_Die1"));
+  SET_STRING_ELT(nms, 199, mkChar("dim_n_ISev_NoICU_NoOx_Die1_ISev_NoICU_NoOx_Die2"));
+  SET_STRING_ELT(nms, 200, mkChar("dim_n_ISev_NoICU_NoOx_Die2_D_Community"));
+  SET_STRING_ELT(nms, 201, mkChar("dim_n_ISev_NoICU_NoOx_Surv1"));
+  SET_STRING_ELT(nms, 202, mkChar("dim_n_ISev_NoICU_NoOx_Surv1_ISev_NoICU_NoOx_Surv2"));
+  SET_STRING_ELT(nms, 203, mkChar("dim_n_ISev_NoICU_NoOx_Surv2_R"));
+  SET_STRING_ELT(nms, 204, mkChar("dim_n_PE1_PE2"));
+  SET_STRING_ELT(nms, 205, mkChar("dim_n_PE2_I"));
+  SET_STRING_ELT(nms, 206, mkChar("dim_n_PE2_IAsymp"));
+  SET_STRING_ELT(nms, 207, mkChar("dim_n_PE2_ICase1"));
+  SET_STRING_ELT(nms, 208, mkChar("dim_n_PE2_ICase1_Drug_5"));
+  SET_STRING_ELT(nms, 209, mkChar("dim_n_PE2_ICase1_initial"));
+  SET_STRING_ELT(nms, 210, mkChar("dim_n_PE2_ICase1_No_Drug_5"));
+  SET_STRING_ELT(nms, 211, mkChar("dim_n_PE2_IMild"));
+  SET_STRING_ELT(nms, 212, mkChar("dim_n_PE2_IMild_Drug_5"));
+  SET_STRING_ELT(nms, 213, mkChar("dim_n_PE2_IMild_No_Drug_5"));
+  SET_STRING_ELT(nms, 214, mkChar("dim_n_PE2_IMild_or_IAsymp"));
+  SET_STRING_ELT(nms, 215, mkChar("dim_n_PS_PE1"));
+  SET_STRING_ELT(nms, 216, mkChar("dim_n_PS_S"));
+  SET_STRING_ELT(nms, 217, mkChar("dim_n_S_E1"));
+  SET_STRING_ELT(nms, 218, mkChar("dim_n_S_PS"));
+  SET_STRING_ELT(nms, 219, mkChar("dim_number_GetHosp"));
+  SET_STRING_ELT(nms, 220, mkChar("dim_number_GetHosp_NoOx"));
+  SET_STRING_ELT(nms, 221, mkChar("dim_number_GetHosp_Ox"));
+  SET_STRING_ELT(nms, 222, mkChar("dim_number_GetICU"));
+  SET_STRING_ELT(nms, 223, mkChar("dim_number_GetICU_GetOx"));
+  SET_STRING_ELT(nms, 224, mkChar("dim_number_GetICU_GetOx_GetMV"));
+  SET_STRING_ELT(nms, 225, mkChar("dim_number_GetICU_GetOx_NeedMV"));
+  SET_STRING_ELT(nms, 226, mkChar("dim_number_GetICU_GetOx_NoMV"));
+  SET_STRING_ELT(nms, 227, mkChar("dim_number_GetICU_NoOx"));
+  SET_STRING_ELT(nms, 228, mkChar("dim_number_GetICU_NoOx_NeedMV"));
+  SET_STRING_ELT(nms, 229, mkChar("dim_number_NotHosp"));
+  SET_STRING_ELT(nms, 230, mkChar("dim_number_NotICU"));
+  SET_STRING_ELT(nms, 231, mkChar("dim_number_NotICU_NotOx"));
+  SET_STRING_ELT(nms, 232, mkChar("dim_number_NotICU_NotOx_NotMV"));
+  SET_STRING_ELT(nms, 233, mkChar("dim_number_req_Hosp"));
+  SET_STRING_ELT(nms, 234, mkChar("dim_number_req_ICU"));
+  SET_STRING_ELT(nms, 235, mkChar("dim_number_req_ICU_initial"));
+  SET_STRING_ELT(nms, 236, mkChar("dim_number_req_ICU_MV"));
+  SET_STRING_ELT(nms, 237, mkChar("dim_number_req_ICU_MV_initial"));
+  SET_STRING_ELT(nms, 238, mkChar("dim_number_req_ICU_Ox"));
+  SET_STRING_ELT(nms, 239, mkChar("dim_PE1"));
+  SET_STRING_ELT(nms, 240, mkChar("dim_PE1_0"));
+  SET_STRING_ELT(nms, 241, mkChar("dim_PE2"));
+  SET_STRING_ELT(nms, 242, mkChar("dim_PE2_0"));
+  SET_STRING_ELT(nms, 243, mkChar("dim_prob_asymp"));
+  SET_STRING_ELT(nms, 244, mkChar("dim_prob_critical"));
+  SET_STRING_ELT(nms, 245, mkChar("dim_prob_critical_death_get_ICU_get_ox_get_MV"));
+  SET_STRING_ELT(nms, 246, mkChar("dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline"));
+  SET_STRING_ELT(nms, 247, mkChar("dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13"));
+  SET_STRING_ELT(nms, 248, mkChar("dim_prob_critical_death_get_ICU_get_ox_no_MV"));
+  SET_STRING_ELT(nms, 249, mkChar("dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline"));
+  SET_STRING_ELT(nms, 250, mkChar("dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13"));
+  SET_STRING_ELT(nms, 251, mkChar("dim_prob_critical_death_get_ICU_no_ox_no_MV"));
+  SET_STRING_ELT(nms, 252, mkChar("dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline"));
+  SET_STRING_ELT(nms, 253, mkChar("dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13"));
+  SET_STRING_ELT(nms, 254, mkChar("dim_prob_critical_death_no_ICU_no_ox_no_MV"));
+  SET_STRING_ELT(nms, 255, mkChar("dim_prob_hosp"));
+  SET_STRING_ELT(nms, 256, mkChar("dim_prob_moderate_death_get_hosp_get_ox"));
+  SET_STRING_ELT(nms, 257, mkChar("dim_prob_moderate_death_get_hosp_get_ox_baseline"));
+  SET_STRING_ELT(nms, 258, mkChar("dim_prob_moderate_death_get_hosp_get_ox_Drug_11"));
+  SET_STRING_ELT(nms, 259, mkChar("dim_prob_moderate_death_get_hosp_no_ox"));
+  SET_STRING_ELT(nms, 260, mkChar("dim_prob_moderate_death_get_hosp_no_ox_baseline"));
+  SET_STRING_ELT(nms, 261, mkChar("dim_prob_moderate_death_get_hosp_no_ox_Drug_11"));
+  SET_STRING_ELT(nms, 262, mkChar("dim_prob_moderate_death_no_hosp_no_ox"));
+  SET_STRING_ELT(nms, 263, mkChar("dim_prob_severe"));
+  SET_STRING_ELT(nms, 264, mkChar("dim_prob_severe_death_get_ICU_get_ox"));
+  SET_STRING_ELT(nms, 265, mkChar("dim_prob_severe_death_get_ICU_get_ox_baseline"));
+  SET_STRING_ELT(nms, 266, mkChar("dim_prob_severe_death_get_ICU_get_ox_Drug_12"));
+  SET_STRING_ELT(nms, 267, mkChar("dim_prob_severe_death_get_ICU_no_ox"));
+  SET_STRING_ELT(nms, 268, mkChar("dim_prob_severe_death_get_ICU_no_ox_baseline"));
+  SET_STRING_ELT(nms, 269, mkChar("dim_prob_severe_death_get_ICU_no_ox_Drug_12"));
+  SET_STRING_ELT(nms, 270, mkChar("dim_prob_severe_death_no_ICU_no_ox"));
+  SET_STRING_ELT(nms, 271, mkChar("dim_PS"));
+  SET_STRING_ELT(nms, 272, mkChar("dim_PS_0"));
+  SET_STRING_ELT(nms, 273, mkChar("dim_R"));
+  SET_STRING_ELT(nms, 274, mkChar("dim_R_0"));
+  SET_STRING_ELT(nms, 275, mkChar("dim_S"));
+  SET_STRING_ELT(nms, 276, mkChar("dim_S_0"));
+  SET_STRING_ELT(nms, 277, mkChar("dim_s_ij"));
+  SET_STRING_ELT(nms, 278, mkChar("dim_s_ij_1"));
+  SET_STRING_ELT(nms, 279, mkChar("dim_s_ij_2"));
+  SET_STRING_ELT(nms, 280, mkChar("dim_temp"));
+  SET_STRING_ELT(nms, 281, mkChar("dim_tt_baseline_oxygen_demand"));
+  SET_STRING_ELT(nms, 282, mkChar("dim_tt_beta"));
+  SET_STRING_ELT(nms, 283, mkChar("dim_tt_hosp_beds"));
+  SET_STRING_ELT(nms, 284, mkChar("dim_tt_ICU_beds"));
+  SET_STRING_ELT(nms, 285, mkChar("dim_tt_matrix"));
+  SET_STRING_ELT(nms, 286, mkChar("dim_tt_oxygen_supply"));
+  SET_STRING_ELT(nms, 287, mkChar("drug_1_effect_size"));
+  SET_STRING_ELT(nms, 288, mkChar("drug_1_indic"));
+  SET_STRING_ELT(nms, 289, mkChar("drug_10_GetOx_GetMV_effect_size"));
+  SET_STRING_ELT(nms, 290, mkChar("drug_10_GetOx_NoMV_effect_size"));
+  SET_STRING_ELT(nms, 291, mkChar("drug_10_indic_ICrit_GetICU_GetOx_GetMV"));
+  SET_STRING_ELT(nms, 292, mkChar("drug_10_indic_ICrit_GetICU_GetOx_NoMV"));
+  SET_STRING_ELT(nms, 293, mkChar("drug_10_indic_ICrit_GetICU_NoOx_NoMV"));
+  SET_STRING_ELT(nms, 294, mkChar("drug_10_NoOx_NoMV_effect_size"));
+  SET_STRING_ELT(nms, 295, mkChar("drug_10_prop_treat"));
+  SET_STRING_ELT(nms, 296, mkChar("drug_11_GetOx_effect_size"));
+  SET_STRING_ELT(nms, 297, mkChar("drug_11_indic_IMod_GetHosp_GetOx"));
+  SET_STRING_ELT(nms, 298, mkChar("drug_11_indic_IMod_GetHosp_NoOx"));
+  SET_STRING_ELT(nms, 299, mkChar("drug_11_NoOx_effect_size"));
+  SET_STRING_ELT(nms, 300, mkChar("drug_11_prop_treat"));
+  SET_STRING_ELT(nms, 301, mkChar("drug_12_GetOx_effect_size"));
+  SET_STRING_ELT(nms, 302, mkChar("drug_12_indic_ISev_GetICU_GetOx"));
+  SET_STRING_ELT(nms, 303, mkChar("drug_12_indic_ISev_GetICU_NoOx"));
+  SET_STRING_ELT(nms, 304, mkChar("drug_12_NoOx_effect_size"));
+  SET_STRING_ELT(nms, 305, mkChar("drug_12_prop_treat"));
+  SET_STRING_ELT(nms, 306, mkChar("drug_13_GetOx_GetMV_effect_size"));
+  SET_STRING_ELT(nms, 307, mkChar("drug_13_GetOx_NoMV_effect_size"));
+  SET_STRING_ELT(nms, 308, mkChar("drug_13_indic_ICrit_GetICU_GetOx_GetMV"));
+  SET_STRING_ELT(nms, 309, mkChar("drug_13_indic_ICrit_GetICU_GetOx_NoMV"));
+  SET_STRING_ELT(nms, 310, mkChar("drug_13_indic_ICrit_GetICU_NoOx_NoMV"));
+  SET_STRING_ELT(nms, 311, mkChar("drug_13_NoOx_NoMV_effect_size"));
+  SET_STRING_ELT(nms, 312, mkChar("drug_13_prop_treat"));
+  SET_STRING_ELT(nms, 313, mkChar("drug_2_effect_size"));
+  SET_STRING_ELT(nms, 314, mkChar("drug_2_indic"));
+  SET_STRING_ELT(nms, 315, mkChar("drug_3_effect_size"));
+  SET_STRING_ELT(nms, 316, mkChar("drug_3_indic"));
+  SET_STRING_ELT(nms, 317, mkChar("drug_3_prop_treat"));
+  SET_STRING_ELT(nms, 318, mkChar("drug_4_effect_size"));
+  SET_STRING_ELT(nms, 319, mkChar("drug_4_indic"));
+  SET_STRING_ELT(nms, 320, mkChar("drug_4_prop_treat"));
+  SET_STRING_ELT(nms, 321, mkChar("drug_5_effect_size"));
+  SET_STRING_ELT(nms, 322, mkChar("drug_5_indic_ICase"));
+  SET_STRING_ELT(nms, 323, mkChar("drug_5_indic_IMild"));
+  SET_STRING_ELT(nms, 324, mkChar("drug_5_prop_treat"));
+  SET_STRING_ELT(nms, 325, mkChar("drug_6_effect_size"));
+  SET_STRING_ELT(nms, 326, mkChar("drug_6_indic"));
+  SET_STRING_ELT(nms, 327, mkChar("drug_6_prop_treat"));
+  SET_STRING_ELT(nms, 328, mkChar("drug_7_effect_size"));
+  SET_STRING_ELT(nms, 329, mkChar("drug_7_indic"));
+  SET_STRING_ELT(nms, 330, mkChar("drug_7_prop_treat"));
+  SET_STRING_ELT(nms, 331, mkChar("drug_8_GetOx_effect_size"));
+  SET_STRING_ELT(nms, 332, mkChar("drug_8_indic_IMod_GetHosp_GetOx"));
+  SET_STRING_ELT(nms, 333, mkChar("drug_8_indic_IMod_GetHosp_NoOx"));
+  SET_STRING_ELT(nms, 334, mkChar("drug_8_NoOx_effect_size"));
+  SET_STRING_ELT(nms, 335, mkChar("drug_8_prop_treat"));
+  SET_STRING_ELT(nms, 336, mkChar("drug_9_GetOx_effect_size"));
+  SET_STRING_ELT(nms, 337, mkChar("drug_9_indic_ISev_GetICU_GetOx"));
+  SET_STRING_ELT(nms, 338, mkChar("drug_9_indic_ISev_GetICU_NoOx"));
+  SET_STRING_ELT(nms, 339, mkChar("drug_9_NoOx_effect_size"));
+  SET_STRING_ELT(nms, 340, mkChar("drug_9_prop_treat"));
+  SET_STRING_ELT(nms, 341, mkChar("E1_0"));
+  SET_STRING_ELT(nms, 342, mkChar("E2_0"));
+  SET_STRING_ELT(nms, 343, mkChar("gamma_E"));
+  SET_STRING_ELT(nms, 344, mkChar("gamma_IAsymp"));
+  SET_STRING_ELT(nms, 345, mkChar("gamma_ICase"));
+  SET_STRING_ELT(nms, 346, mkChar("gamma_ICrit_GetICU_GetOx_GetMV_Die"));
+  SET_STRING_ELT(nms, 347, mkChar("gamma_ICrit_GetICU_GetOx_GetMV_Surv"));
+  SET_STRING_ELT(nms, 348, mkChar("gamma_ICrit_GetICU_GetOx_GetMV_Surv_Drug_10"));
+  SET_STRING_ELT(nms, 349, mkChar("gamma_ICrit_GetICU_GetOx_NoMV_Die"));
+  SET_STRING_ELT(nms, 350, mkChar("gamma_ICrit_GetICU_GetOx_NoMV_Surv"));
+  SET_STRING_ELT(nms, 351, mkChar("gamma_ICrit_GetICU_GetOx_NoMV_Surv_Drug_10"));
+  SET_STRING_ELT(nms, 352, mkChar("gamma_ICrit_GetICU_NoOx_NoMV_Die"));
+  SET_STRING_ELT(nms, 353, mkChar("gamma_ICrit_GetICU_NoOx_NoMV_Surv"));
+  SET_STRING_ELT(nms, 354, mkChar("gamma_ICrit_GetICU_NoOx_NoMV_Surv_Drug_10"));
+  SET_STRING_ELT(nms, 355, mkChar("gamma_ICrit_NoICU_NoOx_NoMV_Die"));
+  SET_STRING_ELT(nms, 356, mkChar("gamma_ICrit_NoICU_NoOx_NoMV_Surv"));
+  SET_STRING_ELT(nms, 357, mkChar("gamma_IMild"));
+  SET_STRING_ELT(nms, 358, mkChar("gamma_IMild_Drug_4"));
+  SET_STRING_ELT(nms, 359, mkChar("gamma_IMod_GetHosp_GetOx_Die"));
+  SET_STRING_ELT(nms, 360, mkChar("gamma_IMod_GetHosp_GetOx_Surv"));
+  SET_STRING_ELT(nms, 361, mkChar("gamma_IMod_GetHosp_GetOx_Surv_Drug_8"));
+  SET_STRING_ELT(nms, 362, mkChar("gamma_IMod_GetHosp_NoOx_Die"));
+  SET_STRING_ELT(nms, 363, mkChar("gamma_IMod_GetHosp_NoOx_Surv"));
+  SET_STRING_ELT(nms, 364, mkChar("gamma_IMod_GetHosp_NoOx_Surv_Drug_8"));
+  SET_STRING_ELT(nms, 365, mkChar("gamma_IMod_NoHosp_NoOx_Die"));
+  SET_STRING_ELT(nms, 366, mkChar("gamma_IMod_NoHosp_NoOx_Surv"));
+  SET_STRING_ELT(nms, 367, mkChar("gamma_ISev_GetICU_GetOx_Die"));
+  SET_STRING_ELT(nms, 368, mkChar("gamma_ISev_GetICU_GetOx_Surv"));
+  SET_STRING_ELT(nms, 369, mkChar("gamma_ISev_GetICU_GetOx_Surv_Drug_9"));
+  SET_STRING_ELT(nms, 370, mkChar("gamma_ISev_GetICU_NoOx_Die"));
+  SET_STRING_ELT(nms, 371, mkChar("gamma_ISev_GetICU_NoOx_Surv"));
+  SET_STRING_ELT(nms, 372, mkChar("gamma_ISev_GetICU_NoOx_Surv_Drug_9"));
+  SET_STRING_ELT(nms, 373, mkChar("gamma_ISev_NoICU_NoOx_Die"));
+  SET_STRING_ELT(nms, 374, mkChar("gamma_ISev_NoICU_NoOx_Surv"));
+  SET_STRING_ELT(nms, 375, mkChar("gamma_rec"));
+  SET_STRING_ELT(nms, 376, mkChar("hosp_bed_capacity"));
+  SET_STRING_ELT(nms, 377, mkChar("IAsymp_0"));
+  SET_STRING_ELT(nms, 378, mkChar("ICase1_0"));
+  SET_STRING_ELT(nms, 379, mkChar("ICase1_Drug_5_0"));
+  SET_STRING_ELT(nms, 380, mkChar("ICase2_0"));
+  SET_STRING_ELT(nms, 381, mkChar("ICase2_Drug_5_0"));
+  SET_STRING_ELT(nms, 382, mkChar("ICrit_GetICU_GetOx_GetMV_Die1_0"));
+  SET_STRING_ELT(nms, 383, mkChar("ICrit_GetICU_GetOx_GetMV_Die2_0"));
+  SET_STRING_ELT(nms, 384, mkChar("ICrit_GetICU_GetOx_GetMV_Surv1_0"));
+  SET_STRING_ELT(nms, 385, mkChar("ICrit_GetICU_GetOx_GetMV_Surv2_0"));
+  SET_STRING_ELT(nms, 386, mkChar("ICrit_GetICU_GetOx_NoMV_Die1_0"));
+  SET_STRING_ELT(nms, 387, mkChar("ICrit_GetICU_GetOx_NoMV_Die2_0"));
+  SET_STRING_ELT(nms, 388, mkChar("ICrit_GetICU_GetOx_NoMV_Surv1_0"));
+  SET_STRING_ELT(nms, 389, mkChar("ICrit_GetICU_GetOx_NoMV_Surv2_0"));
+  SET_STRING_ELT(nms, 390, mkChar("ICrit_GetICU_NoOx_NoMV_Die1_0"));
+  SET_STRING_ELT(nms, 391, mkChar("ICrit_GetICU_NoOx_NoMV_Die2_0"));
+  SET_STRING_ELT(nms, 392, mkChar("ICrit_GetICU_NoOx_NoMV_Surv1_0"));
+  SET_STRING_ELT(nms, 393, mkChar("ICrit_GetICU_NoOx_NoMV_Surv2_0"));
+  SET_STRING_ELT(nms, 394, mkChar("ICrit_NoICU_NoOx_NoMV_Die1_0"));
+  SET_STRING_ELT(nms, 395, mkChar("ICrit_NoICU_NoOx_NoMV_Die2_0"));
+  SET_STRING_ELT(nms, 396, mkChar("ICrit_NoICU_NoOx_NoMV_Surv1_0"));
+  SET_STRING_ELT(nms, 397, mkChar("ICrit_NoICU_NoOx_NoMV_Surv2_0"));
+  SET_STRING_ELT(nms, 398, mkChar("ICU_bed_capacity"));
+  SET_STRING_ELT(nms, 399, mkChar("IMild_0"));
+  SET_STRING_ELT(nms, 400, mkChar("IMild_Drug_5_0"));
+  SET_STRING_ELT(nms, 401, mkChar("IMod_GetHosp_GetOx_Die1_0"));
+  SET_STRING_ELT(nms, 402, mkChar("IMod_GetHosp_GetOx_Die2_0"));
+  SET_STRING_ELT(nms, 403, mkChar("IMod_GetHosp_GetOx_Surv1_0"));
+  SET_STRING_ELT(nms, 404, mkChar("IMod_GetHosp_GetOx_Surv2_0"));
+  SET_STRING_ELT(nms, 405, mkChar("IMod_GetHosp_NoOx_Die1_0"));
+  SET_STRING_ELT(nms, 406, mkChar("IMod_GetHosp_NoOx_Die2_0"));
+  SET_STRING_ELT(nms, 407, mkChar("IMod_GetHosp_NoOx_Surv1_0"));
+  SET_STRING_ELT(nms, 408, mkChar("IMod_GetHosp_NoOx_Surv2_0"));
+  SET_STRING_ELT(nms, 409, mkChar("IMod_NoHosp_NoOx_Die1_0"));
+  SET_STRING_ELT(nms, 410, mkChar("IMod_NoHosp_NoOx_Die2_0"));
+  SET_STRING_ELT(nms, 411, mkChar("IMod_NoHosp_NoOx_Surv1_0"));
+  SET_STRING_ELT(nms, 412, mkChar("IMod_NoHosp_NoOx_Surv2_0"));
+  SET_STRING_ELT(nms, 413, mkChar("initial_D"));
+  SET_STRING_ELT(nms, 414, mkChar("initial_D_Community"));
+  SET_STRING_ELT(nms, 415, mkChar("initial_D_Hospital"));
+  SET_STRING_ELT(nms, 416, mkChar("initial_E1"));
+  SET_STRING_ELT(nms, 417, mkChar("initial_E2"));
+  SET_STRING_ELT(nms, 418, mkChar("initial_IAsymp"));
+  SET_STRING_ELT(nms, 419, mkChar("initial_ICase1"));
+  SET_STRING_ELT(nms, 420, mkChar("initial_ICase1_Drug_5"));
+  SET_STRING_ELT(nms, 421, mkChar("initial_ICase2"));
+  SET_STRING_ELT(nms, 422, mkChar("initial_ICase2_Drug_5"));
+  SET_STRING_ELT(nms, 423, mkChar("initial_ICrit_GetICU_GetOx_GetMV_Die1"));
+  SET_STRING_ELT(nms, 424, mkChar("initial_ICrit_GetICU_GetOx_GetMV_Die2"));
+  SET_STRING_ELT(nms, 425, mkChar("initial_ICrit_GetICU_GetOx_GetMV_Surv1"));
+  SET_STRING_ELT(nms, 426, mkChar("initial_ICrit_GetICU_GetOx_GetMV_Surv2"));
+  SET_STRING_ELT(nms, 427, mkChar("initial_ICrit_GetICU_GetOx_NoMV_Die1"));
+  SET_STRING_ELT(nms, 428, mkChar("initial_ICrit_GetICU_GetOx_NoMV_Die2"));
+  SET_STRING_ELT(nms, 429, mkChar("initial_ICrit_GetICU_GetOx_NoMV_Surv1"));
+  SET_STRING_ELT(nms, 430, mkChar("initial_ICrit_GetICU_GetOx_NoMV_Surv2"));
+  SET_STRING_ELT(nms, 431, mkChar("initial_ICrit_GetICU_NoOx_NoMV_Die1"));
+  SET_STRING_ELT(nms, 432, mkChar("initial_ICrit_GetICU_NoOx_NoMV_Die2"));
+  SET_STRING_ELT(nms, 433, mkChar("initial_ICrit_GetICU_NoOx_NoMV_Surv1"));
+  SET_STRING_ELT(nms, 434, mkChar("initial_ICrit_GetICU_NoOx_NoMV_Surv2"));
+  SET_STRING_ELT(nms, 435, mkChar("initial_ICrit_NoICU_NoOx_NoMV_Die1"));
+  SET_STRING_ELT(nms, 436, mkChar("initial_ICrit_NoICU_NoOx_NoMV_Die2"));
+  SET_STRING_ELT(nms, 437, mkChar("initial_ICrit_NoICU_NoOx_NoMV_Surv1"));
+  SET_STRING_ELT(nms, 438, mkChar("initial_ICrit_NoICU_NoOx_NoMV_Surv2"));
+  SET_STRING_ELT(nms, 439, mkChar("initial_IMild"));
+  SET_STRING_ELT(nms, 440, mkChar("initial_IMild_Drug_5"));
+  SET_STRING_ELT(nms, 441, mkChar("initial_IMod_GetHosp_GetOx_Die1"));
+  SET_STRING_ELT(nms, 442, mkChar("initial_IMod_GetHosp_GetOx_Die2"));
+  SET_STRING_ELT(nms, 443, mkChar("initial_IMod_GetHosp_GetOx_Surv1"));
+  SET_STRING_ELT(nms, 444, mkChar("initial_IMod_GetHosp_GetOx_Surv2"));
+  SET_STRING_ELT(nms, 445, mkChar("initial_IMod_GetHosp_NoOx_Die1"));
+  SET_STRING_ELT(nms, 446, mkChar("initial_IMod_GetHosp_NoOx_Die2"));
+  SET_STRING_ELT(nms, 447, mkChar("initial_IMod_GetHosp_NoOx_Surv1"));
+  SET_STRING_ELT(nms, 448, mkChar("initial_IMod_GetHosp_NoOx_Surv2"));
+  SET_STRING_ELT(nms, 449, mkChar("initial_IMod_NoHosp_NoOx_Die1"));
+  SET_STRING_ELT(nms, 450, mkChar("initial_IMod_NoHosp_NoOx_Die2"));
+  SET_STRING_ELT(nms, 451, mkChar("initial_IMod_NoHosp_NoOx_Surv1"));
+  SET_STRING_ELT(nms, 452, mkChar("initial_IMod_NoHosp_NoOx_Surv2"));
+  SET_STRING_ELT(nms, 453, mkChar("initial_IRec1"));
+  SET_STRING_ELT(nms, 454, mkChar("initial_IRec2"));
+  SET_STRING_ELT(nms, 455, mkChar("initial_ISev_GetICU_GetOx_Die1"));
+  SET_STRING_ELT(nms, 456, mkChar("initial_ISev_GetICU_GetOx_Die2"));
+  SET_STRING_ELT(nms, 457, mkChar("initial_ISev_GetICU_GetOx_Surv1"));
+  SET_STRING_ELT(nms, 458, mkChar("initial_ISev_GetICU_GetOx_Surv2"));
+  SET_STRING_ELT(nms, 459, mkChar("initial_ISev_GetICU_NoOx_Die1"));
+  SET_STRING_ELT(nms, 460, mkChar("initial_ISev_GetICU_NoOx_Die2"));
+  SET_STRING_ELT(nms, 461, mkChar("initial_ISev_GetICU_NoOx_Surv1"));
+  SET_STRING_ELT(nms, 462, mkChar("initial_ISev_GetICU_NoOx_Surv2"));
+  SET_STRING_ELT(nms, 463, mkChar("initial_ISev_NoICU_NoOx_Die1"));
+  SET_STRING_ELT(nms, 464, mkChar("initial_ISev_NoICU_NoOx_Die2"));
+  SET_STRING_ELT(nms, 465, mkChar("initial_ISev_NoICU_NoOx_Surv1"));
+  SET_STRING_ELT(nms, 466, mkChar("initial_ISev_NoICU_NoOx_Surv2"));
+  SET_STRING_ELT(nms, 467, mkChar("initial_oxygen_availability"));
+  SET_STRING_ELT(nms, 468, mkChar("initial_PE1"));
+  SET_STRING_ELT(nms, 469, mkChar("initial_PE2"));
+  SET_STRING_ELT(nms, 470, mkChar("initial_PS"));
+  SET_STRING_ELT(nms, 471, mkChar("initial_R"));
+  SET_STRING_ELT(nms, 472, mkChar("initial_S"));
+  SET_STRING_ELT(nms, 473, mkChar("input_baseline_oxygen_demand"));
+  SET_STRING_ELT(nms, 474, mkChar("input_oxygen_supply"));
+  SET_STRING_ELT(nms, 475, mkChar("interpolate_baseline_oxygen_demand"));
+  SET_STRING_ELT(nms, 476, mkChar("interpolate_beta"));
+  SET_STRING_ELT(nms, 477, mkChar("interpolate_current_hosp_bed_capacity"));
+  SET_STRING_ELT(nms, 478, mkChar("interpolate_current_ICU_bed_capacity"));
+  SET_STRING_ELT(nms, 479, mkChar("interpolate_m"));
+  SET_STRING_ELT(nms, 480, mkChar("interpolate_oxygen_supply"));
+  SET_STRING_ELT(nms, 481, mkChar("IRec1_0"));
+  SET_STRING_ELT(nms, 482, mkChar("IRec2_0"));
+  SET_STRING_ELT(nms, 483, mkChar("ISev_GetICU_GetOx_Die1_0"));
+  SET_STRING_ELT(nms, 484, mkChar("ISev_GetICU_GetOx_Die2_0"));
+  SET_STRING_ELT(nms, 485, mkChar("ISev_GetICU_GetOx_Surv1_0"));
+  SET_STRING_ELT(nms, 486, mkChar("ISev_GetICU_GetOx_Surv2_0"));
+  SET_STRING_ELT(nms, 487, mkChar("ISev_GetICU_NoOx_Die1_0"));
+  SET_STRING_ELT(nms, 488, mkChar("ISev_GetICU_NoOx_Die2_0"));
+  SET_STRING_ELT(nms, 489, mkChar("ISev_GetICU_NoOx_Surv1_0"));
+  SET_STRING_ELT(nms, 490, mkChar("ISev_GetICU_NoOx_Surv2_0"));
+  SET_STRING_ELT(nms, 491, mkChar("ISev_NoICU_NoOx_Die1_0"));
+  SET_STRING_ELT(nms, 492, mkChar("ISev_NoICU_NoOx_Die2_0"));
+  SET_STRING_ELT(nms, 493, mkChar("ISev_NoICU_NoOx_Surv1_0"));
+  SET_STRING_ELT(nms, 494, mkChar("ISev_NoICU_NoOx_Surv2_0"));
+  SET_STRING_ELT(nms, 495, mkChar("lambda"));
+  SET_STRING_ELT(nms, 496, mkChar("m"));
+  SET_STRING_ELT(nms, 497, mkChar("max_leftover"));
+  SET_STRING_ELT(nms, 498, mkChar("mix_mat_set"));
+  SET_STRING_ELT(nms, 499, mkChar("MV_capacity"));
+  SET_STRING_ELT(nms, 500, mkChar("N_age"));
+  SET_STRING_ELT(nms, 501, mkChar("n_E1_E2"));
+  SET_STRING_ELT(nms, 502, mkChar("n_E2_I"));
+  SET_STRING_ELT(nms, 503, mkChar("n_E2_IAsymp"));
+  SET_STRING_ELT(nms, 504, mkChar("n_E2_ICase1"));
+  SET_STRING_ELT(nms, 505, mkChar("n_E2_ICase1_Drug_5"));
+  SET_STRING_ELT(nms, 506, mkChar("n_E2_ICase1_initial"));
+  SET_STRING_ELT(nms, 507, mkChar("n_E2_ICase1_No_Drug_5"));
+  SET_STRING_ELT(nms, 508, mkChar("n_E2_IMild"));
+  SET_STRING_ELT(nms, 509, mkChar("n_E2_IMild_Drug_5"));
+  SET_STRING_ELT(nms, 510, mkChar("n_E2_IMild_No_Drug_5"));
+  SET_STRING_ELT(nms, 511, mkChar("n_E2_IMild_or_IAsymp"));
+  SET_STRING_ELT(nms, 512, mkChar("n_IAsymp_R"));
+  SET_STRING_ELT(nms, 513, mkChar("n_ICase1_Drug_5_ICase2_Drug_5"));
+  SET_STRING_ELT(nms, 514, mkChar("n_ICase1_ICase2"));
+  SET_STRING_ELT(nms, 515, mkChar("n_ICase2_Drug_5_Hosp"));
+  SET_STRING_ELT(nms, 516, mkChar("n_ICase2_Hosp"));
+  SET_STRING_ELT(nms, 517, mkChar("n_ICrit_GetICU_GetOx_GetMV_Die1"));
+  SET_STRING_ELT(nms, 518, mkChar("n_ICrit_GetICU_GetOx_GetMV_Die1_ICrit_GetICU_GetOx_GetMV_Die2"));
+  SET_STRING_ELT(nms, 519, mkChar("n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital"));
+  SET_STRING_ELT(nms, 520, mkChar("n_ICrit_GetICU_GetOx_GetMV_Surv1"));
+  SET_STRING_ELT(nms, 521, mkChar("n_ICrit_GetICU_GetOx_GetMV_Surv1_ICrit_GetICU_GetOx_GetMV_Surv2"));
+  SET_STRING_ELT(nms, 522, mkChar("n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec"));
+  SET_STRING_ELT(nms, 523, mkChar("n_ICrit_GetICU_GetOx_NoMV_Die1"));
+  SET_STRING_ELT(nms, 524, mkChar("n_ICrit_GetICU_GetOx_NoMV_Die1_ICrit_GetICU_GetOx_NoMV_Die2"));
+  SET_STRING_ELT(nms, 525, mkChar("n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital"));
+  SET_STRING_ELT(nms, 526, mkChar("n_ICrit_GetICU_GetOx_NoMV_Surv1"));
+  SET_STRING_ELT(nms, 527, mkChar("n_ICrit_GetICU_GetOx_NoMV_Surv1_ICrit_GetICU_GetOx_NoMV_Surv2"));
+  SET_STRING_ELT(nms, 528, mkChar("n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec"));
+  SET_STRING_ELT(nms, 529, mkChar("n_ICrit_GetICU_NoOx_NoMV_Die1"));
+  SET_STRING_ELT(nms, 530, mkChar("n_ICrit_GetICU_NoOx_NoMV_Die1_ICrit_GetICU_NoOx_NoMV_Die2"));
+  SET_STRING_ELT(nms, 531, mkChar("n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital"));
+  SET_STRING_ELT(nms, 532, mkChar("n_ICrit_GetICU_NoOx_NoMV_Surv1"));
+  SET_STRING_ELT(nms, 533, mkChar("n_ICrit_GetICU_NoOx_NoMV_Surv1_ICrit_GetICU_NoOx_NoMV_Surv2"));
+  SET_STRING_ELT(nms, 534, mkChar("n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec"));
+  SET_STRING_ELT(nms, 535, mkChar("n_ICrit_NoICU_NoOx_NoMV_Die1"));
+  SET_STRING_ELT(nms, 536, mkChar("n_ICrit_NoICU_NoOx_NoMV_Die1_ICrit_NoICU_NoOx_NoMV_Die2"));
+  SET_STRING_ELT(nms, 537, mkChar("n_ICrit_NoICU_NoOx_NoMV_Die2_D_Community"));
+  SET_STRING_ELT(nms, 538, mkChar("n_ICrit_NoICU_NoOx_NoMV_Surv1"));
+  SET_STRING_ELT(nms, 539, mkChar("n_ICrit_NoICU_NoOx_NoMV_Surv1_ICrit_NoICU_NoOx_NoMV_Surv2"));
+  SET_STRING_ELT(nms, 540, mkChar("n_ICrit_NoICU_NoOx_NoMV_Surv2_R"));
+  SET_STRING_ELT(nms, 541, mkChar("n_IMild_Drug_5_R"));
+  SET_STRING_ELT(nms, 542, mkChar("n_IMild_R"));
+  SET_STRING_ELT(nms, 543, mkChar("n_IMod_GetHosp_GetOx_Die1"));
+  SET_STRING_ELT(nms, 544, mkChar("n_IMod_GetHosp_GetOx_Die1_IMod_GetHosp_GetOx_Die2"));
+  SET_STRING_ELT(nms, 545, mkChar("n_IMod_GetHosp_GetOx_Die2_D_Hospital"));
+  SET_STRING_ELT(nms, 546, mkChar("n_IMod_GetHosp_GetOx_Surv1"));
+  SET_STRING_ELT(nms, 547, mkChar("n_IMod_GetHosp_GetOx_Surv1_IMod_GetHosp_GetOx_Surv2"));
+  SET_STRING_ELT(nms, 548, mkChar("n_IMod_GetHosp_GetOx_Surv2_R"));
+  SET_STRING_ELT(nms, 549, mkChar("n_IMod_GetHosp_NoOx_Die1"));
+  SET_STRING_ELT(nms, 550, mkChar("n_IMod_GetHosp_NoOx_Die1_IMod_GetHosp_NoOx_Die2"));
+  SET_STRING_ELT(nms, 551, mkChar("n_IMod_GetHosp_NoOx_Die2_D_Hospital"));
+  SET_STRING_ELT(nms, 552, mkChar("n_IMod_GetHosp_NoOx_Surv1"));
+  SET_STRING_ELT(nms, 553, mkChar("n_IMod_GetHosp_NoOx_Surv1_IMod_GetHosp_NoOx_Surv2"));
+  SET_STRING_ELT(nms, 554, mkChar("n_IMod_GetHosp_NoOx_Surv2_R"));
+  SET_STRING_ELT(nms, 555, mkChar("n_IMod_NoHosp_NoOx_Die1"));
+  SET_STRING_ELT(nms, 556, mkChar("n_IMod_NoHosp_NoOx_Die1_IMod_NoHosp_NoOx_Die2"));
+  SET_STRING_ELT(nms, 557, mkChar("n_IMod_NoHosp_NoOx_Die2_D_Community"));
+  SET_STRING_ELT(nms, 558, mkChar("n_IMod_NoHosp_NoOx_Surv1"));
+  SET_STRING_ELT(nms, 559, mkChar("n_IMod_NoHosp_NoOx_Surv1_IMod_NoHosp_NoOx_Surv2"));
+  SET_STRING_ELT(nms, 560, mkChar("n_IMod_NoHosp_NoOx_Surv2_R"));
+  SET_STRING_ELT(nms, 561, mkChar("n_IRec1_IRec2"));
+  SET_STRING_ELT(nms, 562, mkChar("n_IRec2_R"));
+  SET_STRING_ELT(nms, 563, mkChar("n_ISev_GetICU_GetOx_Die1"));
+  SET_STRING_ELT(nms, 564, mkChar("n_ISev_GetICU_GetOx_Die1_ISev_GetICU_GetOx_Die2"));
+  SET_STRING_ELT(nms, 565, mkChar("n_ISev_GetICU_GetOx_Die2_D_Hospital"));
+  SET_STRING_ELT(nms, 566, mkChar("n_ISev_GetICU_GetOx_Surv1"));
+  SET_STRING_ELT(nms, 567, mkChar("n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2"));
+  SET_STRING_ELT(nms, 568, mkChar("n_ISev_GetICU_GetOx_Surv2_Rec"));
+  SET_STRING_ELT(nms, 569, mkChar("n_ISev_GetICU_NoOx_Die1"));
+  SET_STRING_ELT(nms, 570, mkChar("n_ISev_GetICU_NoOx_Die1_ISev_GetICU_NoOx_Die2"));
+  SET_STRING_ELT(nms, 571, mkChar("n_ISev_GetICU_NoOx_Die2_D_Hospital"));
+  SET_STRING_ELT(nms, 572, mkChar("n_ISev_GetICU_NoOx_Surv1"));
+  SET_STRING_ELT(nms, 573, mkChar("n_ISev_GetICU_NoOx_Surv1_ISev_GetICU_NoOx_Surv2"));
+  SET_STRING_ELT(nms, 574, mkChar("n_ISev_GetICU_NoOx_Surv2_Rec"));
+  SET_STRING_ELT(nms, 575, mkChar("n_ISev_NoICU_NoOx_Die1"));
+  SET_STRING_ELT(nms, 576, mkChar("n_ISev_NoICU_NoOx_Die1_ISev_NoICU_NoOx_Die2"));
+  SET_STRING_ELT(nms, 577, mkChar("n_ISev_NoICU_NoOx_Die2_D_Community"));
+  SET_STRING_ELT(nms, 578, mkChar("n_ISev_NoICU_NoOx_Surv1"));
+  SET_STRING_ELT(nms, 579, mkChar("n_ISev_NoICU_NoOx_Surv1_ISev_NoICU_NoOx_Surv2"));
+  SET_STRING_ELT(nms, 580, mkChar("n_ISev_NoICU_NoOx_Surv2_R"));
+  SET_STRING_ELT(nms, 581, mkChar("n_PE1_PE2"));
+  SET_STRING_ELT(nms, 582, mkChar("n_PE2_I"));
+  SET_STRING_ELT(nms, 583, mkChar("n_PE2_IAsymp"));
+  SET_STRING_ELT(nms, 584, mkChar("n_PE2_ICase1"));
+  SET_STRING_ELT(nms, 585, mkChar("n_PE2_ICase1_Drug_5"));
+  SET_STRING_ELT(nms, 586, mkChar("n_PE2_ICase1_initial"));
+  SET_STRING_ELT(nms, 587, mkChar("n_PE2_ICase1_No_Drug_5"));
+  SET_STRING_ELT(nms, 588, mkChar("n_PE2_IMild"));
+  SET_STRING_ELT(nms, 589, mkChar("n_PE2_IMild_Drug_5"));
+  SET_STRING_ELT(nms, 590, mkChar("n_PE2_IMild_No_Drug_5"));
+  SET_STRING_ELT(nms, 591, mkChar("n_PE2_IMild_or_IAsymp"));
+  SET_STRING_ELT(nms, 592, mkChar("n_PS_PE1"));
+  SET_STRING_ELT(nms, 593, mkChar("n_PS_S"));
+  SET_STRING_ELT(nms, 594, mkChar("n_S_E1"));
+  SET_STRING_ELT(nms, 595, mkChar("n_S_PS"));
+  SET_STRING_ELT(nms, 596, mkChar("number_GetHosp"));
+  SET_STRING_ELT(nms, 597, mkChar("number_GetHosp_NoOx"));
+  SET_STRING_ELT(nms, 598, mkChar("number_GetHosp_Ox"));
+  SET_STRING_ELT(nms, 599, mkChar("number_GetICU"));
+  SET_STRING_ELT(nms, 600, mkChar("number_GetICU_GetOx"));
+  SET_STRING_ELT(nms, 601, mkChar("number_GetICU_GetOx_GetMV"));
+  SET_STRING_ELT(nms, 602, mkChar("number_GetICU_GetOx_NeedMV"));
+  SET_STRING_ELT(nms, 603, mkChar("number_GetICU_GetOx_NoMV"));
+  SET_STRING_ELT(nms, 604, mkChar("number_GetICU_NoOx"));
+  SET_STRING_ELT(nms, 605, mkChar("number_GetICU_NoOx_NeedMV"));
+  SET_STRING_ELT(nms, 606, mkChar("number_NotHosp"));
+  SET_STRING_ELT(nms, 607, mkChar("number_NotICU"));
+  SET_STRING_ELT(nms, 608, mkChar("number_NotICU_NotOx"));
+  SET_STRING_ELT(nms, 609, mkChar("number_NotICU_NotOx_NotMV"));
+  SET_STRING_ELT(nms, 610, mkChar("number_req_Hosp"));
+  SET_STRING_ELT(nms, 611, mkChar("number_req_ICU"));
+  SET_STRING_ELT(nms, 612, mkChar("number_req_ICU_initial"));
+  SET_STRING_ELT(nms, 613, mkChar("number_req_ICU_MV"));
+  SET_STRING_ELT(nms, 614, mkChar("number_req_ICU_MV_initial"));
+  SET_STRING_ELT(nms, 615, mkChar("number_req_ICU_Ox"));
+  SET_STRING_ELT(nms, 616, mkChar("offset_output_n_E1_E2"));
+  SET_STRING_ELT(nms, 617, mkChar("offset_output_n_E2_I"));
+  SET_STRING_ELT(nms, 618, mkChar("offset_output_n_E2_IAsymp"));
+  SET_STRING_ELT(nms, 619, mkChar("offset_output_n_E2_ICase1"));
+  SET_STRING_ELT(nms, 620, mkChar("offset_output_n_E2_ICase1_Drug_5"));
+  SET_STRING_ELT(nms, 621, mkChar("offset_output_n_E2_ICase1_initial"));
+  SET_STRING_ELT(nms, 622, mkChar("offset_output_n_E2_ICase1_No_Drug_5"));
+  SET_STRING_ELT(nms, 623, mkChar("offset_output_n_E2_IMild"));
+  SET_STRING_ELT(nms, 624, mkChar("offset_output_n_E2_IMild_Drug_5"));
+  SET_STRING_ELT(nms, 625, mkChar("offset_output_n_E2_IMild_No_Drug_5"));
+  SET_STRING_ELT(nms, 626, mkChar("offset_output_n_ICase1_ICase2"));
+  SET_STRING_ELT(nms, 627, mkChar("offset_output_n_ICase2_Hosp"));
+  SET_STRING_ELT(nms, 628, mkChar("offset_output_n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital"));
+  SET_STRING_ELT(nms, 629, mkChar("offset_output_n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec"));
+  SET_STRING_ELT(nms, 630, mkChar("offset_output_n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital"));
+  SET_STRING_ELT(nms, 631, mkChar("offset_output_n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec"));
+  SET_STRING_ELT(nms, 632, mkChar("offset_output_n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital"));
+  SET_STRING_ELT(nms, 633, mkChar("offset_output_n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec"));
+  SET_STRING_ELT(nms, 634, mkChar("offset_output_n_IMild_R"));
+  SET_STRING_ELT(nms, 635, mkChar("offset_output_n_IMod_GetHosp_GetOx_Die2_D_Hospital"));
+  SET_STRING_ELT(nms, 636, mkChar("offset_output_n_IMod_GetHosp_GetOx_Surv2_R"));
+  SET_STRING_ELT(nms, 637, mkChar("offset_output_n_IMod_GetHosp_NoOx_Die2_D_Hospital"));
+  SET_STRING_ELT(nms, 638, mkChar("offset_output_n_IMod_GetHosp_NoOx_Surv2_R"));
+  SET_STRING_ELT(nms, 639, mkChar("offset_output_n_IRec1_IRec2"));
+  SET_STRING_ELT(nms, 640, mkChar("offset_output_n_IRec2_R"));
+  SET_STRING_ELT(nms, 641, mkChar("offset_output_n_ISev_GetICU_GetOx_Die1"));
+  SET_STRING_ELT(nms, 642, mkChar("offset_output_n_ISev_GetICU_GetOx_Die2_D_Hospital"));
+  SET_STRING_ELT(nms, 643, mkChar("offset_output_n_ISev_GetICU_GetOx_Surv1"));
+  SET_STRING_ELT(nms, 644, mkChar("offset_output_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2"));
+  SET_STRING_ELT(nms, 645, mkChar("offset_output_n_ISev_GetICU_GetOx_Surv2_Rec"));
+  SET_STRING_ELT(nms, 646, mkChar("offset_output_n_ISev_GetICU_NoOx_Die2_D_Hospital"));
+  SET_STRING_ELT(nms, 647, mkChar("offset_output_n_ISev_GetICU_NoOx_Surv2_Rec"));
+  SET_STRING_ELT(nms, 648, mkChar("offset_output_n_PE1_PE2"));
+  SET_STRING_ELT(nms, 649, mkChar("offset_output_n_PE2_I"));
+  SET_STRING_ELT(nms, 650, mkChar("offset_output_n_PE2_ICase1"));
+  SET_STRING_ELT(nms, 651, mkChar("offset_output_n_PE2_ICase1_Drug_5"));
+  SET_STRING_ELT(nms, 652, mkChar("offset_output_n_PE2_ICase1_initial"));
+  SET_STRING_ELT(nms, 653, mkChar("offset_output_n_PE2_ICase1_No_Drug_5"));
+  SET_STRING_ELT(nms, 654, mkChar("offset_output_n_PE2_IMild"));
+  SET_STRING_ELT(nms, 655, mkChar("offset_output_n_PE2_IMild_Drug_5"));
+  SET_STRING_ELT(nms, 656, mkChar("offset_output_n_PE2_IMild_No_Drug_5"));
+  SET_STRING_ELT(nms, 657, mkChar("offset_output_n_PS_PE1"));
+  SET_STRING_ELT(nms, 658, mkChar("offset_output_n_PS_S"));
+  SET_STRING_ELT(nms, 659, mkChar("offset_output_n_S_E1"));
+  SET_STRING_ELT(nms, 660, mkChar("offset_output_number_GetHosp"));
+  SET_STRING_ELT(nms, 661, mkChar("offset_output_number_GetHosp_NoOx"));
+  SET_STRING_ELT(nms, 662, mkChar("offset_output_number_GetHosp_Ox"));
+  SET_STRING_ELT(nms, 663, mkChar("offset_output_number_GetICU"));
+  SET_STRING_ELT(nms, 664, mkChar("offset_output_number_GetICU_GetOx"));
+  SET_STRING_ELT(nms, 665, mkChar("offset_output_number_GetICU_GetOx_GetMV"));
+  SET_STRING_ELT(nms, 666, mkChar("offset_output_number_GetICU_GetOx_NeedMV"));
+  SET_STRING_ELT(nms, 667, mkChar("offset_output_number_GetICU_GetOx_NoMV"));
+  SET_STRING_ELT(nms, 668, mkChar("offset_output_number_GetICU_NoOx"));
+  SET_STRING_ELT(nms, 669, mkChar("offset_output_number_GetICU_NoOx_NeedMV"));
+  SET_STRING_ELT(nms, 670, mkChar("offset_output_number_NotHosp"));
+  SET_STRING_ELT(nms, 671, mkChar("offset_output_number_NotICU"));
+  SET_STRING_ELT(nms, 672, mkChar("offset_output_number_NotICU_NotOx"));
+  SET_STRING_ELT(nms, 673, mkChar("offset_output_number_NotICU_NotOx_NotMV"));
+  SET_STRING_ELT(nms, 674, mkChar("offset_output_number_req_Hosp"));
+  SET_STRING_ELT(nms, 675, mkChar("offset_output_number_req_ICU"));
+  SET_STRING_ELT(nms, 676, mkChar("offset_output_number_req_ICU_initial"));
+  SET_STRING_ELT(nms, 677, mkChar("offset_output_number_req_ICU_MV"));
+  SET_STRING_ELT(nms, 678, mkChar("offset_output_number_req_ICU_MV_initial"));
+  SET_STRING_ELT(nms, 679, mkChar("offset_output_number_req_ICU_Ox"));
+  SET_STRING_ELT(nms, 680, mkChar("offset_output_prob_critical_death_get_ICU_get_ox_get_MV"));
+  SET_STRING_ELT(nms, 681, mkChar("offset_output_prob_critical_death_get_ICU_get_ox_get_MV_baseline"));
+  SET_STRING_ELT(nms, 682, mkChar("offset_output_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13"));
+  SET_STRING_ELT(nms, 683, mkChar("offset_output_prob_critical_death_get_ICU_get_ox_no_MV"));
+  SET_STRING_ELT(nms, 684, mkChar("offset_output_prob_critical_death_get_ICU_get_ox_no_MV_baseline"));
+  SET_STRING_ELT(nms, 685, mkChar("offset_output_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13"));
+  SET_STRING_ELT(nms, 686, mkChar("offset_output_prob_critical_death_get_ICU_no_ox_no_MV"));
+  SET_STRING_ELT(nms, 687, mkChar("offset_output_prob_critical_death_get_ICU_no_ox_no_MV_baseline"));
+  SET_STRING_ELT(nms, 688, mkChar("offset_output_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13"));
+  SET_STRING_ELT(nms, 689, mkChar("offset_output_prob_moderate_death_get_hosp_get_ox"));
+  SET_STRING_ELT(nms, 690, mkChar("offset_output_prob_moderate_death_get_hosp_get_ox_baseline"));
+  SET_STRING_ELT(nms, 691, mkChar("offset_output_prob_moderate_death_get_hosp_get_ox_Drug_11"));
+  SET_STRING_ELT(nms, 692, mkChar("offset_output_prob_moderate_death_get_hosp_no_ox"));
+  SET_STRING_ELT(nms, 693, mkChar("offset_output_prob_moderate_death_get_hosp_no_ox_baseline"));
+  SET_STRING_ELT(nms, 694, mkChar("offset_output_prob_moderate_death_get_hosp_no_ox_Drug_11"));
+  SET_STRING_ELT(nms, 695, mkChar("offset_output_prob_severe_death_get_ICU_get_ox"));
+  SET_STRING_ELT(nms, 696, mkChar("offset_output_prob_severe_death_get_ICU_get_ox_baseline"));
+  SET_STRING_ELT(nms, 697, mkChar("offset_output_prob_severe_death_get_ICU_get_ox_Drug_12"));
+  SET_STRING_ELT(nms, 698, mkChar("offset_output_prob_severe_death_get_ICU_no_ox"));
+  SET_STRING_ELT(nms, 699, mkChar("offset_output_prob_severe_death_get_ICU_no_ox_baseline"));
+  SET_STRING_ELT(nms, 700, mkChar("offset_output_prob_severe_death_get_ICU_no_ox_Drug_12"));
+  SET_STRING_ELT(nms, 701, mkChar("offset_variable_D"));
+  SET_STRING_ELT(nms, 702, mkChar("offset_variable_D_Community"));
+  SET_STRING_ELT(nms, 703, mkChar("offset_variable_D_Hospital"));
+  SET_STRING_ELT(nms, 704, mkChar("offset_variable_E1"));
+  SET_STRING_ELT(nms, 705, mkChar("offset_variable_E2"));
+  SET_STRING_ELT(nms, 706, mkChar("offset_variable_IAsymp"));
+  SET_STRING_ELT(nms, 707, mkChar("offset_variable_ICase1"));
+  SET_STRING_ELT(nms, 708, mkChar("offset_variable_ICase1_Drug_5"));
+  SET_STRING_ELT(nms, 709, mkChar("offset_variable_ICase2"));
+  SET_STRING_ELT(nms, 710, mkChar("offset_variable_ICase2_Drug_5"));
+  SET_STRING_ELT(nms, 711, mkChar("offset_variable_ICrit_GetICU_GetOx_GetMV_Die1"));
+  SET_STRING_ELT(nms, 712, mkChar("offset_variable_ICrit_GetICU_GetOx_GetMV_Die2"));
+  SET_STRING_ELT(nms, 713, mkChar("offset_variable_ICrit_GetICU_GetOx_GetMV_Surv1"));
+  SET_STRING_ELT(nms, 714, mkChar("offset_variable_ICrit_GetICU_GetOx_GetMV_Surv2"));
+  SET_STRING_ELT(nms, 715, mkChar("offset_variable_ICrit_GetICU_GetOx_NoMV_Die1"));
+  SET_STRING_ELT(nms, 716, mkChar("offset_variable_ICrit_GetICU_GetOx_NoMV_Die2"));
+  SET_STRING_ELT(nms, 717, mkChar("offset_variable_ICrit_GetICU_GetOx_NoMV_Surv1"));
+  SET_STRING_ELT(nms, 718, mkChar("offset_variable_ICrit_GetICU_GetOx_NoMV_Surv2"));
+  SET_STRING_ELT(nms, 719, mkChar("offset_variable_ICrit_GetICU_NoOx_NoMV_Die1"));
+  SET_STRING_ELT(nms, 720, mkChar("offset_variable_ICrit_GetICU_NoOx_NoMV_Die2"));
+  SET_STRING_ELT(nms, 721, mkChar("offset_variable_ICrit_GetICU_NoOx_NoMV_Surv1"));
+  SET_STRING_ELT(nms, 722, mkChar("offset_variable_ICrit_GetICU_NoOx_NoMV_Surv2"));
+  SET_STRING_ELT(nms, 723, mkChar("offset_variable_ICrit_NoICU_NoOx_NoMV_Die1"));
+  SET_STRING_ELT(nms, 724, mkChar("offset_variable_ICrit_NoICU_NoOx_NoMV_Die2"));
+  SET_STRING_ELT(nms, 725, mkChar("offset_variable_ICrit_NoICU_NoOx_NoMV_Surv1"));
+  SET_STRING_ELT(nms, 726, mkChar("offset_variable_ICrit_NoICU_NoOx_NoMV_Surv2"));
+  SET_STRING_ELT(nms, 727, mkChar("offset_variable_IMild"));
+  SET_STRING_ELT(nms, 728, mkChar("offset_variable_IMild_Drug_5"));
+  SET_STRING_ELT(nms, 729, mkChar("offset_variable_IMod_GetHosp_GetOx_Die1"));
+  SET_STRING_ELT(nms, 730, mkChar("offset_variable_IMod_GetHosp_GetOx_Die2"));
+  SET_STRING_ELT(nms, 731, mkChar("offset_variable_IMod_GetHosp_GetOx_Surv1"));
+  SET_STRING_ELT(nms, 732, mkChar("offset_variable_IMod_GetHosp_GetOx_Surv2"));
+  SET_STRING_ELT(nms, 733, mkChar("offset_variable_IMod_GetHosp_NoOx_Die1"));
+  SET_STRING_ELT(nms, 734, mkChar("offset_variable_IMod_GetHosp_NoOx_Die2"));
+  SET_STRING_ELT(nms, 735, mkChar("offset_variable_IMod_GetHosp_NoOx_Surv1"));
+  SET_STRING_ELT(nms, 736, mkChar("offset_variable_IMod_GetHosp_NoOx_Surv2"));
+  SET_STRING_ELT(nms, 737, mkChar("offset_variable_IMod_NoHosp_NoOx_Die1"));
+  SET_STRING_ELT(nms, 738, mkChar("offset_variable_IMod_NoHosp_NoOx_Die2"));
+  SET_STRING_ELT(nms, 739, mkChar("offset_variable_IMod_NoHosp_NoOx_Surv1"));
+  SET_STRING_ELT(nms, 740, mkChar("offset_variable_IMod_NoHosp_NoOx_Surv2"));
+  SET_STRING_ELT(nms, 741, mkChar("offset_variable_IRec1"));
+  SET_STRING_ELT(nms, 742, mkChar("offset_variable_IRec2"));
+  SET_STRING_ELT(nms, 743, mkChar("offset_variable_ISev_GetICU_GetOx_Die1"));
+  SET_STRING_ELT(nms, 744, mkChar("offset_variable_ISev_GetICU_GetOx_Die2"));
+  SET_STRING_ELT(nms, 745, mkChar("offset_variable_ISev_GetICU_GetOx_Surv1"));
+  SET_STRING_ELT(nms, 746, mkChar("offset_variable_ISev_GetICU_GetOx_Surv2"));
+  SET_STRING_ELT(nms, 747, mkChar("offset_variable_ISev_GetICU_NoOx_Die1"));
+  SET_STRING_ELT(nms, 748, mkChar("offset_variable_ISev_GetICU_NoOx_Die2"));
+  SET_STRING_ELT(nms, 749, mkChar("offset_variable_ISev_GetICU_NoOx_Surv1"));
+  SET_STRING_ELT(nms, 750, mkChar("offset_variable_ISev_GetICU_NoOx_Surv2"));
+  SET_STRING_ELT(nms, 751, mkChar("offset_variable_ISev_NoICU_NoOx_Die1"));
+  SET_STRING_ELT(nms, 752, mkChar("offset_variable_ISev_NoICU_NoOx_Die2"));
+  SET_STRING_ELT(nms, 753, mkChar("offset_variable_ISev_NoICU_NoOx_Surv1"));
+  SET_STRING_ELT(nms, 754, mkChar("offset_variable_ISev_NoICU_NoOx_Surv2"));
+  SET_STRING_ELT(nms, 755, mkChar("offset_variable_PE1"));
+  SET_STRING_ELT(nms, 756, mkChar("offset_variable_PE2"));
+  SET_STRING_ELT(nms, 757, mkChar("offset_variable_PS"));
+  SET_STRING_ELT(nms, 758, mkChar("offset_variable_R"));
+  SET_STRING_ELT(nms, 759, mkChar("oxygen_availability_0"));
+  SET_STRING_ELT(nms, 760, mkChar("PE1_0"));
+  SET_STRING_ELT(nms, 761, mkChar("PE2_0"));
+  SET_STRING_ELT(nms, 762, mkChar("prob_asymp"));
+  SET_STRING_ELT(nms, 763, mkChar("prob_critical"));
+  SET_STRING_ELT(nms, 764, mkChar("prob_critical_death_get_ICU_get_ox_get_MV"));
+  SET_STRING_ELT(nms, 765, mkChar("prob_critical_death_get_ICU_get_ox_get_MV_baseline"));
+  SET_STRING_ELT(nms, 766, mkChar("prob_critical_death_get_ICU_get_ox_get_MV_Drug_13"));
+  SET_STRING_ELT(nms, 767, mkChar("prob_critical_death_get_ICU_get_ox_no_MV"));
+  SET_STRING_ELT(nms, 768, mkChar("prob_critical_death_get_ICU_get_ox_no_MV_baseline"));
+  SET_STRING_ELT(nms, 769, mkChar("prob_critical_death_get_ICU_get_ox_no_MV_Drug_13"));
+  SET_STRING_ELT(nms, 770, mkChar("prob_critical_death_get_ICU_no_ox_no_MV"));
+  SET_STRING_ELT(nms, 771, mkChar("prob_critical_death_get_ICU_no_ox_no_MV_baseline"));
+  SET_STRING_ELT(nms, 772, mkChar("prob_critical_death_get_ICU_no_ox_no_MV_Drug_13"));
+  SET_STRING_ELT(nms, 773, mkChar("prob_critical_death_no_ICU_no_ox_no_MV"));
+  SET_STRING_ELT(nms, 774, mkChar("prob_hosp"));
+  SET_STRING_ELT(nms, 775, mkChar("prob_moderate_death_get_hosp_get_ox"));
+  SET_STRING_ELT(nms, 776, mkChar("prob_moderate_death_get_hosp_get_ox_baseline"));
+  SET_STRING_ELT(nms, 777, mkChar("prob_moderate_death_get_hosp_get_ox_Drug_11"));
+  SET_STRING_ELT(nms, 778, mkChar("prob_moderate_death_get_hosp_no_ox"));
+  SET_STRING_ELT(nms, 779, mkChar("prob_moderate_death_get_hosp_no_ox_baseline"));
+  SET_STRING_ELT(nms, 780, mkChar("prob_moderate_death_get_hosp_no_ox_Drug_11"));
+  SET_STRING_ELT(nms, 781, mkChar("prob_moderate_death_no_hosp_no_ox"));
+  SET_STRING_ELT(nms, 782, mkChar("prob_severe"));
+  SET_STRING_ELT(nms, 783, mkChar("prob_severe_death_get_ICU_get_ox"));
+  SET_STRING_ELT(nms, 784, mkChar("prob_severe_death_get_ICU_get_ox_baseline"));
+  SET_STRING_ELT(nms, 785, mkChar("prob_severe_death_get_ICU_get_ox_Drug_12"));
+  SET_STRING_ELT(nms, 786, mkChar("prob_severe_death_get_ICU_no_ox"));
+  SET_STRING_ELT(nms, 787, mkChar("prob_severe_death_get_ICU_no_ox_baseline"));
+  SET_STRING_ELT(nms, 788, mkChar("prob_severe_death_get_ICU_no_ox_Drug_12"));
+  SET_STRING_ELT(nms, 789, mkChar("prob_severe_death_no_ICU_no_ox"));
+  SET_STRING_ELT(nms, 790, mkChar("prophylactic_drug_timing_1"));
+  SET_STRING_ELT(nms, 791, mkChar("prophylactic_drug_timing_2"));
+  SET_STRING_ELT(nms, 792, mkChar("prophylactic_drug_wane"));
+  SET_STRING_ELT(nms, 793, mkChar("prophylactic_prop_treat"));
+  SET_STRING_ELT(nms, 794, mkChar("PS_0"));
+  SET_STRING_ELT(nms, 795, mkChar("R_0"));
+  SET_STRING_ELT(nms, 796, mkChar("rel_inf_asymp"));
+  SET_STRING_ELT(nms, 797, mkChar("rel_inf_mild"));
+  SET_STRING_ELT(nms, 798, mkChar("S_0"));
+  SET_STRING_ELT(nms, 799, mkChar("s_ij"));
+  SET_STRING_ELT(nms, 800, mkChar("severe_critical_case_oxygen_consumption_multiplier"));
+  SET_STRING_ELT(nms, 801, mkChar("temp"));
+  SET_STRING_ELT(nms, 802, mkChar("tt_baseline_oxygen_demand"));
+  SET_STRING_ELT(nms, 803, mkChar("tt_beta"));
+  SET_STRING_ELT(nms, 804, mkChar("tt_hosp_beds"));
+  SET_STRING_ELT(nms, 805, mkChar("tt_ICU_beds"));
+  SET_STRING_ELT(nms, 806, mkChar("tt_matrix"));
+  SET_STRING_ELT(nms, 807, mkChar("tt_oxygen_supply"));
+  setAttrib(contents, R_NamesSymbol, nms);
+  UNPROTECT(278);
+  return contents;
+}
+SEXP deterministic_apothecary_SEIR_set_user(SEXP internal_p, SEXP user) {
+  deterministic_apothecary_SEIR_internal *internal = deterministic_apothecary_SEIR_get_internal(internal_p, 1);
+  internal->drug_1_effect_size = user_get_scalar_double(user, "drug_1_effect_size", internal->drug_1_effect_size, NA_REAL, NA_REAL);
+  internal->drug_1_indic = user_get_scalar_double(user, "drug_1_indic", internal->drug_1_indic, NA_REAL, NA_REAL);
+  internal->drug_10_GetOx_GetMV_effect_size = user_get_scalar_double(user, "drug_10_GetOx_GetMV_effect_size", internal->drug_10_GetOx_GetMV_effect_size, NA_REAL, NA_REAL);
+  internal->drug_10_GetOx_NoMV_effect_size = user_get_scalar_double(user, "drug_10_GetOx_NoMV_effect_size", internal->drug_10_GetOx_NoMV_effect_size, NA_REAL, NA_REAL);
+  internal->drug_10_indic_ICrit_GetICU_GetOx_GetMV = user_get_scalar_double(user, "drug_10_indic_ICrit_GetICU_GetOx_GetMV", internal->drug_10_indic_ICrit_GetICU_GetOx_GetMV, NA_REAL, NA_REAL);
+  internal->drug_10_indic_ICrit_GetICU_GetOx_NoMV = user_get_scalar_double(user, "drug_10_indic_ICrit_GetICU_GetOx_NoMV", internal->drug_10_indic_ICrit_GetICU_GetOx_NoMV, NA_REAL, NA_REAL);
+  internal->drug_10_indic_ICrit_GetICU_NoOx_NoMV = user_get_scalar_double(user, "drug_10_indic_ICrit_GetICU_NoOx_NoMV", internal->drug_10_indic_ICrit_GetICU_NoOx_NoMV, NA_REAL, NA_REAL);
+  internal->drug_10_NoOx_NoMV_effect_size = user_get_scalar_double(user, "drug_10_NoOx_NoMV_effect_size", internal->drug_10_NoOx_NoMV_effect_size, NA_REAL, NA_REAL);
+  internal->drug_10_prop_treat = user_get_scalar_double(user, "drug_10_prop_treat", internal->drug_10_prop_treat, NA_REAL, NA_REAL);
+  internal->drug_11_GetOx_effect_size = user_get_scalar_double(user, "drug_11_GetOx_effect_size", internal->drug_11_GetOx_effect_size, NA_REAL, NA_REAL);
+  internal->drug_11_indic_IMod_GetHosp_GetOx = user_get_scalar_double(user, "drug_11_indic_IMod_GetHosp_GetOx", internal->drug_11_indic_IMod_GetHosp_GetOx, NA_REAL, NA_REAL);
+  internal->drug_11_indic_IMod_GetHosp_NoOx = user_get_scalar_double(user, "drug_11_indic_IMod_GetHosp_NoOx", internal->drug_11_indic_IMod_GetHosp_NoOx, NA_REAL, NA_REAL);
+  internal->drug_11_NoOx_effect_size = user_get_scalar_double(user, "drug_11_NoOx_effect_size", internal->drug_11_NoOx_effect_size, NA_REAL, NA_REAL);
+  internal->drug_11_prop_treat = user_get_scalar_double(user, "drug_11_prop_treat", internal->drug_11_prop_treat, NA_REAL, NA_REAL);
+  internal->drug_12_GetOx_effect_size = user_get_scalar_double(user, "drug_12_GetOx_effect_size", internal->drug_12_GetOx_effect_size, NA_REAL, NA_REAL);
+  internal->drug_12_indic_ISev_GetICU_GetOx = user_get_scalar_double(user, "drug_12_indic_ISev_GetICU_GetOx", internal->drug_12_indic_ISev_GetICU_GetOx, NA_REAL, NA_REAL);
+  internal->drug_12_indic_ISev_GetICU_NoOx = user_get_scalar_double(user, "drug_12_indic_ISev_GetICU_NoOx", internal->drug_12_indic_ISev_GetICU_NoOx, NA_REAL, NA_REAL);
+  internal->drug_12_NoOx_effect_size = user_get_scalar_double(user, "drug_12_NoOx_effect_size", internal->drug_12_NoOx_effect_size, NA_REAL, NA_REAL);
+  internal->drug_12_prop_treat = user_get_scalar_double(user, "drug_12_prop_treat", internal->drug_12_prop_treat, NA_REAL, NA_REAL);
+  internal->drug_13_GetOx_GetMV_effect_size = user_get_scalar_double(user, "drug_13_GetOx_GetMV_effect_size", internal->drug_13_GetOx_GetMV_effect_size, NA_REAL, NA_REAL);
+  internal->drug_13_GetOx_NoMV_effect_size = user_get_scalar_double(user, "drug_13_GetOx_NoMV_effect_size", internal->drug_13_GetOx_NoMV_effect_size, NA_REAL, NA_REAL);
+  internal->drug_13_indic_ICrit_GetICU_GetOx_GetMV = user_get_scalar_double(user, "drug_13_indic_ICrit_GetICU_GetOx_GetMV", internal->drug_13_indic_ICrit_GetICU_GetOx_GetMV, NA_REAL, NA_REAL);
+  internal->drug_13_indic_ICrit_GetICU_GetOx_NoMV = user_get_scalar_double(user, "drug_13_indic_ICrit_GetICU_GetOx_NoMV", internal->drug_13_indic_ICrit_GetICU_GetOx_NoMV, NA_REAL, NA_REAL);
+  internal->drug_13_indic_ICrit_GetICU_NoOx_NoMV = user_get_scalar_double(user, "drug_13_indic_ICrit_GetICU_NoOx_NoMV", internal->drug_13_indic_ICrit_GetICU_NoOx_NoMV, NA_REAL, NA_REAL);
+  internal->drug_13_NoOx_NoMV_effect_size = user_get_scalar_double(user, "drug_13_NoOx_NoMV_effect_size", internal->drug_13_NoOx_NoMV_effect_size, NA_REAL, NA_REAL);
+  internal->drug_13_prop_treat = user_get_scalar_double(user, "drug_13_prop_treat", internal->drug_13_prop_treat, NA_REAL, NA_REAL);
+  internal->drug_2_effect_size = user_get_scalar_double(user, "drug_2_effect_size", internal->drug_2_effect_size, NA_REAL, NA_REAL);
+  internal->drug_2_indic = user_get_scalar_double(user, "drug_2_indic", internal->drug_2_indic, NA_REAL, NA_REAL);
+  internal->drug_3_effect_size = user_get_scalar_double(user, "drug_3_effect_size", internal->drug_3_effect_size, NA_REAL, NA_REAL);
+  internal->drug_3_indic = user_get_scalar_double(user, "drug_3_indic", internal->drug_3_indic, NA_REAL, NA_REAL);
+  internal->drug_3_prop_treat = user_get_scalar_double(user, "drug_3_prop_treat", internal->drug_3_prop_treat, NA_REAL, NA_REAL);
+  internal->drug_4_effect_size = user_get_scalar_double(user, "drug_4_effect_size", internal->drug_4_effect_size, NA_REAL, NA_REAL);
+  internal->drug_4_indic = user_get_scalar_double(user, "drug_4_indic", internal->drug_4_indic, NA_REAL, NA_REAL);
+  internal->drug_4_prop_treat = user_get_scalar_double(user, "drug_4_prop_treat", internal->drug_4_prop_treat, NA_REAL, NA_REAL);
+  internal->drug_5_effect_size = user_get_scalar_double(user, "drug_5_effect_size", internal->drug_5_effect_size, NA_REAL, NA_REAL);
+  internal->drug_5_indic_ICase = user_get_scalar_double(user, "drug_5_indic_ICase", internal->drug_5_indic_ICase, NA_REAL, NA_REAL);
+  internal->drug_5_indic_IMild = user_get_scalar_double(user, "drug_5_indic_IMild", internal->drug_5_indic_IMild, NA_REAL, NA_REAL);
+  internal->drug_5_prop_treat = user_get_scalar_double(user, "drug_5_prop_treat", internal->drug_5_prop_treat, NA_REAL, NA_REAL);
+  internal->drug_6_effect_size = user_get_scalar_double(user, "drug_6_effect_size", internal->drug_6_effect_size, NA_REAL, NA_REAL);
+  internal->drug_6_indic = user_get_scalar_double(user, "drug_6_indic", internal->drug_6_indic, NA_REAL, NA_REAL);
+  internal->drug_6_prop_treat = user_get_scalar_double(user, "drug_6_prop_treat", internal->drug_6_prop_treat, NA_REAL, NA_REAL);
+  internal->drug_7_effect_size = user_get_scalar_double(user, "drug_7_effect_size", internal->drug_7_effect_size, NA_REAL, NA_REAL);
+  internal->drug_7_indic = user_get_scalar_double(user, "drug_7_indic", internal->drug_7_indic, NA_REAL, NA_REAL);
+  internal->drug_7_prop_treat = user_get_scalar_double(user, "drug_7_prop_treat", internal->drug_7_prop_treat, NA_REAL, NA_REAL);
+  internal->drug_8_GetOx_effect_size = user_get_scalar_double(user, "drug_8_GetOx_effect_size", internal->drug_8_GetOx_effect_size, NA_REAL, NA_REAL);
+  internal->drug_8_indic_IMod_GetHosp_GetOx = user_get_scalar_double(user, "drug_8_indic_IMod_GetHosp_GetOx", internal->drug_8_indic_IMod_GetHosp_GetOx, NA_REAL, NA_REAL);
+  internal->drug_8_indic_IMod_GetHosp_NoOx = user_get_scalar_double(user, "drug_8_indic_IMod_GetHosp_NoOx", internal->drug_8_indic_IMod_GetHosp_NoOx, NA_REAL, NA_REAL);
+  internal->drug_8_NoOx_effect_size = user_get_scalar_double(user, "drug_8_NoOx_effect_size", internal->drug_8_NoOx_effect_size, NA_REAL, NA_REAL);
+  internal->drug_8_prop_treat = user_get_scalar_double(user, "drug_8_prop_treat", internal->drug_8_prop_treat, NA_REAL, NA_REAL);
+  internal->drug_9_GetOx_effect_size = user_get_scalar_double(user, "drug_9_GetOx_effect_size", internal->drug_9_GetOx_effect_size, NA_REAL, NA_REAL);
+  internal->drug_9_indic_ISev_GetICU_GetOx = user_get_scalar_double(user, "drug_9_indic_ISev_GetICU_GetOx", internal->drug_9_indic_ISev_GetICU_GetOx, NA_REAL, NA_REAL);
+  internal->drug_9_indic_ISev_GetICU_NoOx = user_get_scalar_double(user, "drug_9_indic_ISev_GetICU_NoOx", internal->drug_9_indic_ISev_GetICU_NoOx, NA_REAL, NA_REAL);
+  internal->drug_9_NoOx_effect_size = user_get_scalar_double(user, "drug_9_NoOx_effect_size", internal->drug_9_NoOx_effect_size, NA_REAL, NA_REAL);
+  internal->drug_9_prop_treat = user_get_scalar_double(user, "drug_9_prop_treat", internal->drug_9_prop_treat, NA_REAL, NA_REAL);
+  internal->gamma_E = user_get_scalar_double(user, "gamma_E", internal->gamma_E, NA_REAL, NA_REAL);
+  internal->gamma_IAsymp = user_get_scalar_double(user, "gamma_IAsymp", internal->gamma_IAsymp, NA_REAL, NA_REAL);
+  internal->gamma_ICase = user_get_scalar_double(user, "gamma_ICase", internal->gamma_ICase, NA_REAL, NA_REAL);
+  internal->gamma_ICrit_GetICU_GetOx_GetMV_Die = user_get_scalar_double(user, "gamma_ICrit_GetICU_GetOx_GetMV_Die", internal->gamma_ICrit_GetICU_GetOx_GetMV_Die, NA_REAL, NA_REAL);
+  internal->gamma_ICrit_GetICU_GetOx_GetMV_Surv = user_get_scalar_double(user, "gamma_ICrit_GetICU_GetOx_GetMV_Surv", internal->gamma_ICrit_GetICU_GetOx_GetMV_Surv, NA_REAL, NA_REAL);
+  internal->gamma_ICrit_GetICU_GetOx_NoMV_Die = user_get_scalar_double(user, "gamma_ICrit_GetICU_GetOx_NoMV_Die", internal->gamma_ICrit_GetICU_GetOx_NoMV_Die, NA_REAL, NA_REAL);
+  internal->gamma_ICrit_GetICU_GetOx_NoMV_Surv = user_get_scalar_double(user, "gamma_ICrit_GetICU_GetOx_NoMV_Surv", internal->gamma_ICrit_GetICU_GetOx_NoMV_Surv, NA_REAL, NA_REAL);
+  internal->gamma_ICrit_GetICU_NoOx_NoMV_Die = user_get_scalar_double(user, "gamma_ICrit_GetICU_NoOx_NoMV_Die", internal->gamma_ICrit_GetICU_NoOx_NoMV_Die, NA_REAL, NA_REAL);
+  internal->gamma_ICrit_GetICU_NoOx_NoMV_Surv = user_get_scalar_double(user, "gamma_ICrit_GetICU_NoOx_NoMV_Surv", internal->gamma_ICrit_GetICU_NoOx_NoMV_Surv, NA_REAL, NA_REAL);
+  internal->gamma_ICrit_NoICU_NoOx_NoMV_Die = user_get_scalar_double(user, "gamma_ICrit_NoICU_NoOx_NoMV_Die", internal->gamma_ICrit_NoICU_NoOx_NoMV_Die, NA_REAL, NA_REAL);
+  internal->gamma_ICrit_NoICU_NoOx_NoMV_Surv = user_get_scalar_double(user, "gamma_ICrit_NoICU_NoOx_NoMV_Surv", internal->gamma_ICrit_NoICU_NoOx_NoMV_Surv, NA_REAL, NA_REAL);
+  internal->gamma_IMild = user_get_scalar_double(user, "gamma_IMild", internal->gamma_IMild, NA_REAL, NA_REAL);
+  internal->gamma_IMod_GetHosp_GetOx_Die = user_get_scalar_double(user, "gamma_IMod_GetHosp_GetOx_Die", internal->gamma_IMod_GetHosp_GetOx_Die, NA_REAL, NA_REAL);
+  internal->gamma_IMod_GetHosp_GetOx_Surv = user_get_scalar_double(user, "gamma_IMod_GetHosp_GetOx_Surv", internal->gamma_IMod_GetHosp_GetOx_Surv, NA_REAL, NA_REAL);
+  internal->gamma_IMod_GetHosp_NoOx_Die = user_get_scalar_double(user, "gamma_IMod_GetHosp_NoOx_Die", internal->gamma_IMod_GetHosp_NoOx_Die, NA_REAL, NA_REAL);
+  internal->gamma_IMod_GetHosp_NoOx_Surv = user_get_scalar_double(user, "gamma_IMod_GetHosp_NoOx_Surv", internal->gamma_IMod_GetHosp_NoOx_Surv, NA_REAL, NA_REAL);
+  internal->gamma_IMod_NoHosp_NoOx_Die = user_get_scalar_double(user, "gamma_IMod_NoHosp_NoOx_Die", internal->gamma_IMod_NoHosp_NoOx_Die, NA_REAL, NA_REAL);
+  internal->gamma_IMod_NoHosp_NoOx_Surv = user_get_scalar_double(user, "gamma_IMod_NoHosp_NoOx_Surv", internal->gamma_IMod_NoHosp_NoOx_Surv, NA_REAL, NA_REAL);
+  internal->gamma_ISev_GetICU_GetOx_Die = user_get_scalar_double(user, "gamma_ISev_GetICU_GetOx_Die", internal->gamma_ISev_GetICU_GetOx_Die, NA_REAL, NA_REAL);
+  internal->gamma_ISev_GetICU_GetOx_Surv = user_get_scalar_double(user, "gamma_ISev_GetICU_GetOx_Surv", internal->gamma_ISev_GetICU_GetOx_Surv, NA_REAL, NA_REAL);
+  internal->gamma_ISev_GetICU_NoOx_Die = user_get_scalar_double(user, "gamma_ISev_GetICU_NoOx_Die", internal->gamma_ISev_GetICU_NoOx_Die, NA_REAL, NA_REAL);
+  internal->gamma_ISev_GetICU_NoOx_Surv = user_get_scalar_double(user, "gamma_ISev_GetICU_NoOx_Surv", internal->gamma_ISev_GetICU_NoOx_Surv, NA_REAL, NA_REAL);
+  internal->gamma_ISev_NoICU_NoOx_Die = user_get_scalar_double(user, "gamma_ISev_NoICU_NoOx_Die", internal->gamma_ISev_NoICU_NoOx_Die, NA_REAL, NA_REAL);
+  internal->gamma_ISev_NoICU_NoOx_Surv = user_get_scalar_double(user, "gamma_ISev_NoICU_NoOx_Surv", internal->gamma_ISev_NoICU_NoOx_Surv, NA_REAL, NA_REAL);
+  internal->gamma_rec = user_get_scalar_double(user, "gamma_rec", internal->gamma_rec, NA_REAL, NA_REAL);
+  internal->max_leftover = user_get_scalar_double(user, "max_leftover", internal->max_leftover, NA_REAL, NA_REAL);
+  internal->MV_capacity = user_get_scalar_double(user, "MV_capacity", internal->MV_capacity, NA_REAL, NA_REAL);
+  internal->N_age = user_get_scalar_int(user, "N_age", internal->N_age, NA_REAL, NA_REAL);
+  internal->oxygen_availability_0 = user_get_scalar_double(user, "oxygen_availability_0", internal->oxygen_availability_0, NA_REAL, NA_REAL);
+  internal->prophylactic_drug_timing_1 = user_get_scalar_double(user, "prophylactic_drug_timing_1", internal->prophylactic_drug_timing_1, NA_REAL, NA_REAL);
+  internal->prophylactic_drug_timing_2 = user_get_scalar_double(user, "prophylactic_drug_timing_2", internal->prophylactic_drug_timing_2, NA_REAL, NA_REAL);
+  internal->prophylactic_drug_wane = user_get_scalar_double(user, "prophylactic_drug_wane", internal->prophylactic_drug_wane, NA_REAL, NA_REAL);
+  internal->prophylactic_prop_treat = user_get_scalar_double(user, "prophylactic_prop_treat", internal->prophylactic_prop_treat, NA_REAL, NA_REAL);
+  internal->rel_inf_asymp = user_get_scalar_double(user, "rel_inf_asymp", internal->rel_inf_asymp, NA_REAL, NA_REAL);
+  internal->rel_inf_mild = user_get_scalar_double(user, "rel_inf_mild", internal->rel_inf_mild, NA_REAL, NA_REAL);
+  internal->severe_critical_case_oxygen_consumption_multiplier = user_get_scalar_double(user, "severe_critical_case_oxygen_consumption_multiplier", internal->severe_critical_case_oxygen_consumption_multiplier, NA_REAL, NA_REAL);
+  internal->tt_baseline_oxygen_demand = (double*) user_get_array_dim(user, false, internal->tt_baseline_oxygen_demand, "tt_baseline_oxygen_demand", 1, NA_REAL, NA_REAL, &internal->dim_tt_baseline_oxygen_demand);
+  internal->tt_beta = (double*) user_get_array_dim(user, false, internal->tt_beta, "tt_beta", 1, NA_REAL, NA_REAL, &internal->dim_tt_beta);
+  internal->tt_hosp_beds = (double*) user_get_array_dim(user, false, internal->tt_hosp_beds, "tt_hosp_beds", 1, NA_REAL, NA_REAL, &internal->dim_tt_hosp_beds);
+  internal->tt_ICU_beds = (double*) user_get_array_dim(user, false, internal->tt_ICU_beds, "tt_ICU_beds", 1, NA_REAL, NA_REAL, &internal->dim_tt_ICU_beds);
+  internal->tt_matrix = (double*) user_get_array_dim(user, false, internal->tt_matrix, "tt_matrix", 1, NA_REAL, NA_REAL, &internal->dim_tt_matrix);
+  internal->tt_oxygen_supply = (double*) user_get_array_dim(user, false, internal->tt_oxygen_supply, "tt_oxygen_supply", 1, NA_REAL, NA_REAL, &internal->dim_tt_oxygen_supply);
+  internal->dim_D = internal->N_age;
+  internal->dim_D_Community = internal->N_age;
+  internal->dim_D_Community_0 = internal->N_age;
+  internal->dim_D_Hospital = internal->N_age;
+  internal->dim_D_Hospital_0 = internal->N_age;
+  internal->dim_E1 = internal->N_age;
+  internal->dim_E1_0 = internal->N_age;
+  internal->dim_E2 = internal->N_age;
+  internal->dim_E2_0 = internal->N_age;
+  internal->dim_IAsymp = internal->N_age;
+  internal->dim_IAsymp_0 = internal->N_age;
+  internal->dim_ICase1 = internal->N_age;
+  internal->dim_ICase1_0 = internal->N_age;
+  internal->dim_ICase1_Drug_5 = internal->N_age;
+  internal->dim_ICase1_Drug_5_0 = internal->N_age;
+  internal->dim_ICase2 = internal->N_age;
+  internal->dim_ICase2_0 = internal->N_age;
+  internal->dim_ICase2_Drug_5 = internal->N_age;
+  internal->dim_ICase2_Drug_5_0 = internal->N_age;
+  internal->dim_ICrit_GetICU_GetOx_GetMV_Die1 = internal->N_age;
+  internal->dim_ICrit_GetICU_GetOx_GetMV_Die1_0 = internal->N_age;
+  internal->dim_ICrit_GetICU_GetOx_GetMV_Die2 = internal->N_age;
+  internal->dim_ICrit_GetICU_GetOx_GetMV_Die2_0 = internal->N_age;
+  internal->dim_ICrit_GetICU_GetOx_GetMV_Surv1 = internal->N_age;
+  internal->dim_ICrit_GetICU_GetOx_GetMV_Surv1_0 = internal->N_age;
+  internal->dim_ICrit_GetICU_GetOx_GetMV_Surv2 = internal->N_age;
+  internal->dim_ICrit_GetICU_GetOx_GetMV_Surv2_0 = internal->N_age;
+  internal->dim_ICrit_GetICU_GetOx_NoMV_Die1 = internal->N_age;
+  internal->dim_ICrit_GetICU_GetOx_NoMV_Die1_0 = internal->N_age;
+  internal->dim_ICrit_GetICU_GetOx_NoMV_Die2 = internal->N_age;
+  internal->dim_ICrit_GetICU_GetOx_NoMV_Die2_0 = internal->N_age;
+  internal->dim_ICrit_GetICU_GetOx_NoMV_Surv1 = internal->N_age;
+  internal->dim_ICrit_GetICU_GetOx_NoMV_Surv1_0 = internal->N_age;
+  internal->dim_ICrit_GetICU_GetOx_NoMV_Surv2 = internal->N_age;
+  internal->dim_ICrit_GetICU_GetOx_NoMV_Surv2_0 = internal->N_age;
+  internal->dim_ICrit_GetICU_NoOx_NoMV_Die1 = internal->N_age;
+  internal->dim_ICrit_GetICU_NoOx_NoMV_Die1_0 = internal->N_age;
+  internal->dim_ICrit_GetICU_NoOx_NoMV_Die2 = internal->N_age;
+  internal->dim_ICrit_GetICU_NoOx_NoMV_Die2_0 = internal->N_age;
+  internal->dim_ICrit_GetICU_NoOx_NoMV_Surv1 = internal->N_age;
+  internal->dim_ICrit_GetICU_NoOx_NoMV_Surv1_0 = internal->N_age;
+  internal->dim_ICrit_GetICU_NoOx_NoMV_Surv2 = internal->N_age;
+  internal->dim_ICrit_GetICU_NoOx_NoMV_Surv2_0 = internal->N_age;
+  internal->dim_ICrit_NoICU_NoOx_NoMV_Die1 = internal->N_age;
+  internal->dim_ICrit_NoICU_NoOx_NoMV_Die1_0 = internal->N_age;
+  internal->dim_ICrit_NoICU_NoOx_NoMV_Die2 = internal->N_age;
+  internal->dim_ICrit_NoICU_NoOx_NoMV_Die2_0 = internal->N_age;
+  internal->dim_ICrit_NoICU_NoOx_NoMV_Surv1 = internal->N_age;
+  internal->dim_ICrit_NoICU_NoOx_NoMV_Surv1_0 = internal->N_age;
+  internal->dim_ICrit_NoICU_NoOx_NoMV_Surv2 = internal->N_age;
+  internal->dim_ICrit_NoICU_NoOx_NoMV_Surv2_0 = internal->N_age;
+  internal->dim_IMild = internal->N_age;
+  internal->dim_IMild_0 = internal->N_age;
+  internal->dim_IMild_Drug_5 = internal->N_age;
+  internal->dim_IMild_Drug_5_0 = internal->N_age;
+  internal->dim_IMod_GetHosp_GetOx_Die1 = internal->N_age;
+  internal->dim_IMod_GetHosp_GetOx_Die1_0 = internal->N_age;
+  internal->dim_IMod_GetHosp_GetOx_Die2 = internal->N_age;
+  internal->dim_IMod_GetHosp_GetOx_Die2_0 = internal->N_age;
+  internal->dim_IMod_GetHosp_GetOx_Surv1 = internal->N_age;
+  internal->dim_IMod_GetHosp_GetOx_Surv1_0 = internal->N_age;
+  internal->dim_IMod_GetHosp_GetOx_Surv2 = internal->N_age;
+  internal->dim_IMod_GetHosp_GetOx_Surv2_0 = internal->N_age;
+  internal->dim_IMod_GetHosp_NoOx_Die1 = internal->N_age;
+  internal->dim_IMod_GetHosp_NoOx_Die1_0 = internal->N_age;
+  internal->dim_IMod_GetHosp_NoOx_Die2 = internal->N_age;
+  internal->dim_IMod_GetHosp_NoOx_Die2_0 = internal->N_age;
+  internal->dim_IMod_GetHosp_NoOx_Surv1 = internal->N_age;
+  internal->dim_IMod_GetHosp_NoOx_Surv1_0 = internal->N_age;
+  internal->dim_IMod_GetHosp_NoOx_Surv2 = internal->N_age;
+  internal->dim_IMod_GetHosp_NoOx_Surv2_0 = internal->N_age;
+  internal->dim_IMod_NoHosp_NoOx_Die1 = internal->N_age;
+  internal->dim_IMod_NoHosp_NoOx_Die1_0 = internal->N_age;
+  internal->dim_IMod_NoHosp_NoOx_Die2 = internal->N_age;
+  internal->dim_IMod_NoHosp_NoOx_Die2_0 = internal->N_age;
+  internal->dim_IMod_NoHosp_NoOx_Surv1 = internal->N_age;
+  internal->dim_IMod_NoHosp_NoOx_Surv1_0 = internal->N_age;
+  internal->dim_IMod_NoHosp_NoOx_Surv2 = internal->N_age;
+  internal->dim_IMod_NoHosp_NoOx_Surv2_0 = internal->N_age;
+  internal->dim_IRec1 = internal->N_age;
+  internal->dim_IRec1_0 = internal->N_age;
+  internal->dim_IRec2 = internal->N_age;
+  internal->dim_IRec2_0 = internal->N_age;
+  internal->dim_ISev_GetICU_GetOx_Die1 = internal->N_age;
+  internal->dim_ISev_GetICU_GetOx_Die1_0 = internal->N_age;
+  internal->dim_ISev_GetICU_GetOx_Die2 = internal->N_age;
+  internal->dim_ISev_GetICU_GetOx_Die2_0 = internal->N_age;
+  internal->dim_ISev_GetICU_GetOx_Surv1 = internal->N_age;
+  internal->dim_ISev_GetICU_GetOx_Surv1_0 = internal->N_age;
+  internal->dim_ISev_GetICU_GetOx_Surv2 = internal->N_age;
+  internal->dim_ISev_GetICU_GetOx_Surv2_0 = internal->N_age;
+  internal->dim_ISev_GetICU_NoOx_Die1 = internal->N_age;
+  internal->dim_ISev_GetICU_NoOx_Die1_0 = internal->N_age;
+  internal->dim_ISev_GetICU_NoOx_Die2 = internal->N_age;
+  internal->dim_ISev_GetICU_NoOx_Die2_0 = internal->N_age;
+  internal->dim_ISev_GetICU_NoOx_Surv1 = internal->N_age;
+  internal->dim_ISev_GetICU_NoOx_Surv1_0 = internal->N_age;
+  internal->dim_ISev_GetICU_NoOx_Surv2 = internal->N_age;
+  internal->dim_ISev_GetICU_NoOx_Surv2_0 = internal->N_age;
+  internal->dim_ISev_NoICU_NoOx_Die1 = internal->N_age;
+  internal->dim_ISev_NoICU_NoOx_Die1_0 = internal->N_age;
+  internal->dim_ISev_NoICU_NoOx_Die2 = internal->N_age;
+  internal->dim_ISev_NoICU_NoOx_Die2_0 = internal->N_age;
+  internal->dim_ISev_NoICU_NoOx_Surv1 = internal->N_age;
+  internal->dim_ISev_NoICU_NoOx_Surv1_0 = internal->N_age;
+  internal->dim_ISev_NoICU_NoOx_Surv2 = internal->N_age;
+  internal->dim_ISev_NoICU_NoOx_Surv2_0 = internal->N_age;
+  internal->dim_lambda = internal->N_age;
+  internal->dim_m_1 = internal->N_age;
+  internal->dim_m_2 = internal->N_age;
+  internal->dim_n_E1_E2 = internal->N_age;
+  internal->dim_n_E2_I = internal->N_age;
+  internal->dim_n_E2_IAsymp = internal->N_age;
+  internal->dim_n_E2_ICase1 = internal->N_age;
+  internal->dim_n_E2_ICase1_Drug_5 = internal->N_age;
+  internal->dim_n_E2_ICase1_initial = internal->N_age;
+  internal->dim_n_E2_ICase1_No_Drug_5 = internal->N_age;
+  internal->dim_n_E2_IMild = internal->N_age;
+  internal->dim_n_E2_IMild_Drug_5 = internal->N_age;
+  internal->dim_n_E2_IMild_No_Drug_5 = internal->N_age;
+  internal->dim_n_E2_IMild_or_IAsymp = internal->N_age;
+  internal->dim_n_IAsymp_R = internal->N_age;
+  internal->dim_n_ICase1_Drug_5_ICase2_Drug_5 = internal->N_age;
+  internal->dim_n_ICase1_ICase2 = internal->N_age;
+  internal->dim_n_ICase2_Drug_5_Hosp = internal->N_age;
+  internal->dim_n_ICase2_Hosp = internal->N_age;
+  internal->dim_n_ICrit_GetICU_GetOx_GetMV_Die1 = internal->N_age;
+  internal->dim_n_ICrit_GetICU_GetOx_GetMV_Die1_ICrit_GetICU_GetOx_GetMV_Die2 = internal->N_age;
+  internal->dim_n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital = internal->N_age;
+  internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv1 = internal->N_age;
+  internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv1_ICrit_GetICU_GetOx_GetMV_Surv2 = internal->N_age;
+  internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec = internal->N_age;
+  internal->dim_n_ICrit_GetICU_GetOx_NoMV_Die1 = internal->N_age;
+  internal->dim_n_ICrit_GetICU_GetOx_NoMV_Die1_ICrit_GetICU_GetOx_NoMV_Die2 = internal->N_age;
+  internal->dim_n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital = internal->N_age;
+  internal->dim_n_ICrit_GetICU_GetOx_NoMV_Surv1 = internal->N_age;
+  internal->dim_n_ICrit_GetICU_GetOx_NoMV_Surv1_ICrit_GetICU_GetOx_NoMV_Surv2 = internal->N_age;
+  internal->dim_n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec = internal->N_age;
+  internal->dim_n_ICrit_GetICU_NoOx_NoMV_Die1 = internal->N_age;
+  internal->dim_n_ICrit_GetICU_NoOx_NoMV_Die1_ICrit_GetICU_NoOx_NoMV_Die2 = internal->N_age;
+  internal->dim_n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital = internal->N_age;
+  internal->dim_n_ICrit_GetICU_NoOx_NoMV_Surv1 = internal->N_age;
+  internal->dim_n_ICrit_GetICU_NoOx_NoMV_Surv1_ICrit_GetICU_NoOx_NoMV_Surv2 = internal->N_age;
+  internal->dim_n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec = internal->N_age;
+  internal->dim_n_ICrit_NoICU_NoOx_NoMV_Die1 = internal->N_age;
+  internal->dim_n_ICrit_NoICU_NoOx_NoMV_Die1_ICrit_NoICU_NoOx_NoMV_Die2 = internal->N_age;
+  internal->dim_n_ICrit_NoICU_NoOx_NoMV_Die2_D_Community = internal->N_age;
+  internal->dim_n_ICrit_NoICU_NoOx_NoMV_Surv1 = internal->N_age;
+  internal->dim_n_ICrit_NoICU_NoOx_NoMV_Surv1_ICrit_NoICU_NoOx_NoMV_Surv2 = internal->N_age;
+  internal->dim_n_ICrit_NoICU_NoOx_NoMV_Surv2_R = internal->N_age;
+  internal->dim_n_IMild_Drug_5_R = internal->N_age;
+  internal->dim_n_IMild_R = internal->N_age;
+  internal->dim_n_IMod_GetHosp_GetOx_Die1 = internal->N_age;
+  internal->dim_n_IMod_GetHosp_GetOx_Die1_IMod_GetHosp_GetOx_Die2 = internal->N_age;
+  internal->dim_n_IMod_GetHosp_GetOx_Die2_D_Hospital = internal->N_age;
+  internal->dim_n_IMod_GetHosp_GetOx_Surv1 = internal->N_age;
+  internal->dim_n_IMod_GetHosp_GetOx_Surv1_IMod_GetHosp_GetOx_Surv2 = internal->N_age;
+  internal->dim_n_IMod_GetHosp_GetOx_Surv2_R = internal->N_age;
+  internal->dim_n_IMod_GetHosp_NoOx_Die1 = internal->N_age;
+  internal->dim_n_IMod_GetHosp_NoOx_Die1_IMod_GetHosp_NoOx_Die2 = internal->N_age;
+  internal->dim_n_IMod_GetHosp_NoOx_Die2_D_Hospital = internal->N_age;
+  internal->dim_n_IMod_GetHosp_NoOx_Surv1 = internal->N_age;
+  internal->dim_n_IMod_GetHosp_NoOx_Surv1_IMod_GetHosp_NoOx_Surv2 = internal->N_age;
+  internal->dim_n_IMod_GetHosp_NoOx_Surv2_R = internal->N_age;
+  internal->dim_n_IMod_NoHosp_NoOx_Die1 = internal->N_age;
+  internal->dim_n_IMod_NoHosp_NoOx_Die1_IMod_NoHosp_NoOx_Die2 = internal->N_age;
+  internal->dim_n_IMod_NoHosp_NoOx_Die2_D_Community = internal->N_age;
+  internal->dim_n_IMod_NoHosp_NoOx_Surv1 = internal->N_age;
+  internal->dim_n_IMod_NoHosp_NoOx_Surv1_IMod_NoHosp_NoOx_Surv2 = internal->N_age;
+  internal->dim_n_IMod_NoHosp_NoOx_Surv2_R = internal->N_age;
+  internal->dim_n_IRec1_IRec2 = internal->N_age;
+  internal->dim_n_IRec2_R = internal->N_age;
+  internal->dim_n_ISev_GetICU_GetOx_Die1 = internal->N_age;
+  internal->dim_n_ISev_GetICU_GetOx_Die1_ISev_GetICU_GetOx_Die2 = internal->N_age;
+  internal->dim_n_ISev_GetICU_GetOx_Die2_D_Hospital = internal->N_age;
+  internal->dim_n_ISev_GetICU_GetOx_Surv1 = internal->N_age;
+  internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 = internal->N_age;
+  internal->dim_n_ISev_GetICU_GetOx_Surv2_Rec = internal->N_age;
+  internal->dim_n_ISev_GetICU_NoOx_Die1 = internal->N_age;
+  internal->dim_n_ISev_GetICU_NoOx_Die1_ISev_GetICU_NoOx_Die2 = internal->N_age;
+  internal->dim_n_ISev_GetICU_NoOx_Die2_D_Hospital = internal->N_age;
+  internal->dim_n_ISev_GetICU_NoOx_Surv1 = internal->N_age;
+  internal->dim_n_ISev_GetICU_NoOx_Surv1_ISev_GetICU_NoOx_Surv2 = internal->N_age;
+  internal->dim_n_ISev_GetICU_NoOx_Surv2_Rec = internal->N_age;
+  internal->dim_n_ISev_NoICU_NoOx_Die1 = internal->N_age;
+  internal->dim_n_ISev_NoICU_NoOx_Die1_ISev_NoICU_NoOx_Die2 = internal->N_age;
+  internal->dim_n_ISev_NoICU_NoOx_Die2_D_Community = internal->N_age;
+  internal->dim_n_ISev_NoICU_NoOx_Surv1 = internal->N_age;
+  internal->dim_n_ISev_NoICU_NoOx_Surv1_ISev_NoICU_NoOx_Surv2 = internal->N_age;
+  internal->dim_n_ISev_NoICU_NoOx_Surv2_R = internal->N_age;
+  internal->dim_n_PE1_PE2 = internal->N_age;
+  internal->dim_n_PE2_I = internal->N_age;
+  internal->dim_n_PE2_IAsymp = internal->N_age;
+  internal->dim_n_PE2_ICase1 = internal->N_age;
+  internal->dim_n_PE2_ICase1_Drug_5 = internal->N_age;
+  internal->dim_n_PE2_ICase1_initial = internal->N_age;
+  internal->dim_n_PE2_ICase1_No_Drug_5 = internal->N_age;
+  internal->dim_n_PE2_IMild = internal->N_age;
+  internal->dim_n_PE2_IMild_Drug_5 = internal->N_age;
+  internal->dim_n_PE2_IMild_No_Drug_5 = internal->N_age;
+  internal->dim_n_PE2_IMild_or_IAsymp = internal->N_age;
+  internal->dim_n_PS_PE1 = internal->N_age;
+  internal->dim_n_PS_S = internal->N_age;
+  internal->dim_n_S_E1 = internal->N_age;
+  internal->dim_n_S_PS = internal->N_age;
+  internal->dim_number_GetHosp = internal->N_age;
+  internal->dim_number_GetHosp_NoOx = internal->N_age;
+  internal->dim_number_GetHosp_Ox = internal->N_age;
+  internal->dim_number_GetICU = internal->N_age;
+  internal->dim_number_GetICU_GetOx = internal->N_age;
+  internal->dim_number_GetICU_GetOx_GetMV = internal->N_age;
+  internal->dim_number_GetICU_GetOx_NeedMV = internal->N_age;
+  internal->dim_number_GetICU_GetOx_NoMV = internal->N_age;
+  internal->dim_number_GetICU_NoOx = internal->N_age;
+  internal->dim_number_GetICU_NoOx_NeedMV = internal->N_age;
+  internal->dim_number_NotHosp = internal->N_age;
+  internal->dim_number_NotICU = internal->N_age;
+  internal->dim_number_NotICU_NotOx = internal->N_age;
+  internal->dim_number_NotICU_NotOx_NotMV = internal->N_age;
+  internal->dim_number_req_Hosp = internal->N_age;
+  internal->dim_number_req_ICU = internal->N_age;
+  internal->dim_number_req_ICU_initial = internal->N_age;
+  internal->dim_number_req_ICU_MV = internal->N_age;
+  internal->dim_number_req_ICU_MV_initial = internal->N_age;
+  internal->dim_number_req_ICU_Ox = internal->N_age;
+  internal->dim_PE1 = internal->N_age;
+  internal->dim_PE1_0 = internal->N_age;
+  internal->dim_PE2 = internal->N_age;
+  internal->dim_PE2_0 = internal->N_age;
+  internal->dim_prob_asymp = internal->N_age;
+  internal->dim_prob_critical = internal->N_age;
+  internal->dim_prob_critical_death_get_ICU_get_ox_get_MV = internal->N_age;
+  internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline = internal->N_age;
+  internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 = internal->N_age;
+  internal->dim_prob_critical_death_get_ICU_get_ox_no_MV = internal->N_age;
+  internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline = internal->N_age;
+  internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 = internal->N_age;
+  internal->dim_prob_critical_death_get_ICU_no_ox_no_MV = internal->N_age;
+  internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline = internal->N_age;
+  internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 = internal->N_age;
+  internal->dim_prob_critical_death_no_ICU_no_ox_no_MV = internal->N_age;
+  internal->dim_prob_hosp = internal->N_age;
+  internal->dim_prob_moderate_death_get_hosp_get_ox = internal->N_age;
+  internal->dim_prob_moderate_death_get_hosp_get_ox_baseline = internal->N_age;
+  internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 = internal->N_age;
+  internal->dim_prob_moderate_death_get_hosp_no_ox = internal->N_age;
+  internal->dim_prob_moderate_death_get_hosp_no_ox_baseline = internal->N_age;
+  internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 = internal->N_age;
+  internal->dim_prob_moderate_death_no_hosp_no_ox = internal->N_age;
+  internal->dim_prob_severe = internal->N_age;
+  internal->dim_prob_severe_death_get_ICU_get_ox = internal->N_age;
+  internal->dim_prob_severe_death_get_ICU_get_ox_baseline = internal->N_age;
+  internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 = internal->N_age;
+  internal->dim_prob_severe_death_get_ICU_no_ox = internal->N_age;
+  internal->dim_prob_severe_death_get_ICU_no_ox_baseline = internal->N_age;
+  internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 = internal->N_age;
+  internal->dim_prob_severe_death_no_ICU_no_ox = internal->N_age;
+  internal->dim_PS = internal->N_age;
+  internal->dim_PS_0 = internal->N_age;
+  internal->dim_R = internal->N_age;
+  internal->dim_R_0 = internal->N_age;
+  internal->dim_S = internal->N_age;
+  internal->dim_S_0 = internal->N_age;
+  internal->dim_s_ij_1 = internal->N_age;
+  internal->dim_s_ij_2 = internal->N_age;
+  internal->dim_temp = internal->N_age;
+  internal->gamma_ICrit_GetICU_GetOx_GetMV_Surv_Drug_10 = (((1 - internal->drug_10_prop_treat) * internal->gamma_ICrit_GetICU_GetOx_GetMV_Surv) + (internal->drug_10_prop_treat * internal->drug_10_GetOx_GetMV_effect_size * internal->gamma_ICrit_GetICU_GetOx_GetMV_Surv));
+  internal->gamma_ICrit_GetICU_GetOx_NoMV_Surv_Drug_10 = (((1 - internal->drug_10_prop_treat) * internal->gamma_ICrit_GetICU_GetOx_NoMV_Surv) + (internal->drug_10_prop_treat * internal->drug_10_GetOx_NoMV_effect_size * internal->gamma_ICrit_GetICU_GetOx_NoMV_Surv));
+  internal->gamma_ICrit_GetICU_NoOx_NoMV_Surv_Drug_10 = (((1 - internal->drug_10_prop_treat) * internal->gamma_ICrit_GetICU_NoOx_NoMV_Surv) + (internal->drug_10_prop_treat * internal->drug_10_NoOx_NoMV_effect_size * internal->gamma_ICrit_GetICU_NoOx_NoMV_Surv));
+  internal->gamma_IMild_Drug_4 = ((1 - internal->drug_4_prop_treat) * internal->gamma_IMild) + (internal->drug_4_prop_treat * internal->drug_4_effect_size * internal->gamma_IMild);
+  internal->gamma_IMod_GetHosp_GetOx_Surv_Drug_8 = (((1 - internal->drug_8_prop_treat) * internal->gamma_IMod_GetHosp_GetOx_Surv) + (internal->drug_8_prop_treat * internal->drug_8_GetOx_effect_size * internal->gamma_IMod_GetHosp_GetOx_Surv));
+  internal->gamma_IMod_GetHosp_NoOx_Surv_Drug_8 = (((1 - internal->drug_8_prop_treat) * internal->gamma_IMod_GetHosp_NoOx_Surv) + (internal->drug_8_prop_treat * internal->drug_8_NoOx_effect_size * internal->gamma_IMod_GetHosp_NoOx_Surv));
+  internal->gamma_ISev_GetICU_GetOx_Surv_Drug_9 = (((1 - internal->drug_9_prop_treat) * internal->gamma_ISev_GetICU_GetOx_Surv) + (internal->drug_9_prop_treat * internal->drug_9_GetOx_effect_size * internal->gamma_ISev_GetICU_GetOx_Surv));
+  internal->gamma_ISev_GetICU_NoOx_Surv_Drug_9 = (((1 - internal->drug_9_prop_treat) * internal->gamma_ISev_GetICU_NoOx_Surv) + (internal->drug_9_prop_treat * internal->drug_9_NoOx_effect_size * internal->gamma_ISev_GetICU_NoOx_Surv));
+  internal->initial_oxygen_availability = internal->oxygen_availability_0;
+  Free(internal->initial_D);
+  internal->initial_D = (double*) Calloc(internal->dim_D, double);
+  Free(internal->initial_D_Community);
+  internal->initial_D_Community = (double*) Calloc(internal->dim_D_Community, double);
+  Free(internal->initial_D_Hospital);
+  internal->initial_D_Hospital = (double*) Calloc(internal->dim_D_Hospital, double);
+  Free(internal->initial_E1);
+  internal->initial_E1 = (double*) Calloc(internal->dim_E1, double);
+  Free(internal->initial_E2);
+  internal->initial_E2 = (double*) Calloc(internal->dim_E2, double);
+  Free(internal->initial_IAsymp);
+  internal->initial_IAsymp = (double*) Calloc(internal->dim_IAsymp, double);
+  Free(internal->initial_ICase1);
+  internal->initial_ICase1 = (double*) Calloc(internal->dim_ICase1, double);
+  Free(internal->initial_ICase1_Drug_5);
+  internal->initial_ICase1_Drug_5 = (double*) Calloc(internal->dim_ICase1_Drug_5, double);
+  Free(internal->initial_ICase2);
+  internal->initial_ICase2 = (double*) Calloc(internal->dim_ICase2, double);
+  Free(internal->initial_ICase2_Drug_5);
+  internal->initial_ICase2_Drug_5 = (double*) Calloc(internal->dim_ICase2_Drug_5, double);
+  Free(internal->initial_ICrit_GetICU_GetOx_GetMV_Die1);
+  internal->initial_ICrit_GetICU_GetOx_GetMV_Die1 = (double*) Calloc(internal->dim_ICrit_GetICU_GetOx_GetMV_Die1, double);
+  Free(internal->initial_ICrit_GetICU_GetOx_GetMV_Die2);
+  internal->initial_ICrit_GetICU_GetOx_GetMV_Die2 = (double*) Calloc(internal->dim_ICrit_GetICU_GetOx_GetMV_Die2, double);
+  Free(internal->initial_ICrit_GetICU_GetOx_GetMV_Surv1);
+  internal->initial_ICrit_GetICU_GetOx_GetMV_Surv1 = (double*) Calloc(internal->dim_ICrit_GetICU_GetOx_GetMV_Surv1, double);
+  Free(internal->initial_ICrit_GetICU_GetOx_GetMV_Surv2);
+  internal->initial_ICrit_GetICU_GetOx_GetMV_Surv2 = (double*) Calloc(internal->dim_ICrit_GetICU_GetOx_GetMV_Surv2, double);
+  Free(internal->initial_ICrit_GetICU_GetOx_NoMV_Die1);
+  internal->initial_ICrit_GetICU_GetOx_NoMV_Die1 = (double*) Calloc(internal->dim_ICrit_GetICU_GetOx_NoMV_Die1, double);
+  Free(internal->initial_ICrit_GetICU_GetOx_NoMV_Die2);
+  internal->initial_ICrit_GetICU_GetOx_NoMV_Die2 = (double*) Calloc(internal->dim_ICrit_GetICU_GetOx_NoMV_Die2, double);
+  Free(internal->initial_ICrit_GetICU_GetOx_NoMV_Surv1);
+  internal->initial_ICrit_GetICU_GetOx_NoMV_Surv1 = (double*) Calloc(internal->dim_ICrit_GetICU_GetOx_NoMV_Surv1, double);
+  Free(internal->initial_ICrit_GetICU_GetOx_NoMV_Surv2);
+  internal->initial_ICrit_GetICU_GetOx_NoMV_Surv2 = (double*) Calloc(internal->dim_ICrit_GetICU_GetOx_NoMV_Surv2, double);
+  Free(internal->initial_ICrit_GetICU_NoOx_NoMV_Die1);
+  internal->initial_ICrit_GetICU_NoOx_NoMV_Die1 = (double*) Calloc(internal->dim_ICrit_GetICU_NoOx_NoMV_Die1, double);
+  Free(internal->initial_ICrit_GetICU_NoOx_NoMV_Die2);
+  internal->initial_ICrit_GetICU_NoOx_NoMV_Die2 = (double*) Calloc(internal->dim_ICrit_GetICU_NoOx_NoMV_Die2, double);
+  Free(internal->initial_ICrit_GetICU_NoOx_NoMV_Surv1);
+  internal->initial_ICrit_GetICU_NoOx_NoMV_Surv1 = (double*) Calloc(internal->dim_ICrit_GetICU_NoOx_NoMV_Surv1, double);
+  Free(internal->initial_ICrit_GetICU_NoOx_NoMV_Surv2);
+  internal->initial_ICrit_GetICU_NoOx_NoMV_Surv2 = (double*) Calloc(internal->dim_ICrit_GetICU_NoOx_NoMV_Surv2, double);
+  Free(internal->initial_ICrit_NoICU_NoOx_NoMV_Die1);
+  internal->initial_ICrit_NoICU_NoOx_NoMV_Die1 = (double*) Calloc(internal->dim_ICrit_NoICU_NoOx_NoMV_Die1, double);
+  Free(internal->initial_ICrit_NoICU_NoOx_NoMV_Die2);
+  internal->initial_ICrit_NoICU_NoOx_NoMV_Die2 = (double*) Calloc(internal->dim_ICrit_NoICU_NoOx_NoMV_Die2, double);
+  Free(internal->initial_ICrit_NoICU_NoOx_NoMV_Surv1);
+  internal->initial_ICrit_NoICU_NoOx_NoMV_Surv1 = (double*) Calloc(internal->dim_ICrit_NoICU_NoOx_NoMV_Surv1, double);
+  Free(internal->initial_ICrit_NoICU_NoOx_NoMV_Surv2);
+  internal->initial_ICrit_NoICU_NoOx_NoMV_Surv2 = (double*) Calloc(internal->dim_ICrit_NoICU_NoOx_NoMV_Surv2, double);
+  Free(internal->initial_IMild);
+  internal->initial_IMild = (double*) Calloc(internal->dim_IMild, double);
+  Free(internal->initial_IMild_Drug_5);
+  internal->initial_IMild_Drug_5 = (double*) Calloc(internal->dim_IMild_Drug_5, double);
+  Free(internal->initial_IMod_GetHosp_GetOx_Die1);
+  internal->initial_IMod_GetHosp_GetOx_Die1 = (double*) Calloc(internal->dim_IMod_GetHosp_GetOx_Die1, double);
+  Free(internal->initial_IMod_GetHosp_GetOx_Die2);
+  internal->initial_IMod_GetHosp_GetOx_Die2 = (double*) Calloc(internal->dim_IMod_GetHosp_GetOx_Die2, double);
+  Free(internal->initial_IMod_GetHosp_GetOx_Surv1);
+  internal->initial_IMod_GetHosp_GetOx_Surv1 = (double*) Calloc(internal->dim_IMod_GetHosp_GetOx_Surv1, double);
+  Free(internal->initial_IMod_GetHosp_GetOx_Surv2);
+  internal->initial_IMod_GetHosp_GetOx_Surv2 = (double*) Calloc(internal->dim_IMod_GetHosp_GetOx_Surv2, double);
+  Free(internal->initial_IMod_GetHosp_NoOx_Die1);
+  internal->initial_IMod_GetHosp_NoOx_Die1 = (double*) Calloc(internal->dim_IMod_GetHosp_NoOx_Die1, double);
+  Free(internal->initial_IMod_GetHosp_NoOx_Die2);
+  internal->initial_IMod_GetHosp_NoOx_Die2 = (double*) Calloc(internal->dim_IMod_GetHosp_NoOx_Die2, double);
+  Free(internal->initial_IMod_GetHosp_NoOx_Surv1);
+  internal->initial_IMod_GetHosp_NoOx_Surv1 = (double*) Calloc(internal->dim_IMod_GetHosp_NoOx_Surv1, double);
+  Free(internal->initial_IMod_GetHosp_NoOx_Surv2);
+  internal->initial_IMod_GetHosp_NoOx_Surv2 = (double*) Calloc(internal->dim_IMod_GetHosp_NoOx_Surv2, double);
+  Free(internal->initial_IMod_NoHosp_NoOx_Die1);
+  internal->initial_IMod_NoHosp_NoOx_Die1 = (double*) Calloc(internal->dim_IMod_NoHosp_NoOx_Die1, double);
+  Free(internal->initial_IMod_NoHosp_NoOx_Die2);
+  internal->initial_IMod_NoHosp_NoOx_Die2 = (double*) Calloc(internal->dim_IMod_NoHosp_NoOx_Die2, double);
+  Free(internal->initial_IMod_NoHosp_NoOx_Surv1);
+  internal->initial_IMod_NoHosp_NoOx_Surv1 = (double*) Calloc(internal->dim_IMod_NoHosp_NoOx_Surv1, double);
+  Free(internal->initial_IMod_NoHosp_NoOx_Surv2);
+  internal->initial_IMod_NoHosp_NoOx_Surv2 = (double*) Calloc(internal->dim_IMod_NoHosp_NoOx_Surv2, double);
+  Free(internal->initial_IRec1);
+  internal->initial_IRec1 = (double*) Calloc(internal->dim_IRec1, double);
+  Free(internal->initial_IRec2);
+  internal->initial_IRec2 = (double*) Calloc(internal->dim_IRec2, double);
+  Free(internal->initial_ISev_GetICU_GetOx_Die1);
+  internal->initial_ISev_GetICU_GetOx_Die1 = (double*) Calloc(internal->dim_ISev_GetICU_GetOx_Die1, double);
+  Free(internal->initial_ISev_GetICU_GetOx_Die2);
+  internal->initial_ISev_GetICU_GetOx_Die2 = (double*) Calloc(internal->dim_ISev_GetICU_GetOx_Die2, double);
+  Free(internal->initial_ISev_GetICU_GetOx_Surv1);
+  internal->initial_ISev_GetICU_GetOx_Surv1 = (double*) Calloc(internal->dim_ISev_GetICU_GetOx_Surv1, double);
+  Free(internal->initial_ISev_GetICU_GetOx_Surv2);
+  internal->initial_ISev_GetICU_GetOx_Surv2 = (double*) Calloc(internal->dim_ISev_GetICU_GetOx_Surv2, double);
+  Free(internal->initial_ISev_GetICU_NoOx_Die1);
+  internal->initial_ISev_GetICU_NoOx_Die1 = (double*) Calloc(internal->dim_ISev_GetICU_NoOx_Die1, double);
+  Free(internal->initial_ISev_GetICU_NoOx_Die2);
+  internal->initial_ISev_GetICU_NoOx_Die2 = (double*) Calloc(internal->dim_ISev_GetICU_NoOx_Die2, double);
+  Free(internal->initial_ISev_GetICU_NoOx_Surv1);
+  internal->initial_ISev_GetICU_NoOx_Surv1 = (double*) Calloc(internal->dim_ISev_GetICU_NoOx_Surv1, double);
+  Free(internal->initial_ISev_GetICU_NoOx_Surv2);
+  internal->initial_ISev_GetICU_NoOx_Surv2 = (double*) Calloc(internal->dim_ISev_GetICU_NoOx_Surv2, double);
+  Free(internal->initial_ISev_NoICU_NoOx_Die1);
+  internal->initial_ISev_NoICU_NoOx_Die1 = (double*) Calloc(internal->dim_ISev_NoICU_NoOx_Die1, double);
+  Free(internal->initial_ISev_NoICU_NoOx_Die2);
+  internal->initial_ISev_NoICU_NoOx_Die2 = (double*) Calloc(internal->dim_ISev_NoICU_NoOx_Die2, double);
+  Free(internal->initial_ISev_NoICU_NoOx_Surv1);
+  internal->initial_ISev_NoICU_NoOx_Surv1 = (double*) Calloc(internal->dim_ISev_NoICU_NoOx_Surv1, double);
+  Free(internal->initial_ISev_NoICU_NoOx_Surv2);
+  internal->initial_ISev_NoICU_NoOx_Surv2 = (double*) Calloc(internal->dim_ISev_NoICU_NoOx_Surv2, double);
+  Free(internal->initial_PE1);
+  internal->initial_PE1 = (double*) Calloc(internal->dim_PE1, double);
+  Free(internal->initial_PE2);
+  internal->initial_PE2 = (double*) Calloc(internal->dim_PE2, double);
+  Free(internal->initial_PS);
+  internal->initial_PS = (double*) Calloc(internal->dim_PS, double);
+  Free(internal->initial_R);
+  internal->initial_R = (double*) Calloc(internal->dim_R, double);
+  Free(internal->initial_S);
+  internal->initial_S = (double*) Calloc(internal->dim_S, double);
+  Free(internal->lambda);
+  internal->lambda = (double*) Calloc(internal->dim_lambda, double);
+  Free(internal->n_E1_E2);
+  internal->n_E1_E2 = (double*) Calloc(internal->dim_n_E1_E2, double);
+  Free(internal->n_E2_I);
+  internal->n_E2_I = (double*) Calloc(internal->dim_n_E2_I, double);
+  Free(internal->n_E2_IAsymp);
+  internal->n_E2_IAsymp = (double*) Calloc(internal->dim_n_E2_IAsymp, double);
+  Free(internal->n_E2_ICase1);
+  internal->n_E2_ICase1 = (double*) Calloc(internal->dim_n_E2_ICase1, double);
+  Free(internal->n_E2_ICase1_Drug_5);
+  internal->n_E2_ICase1_Drug_5 = (double*) Calloc(internal->dim_n_E2_ICase1_Drug_5, double);
+  Free(internal->n_E2_ICase1_initial);
+  internal->n_E2_ICase1_initial = (double*) Calloc(internal->dim_n_E2_ICase1_initial, double);
+  Free(internal->n_E2_ICase1_No_Drug_5);
+  internal->n_E2_ICase1_No_Drug_5 = (double*) Calloc(internal->dim_n_E2_ICase1_No_Drug_5, double);
+  Free(internal->n_E2_IMild);
+  internal->n_E2_IMild = (double*) Calloc(internal->dim_n_E2_IMild, double);
+  Free(internal->n_E2_IMild_Drug_5);
+  internal->n_E2_IMild_Drug_5 = (double*) Calloc(internal->dim_n_E2_IMild_Drug_5, double);
+  Free(internal->n_E2_IMild_No_Drug_5);
+  internal->n_E2_IMild_No_Drug_5 = (double*) Calloc(internal->dim_n_E2_IMild_No_Drug_5, double);
+  Free(internal->n_E2_IMild_or_IAsymp);
+  internal->n_E2_IMild_or_IAsymp = (double*) Calloc(internal->dim_n_E2_IMild_or_IAsymp, double);
+  Free(internal->n_IAsymp_R);
+  internal->n_IAsymp_R = (double*) Calloc(internal->dim_n_IAsymp_R, double);
+  Free(internal->n_ICase1_Drug_5_ICase2_Drug_5);
+  internal->n_ICase1_Drug_5_ICase2_Drug_5 = (double*) Calloc(internal->dim_n_ICase1_Drug_5_ICase2_Drug_5, double);
+  Free(internal->n_ICase1_ICase2);
+  internal->n_ICase1_ICase2 = (double*) Calloc(internal->dim_n_ICase1_ICase2, double);
+  Free(internal->n_ICase2_Drug_5_Hosp);
+  internal->n_ICase2_Drug_5_Hosp = (double*) Calloc(internal->dim_n_ICase2_Drug_5_Hosp, double);
+  Free(internal->n_ICase2_Hosp);
+  internal->n_ICase2_Hosp = (double*) Calloc(internal->dim_n_ICase2_Hosp, double);
+  Free(internal->n_ICrit_GetICU_GetOx_GetMV_Die1);
+  internal->n_ICrit_GetICU_GetOx_GetMV_Die1 = (double*) Calloc(internal->dim_n_ICrit_GetICU_GetOx_GetMV_Die1, double);
+  Free(internal->n_ICrit_GetICU_GetOx_GetMV_Die1_ICrit_GetICU_GetOx_GetMV_Die2);
+  internal->n_ICrit_GetICU_GetOx_GetMV_Die1_ICrit_GetICU_GetOx_GetMV_Die2 = (double*) Calloc(internal->dim_n_ICrit_GetICU_GetOx_GetMV_Die1_ICrit_GetICU_GetOx_GetMV_Die2, double);
+  Free(internal->n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital);
+  internal->n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital = (double*) Calloc(internal->dim_n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital, double);
+  Free(internal->n_ICrit_GetICU_GetOx_GetMV_Surv1);
+  internal->n_ICrit_GetICU_GetOx_GetMV_Surv1 = (double*) Calloc(internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv1, double);
+  Free(internal->n_ICrit_GetICU_GetOx_GetMV_Surv1_ICrit_GetICU_GetOx_GetMV_Surv2);
+  internal->n_ICrit_GetICU_GetOx_GetMV_Surv1_ICrit_GetICU_GetOx_GetMV_Surv2 = (double*) Calloc(internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv1_ICrit_GetICU_GetOx_GetMV_Surv2, double);
+  Free(internal->n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec);
+  internal->n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec = (double*) Calloc(internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec, double);
+  Free(internal->n_ICrit_GetICU_GetOx_NoMV_Die1);
+  internal->n_ICrit_GetICU_GetOx_NoMV_Die1 = (double*) Calloc(internal->dim_n_ICrit_GetICU_GetOx_NoMV_Die1, double);
+  Free(internal->n_ICrit_GetICU_GetOx_NoMV_Die1_ICrit_GetICU_GetOx_NoMV_Die2);
+  internal->n_ICrit_GetICU_GetOx_NoMV_Die1_ICrit_GetICU_GetOx_NoMV_Die2 = (double*) Calloc(internal->dim_n_ICrit_GetICU_GetOx_NoMV_Die1_ICrit_GetICU_GetOx_NoMV_Die2, double);
+  Free(internal->n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital);
+  internal->n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital = (double*) Calloc(internal->dim_n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital, double);
+  Free(internal->n_ICrit_GetICU_GetOx_NoMV_Surv1);
+  internal->n_ICrit_GetICU_GetOx_NoMV_Surv1 = (double*) Calloc(internal->dim_n_ICrit_GetICU_GetOx_NoMV_Surv1, double);
+  Free(internal->n_ICrit_GetICU_GetOx_NoMV_Surv1_ICrit_GetICU_GetOx_NoMV_Surv2);
+  internal->n_ICrit_GetICU_GetOx_NoMV_Surv1_ICrit_GetICU_GetOx_NoMV_Surv2 = (double*) Calloc(internal->dim_n_ICrit_GetICU_GetOx_NoMV_Surv1_ICrit_GetICU_GetOx_NoMV_Surv2, double);
+  Free(internal->n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec);
+  internal->n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec = (double*) Calloc(internal->dim_n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec, double);
+  Free(internal->n_ICrit_GetICU_NoOx_NoMV_Die1);
+  internal->n_ICrit_GetICU_NoOx_NoMV_Die1 = (double*) Calloc(internal->dim_n_ICrit_GetICU_NoOx_NoMV_Die1, double);
+  Free(internal->n_ICrit_GetICU_NoOx_NoMV_Die1_ICrit_GetICU_NoOx_NoMV_Die2);
+  internal->n_ICrit_GetICU_NoOx_NoMV_Die1_ICrit_GetICU_NoOx_NoMV_Die2 = (double*) Calloc(internal->dim_n_ICrit_GetICU_NoOx_NoMV_Die1_ICrit_GetICU_NoOx_NoMV_Die2, double);
+  Free(internal->n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital);
+  internal->n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital = (double*) Calloc(internal->dim_n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital, double);
+  Free(internal->n_ICrit_GetICU_NoOx_NoMV_Surv1);
+  internal->n_ICrit_GetICU_NoOx_NoMV_Surv1 = (double*) Calloc(internal->dim_n_ICrit_GetICU_NoOx_NoMV_Surv1, double);
+  Free(internal->n_ICrit_GetICU_NoOx_NoMV_Surv1_ICrit_GetICU_NoOx_NoMV_Surv2);
+  internal->n_ICrit_GetICU_NoOx_NoMV_Surv1_ICrit_GetICU_NoOx_NoMV_Surv2 = (double*) Calloc(internal->dim_n_ICrit_GetICU_NoOx_NoMV_Surv1_ICrit_GetICU_NoOx_NoMV_Surv2, double);
+  Free(internal->n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec);
+  internal->n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec = (double*) Calloc(internal->dim_n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec, double);
+  Free(internal->n_ICrit_NoICU_NoOx_NoMV_Die1);
+  internal->n_ICrit_NoICU_NoOx_NoMV_Die1 = (double*) Calloc(internal->dim_n_ICrit_NoICU_NoOx_NoMV_Die1, double);
+  Free(internal->n_ICrit_NoICU_NoOx_NoMV_Die1_ICrit_NoICU_NoOx_NoMV_Die2);
+  internal->n_ICrit_NoICU_NoOx_NoMV_Die1_ICrit_NoICU_NoOx_NoMV_Die2 = (double*) Calloc(internal->dim_n_ICrit_NoICU_NoOx_NoMV_Die1_ICrit_NoICU_NoOx_NoMV_Die2, double);
+  Free(internal->n_ICrit_NoICU_NoOx_NoMV_Die2_D_Community);
+  internal->n_ICrit_NoICU_NoOx_NoMV_Die2_D_Community = (double*) Calloc(internal->dim_n_ICrit_NoICU_NoOx_NoMV_Die2_D_Community, double);
+  Free(internal->n_ICrit_NoICU_NoOx_NoMV_Surv1);
+  internal->n_ICrit_NoICU_NoOx_NoMV_Surv1 = (double*) Calloc(internal->dim_n_ICrit_NoICU_NoOx_NoMV_Surv1, double);
+  Free(internal->n_ICrit_NoICU_NoOx_NoMV_Surv1_ICrit_NoICU_NoOx_NoMV_Surv2);
+  internal->n_ICrit_NoICU_NoOx_NoMV_Surv1_ICrit_NoICU_NoOx_NoMV_Surv2 = (double*) Calloc(internal->dim_n_ICrit_NoICU_NoOx_NoMV_Surv1_ICrit_NoICU_NoOx_NoMV_Surv2, double);
+  Free(internal->n_ICrit_NoICU_NoOx_NoMV_Surv2_R);
+  internal->n_ICrit_NoICU_NoOx_NoMV_Surv2_R = (double*) Calloc(internal->dim_n_ICrit_NoICU_NoOx_NoMV_Surv2_R, double);
+  Free(internal->n_IMild_Drug_5_R);
+  internal->n_IMild_Drug_5_R = (double*) Calloc(internal->dim_n_IMild_Drug_5_R, double);
+  Free(internal->n_IMild_R);
+  internal->n_IMild_R = (double*) Calloc(internal->dim_n_IMild_R, double);
+  Free(internal->n_IMod_GetHosp_GetOx_Die1);
+  internal->n_IMod_GetHosp_GetOx_Die1 = (double*) Calloc(internal->dim_n_IMod_GetHosp_GetOx_Die1, double);
+  Free(internal->n_IMod_GetHosp_GetOx_Die1_IMod_GetHosp_GetOx_Die2);
+  internal->n_IMod_GetHosp_GetOx_Die1_IMod_GetHosp_GetOx_Die2 = (double*) Calloc(internal->dim_n_IMod_GetHosp_GetOx_Die1_IMod_GetHosp_GetOx_Die2, double);
+  Free(internal->n_IMod_GetHosp_GetOx_Die2_D_Hospital);
+  internal->n_IMod_GetHosp_GetOx_Die2_D_Hospital = (double*) Calloc(internal->dim_n_IMod_GetHosp_GetOx_Die2_D_Hospital, double);
+  Free(internal->n_IMod_GetHosp_GetOx_Surv1);
+  internal->n_IMod_GetHosp_GetOx_Surv1 = (double*) Calloc(internal->dim_n_IMod_GetHosp_GetOx_Surv1, double);
+  Free(internal->n_IMod_GetHosp_GetOx_Surv1_IMod_GetHosp_GetOx_Surv2);
+  internal->n_IMod_GetHosp_GetOx_Surv1_IMod_GetHosp_GetOx_Surv2 = (double*) Calloc(internal->dim_n_IMod_GetHosp_GetOx_Surv1_IMod_GetHosp_GetOx_Surv2, double);
+  Free(internal->n_IMod_GetHosp_GetOx_Surv2_R);
+  internal->n_IMod_GetHosp_GetOx_Surv2_R = (double*) Calloc(internal->dim_n_IMod_GetHosp_GetOx_Surv2_R, double);
+  Free(internal->n_IMod_GetHosp_NoOx_Die1);
+  internal->n_IMod_GetHosp_NoOx_Die1 = (double*) Calloc(internal->dim_n_IMod_GetHosp_NoOx_Die1, double);
+  Free(internal->n_IMod_GetHosp_NoOx_Die1_IMod_GetHosp_NoOx_Die2);
+  internal->n_IMod_GetHosp_NoOx_Die1_IMod_GetHosp_NoOx_Die2 = (double*) Calloc(internal->dim_n_IMod_GetHosp_NoOx_Die1_IMod_GetHosp_NoOx_Die2, double);
+  Free(internal->n_IMod_GetHosp_NoOx_Die2_D_Hospital);
+  internal->n_IMod_GetHosp_NoOx_Die2_D_Hospital = (double*) Calloc(internal->dim_n_IMod_GetHosp_NoOx_Die2_D_Hospital, double);
+  Free(internal->n_IMod_GetHosp_NoOx_Surv1);
+  internal->n_IMod_GetHosp_NoOx_Surv1 = (double*) Calloc(internal->dim_n_IMod_GetHosp_NoOx_Surv1, double);
+  Free(internal->n_IMod_GetHosp_NoOx_Surv1_IMod_GetHosp_NoOx_Surv2);
+  internal->n_IMod_GetHosp_NoOx_Surv1_IMod_GetHosp_NoOx_Surv2 = (double*) Calloc(internal->dim_n_IMod_GetHosp_NoOx_Surv1_IMod_GetHosp_NoOx_Surv2, double);
+  Free(internal->n_IMod_GetHosp_NoOx_Surv2_R);
+  internal->n_IMod_GetHosp_NoOx_Surv2_R = (double*) Calloc(internal->dim_n_IMod_GetHosp_NoOx_Surv2_R, double);
+  Free(internal->n_IMod_NoHosp_NoOx_Die1);
+  internal->n_IMod_NoHosp_NoOx_Die1 = (double*) Calloc(internal->dim_n_IMod_NoHosp_NoOx_Die1, double);
+  Free(internal->n_IMod_NoHosp_NoOx_Die1_IMod_NoHosp_NoOx_Die2);
+  internal->n_IMod_NoHosp_NoOx_Die1_IMod_NoHosp_NoOx_Die2 = (double*) Calloc(internal->dim_n_IMod_NoHosp_NoOx_Die1_IMod_NoHosp_NoOx_Die2, double);
+  Free(internal->n_IMod_NoHosp_NoOx_Die2_D_Community);
+  internal->n_IMod_NoHosp_NoOx_Die2_D_Community = (double*) Calloc(internal->dim_n_IMod_NoHosp_NoOx_Die2_D_Community, double);
+  Free(internal->n_IMod_NoHosp_NoOx_Surv1);
+  internal->n_IMod_NoHosp_NoOx_Surv1 = (double*) Calloc(internal->dim_n_IMod_NoHosp_NoOx_Surv1, double);
+  Free(internal->n_IMod_NoHosp_NoOx_Surv1_IMod_NoHosp_NoOx_Surv2);
+  internal->n_IMod_NoHosp_NoOx_Surv1_IMod_NoHosp_NoOx_Surv2 = (double*) Calloc(internal->dim_n_IMod_NoHosp_NoOx_Surv1_IMod_NoHosp_NoOx_Surv2, double);
+  Free(internal->n_IMod_NoHosp_NoOx_Surv2_R);
+  internal->n_IMod_NoHosp_NoOx_Surv2_R = (double*) Calloc(internal->dim_n_IMod_NoHosp_NoOx_Surv2_R, double);
+  Free(internal->n_IRec1_IRec2);
+  internal->n_IRec1_IRec2 = (double*) Calloc(internal->dim_n_IRec1_IRec2, double);
+  Free(internal->n_IRec2_R);
+  internal->n_IRec2_R = (double*) Calloc(internal->dim_n_IRec2_R, double);
+  Free(internal->n_ISev_GetICU_GetOx_Die1);
+  internal->n_ISev_GetICU_GetOx_Die1 = (double*) Calloc(internal->dim_n_ISev_GetICU_GetOx_Die1, double);
+  Free(internal->n_ISev_GetICU_GetOx_Die1_ISev_GetICU_GetOx_Die2);
+  internal->n_ISev_GetICU_GetOx_Die1_ISev_GetICU_GetOx_Die2 = (double*) Calloc(internal->dim_n_ISev_GetICU_GetOx_Die1_ISev_GetICU_GetOx_Die2, double);
+  Free(internal->n_ISev_GetICU_GetOx_Die2_D_Hospital);
+  internal->n_ISev_GetICU_GetOx_Die2_D_Hospital = (double*) Calloc(internal->dim_n_ISev_GetICU_GetOx_Die2_D_Hospital, double);
+  Free(internal->n_ISev_GetICU_GetOx_Surv1);
+  internal->n_ISev_GetICU_GetOx_Surv1 = (double*) Calloc(internal->dim_n_ISev_GetICU_GetOx_Surv1, double);
+  Free(internal->n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2);
+  internal->n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 = (double*) Calloc(internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2, double);
+  Free(internal->n_ISev_GetICU_GetOx_Surv2_Rec);
+  internal->n_ISev_GetICU_GetOx_Surv2_Rec = (double*) Calloc(internal->dim_n_ISev_GetICU_GetOx_Surv2_Rec, double);
+  Free(internal->n_ISev_GetICU_NoOx_Die1);
+  internal->n_ISev_GetICU_NoOx_Die1 = (double*) Calloc(internal->dim_n_ISev_GetICU_NoOx_Die1, double);
+  Free(internal->n_ISev_GetICU_NoOx_Die1_ISev_GetICU_NoOx_Die2);
+  internal->n_ISev_GetICU_NoOx_Die1_ISev_GetICU_NoOx_Die2 = (double*) Calloc(internal->dim_n_ISev_GetICU_NoOx_Die1_ISev_GetICU_NoOx_Die2, double);
+  Free(internal->n_ISev_GetICU_NoOx_Die2_D_Hospital);
+  internal->n_ISev_GetICU_NoOx_Die2_D_Hospital = (double*) Calloc(internal->dim_n_ISev_GetICU_NoOx_Die2_D_Hospital, double);
+  Free(internal->n_ISev_GetICU_NoOx_Surv1);
+  internal->n_ISev_GetICU_NoOx_Surv1 = (double*) Calloc(internal->dim_n_ISev_GetICU_NoOx_Surv1, double);
+  Free(internal->n_ISev_GetICU_NoOx_Surv1_ISev_GetICU_NoOx_Surv2);
+  internal->n_ISev_GetICU_NoOx_Surv1_ISev_GetICU_NoOx_Surv2 = (double*) Calloc(internal->dim_n_ISev_GetICU_NoOx_Surv1_ISev_GetICU_NoOx_Surv2, double);
+  Free(internal->n_ISev_GetICU_NoOx_Surv2_Rec);
+  internal->n_ISev_GetICU_NoOx_Surv2_Rec = (double*) Calloc(internal->dim_n_ISev_GetICU_NoOx_Surv2_Rec, double);
+  Free(internal->n_ISev_NoICU_NoOx_Die1);
+  internal->n_ISev_NoICU_NoOx_Die1 = (double*) Calloc(internal->dim_n_ISev_NoICU_NoOx_Die1, double);
+  Free(internal->n_ISev_NoICU_NoOx_Die1_ISev_NoICU_NoOx_Die2);
+  internal->n_ISev_NoICU_NoOx_Die1_ISev_NoICU_NoOx_Die2 = (double*) Calloc(internal->dim_n_ISev_NoICU_NoOx_Die1_ISev_NoICU_NoOx_Die2, double);
+  Free(internal->n_ISev_NoICU_NoOx_Die2_D_Community);
+  internal->n_ISev_NoICU_NoOx_Die2_D_Community = (double*) Calloc(internal->dim_n_ISev_NoICU_NoOx_Die2_D_Community, double);
+  Free(internal->n_ISev_NoICU_NoOx_Surv1);
+  internal->n_ISev_NoICU_NoOx_Surv1 = (double*) Calloc(internal->dim_n_ISev_NoICU_NoOx_Surv1, double);
+  Free(internal->n_ISev_NoICU_NoOx_Surv1_ISev_NoICU_NoOx_Surv2);
+  internal->n_ISev_NoICU_NoOx_Surv1_ISev_NoICU_NoOx_Surv2 = (double*) Calloc(internal->dim_n_ISev_NoICU_NoOx_Surv1_ISev_NoICU_NoOx_Surv2, double);
+  Free(internal->n_ISev_NoICU_NoOx_Surv2_R);
+  internal->n_ISev_NoICU_NoOx_Surv2_R = (double*) Calloc(internal->dim_n_ISev_NoICU_NoOx_Surv2_R, double);
+  Free(internal->n_PE1_PE2);
+  internal->n_PE1_PE2 = (double*) Calloc(internal->dim_n_PE1_PE2, double);
+  Free(internal->n_PE2_I);
+  internal->n_PE2_I = (double*) Calloc(internal->dim_n_PE2_I, double);
+  Free(internal->n_PE2_IAsymp);
+  internal->n_PE2_IAsymp = (double*) Calloc(internal->dim_n_PE2_IAsymp, double);
+  Free(internal->n_PE2_ICase1);
+  internal->n_PE2_ICase1 = (double*) Calloc(internal->dim_n_PE2_ICase1, double);
+  Free(internal->n_PE2_ICase1_Drug_5);
+  internal->n_PE2_ICase1_Drug_5 = (double*) Calloc(internal->dim_n_PE2_ICase1_Drug_5, double);
+  Free(internal->n_PE2_ICase1_initial);
+  internal->n_PE2_ICase1_initial = (double*) Calloc(internal->dim_n_PE2_ICase1_initial, double);
+  Free(internal->n_PE2_ICase1_No_Drug_5);
+  internal->n_PE2_ICase1_No_Drug_5 = (double*) Calloc(internal->dim_n_PE2_ICase1_No_Drug_5, double);
+  Free(internal->n_PE2_IMild);
+  internal->n_PE2_IMild = (double*) Calloc(internal->dim_n_PE2_IMild, double);
+  Free(internal->n_PE2_IMild_Drug_5);
+  internal->n_PE2_IMild_Drug_5 = (double*) Calloc(internal->dim_n_PE2_IMild_Drug_5, double);
+  Free(internal->n_PE2_IMild_No_Drug_5);
+  internal->n_PE2_IMild_No_Drug_5 = (double*) Calloc(internal->dim_n_PE2_IMild_No_Drug_5, double);
+  Free(internal->n_PE2_IMild_or_IAsymp);
+  internal->n_PE2_IMild_or_IAsymp = (double*) Calloc(internal->dim_n_PE2_IMild_or_IAsymp, double);
+  Free(internal->n_PS_PE1);
+  internal->n_PS_PE1 = (double*) Calloc(internal->dim_n_PS_PE1, double);
+  Free(internal->n_PS_S);
+  internal->n_PS_S = (double*) Calloc(internal->dim_n_PS_S, double);
+  Free(internal->n_S_E1);
+  internal->n_S_E1 = (double*) Calloc(internal->dim_n_S_E1, double);
+  Free(internal->n_S_PS);
+  internal->n_S_PS = (double*) Calloc(internal->dim_n_S_PS, double);
+  Free(internal->number_GetHosp);
+  internal->number_GetHosp = (double*) Calloc(internal->dim_number_GetHosp, double);
+  Free(internal->number_GetHosp_NoOx);
+  internal->number_GetHosp_NoOx = (double*) Calloc(internal->dim_number_GetHosp_NoOx, double);
+  Free(internal->number_GetHosp_Ox);
+  internal->number_GetHosp_Ox = (double*) Calloc(internal->dim_number_GetHosp_Ox, double);
+  Free(internal->number_GetICU);
+  internal->number_GetICU = (double*) Calloc(internal->dim_number_GetICU, double);
+  Free(internal->number_GetICU_GetOx);
+  internal->number_GetICU_GetOx = (double*) Calloc(internal->dim_number_GetICU_GetOx, double);
+  Free(internal->number_GetICU_GetOx_GetMV);
+  internal->number_GetICU_GetOx_GetMV = (double*) Calloc(internal->dim_number_GetICU_GetOx_GetMV, double);
+  Free(internal->number_GetICU_GetOx_NeedMV);
+  internal->number_GetICU_GetOx_NeedMV = (double*) Calloc(internal->dim_number_GetICU_GetOx_NeedMV, double);
+  Free(internal->number_GetICU_GetOx_NoMV);
+  internal->number_GetICU_GetOx_NoMV = (double*) Calloc(internal->dim_number_GetICU_GetOx_NoMV, double);
+  Free(internal->number_GetICU_NoOx);
+  internal->number_GetICU_NoOx = (double*) Calloc(internal->dim_number_GetICU_NoOx, double);
+  Free(internal->number_GetICU_NoOx_NeedMV);
+  internal->number_GetICU_NoOx_NeedMV = (double*) Calloc(internal->dim_number_GetICU_NoOx_NeedMV, double);
+  Free(internal->number_NotHosp);
+  internal->number_NotHosp = (double*) Calloc(internal->dim_number_NotHosp, double);
+  Free(internal->number_NotICU);
+  internal->number_NotICU = (double*) Calloc(internal->dim_number_NotICU, double);
+  Free(internal->number_NotICU_NotOx);
+  internal->number_NotICU_NotOx = (double*) Calloc(internal->dim_number_NotICU_NotOx, double);
+  Free(internal->number_NotICU_NotOx_NotMV);
+  internal->number_NotICU_NotOx_NotMV = (double*) Calloc(internal->dim_number_NotICU_NotOx_NotMV, double);
+  Free(internal->number_req_Hosp);
+  internal->number_req_Hosp = (double*) Calloc(internal->dim_number_req_Hosp, double);
+  Free(internal->number_req_ICU);
+  internal->number_req_ICU = (double*) Calloc(internal->dim_number_req_ICU, double);
+  Free(internal->number_req_ICU_initial);
+  internal->number_req_ICU_initial = (double*) Calloc(internal->dim_number_req_ICU_initial, double);
+  Free(internal->number_req_ICU_MV);
+  internal->number_req_ICU_MV = (double*) Calloc(internal->dim_number_req_ICU_MV, double);
+  Free(internal->number_req_ICU_MV_initial);
+  internal->number_req_ICU_MV_initial = (double*) Calloc(internal->dim_number_req_ICU_MV_initial, double);
+  Free(internal->number_req_ICU_Ox);
+  internal->number_req_ICU_Ox = (double*) Calloc(internal->dim_number_req_ICU_Ox, double);
+  Free(internal->prob_critical_death_get_ICU_get_ox_get_MV);
+  internal->prob_critical_death_get_ICU_get_ox_get_MV = (double*) Calloc(internal->dim_prob_critical_death_get_ICU_get_ox_get_MV, double);
+  Free(internal->prob_critical_death_get_ICU_get_ox_get_MV_Drug_13);
+  internal->prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 = (double*) Calloc(internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13, double);
+  Free(internal->prob_critical_death_get_ICU_get_ox_no_MV);
+  internal->prob_critical_death_get_ICU_get_ox_no_MV = (double*) Calloc(internal->dim_prob_critical_death_get_ICU_get_ox_no_MV, double);
+  Free(internal->prob_critical_death_get_ICU_get_ox_no_MV_Drug_13);
+  internal->prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 = (double*) Calloc(internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13, double);
+  Free(internal->prob_critical_death_get_ICU_no_ox_no_MV);
+  internal->prob_critical_death_get_ICU_no_ox_no_MV = (double*) Calloc(internal->dim_prob_critical_death_get_ICU_no_ox_no_MV, double);
+  Free(internal->prob_critical_death_get_ICU_no_ox_no_MV_Drug_13);
+  internal->prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 = (double*) Calloc(internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13, double);
+  Free(internal->prob_moderate_death_get_hosp_get_ox);
+  internal->prob_moderate_death_get_hosp_get_ox = (double*) Calloc(internal->dim_prob_moderate_death_get_hosp_get_ox, double);
+  Free(internal->prob_moderate_death_get_hosp_get_ox_Drug_11);
+  internal->prob_moderate_death_get_hosp_get_ox_Drug_11 = (double*) Calloc(internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11, double);
+  Free(internal->prob_moderate_death_get_hosp_no_ox);
+  internal->prob_moderate_death_get_hosp_no_ox = (double*) Calloc(internal->dim_prob_moderate_death_get_hosp_no_ox, double);
+  Free(internal->prob_moderate_death_get_hosp_no_ox_Drug_11);
+  internal->prob_moderate_death_get_hosp_no_ox_Drug_11 = (double*) Calloc(internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11, double);
+  Free(internal->prob_severe_death_get_ICU_get_ox);
+  internal->prob_severe_death_get_ICU_get_ox = (double*) Calloc(internal->dim_prob_severe_death_get_ICU_get_ox, double);
+  Free(internal->prob_severe_death_get_ICU_get_ox_Drug_12);
+  internal->prob_severe_death_get_ICU_get_ox_Drug_12 = (double*) Calloc(internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12, double);
+  Free(internal->prob_severe_death_get_ICU_no_ox);
+  internal->prob_severe_death_get_ICU_no_ox = (double*) Calloc(internal->dim_prob_severe_death_get_ICU_no_ox, double);
+  Free(internal->prob_severe_death_get_ICU_no_ox_Drug_12);
+  internal->prob_severe_death_get_ICU_no_ox_Drug_12 = (double*) Calloc(internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12, double);
+  Free(internal->temp);
+  internal->temp = (double*) Calloc(internal->dim_temp, double);
+  internal->D_Community_0 = (double*) user_get_array(user, false, internal->D_Community_0, "D_Community_0", NA_REAL, NA_REAL, 1, internal->dim_D_Community_0);
+  internal->D_Hospital_0 = (double*) user_get_array(user, false, internal->D_Hospital_0, "D_Hospital_0", NA_REAL, NA_REAL, 1, internal->dim_D_Hospital_0);
+  internal->dim_beta_set = internal->dim_tt_beta;
+  internal->dim_hosp_bed_capacity = internal->dim_tt_hosp_beds;
+  internal->dim_ICU_bed_capacity = internal->dim_tt_ICU_beds;
+  internal->dim_input_baseline_oxygen_demand = internal->dim_tt_baseline_oxygen_demand;
+  internal->dim_input_oxygen_supply = internal->dim_tt_oxygen_supply;
+  internal->dim_m = internal->dim_m_1 * internal->dim_m_2;
+  internal->dim_mix_mat_set_1 = internal->dim_tt_matrix;
+  internal->dim_mix_mat_set_2 = internal->N_age;
+  internal->dim_mix_mat_set_3 = internal->N_age;
+  internal->dim_s_ij = internal->dim_s_ij_1 * internal->dim_s_ij_2;
+  internal->E1_0 = (double*) user_get_array(user, false, internal->E1_0, "E1_0", NA_REAL, NA_REAL, 1, internal->dim_E1_0);
+  internal->E2_0 = (double*) user_get_array(user, false, internal->E2_0, "E2_0", NA_REAL, NA_REAL, 1, internal->dim_E2_0);
+  internal->IAsymp_0 = (double*) user_get_array(user, false, internal->IAsymp_0, "IAsymp_0", NA_REAL, NA_REAL, 1, internal->dim_IAsymp_0);
+  internal->ICase1_0 = (double*) user_get_array(user, false, internal->ICase1_0, "ICase1_0", NA_REAL, NA_REAL, 1, internal->dim_ICase1_0);
+  internal->ICase1_Drug_5_0 = (double*) user_get_array(user, false, internal->ICase1_Drug_5_0, "ICase1_Drug_5_0", NA_REAL, NA_REAL, 1, internal->dim_ICase1_Drug_5_0);
+  internal->ICase2_0 = (double*) user_get_array(user, false, internal->ICase2_0, "ICase2_0", NA_REAL, NA_REAL, 1, internal->dim_ICase2_0);
+  internal->ICase2_Drug_5_0 = (double*) user_get_array(user, false, internal->ICase2_Drug_5_0, "ICase2_Drug_5_0", NA_REAL, NA_REAL, 1, internal->dim_ICase2_Drug_5_0);
+  internal->ICrit_GetICU_GetOx_GetMV_Die1_0 = (double*) user_get_array(user, false, internal->ICrit_GetICU_GetOx_GetMV_Die1_0, "ICrit_GetICU_GetOx_GetMV_Die1_0", NA_REAL, NA_REAL, 1, internal->dim_ICrit_GetICU_GetOx_GetMV_Die1_0);
+  internal->ICrit_GetICU_GetOx_GetMV_Die2_0 = (double*) user_get_array(user, false, internal->ICrit_GetICU_GetOx_GetMV_Die2_0, "ICrit_GetICU_GetOx_GetMV_Die2_0", NA_REAL, NA_REAL, 1, internal->dim_ICrit_GetICU_GetOx_GetMV_Die2_0);
+  internal->ICrit_GetICU_GetOx_GetMV_Surv1_0 = (double*) user_get_array(user, false, internal->ICrit_GetICU_GetOx_GetMV_Surv1_0, "ICrit_GetICU_GetOx_GetMV_Surv1_0", NA_REAL, NA_REAL, 1, internal->dim_ICrit_GetICU_GetOx_GetMV_Surv1_0);
+  internal->ICrit_GetICU_GetOx_GetMV_Surv2_0 = (double*) user_get_array(user, false, internal->ICrit_GetICU_GetOx_GetMV_Surv2_0, "ICrit_GetICU_GetOx_GetMV_Surv2_0", NA_REAL, NA_REAL, 1, internal->dim_ICrit_GetICU_GetOx_GetMV_Surv2_0);
+  internal->ICrit_GetICU_GetOx_NoMV_Die1_0 = (double*) user_get_array(user, false, internal->ICrit_GetICU_GetOx_NoMV_Die1_0, "ICrit_GetICU_GetOx_NoMV_Die1_0", NA_REAL, NA_REAL, 1, internal->dim_ICrit_GetICU_GetOx_NoMV_Die1_0);
+  internal->ICrit_GetICU_GetOx_NoMV_Die2_0 = (double*) user_get_array(user, false, internal->ICrit_GetICU_GetOx_NoMV_Die2_0, "ICrit_GetICU_GetOx_NoMV_Die2_0", NA_REAL, NA_REAL, 1, internal->dim_ICrit_GetICU_GetOx_NoMV_Die2_0);
+  internal->ICrit_GetICU_GetOx_NoMV_Surv1_0 = (double*) user_get_array(user, false, internal->ICrit_GetICU_GetOx_NoMV_Surv1_0, "ICrit_GetICU_GetOx_NoMV_Surv1_0", NA_REAL, NA_REAL, 1, internal->dim_ICrit_GetICU_GetOx_NoMV_Surv1_0);
+  internal->ICrit_GetICU_GetOx_NoMV_Surv2_0 = (double*) user_get_array(user, false, internal->ICrit_GetICU_GetOx_NoMV_Surv2_0, "ICrit_GetICU_GetOx_NoMV_Surv2_0", NA_REAL, NA_REAL, 1, internal->dim_ICrit_GetICU_GetOx_NoMV_Surv2_0);
+  internal->ICrit_GetICU_NoOx_NoMV_Die1_0 = (double*) user_get_array(user, false, internal->ICrit_GetICU_NoOx_NoMV_Die1_0, "ICrit_GetICU_NoOx_NoMV_Die1_0", NA_REAL, NA_REAL, 1, internal->dim_ICrit_GetICU_NoOx_NoMV_Die1_0);
+  internal->ICrit_GetICU_NoOx_NoMV_Die2_0 = (double*) user_get_array(user, false, internal->ICrit_GetICU_NoOx_NoMV_Die2_0, "ICrit_GetICU_NoOx_NoMV_Die2_0", NA_REAL, NA_REAL, 1, internal->dim_ICrit_GetICU_NoOx_NoMV_Die2_0);
+  internal->ICrit_GetICU_NoOx_NoMV_Surv1_0 = (double*) user_get_array(user, false, internal->ICrit_GetICU_NoOx_NoMV_Surv1_0, "ICrit_GetICU_NoOx_NoMV_Surv1_0", NA_REAL, NA_REAL, 1, internal->dim_ICrit_GetICU_NoOx_NoMV_Surv1_0);
+  internal->ICrit_GetICU_NoOx_NoMV_Surv2_0 = (double*) user_get_array(user, false, internal->ICrit_GetICU_NoOx_NoMV_Surv2_0, "ICrit_GetICU_NoOx_NoMV_Surv2_0", NA_REAL, NA_REAL, 1, internal->dim_ICrit_GetICU_NoOx_NoMV_Surv2_0);
+  internal->ICrit_NoICU_NoOx_NoMV_Die1_0 = (double*) user_get_array(user, false, internal->ICrit_NoICU_NoOx_NoMV_Die1_0, "ICrit_NoICU_NoOx_NoMV_Die1_0", NA_REAL, NA_REAL, 1, internal->dim_ICrit_NoICU_NoOx_NoMV_Die1_0);
+  internal->ICrit_NoICU_NoOx_NoMV_Die2_0 = (double*) user_get_array(user, false, internal->ICrit_NoICU_NoOx_NoMV_Die2_0, "ICrit_NoICU_NoOx_NoMV_Die2_0", NA_REAL, NA_REAL, 1, internal->dim_ICrit_NoICU_NoOx_NoMV_Die2_0);
+  internal->ICrit_NoICU_NoOx_NoMV_Surv1_0 = (double*) user_get_array(user, false, internal->ICrit_NoICU_NoOx_NoMV_Surv1_0, "ICrit_NoICU_NoOx_NoMV_Surv1_0", NA_REAL, NA_REAL, 1, internal->dim_ICrit_NoICU_NoOx_NoMV_Surv1_0);
+  internal->ICrit_NoICU_NoOx_NoMV_Surv2_0 = (double*) user_get_array(user, false, internal->ICrit_NoICU_NoOx_NoMV_Surv2_0, "ICrit_NoICU_NoOx_NoMV_Surv2_0", NA_REAL, NA_REAL, 1, internal->dim_ICrit_NoICU_NoOx_NoMV_Surv2_0);
+  internal->IMild_0 = (double*) user_get_array(user, false, internal->IMild_0, "IMild_0", NA_REAL, NA_REAL, 1, internal->dim_IMild_0);
+  internal->IMild_Drug_5_0 = (double*) user_get_array(user, false, internal->IMild_Drug_5_0, "IMild_Drug_5_0", NA_REAL, NA_REAL, 1, internal->dim_IMild_Drug_5_0);
+  internal->IMod_GetHosp_GetOx_Die1_0 = (double*) user_get_array(user, false, internal->IMod_GetHosp_GetOx_Die1_0, "IMod_GetHosp_GetOx_Die1_0", NA_REAL, NA_REAL, 1, internal->dim_IMod_GetHosp_GetOx_Die1_0);
+  internal->IMod_GetHosp_GetOx_Die2_0 = (double*) user_get_array(user, false, internal->IMod_GetHosp_GetOx_Die2_0, "IMod_GetHosp_GetOx_Die2_0", NA_REAL, NA_REAL, 1, internal->dim_IMod_GetHosp_GetOx_Die2_0);
+  internal->IMod_GetHosp_GetOx_Surv1_0 = (double*) user_get_array(user, false, internal->IMod_GetHosp_GetOx_Surv1_0, "IMod_GetHosp_GetOx_Surv1_0", NA_REAL, NA_REAL, 1, internal->dim_IMod_GetHosp_GetOx_Surv1_0);
+  internal->IMod_GetHosp_GetOx_Surv2_0 = (double*) user_get_array(user, false, internal->IMod_GetHosp_GetOx_Surv2_0, "IMod_GetHosp_GetOx_Surv2_0", NA_REAL, NA_REAL, 1, internal->dim_IMod_GetHosp_GetOx_Surv2_0);
+  internal->IMod_GetHosp_NoOx_Die1_0 = (double*) user_get_array(user, false, internal->IMod_GetHosp_NoOx_Die1_0, "IMod_GetHosp_NoOx_Die1_0", NA_REAL, NA_REAL, 1, internal->dim_IMod_GetHosp_NoOx_Die1_0);
+  internal->IMod_GetHosp_NoOx_Die2_0 = (double*) user_get_array(user, false, internal->IMod_GetHosp_NoOx_Die2_0, "IMod_GetHosp_NoOx_Die2_0", NA_REAL, NA_REAL, 1, internal->dim_IMod_GetHosp_NoOx_Die2_0);
+  internal->IMod_GetHosp_NoOx_Surv1_0 = (double*) user_get_array(user, false, internal->IMod_GetHosp_NoOx_Surv1_0, "IMod_GetHosp_NoOx_Surv1_0", NA_REAL, NA_REAL, 1, internal->dim_IMod_GetHosp_NoOx_Surv1_0);
+  internal->IMod_GetHosp_NoOx_Surv2_0 = (double*) user_get_array(user, false, internal->IMod_GetHosp_NoOx_Surv2_0, "IMod_GetHosp_NoOx_Surv2_0", NA_REAL, NA_REAL, 1, internal->dim_IMod_GetHosp_NoOx_Surv2_0);
+  internal->IMod_NoHosp_NoOx_Die1_0 = (double*) user_get_array(user, false, internal->IMod_NoHosp_NoOx_Die1_0, "IMod_NoHosp_NoOx_Die1_0", NA_REAL, NA_REAL, 1, internal->dim_IMod_NoHosp_NoOx_Die1_0);
+  internal->IMod_NoHosp_NoOx_Die2_0 = (double*) user_get_array(user, false, internal->IMod_NoHosp_NoOx_Die2_0, "IMod_NoHosp_NoOx_Die2_0", NA_REAL, NA_REAL, 1, internal->dim_IMod_NoHosp_NoOx_Die2_0);
+  internal->IMod_NoHosp_NoOx_Surv1_0 = (double*) user_get_array(user, false, internal->IMod_NoHosp_NoOx_Surv1_0, "IMod_NoHosp_NoOx_Surv1_0", NA_REAL, NA_REAL, 1, internal->dim_IMod_NoHosp_NoOx_Surv1_0);
+  internal->IMod_NoHosp_NoOx_Surv2_0 = (double*) user_get_array(user, false, internal->IMod_NoHosp_NoOx_Surv2_0, "IMod_NoHosp_NoOx_Surv2_0", NA_REAL, NA_REAL, 1, internal->dim_IMod_NoHosp_NoOx_Surv2_0);
+  for (int i = 1; i <= internal->dim_D; ++i) {
+    internal->initial_D[i - 1] = 0;
+  }
+  internal->IRec1_0 = (double*) user_get_array(user, false, internal->IRec1_0, "IRec1_0", NA_REAL, NA_REAL, 1, internal->dim_IRec1_0);
+  internal->IRec2_0 = (double*) user_get_array(user, false, internal->IRec2_0, "IRec2_0", NA_REAL, NA_REAL, 1, internal->dim_IRec2_0);
+  internal->ISev_GetICU_GetOx_Die1_0 = (double*) user_get_array(user, false, internal->ISev_GetICU_GetOx_Die1_0, "ISev_GetICU_GetOx_Die1_0", NA_REAL, NA_REAL, 1, internal->dim_ISev_GetICU_GetOx_Die1_0);
+  internal->ISev_GetICU_GetOx_Die2_0 = (double*) user_get_array(user, false, internal->ISev_GetICU_GetOx_Die2_0, "ISev_GetICU_GetOx_Die2_0", NA_REAL, NA_REAL, 1, internal->dim_ISev_GetICU_GetOx_Die2_0);
+  internal->ISev_GetICU_GetOx_Surv1_0 = (double*) user_get_array(user, false, internal->ISev_GetICU_GetOx_Surv1_0, "ISev_GetICU_GetOx_Surv1_0", NA_REAL, NA_REAL, 1, internal->dim_ISev_GetICU_GetOx_Surv1_0);
+  internal->ISev_GetICU_GetOx_Surv2_0 = (double*) user_get_array(user, false, internal->ISev_GetICU_GetOx_Surv2_0, "ISev_GetICU_GetOx_Surv2_0", NA_REAL, NA_REAL, 1, internal->dim_ISev_GetICU_GetOx_Surv2_0);
+  internal->ISev_GetICU_NoOx_Die1_0 = (double*) user_get_array(user, false, internal->ISev_GetICU_NoOx_Die1_0, "ISev_GetICU_NoOx_Die1_0", NA_REAL, NA_REAL, 1, internal->dim_ISev_GetICU_NoOx_Die1_0);
+  internal->ISev_GetICU_NoOx_Die2_0 = (double*) user_get_array(user, false, internal->ISev_GetICU_NoOx_Die2_0, "ISev_GetICU_NoOx_Die2_0", NA_REAL, NA_REAL, 1, internal->dim_ISev_GetICU_NoOx_Die2_0);
+  internal->ISev_GetICU_NoOx_Surv1_0 = (double*) user_get_array(user, false, internal->ISev_GetICU_NoOx_Surv1_0, "ISev_GetICU_NoOx_Surv1_0", NA_REAL, NA_REAL, 1, internal->dim_ISev_GetICU_NoOx_Surv1_0);
+  internal->ISev_GetICU_NoOx_Surv2_0 = (double*) user_get_array(user, false, internal->ISev_GetICU_NoOx_Surv2_0, "ISev_GetICU_NoOx_Surv2_0", NA_REAL, NA_REAL, 1, internal->dim_ISev_GetICU_NoOx_Surv2_0);
+  internal->ISev_NoICU_NoOx_Die1_0 = (double*) user_get_array(user, false, internal->ISev_NoICU_NoOx_Die1_0, "ISev_NoICU_NoOx_Die1_0", NA_REAL, NA_REAL, 1, internal->dim_ISev_NoICU_NoOx_Die1_0);
+  internal->ISev_NoICU_NoOx_Die2_0 = (double*) user_get_array(user, false, internal->ISev_NoICU_NoOx_Die2_0, "ISev_NoICU_NoOx_Die2_0", NA_REAL, NA_REAL, 1, internal->dim_ISev_NoICU_NoOx_Die2_0);
+  internal->ISev_NoICU_NoOx_Surv1_0 = (double*) user_get_array(user, false, internal->ISev_NoICU_NoOx_Surv1_0, "ISev_NoICU_NoOx_Surv1_0", NA_REAL, NA_REAL, 1, internal->dim_ISev_NoICU_NoOx_Surv1_0);
+  internal->ISev_NoICU_NoOx_Surv2_0 = (double*) user_get_array(user, false, internal->ISev_NoICU_NoOx_Surv2_0, "ISev_NoICU_NoOx_Surv2_0", NA_REAL, NA_REAL, 1, internal->dim_ISev_NoICU_NoOx_Surv2_0);
+  internal->offset_output_n_E1_E2 = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1;
+  internal->offset_output_n_E2_I = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2;
+  internal->offset_output_n_E2_IAsymp = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1;
+  internal->offset_output_n_E2_ICase1 = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial;
+  internal->offset_output_n_E2_ICase1_Drug_5 = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5;
+  internal->offset_output_n_E2_ICase1_initial = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1;
+  internal->offset_output_n_E2_ICase1_No_Drug_5 = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5;
+  internal->offset_output_n_E2_IMild = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp;
+  internal->offset_output_n_E2_IMild_Drug_5 = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild;
+  internal->offset_output_n_E2_IMild_No_Drug_5 = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5;
+  internal->offset_output_n_ICase1_ICase2 = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I + internal->dim_n_IMild_R;
+  internal->offset_output_n_ICase2_Hosp = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I + internal->dim_n_IMild_R + internal->dim_n_ICase1_ICase2;
+  internal->offset_output_n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I + internal->dim_n_IMild_R + internal->dim_n_ICase1_ICase2 + internal->dim_n_ICase2_Hosp + internal->dim_n_IRec1_IRec2 + internal->dim_n_IRec2_R + internal->dim_number_GetICU + internal->dim_number_NotICU + internal->dim_number_NotICU_NotOx_NotMV + internal->dim_number_NotICU_NotOx + internal->dim_number_req_Hosp + internal->dim_number_GetHosp + internal->dim_number_NotHosp + internal->dim_number_GetHosp_Ox + internal->dim_number_GetHosp_NoOx + internal->dim_number_req_ICU_Ox + internal->dim_number_GetICU_GetOx_NeedMV + internal->dim_number_GetICU_NoOx + internal->dim_number_GetICU_NoOx_NeedMV + internal->dim_number_GetICU_GetOx_GetMV + internal->dim_number_GetICU_GetOx_NoMV + internal->dim_number_GetICU_GetOx + internal->dim_n_IMod_GetHosp_GetOx_Die2_D_Hospital + internal->dim_n_IMod_GetHosp_GetOx_Surv2_R + internal->dim_n_IMod_GetHosp_NoOx_Die2_D_Hospital + internal->dim_n_IMod_GetHosp_NoOx_Surv2_R + internal->dim_n_ISev_GetICU_GetOx_Die2_D_Hospital + internal->dim_n_ISev_GetICU_GetOx_Surv2_Rec + internal->dim_n_ISev_GetICU_NoOx_Die2_D_Hospital + internal->dim_n_ISev_GetICU_NoOx_Surv2_Rec;
+  internal->offset_output_n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I + internal->dim_n_IMild_R + internal->dim_n_ICase1_ICase2 + internal->dim_n_ICase2_Hosp + internal->dim_n_IRec1_IRec2 + internal->dim_n_IRec2_R + internal->dim_number_GetICU + internal->dim_number_NotICU + internal->dim_number_NotICU_NotOx_NotMV + internal->dim_number_NotICU_NotOx + internal->dim_number_req_Hosp + internal->dim_number_GetHosp + internal->dim_number_NotHosp + internal->dim_number_GetHosp_Ox + internal->dim_number_GetHosp_NoOx + internal->dim_number_req_ICU_Ox + internal->dim_number_GetICU_GetOx_NeedMV + internal->dim_number_GetICU_NoOx + internal->dim_number_GetICU_NoOx_NeedMV + internal->dim_number_GetICU_GetOx_GetMV + internal->dim_number_GetICU_GetOx_NoMV + internal->dim_number_GetICU_GetOx + internal->dim_n_IMod_GetHosp_GetOx_Die2_D_Hospital + internal->dim_n_IMod_GetHosp_GetOx_Surv2_R + internal->dim_n_IMod_GetHosp_NoOx_Die2_D_Hospital + internal->dim_n_IMod_GetHosp_NoOx_Surv2_R + internal->dim_n_ISev_GetICU_GetOx_Die2_D_Hospital + internal->dim_n_ISev_GetICU_GetOx_Surv2_Rec + internal->dim_n_ISev_GetICU_NoOx_Die2_D_Hospital + internal->dim_n_ISev_GetICU_NoOx_Surv2_Rec + internal->dim_n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital;
+  internal->offset_output_n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I + internal->dim_n_IMild_R + internal->dim_n_ICase1_ICase2 + internal->dim_n_ICase2_Hosp + internal->dim_n_IRec1_IRec2 + internal->dim_n_IRec2_R + internal->dim_number_GetICU + internal->dim_number_NotICU + internal->dim_number_NotICU_NotOx_NotMV + internal->dim_number_NotICU_NotOx + internal->dim_number_req_Hosp + internal->dim_number_GetHosp + internal->dim_number_NotHosp + internal->dim_number_GetHosp_Ox + internal->dim_number_GetHosp_NoOx + internal->dim_number_req_ICU_Ox + internal->dim_number_GetICU_GetOx_NeedMV + internal->dim_number_GetICU_NoOx + internal->dim_number_GetICU_NoOx_NeedMV + internal->dim_number_GetICU_GetOx_GetMV + internal->dim_number_GetICU_GetOx_NoMV + internal->dim_number_GetICU_GetOx + internal->dim_n_IMod_GetHosp_GetOx_Die2_D_Hospital + internal->dim_n_IMod_GetHosp_GetOx_Surv2_R + internal->dim_n_IMod_GetHosp_NoOx_Die2_D_Hospital + internal->dim_n_IMod_GetHosp_NoOx_Surv2_R + internal->dim_n_ISev_GetICU_GetOx_Die2_D_Hospital + internal->dim_n_ISev_GetICU_GetOx_Surv2_Rec + internal->dim_n_ISev_GetICU_NoOx_Die2_D_Hospital + internal->dim_n_ISev_GetICU_NoOx_Surv2_Rec + internal->dim_n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital + internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec;
+  internal->offset_output_n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I + internal->dim_n_IMild_R + internal->dim_n_ICase1_ICase2 + internal->dim_n_ICase2_Hosp + internal->dim_n_IRec1_IRec2 + internal->dim_n_IRec2_R + internal->dim_number_GetICU + internal->dim_number_NotICU + internal->dim_number_NotICU_NotOx_NotMV + internal->dim_number_NotICU_NotOx + internal->dim_number_req_Hosp + internal->dim_number_GetHosp + internal->dim_number_NotHosp + internal->dim_number_GetHosp_Ox + internal->dim_number_GetHosp_NoOx + internal->dim_number_req_ICU_Ox + internal->dim_number_GetICU_GetOx_NeedMV + internal->dim_number_GetICU_NoOx + internal->dim_number_GetICU_NoOx_NeedMV + internal->dim_number_GetICU_GetOx_GetMV + internal->dim_number_GetICU_GetOx_NoMV + internal->dim_number_GetICU_GetOx + internal->dim_n_IMod_GetHosp_GetOx_Die2_D_Hospital + internal->dim_n_IMod_GetHosp_GetOx_Surv2_R + internal->dim_n_IMod_GetHosp_NoOx_Die2_D_Hospital + internal->dim_n_IMod_GetHosp_NoOx_Surv2_R + internal->dim_n_ISev_GetICU_GetOx_Die2_D_Hospital + internal->dim_n_ISev_GetICU_GetOx_Surv2_Rec + internal->dim_n_ISev_GetICU_NoOx_Die2_D_Hospital + internal->dim_n_ISev_GetICU_NoOx_Surv2_Rec + internal->dim_n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital + internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec + internal->dim_n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital;
+  internal->offset_output_n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I + internal->dim_n_IMild_R + internal->dim_n_ICase1_ICase2 + internal->dim_n_ICase2_Hosp + internal->dim_n_IRec1_IRec2 + internal->dim_n_IRec2_R + internal->dim_number_GetICU + internal->dim_number_NotICU + internal->dim_number_NotICU_NotOx_NotMV + internal->dim_number_NotICU_NotOx + internal->dim_number_req_Hosp + internal->dim_number_GetHosp + internal->dim_number_NotHosp + internal->dim_number_GetHosp_Ox + internal->dim_number_GetHosp_NoOx + internal->dim_number_req_ICU_Ox + internal->dim_number_GetICU_GetOx_NeedMV + internal->dim_number_GetICU_NoOx + internal->dim_number_GetICU_NoOx_NeedMV + internal->dim_number_GetICU_GetOx_GetMV + internal->dim_number_GetICU_GetOx_NoMV + internal->dim_number_GetICU_GetOx + internal->dim_n_IMod_GetHosp_GetOx_Die2_D_Hospital + internal->dim_n_IMod_GetHosp_GetOx_Surv2_R + internal->dim_n_IMod_GetHosp_NoOx_Die2_D_Hospital + internal->dim_n_IMod_GetHosp_NoOx_Surv2_R + internal->dim_n_ISev_GetICU_GetOx_Die2_D_Hospital + internal->dim_n_ISev_GetICU_GetOx_Surv2_Rec + internal->dim_n_ISev_GetICU_NoOx_Die2_D_Hospital + internal->dim_n_ISev_GetICU_NoOx_Surv2_Rec + internal->dim_n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital + internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec + internal->dim_n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital + internal->dim_n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec;
+  internal->offset_output_n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I + internal->dim_n_IMild_R + internal->dim_n_ICase1_ICase2 + internal->dim_n_ICase2_Hosp + internal->dim_n_IRec1_IRec2 + internal->dim_n_IRec2_R + internal->dim_number_GetICU + internal->dim_number_NotICU + internal->dim_number_NotICU_NotOx_NotMV + internal->dim_number_NotICU_NotOx + internal->dim_number_req_Hosp + internal->dim_number_GetHosp + internal->dim_number_NotHosp + internal->dim_number_GetHosp_Ox + internal->dim_number_GetHosp_NoOx + internal->dim_number_req_ICU_Ox + internal->dim_number_GetICU_GetOx_NeedMV + internal->dim_number_GetICU_NoOx + internal->dim_number_GetICU_NoOx_NeedMV + internal->dim_number_GetICU_GetOx_GetMV + internal->dim_number_GetICU_GetOx_NoMV + internal->dim_number_GetICU_GetOx + internal->dim_n_IMod_GetHosp_GetOx_Die2_D_Hospital + internal->dim_n_IMod_GetHosp_GetOx_Surv2_R + internal->dim_n_IMod_GetHosp_NoOx_Die2_D_Hospital + internal->dim_n_IMod_GetHosp_NoOx_Surv2_R + internal->dim_n_ISev_GetICU_GetOx_Die2_D_Hospital + internal->dim_n_ISev_GetICU_GetOx_Surv2_Rec + internal->dim_n_ISev_GetICU_NoOx_Die2_D_Hospital + internal->dim_n_ISev_GetICU_NoOx_Surv2_Rec + internal->dim_n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital + internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec + internal->dim_n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital + internal->dim_n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec + internal->dim_n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital;
+  internal->offset_output_n_IMild_R = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I;
+  internal->offset_output_n_IMod_GetHosp_GetOx_Die2_D_Hospital = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I + internal->dim_n_IMild_R + internal->dim_n_ICase1_ICase2 + internal->dim_n_ICase2_Hosp + internal->dim_n_IRec1_IRec2 + internal->dim_n_IRec2_R + internal->dim_number_GetICU + internal->dim_number_NotICU + internal->dim_number_NotICU_NotOx_NotMV + internal->dim_number_NotICU_NotOx + internal->dim_number_req_Hosp + internal->dim_number_GetHosp + internal->dim_number_NotHosp + internal->dim_number_GetHosp_Ox + internal->dim_number_GetHosp_NoOx + internal->dim_number_req_ICU_Ox + internal->dim_number_GetICU_GetOx_NeedMV + internal->dim_number_GetICU_NoOx + internal->dim_number_GetICU_NoOx_NeedMV + internal->dim_number_GetICU_GetOx_GetMV + internal->dim_number_GetICU_GetOx_NoMV + internal->dim_number_GetICU_GetOx;
+  internal->offset_output_n_IMod_GetHosp_GetOx_Surv2_R = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I + internal->dim_n_IMild_R + internal->dim_n_ICase1_ICase2 + internal->dim_n_ICase2_Hosp + internal->dim_n_IRec1_IRec2 + internal->dim_n_IRec2_R + internal->dim_number_GetICU + internal->dim_number_NotICU + internal->dim_number_NotICU_NotOx_NotMV + internal->dim_number_NotICU_NotOx + internal->dim_number_req_Hosp + internal->dim_number_GetHosp + internal->dim_number_NotHosp + internal->dim_number_GetHosp_Ox + internal->dim_number_GetHosp_NoOx + internal->dim_number_req_ICU_Ox + internal->dim_number_GetICU_GetOx_NeedMV + internal->dim_number_GetICU_NoOx + internal->dim_number_GetICU_NoOx_NeedMV + internal->dim_number_GetICU_GetOx_GetMV + internal->dim_number_GetICU_GetOx_NoMV + internal->dim_number_GetICU_GetOx + internal->dim_n_IMod_GetHosp_GetOx_Die2_D_Hospital;
+  internal->offset_output_n_IMod_GetHosp_NoOx_Die2_D_Hospital = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I + internal->dim_n_IMild_R + internal->dim_n_ICase1_ICase2 + internal->dim_n_ICase2_Hosp + internal->dim_n_IRec1_IRec2 + internal->dim_n_IRec2_R + internal->dim_number_GetICU + internal->dim_number_NotICU + internal->dim_number_NotICU_NotOx_NotMV + internal->dim_number_NotICU_NotOx + internal->dim_number_req_Hosp + internal->dim_number_GetHosp + internal->dim_number_NotHosp + internal->dim_number_GetHosp_Ox + internal->dim_number_GetHosp_NoOx + internal->dim_number_req_ICU_Ox + internal->dim_number_GetICU_GetOx_NeedMV + internal->dim_number_GetICU_NoOx + internal->dim_number_GetICU_NoOx_NeedMV + internal->dim_number_GetICU_GetOx_GetMV + internal->dim_number_GetICU_GetOx_NoMV + internal->dim_number_GetICU_GetOx + internal->dim_n_IMod_GetHosp_GetOx_Die2_D_Hospital + internal->dim_n_IMod_GetHosp_GetOx_Surv2_R;
+  internal->offset_output_n_IMod_GetHosp_NoOx_Surv2_R = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I + internal->dim_n_IMild_R + internal->dim_n_ICase1_ICase2 + internal->dim_n_ICase2_Hosp + internal->dim_n_IRec1_IRec2 + internal->dim_n_IRec2_R + internal->dim_number_GetICU + internal->dim_number_NotICU + internal->dim_number_NotICU_NotOx_NotMV + internal->dim_number_NotICU_NotOx + internal->dim_number_req_Hosp + internal->dim_number_GetHosp + internal->dim_number_NotHosp + internal->dim_number_GetHosp_Ox + internal->dim_number_GetHosp_NoOx + internal->dim_number_req_ICU_Ox + internal->dim_number_GetICU_GetOx_NeedMV + internal->dim_number_GetICU_NoOx + internal->dim_number_GetICU_NoOx_NeedMV + internal->dim_number_GetICU_GetOx_GetMV + internal->dim_number_GetICU_GetOx_NoMV + internal->dim_number_GetICU_GetOx + internal->dim_n_IMod_GetHosp_GetOx_Die2_D_Hospital + internal->dim_n_IMod_GetHosp_GetOx_Surv2_R + internal->dim_n_IMod_GetHosp_NoOx_Die2_D_Hospital;
+  internal->offset_output_n_IRec1_IRec2 = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I + internal->dim_n_IMild_R + internal->dim_n_ICase1_ICase2 + internal->dim_n_ICase2_Hosp;
+  internal->offset_output_n_IRec2_R = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I + internal->dim_n_IMild_R + internal->dim_n_ICase1_ICase2 + internal->dim_n_ICase2_Hosp + internal->dim_n_IRec1_IRec2;
+  internal->offset_output_n_ISev_GetICU_GetOx_Die1 = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV;
+  internal->offset_output_n_ISev_GetICU_GetOx_Die2_D_Hospital = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I + internal->dim_n_IMild_R + internal->dim_n_ICase1_ICase2 + internal->dim_n_ICase2_Hosp + internal->dim_n_IRec1_IRec2 + internal->dim_n_IRec2_R + internal->dim_number_GetICU + internal->dim_number_NotICU + internal->dim_number_NotICU_NotOx_NotMV + internal->dim_number_NotICU_NotOx + internal->dim_number_req_Hosp + internal->dim_number_GetHosp + internal->dim_number_NotHosp + internal->dim_number_GetHosp_Ox + internal->dim_number_GetHosp_NoOx + internal->dim_number_req_ICU_Ox + internal->dim_number_GetICU_GetOx_NeedMV + internal->dim_number_GetICU_NoOx + internal->dim_number_GetICU_NoOx_NeedMV + internal->dim_number_GetICU_GetOx_GetMV + internal->dim_number_GetICU_GetOx_NoMV + internal->dim_number_GetICU_GetOx + internal->dim_n_IMod_GetHosp_GetOx_Die2_D_Hospital + internal->dim_n_IMod_GetHosp_GetOx_Surv2_R + internal->dim_n_IMod_GetHosp_NoOx_Die2_D_Hospital + internal->dim_n_IMod_GetHosp_NoOx_Surv2_R;
+  internal->offset_output_n_ISev_GetICU_GetOx_Surv1 = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1;
+  internal->offset_output_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1;
+  internal->offset_output_n_ISev_GetICU_GetOx_Surv2_Rec = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I + internal->dim_n_IMild_R + internal->dim_n_ICase1_ICase2 + internal->dim_n_ICase2_Hosp + internal->dim_n_IRec1_IRec2 + internal->dim_n_IRec2_R + internal->dim_number_GetICU + internal->dim_number_NotICU + internal->dim_number_NotICU_NotOx_NotMV + internal->dim_number_NotICU_NotOx + internal->dim_number_req_Hosp + internal->dim_number_GetHosp + internal->dim_number_NotHosp + internal->dim_number_GetHosp_Ox + internal->dim_number_GetHosp_NoOx + internal->dim_number_req_ICU_Ox + internal->dim_number_GetICU_GetOx_NeedMV + internal->dim_number_GetICU_NoOx + internal->dim_number_GetICU_NoOx_NeedMV + internal->dim_number_GetICU_GetOx_GetMV + internal->dim_number_GetICU_GetOx_NoMV + internal->dim_number_GetICU_GetOx + internal->dim_n_IMod_GetHosp_GetOx_Die2_D_Hospital + internal->dim_n_IMod_GetHosp_GetOx_Surv2_R + internal->dim_n_IMod_GetHosp_NoOx_Die2_D_Hospital + internal->dim_n_IMod_GetHosp_NoOx_Surv2_R + internal->dim_n_ISev_GetICU_GetOx_Die2_D_Hospital;
+  internal->offset_output_n_ISev_GetICU_NoOx_Die2_D_Hospital = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I + internal->dim_n_IMild_R + internal->dim_n_ICase1_ICase2 + internal->dim_n_ICase2_Hosp + internal->dim_n_IRec1_IRec2 + internal->dim_n_IRec2_R + internal->dim_number_GetICU + internal->dim_number_NotICU + internal->dim_number_NotICU_NotOx_NotMV + internal->dim_number_NotICU_NotOx + internal->dim_number_req_Hosp + internal->dim_number_GetHosp + internal->dim_number_NotHosp + internal->dim_number_GetHosp_Ox + internal->dim_number_GetHosp_NoOx + internal->dim_number_req_ICU_Ox + internal->dim_number_GetICU_GetOx_NeedMV + internal->dim_number_GetICU_NoOx + internal->dim_number_GetICU_NoOx_NeedMV + internal->dim_number_GetICU_GetOx_GetMV + internal->dim_number_GetICU_GetOx_NoMV + internal->dim_number_GetICU_GetOx + internal->dim_n_IMod_GetHosp_GetOx_Die2_D_Hospital + internal->dim_n_IMod_GetHosp_GetOx_Surv2_R + internal->dim_n_IMod_GetHosp_NoOx_Die2_D_Hospital + internal->dim_n_IMod_GetHosp_NoOx_Surv2_R + internal->dim_n_ISev_GetICU_GetOx_Die2_D_Hospital + internal->dim_n_ISev_GetICU_GetOx_Surv2_Rec;
+  internal->offset_output_n_ISev_GetICU_NoOx_Surv2_Rec = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I + internal->dim_n_IMild_R + internal->dim_n_ICase1_ICase2 + internal->dim_n_ICase2_Hosp + internal->dim_n_IRec1_IRec2 + internal->dim_n_IRec2_R + internal->dim_number_GetICU + internal->dim_number_NotICU + internal->dim_number_NotICU_NotOx_NotMV + internal->dim_number_NotICU_NotOx + internal->dim_number_req_Hosp + internal->dim_number_GetHosp + internal->dim_number_NotHosp + internal->dim_number_GetHosp_Ox + internal->dim_number_GetHosp_NoOx + internal->dim_number_req_ICU_Ox + internal->dim_number_GetICU_GetOx_NeedMV + internal->dim_number_GetICU_NoOx + internal->dim_number_GetICU_NoOx_NeedMV + internal->dim_number_GetICU_GetOx_GetMV + internal->dim_number_GetICU_GetOx_NoMV + internal->dim_number_GetICU_GetOx + internal->dim_n_IMod_GetHosp_GetOx_Die2_D_Hospital + internal->dim_n_IMod_GetHosp_GetOx_Surv2_R + internal->dim_n_IMod_GetHosp_NoOx_Die2_D_Hospital + internal->dim_n_IMod_GetHosp_NoOx_Surv2_R + internal->dim_n_ISev_GetICU_GetOx_Die2_D_Hospital + internal->dim_n_ISev_GetICU_GetOx_Surv2_Rec + internal->dim_n_ISev_GetICU_NoOx_Die2_D_Hospital;
+  internal->offset_output_n_PE1_PE2 = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S;
+  internal->offset_output_n_PE2_I = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2;
+  internal->offset_output_n_PE2_ICase1 = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial;
+  internal->offset_output_n_PE2_ICase1_Drug_5 = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5;
+  internal->offset_output_n_PE2_ICase1_initial = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I;
+  internal->offset_output_n_PE2_ICase1_No_Drug_5 = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5;
+  internal->offset_output_n_PE2_IMild = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5;
+  internal->offset_output_n_PE2_IMild_Drug_5 = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild;
+  internal->offset_output_n_PE2_IMild_No_Drug_5 = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5;
+  internal->offset_output_n_PS_PE1 = 44 + internal->dim_n_S_PS;
+  internal->offset_output_n_PS_S = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1;
+  internal->offset_output_n_S_E1 = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV;
+  internal->offset_output_number_GetHosp = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I + internal->dim_n_IMild_R + internal->dim_n_ICase1_ICase2 + internal->dim_n_ICase2_Hosp + internal->dim_n_IRec1_IRec2 + internal->dim_n_IRec2_R + internal->dim_number_GetICU + internal->dim_number_NotICU + internal->dim_number_NotICU_NotOx_NotMV + internal->dim_number_NotICU_NotOx + internal->dim_number_req_Hosp;
+  internal->offset_output_number_GetHosp_NoOx = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I + internal->dim_n_IMild_R + internal->dim_n_ICase1_ICase2 + internal->dim_n_ICase2_Hosp + internal->dim_n_IRec1_IRec2 + internal->dim_n_IRec2_R + internal->dim_number_GetICU + internal->dim_number_NotICU + internal->dim_number_NotICU_NotOx_NotMV + internal->dim_number_NotICU_NotOx + internal->dim_number_req_Hosp + internal->dim_number_GetHosp + internal->dim_number_NotHosp + internal->dim_number_GetHosp_Ox;
+  internal->offset_output_number_GetHosp_Ox = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I + internal->dim_n_IMild_R + internal->dim_n_ICase1_ICase2 + internal->dim_n_ICase2_Hosp + internal->dim_n_IRec1_IRec2 + internal->dim_n_IRec2_R + internal->dim_number_GetICU + internal->dim_number_NotICU + internal->dim_number_NotICU_NotOx_NotMV + internal->dim_number_NotICU_NotOx + internal->dim_number_req_Hosp + internal->dim_number_GetHosp + internal->dim_number_NotHosp;
+  internal->offset_output_number_GetICU = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I + internal->dim_n_IMild_R + internal->dim_n_ICase1_ICase2 + internal->dim_n_ICase2_Hosp + internal->dim_n_IRec1_IRec2 + internal->dim_n_IRec2_R;
+  internal->offset_output_number_GetICU_GetOx = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I + internal->dim_n_IMild_R + internal->dim_n_ICase1_ICase2 + internal->dim_n_ICase2_Hosp + internal->dim_n_IRec1_IRec2 + internal->dim_n_IRec2_R + internal->dim_number_GetICU + internal->dim_number_NotICU + internal->dim_number_NotICU_NotOx_NotMV + internal->dim_number_NotICU_NotOx + internal->dim_number_req_Hosp + internal->dim_number_GetHosp + internal->dim_number_NotHosp + internal->dim_number_GetHosp_Ox + internal->dim_number_GetHosp_NoOx + internal->dim_number_req_ICU_Ox + internal->dim_number_GetICU_GetOx_NeedMV + internal->dim_number_GetICU_NoOx + internal->dim_number_GetICU_NoOx_NeedMV + internal->dim_number_GetICU_GetOx_GetMV + internal->dim_number_GetICU_GetOx_NoMV;
+  internal->offset_output_number_GetICU_GetOx_GetMV = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I + internal->dim_n_IMild_R + internal->dim_n_ICase1_ICase2 + internal->dim_n_ICase2_Hosp + internal->dim_n_IRec1_IRec2 + internal->dim_n_IRec2_R + internal->dim_number_GetICU + internal->dim_number_NotICU + internal->dim_number_NotICU_NotOx_NotMV + internal->dim_number_NotICU_NotOx + internal->dim_number_req_Hosp + internal->dim_number_GetHosp + internal->dim_number_NotHosp + internal->dim_number_GetHosp_Ox + internal->dim_number_GetHosp_NoOx + internal->dim_number_req_ICU_Ox + internal->dim_number_GetICU_GetOx_NeedMV + internal->dim_number_GetICU_NoOx + internal->dim_number_GetICU_NoOx_NeedMV;
+  internal->offset_output_number_GetICU_GetOx_NeedMV = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I + internal->dim_n_IMild_R + internal->dim_n_ICase1_ICase2 + internal->dim_n_ICase2_Hosp + internal->dim_n_IRec1_IRec2 + internal->dim_n_IRec2_R + internal->dim_number_GetICU + internal->dim_number_NotICU + internal->dim_number_NotICU_NotOx_NotMV + internal->dim_number_NotICU_NotOx + internal->dim_number_req_Hosp + internal->dim_number_GetHosp + internal->dim_number_NotHosp + internal->dim_number_GetHosp_Ox + internal->dim_number_GetHosp_NoOx + internal->dim_number_req_ICU_Ox;
+  internal->offset_output_number_GetICU_GetOx_NoMV = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I + internal->dim_n_IMild_R + internal->dim_n_ICase1_ICase2 + internal->dim_n_ICase2_Hosp + internal->dim_n_IRec1_IRec2 + internal->dim_n_IRec2_R + internal->dim_number_GetICU + internal->dim_number_NotICU + internal->dim_number_NotICU_NotOx_NotMV + internal->dim_number_NotICU_NotOx + internal->dim_number_req_Hosp + internal->dim_number_GetHosp + internal->dim_number_NotHosp + internal->dim_number_GetHosp_Ox + internal->dim_number_GetHosp_NoOx + internal->dim_number_req_ICU_Ox + internal->dim_number_GetICU_GetOx_NeedMV + internal->dim_number_GetICU_NoOx + internal->dim_number_GetICU_NoOx_NeedMV + internal->dim_number_GetICU_GetOx_GetMV;
+  internal->offset_output_number_GetICU_NoOx = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I + internal->dim_n_IMild_R + internal->dim_n_ICase1_ICase2 + internal->dim_n_ICase2_Hosp + internal->dim_n_IRec1_IRec2 + internal->dim_n_IRec2_R + internal->dim_number_GetICU + internal->dim_number_NotICU + internal->dim_number_NotICU_NotOx_NotMV + internal->dim_number_NotICU_NotOx + internal->dim_number_req_Hosp + internal->dim_number_GetHosp + internal->dim_number_NotHosp + internal->dim_number_GetHosp_Ox + internal->dim_number_GetHosp_NoOx + internal->dim_number_req_ICU_Ox + internal->dim_number_GetICU_GetOx_NeedMV;
+  internal->offset_output_number_GetICU_NoOx_NeedMV = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I + internal->dim_n_IMild_R + internal->dim_n_ICase1_ICase2 + internal->dim_n_ICase2_Hosp + internal->dim_n_IRec1_IRec2 + internal->dim_n_IRec2_R + internal->dim_number_GetICU + internal->dim_number_NotICU + internal->dim_number_NotICU_NotOx_NotMV + internal->dim_number_NotICU_NotOx + internal->dim_number_req_Hosp + internal->dim_number_GetHosp + internal->dim_number_NotHosp + internal->dim_number_GetHosp_Ox + internal->dim_number_GetHosp_NoOx + internal->dim_number_req_ICU_Ox + internal->dim_number_GetICU_GetOx_NeedMV + internal->dim_number_GetICU_NoOx;
+  internal->offset_output_number_NotHosp = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I + internal->dim_n_IMild_R + internal->dim_n_ICase1_ICase2 + internal->dim_n_ICase2_Hosp + internal->dim_n_IRec1_IRec2 + internal->dim_n_IRec2_R + internal->dim_number_GetICU + internal->dim_number_NotICU + internal->dim_number_NotICU_NotOx_NotMV + internal->dim_number_NotICU_NotOx + internal->dim_number_req_Hosp + internal->dim_number_GetHosp;
+  internal->offset_output_number_NotICU = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I + internal->dim_n_IMild_R + internal->dim_n_ICase1_ICase2 + internal->dim_n_ICase2_Hosp + internal->dim_n_IRec1_IRec2 + internal->dim_n_IRec2_R + internal->dim_number_GetICU;
+  internal->offset_output_number_NotICU_NotOx = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I + internal->dim_n_IMild_R + internal->dim_n_ICase1_ICase2 + internal->dim_n_ICase2_Hosp + internal->dim_n_IRec1_IRec2 + internal->dim_n_IRec2_R + internal->dim_number_GetICU + internal->dim_number_NotICU + internal->dim_number_NotICU_NotOx_NotMV;
+  internal->offset_output_number_NotICU_NotOx_NotMV = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I + internal->dim_n_IMild_R + internal->dim_n_ICase1_ICase2 + internal->dim_n_ICase2_Hosp + internal->dim_n_IRec1_IRec2 + internal->dim_n_IRec2_R + internal->dim_number_GetICU + internal->dim_number_NotICU;
+  internal->offset_output_number_req_Hosp = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I + internal->dim_n_IMild_R + internal->dim_n_ICase1_ICase2 + internal->dim_n_ICase2_Hosp + internal->dim_n_IRec1_IRec2 + internal->dim_n_IRec2_R + internal->dim_number_GetICU + internal->dim_number_NotICU + internal->dim_number_NotICU_NotOx_NotMV + internal->dim_number_NotICU_NotOx;
+  internal->offset_output_number_req_ICU = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial;
+  internal->offset_output_number_req_ICU_initial = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5;
+  internal->offset_output_number_req_ICU_MV = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial;
+  internal->offset_output_number_req_ICU_MV_initial = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU;
+  internal->offset_output_number_req_ICU_Ox = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I + internal->dim_n_IMild_R + internal->dim_n_ICase1_ICase2 + internal->dim_n_ICase2_Hosp + internal->dim_n_IRec1_IRec2 + internal->dim_n_IRec2_R + internal->dim_number_GetICU + internal->dim_number_NotICU + internal->dim_number_NotICU_NotOx_NotMV + internal->dim_number_NotICU_NotOx + internal->dim_number_req_Hosp + internal->dim_number_GetHosp + internal->dim_number_NotHosp + internal->dim_number_GetHosp_Ox + internal->dim_number_GetHosp_NoOx;
+  internal->offset_output_prob_critical_death_get_ICU_get_ox_get_MV = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13;
+  internal->offset_output_prob_critical_death_get_ICU_get_ox_get_MV_baseline = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox;
+  internal->offset_output_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline;
+  internal->offset_output_prob_critical_death_get_ICU_get_ox_no_MV = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13;
+  internal->offset_output_prob_critical_death_get_ICU_get_ox_no_MV_baseline = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV;
+  internal->offset_output_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline;
+  internal->offset_output_prob_critical_death_get_ICU_no_ox_no_MV = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13;
+  internal->offset_output_prob_critical_death_get_ICU_no_ox_no_MV_baseline = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV;
+  internal->offset_output_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline;
+  internal->offset_output_prob_moderate_death_get_hosp_get_ox = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11;
+  internal->offset_output_prob_moderate_death_get_hosp_get_ox_baseline = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2;
+  internal->offset_output_prob_moderate_death_get_hosp_get_ox_Drug_11 = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline;
+  internal->offset_output_prob_moderate_death_get_hosp_no_ox = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11;
+  internal->offset_output_prob_moderate_death_get_hosp_no_ox_baseline = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox;
+  internal->offset_output_prob_moderate_death_get_hosp_no_ox_Drug_11 = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline;
+  internal->offset_output_prob_severe_death_get_ICU_get_ox = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12;
+  internal->offset_output_prob_severe_death_get_ICU_get_ox_baseline = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox;
+  internal->offset_output_prob_severe_death_get_ICU_get_ox_Drug_12 = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline;
+  internal->offset_output_prob_severe_death_get_ICU_no_ox = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12;
+  internal->offset_output_prob_severe_death_get_ICU_no_ox_baseline = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox;
+  internal->offset_output_prob_severe_death_get_ICU_no_ox_Drug_12 = 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline;
+  internal->offset_variable_D = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital;
+  internal->offset_variable_D_Community = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R;
+  internal->offset_variable_D_Hospital = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community;
+  internal->offset_variable_E1 = 1 + internal->dim_S;
+  internal->offset_variable_E2 = 1 + internal->dim_S + internal->dim_E1;
+  internal->offset_variable_IAsymp = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2;
+  internal->offset_variable_ICase1 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild;
+  internal->offset_variable_ICase1_Drug_5 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5;
+  internal->offset_variable_ICase2 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1;
+  internal->offset_variable_ICase2_Drug_5 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5;
+  internal->offset_variable_ICrit_GetICU_GetOx_GetMV_Die1 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2 + internal->dim_IMod_GetHosp_NoOx_Surv1 + internal->dim_IMod_GetHosp_NoOx_Surv2 + internal->dim_IMod_GetHosp_NoOx_Die1 + internal->dim_IMod_GetHosp_NoOx_Die2 + internal->dim_IMod_NoHosp_NoOx_Surv1 + internal->dim_IMod_NoHosp_NoOx_Surv2 + internal->dim_IMod_NoHosp_NoOx_Die1 + internal->dim_IMod_NoHosp_NoOx_Die2 + internal->dim_ISev_GetICU_GetOx_Surv1 + internal->dim_ISev_GetICU_GetOx_Surv2 + internal->dim_ISev_GetICU_GetOx_Die1 + internal->dim_ISev_GetICU_GetOx_Die2 + internal->dim_ISev_GetICU_NoOx_Surv1 + internal->dim_ISev_GetICU_NoOx_Surv2 + internal->dim_ISev_GetICU_NoOx_Die1 + internal->dim_ISev_GetICU_NoOx_Die2 + internal->dim_ISev_NoICU_NoOx_Surv1 + internal->dim_ISev_NoICU_NoOx_Surv2 + internal->dim_ISev_NoICU_NoOx_Die1 + internal->dim_ISev_NoICU_NoOx_Die2 + internal->dim_ICrit_GetICU_GetOx_GetMV_Surv1 + internal->dim_ICrit_GetICU_GetOx_GetMV_Surv2;
+  internal->offset_variable_ICrit_GetICU_GetOx_GetMV_Die2 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2 + internal->dim_IMod_GetHosp_NoOx_Surv1 + internal->dim_IMod_GetHosp_NoOx_Surv2 + internal->dim_IMod_GetHosp_NoOx_Die1 + internal->dim_IMod_GetHosp_NoOx_Die2 + internal->dim_IMod_NoHosp_NoOx_Surv1 + internal->dim_IMod_NoHosp_NoOx_Surv2 + internal->dim_IMod_NoHosp_NoOx_Die1 + internal->dim_IMod_NoHosp_NoOx_Die2 + internal->dim_ISev_GetICU_GetOx_Surv1 + internal->dim_ISev_GetICU_GetOx_Surv2 + internal->dim_ISev_GetICU_GetOx_Die1 + internal->dim_ISev_GetICU_GetOx_Die2 + internal->dim_ISev_GetICU_NoOx_Surv1 + internal->dim_ISev_GetICU_NoOx_Surv2 + internal->dim_ISev_GetICU_NoOx_Die1 + internal->dim_ISev_GetICU_NoOx_Die2 + internal->dim_ISev_NoICU_NoOx_Surv1 + internal->dim_ISev_NoICU_NoOx_Surv2 + internal->dim_ISev_NoICU_NoOx_Die1 + internal->dim_ISev_NoICU_NoOx_Die2 + internal->dim_ICrit_GetICU_GetOx_GetMV_Surv1 + internal->dim_ICrit_GetICU_GetOx_GetMV_Surv2 + internal->dim_ICrit_GetICU_GetOx_GetMV_Die1;
+  internal->offset_variable_ICrit_GetICU_GetOx_GetMV_Surv1 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2 + internal->dim_IMod_GetHosp_NoOx_Surv1 + internal->dim_IMod_GetHosp_NoOx_Surv2 + internal->dim_IMod_GetHosp_NoOx_Die1 + internal->dim_IMod_GetHosp_NoOx_Die2 + internal->dim_IMod_NoHosp_NoOx_Surv1 + internal->dim_IMod_NoHosp_NoOx_Surv2 + internal->dim_IMod_NoHosp_NoOx_Die1 + internal->dim_IMod_NoHosp_NoOx_Die2 + internal->dim_ISev_GetICU_GetOx_Surv1 + internal->dim_ISev_GetICU_GetOx_Surv2 + internal->dim_ISev_GetICU_GetOx_Die1 + internal->dim_ISev_GetICU_GetOx_Die2 + internal->dim_ISev_GetICU_NoOx_Surv1 + internal->dim_ISev_GetICU_NoOx_Surv2 + internal->dim_ISev_GetICU_NoOx_Die1 + internal->dim_ISev_GetICU_NoOx_Die2 + internal->dim_ISev_NoICU_NoOx_Surv1 + internal->dim_ISev_NoICU_NoOx_Surv2 + internal->dim_ISev_NoICU_NoOx_Die1 + internal->dim_ISev_NoICU_NoOx_Die2;
+  internal->offset_variable_ICrit_GetICU_GetOx_GetMV_Surv2 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2 + internal->dim_IMod_GetHosp_NoOx_Surv1 + internal->dim_IMod_GetHosp_NoOx_Surv2 + internal->dim_IMod_GetHosp_NoOx_Die1 + internal->dim_IMod_GetHosp_NoOx_Die2 + internal->dim_IMod_NoHosp_NoOx_Surv1 + internal->dim_IMod_NoHosp_NoOx_Surv2 + internal->dim_IMod_NoHosp_NoOx_Die1 + internal->dim_IMod_NoHosp_NoOx_Die2 + internal->dim_ISev_GetICU_GetOx_Surv1 + internal->dim_ISev_GetICU_GetOx_Surv2 + internal->dim_ISev_GetICU_GetOx_Die1 + internal->dim_ISev_GetICU_GetOx_Die2 + internal->dim_ISev_GetICU_NoOx_Surv1 + internal->dim_ISev_GetICU_NoOx_Surv2 + internal->dim_ISev_GetICU_NoOx_Die1 + internal->dim_ISev_GetICU_NoOx_Die2 + internal->dim_ISev_NoICU_NoOx_Surv1 + internal->dim_ISev_NoICU_NoOx_Surv2 + internal->dim_ISev_NoICU_NoOx_Die1 + internal->dim_ISev_NoICU_NoOx_Die2 + internal->dim_ICrit_GetICU_GetOx_GetMV_Surv1;
+  internal->offset_variable_ICrit_GetICU_GetOx_NoMV_Die1 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2 + internal->dim_IMod_GetHosp_NoOx_Surv1 + internal->dim_IMod_GetHosp_NoOx_Surv2 + internal->dim_IMod_GetHosp_NoOx_Die1 + internal->dim_IMod_GetHosp_NoOx_Die2 + internal->dim_IMod_NoHosp_NoOx_Surv1 + internal->dim_IMod_NoHosp_NoOx_Surv2 + internal->dim_IMod_NoHosp_NoOx_Die1 + internal->dim_IMod_NoHosp_NoOx_Die2 + internal->dim_ISev_GetICU_GetOx_Surv1 + internal->dim_ISev_GetICU_GetOx_Surv2 + internal->dim_ISev_GetICU_GetOx_Die1 + internal->dim_ISev_GetICU_GetOx_Die2 + internal->dim_ISev_GetICU_NoOx_Surv1 + internal->dim_ISev_GetICU_NoOx_Surv2 + internal->dim_ISev_GetICU_NoOx_Die1 + internal->dim_ISev_GetICU_NoOx_Die2 + internal->dim_ISev_NoICU_NoOx_Surv1 + internal->dim_ISev_NoICU_NoOx_Surv2 + internal->dim_ISev_NoICU_NoOx_Die1 + internal->dim_ISev_NoICU_NoOx_Die2 + internal->dim_ICrit_GetICU_GetOx_GetMV_Surv1 + internal->dim_ICrit_GetICU_GetOx_GetMV_Surv2 + internal->dim_ICrit_GetICU_GetOx_GetMV_Die1 + internal->dim_ICrit_GetICU_GetOx_GetMV_Die2 + internal->dim_ICrit_GetICU_GetOx_NoMV_Surv1 + internal->dim_ICrit_GetICU_GetOx_NoMV_Surv2;
+  internal->offset_variable_ICrit_GetICU_GetOx_NoMV_Die2 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2 + internal->dim_IMod_GetHosp_NoOx_Surv1 + internal->dim_IMod_GetHosp_NoOx_Surv2 + internal->dim_IMod_GetHosp_NoOx_Die1 + internal->dim_IMod_GetHosp_NoOx_Die2 + internal->dim_IMod_NoHosp_NoOx_Surv1 + internal->dim_IMod_NoHosp_NoOx_Surv2 + internal->dim_IMod_NoHosp_NoOx_Die1 + internal->dim_IMod_NoHosp_NoOx_Die2 + internal->dim_ISev_GetICU_GetOx_Surv1 + internal->dim_ISev_GetICU_GetOx_Surv2 + internal->dim_ISev_GetICU_GetOx_Die1 + internal->dim_ISev_GetICU_GetOx_Die2 + internal->dim_ISev_GetICU_NoOx_Surv1 + internal->dim_ISev_GetICU_NoOx_Surv2 + internal->dim_ISev_GetICU_NoOx_Die1 + internal->dim_ISev_GetICU_NoOx_Die2 + internal->dim_ISev_NoICU_NoOx_Surv1 + internal->dim_ISev_NoICU_NoOx_Surv2 + internal->dim_ISev_NoICU_NoOx_Die1 + internal->dim_ISev_NoICU_NoOx_Die2 + internal->dim_ICrit_GetICU_GetOx_GetMV_Surv1 + internal->dim_ICrit_GetICU_GetOx_GetMV_Surv2 + internal->dim_ICrit_GetICU_GetOx_GetMV_Die1 + internal->dim_ICrit_GetICU_GetOx_GetMV_Die2 + internal->dim_ICrit_GetICU_GetOx_NoMV_Surv1 + internal->dim_ICrit_GetICU_GetOx_NoMV_Surv2 + internal->dim_ICrit_GetICU_GetOx_NoMV_Die1;
+  internal->offset_variable_ICrit_GetICU_GetOx_NoMV_Surv1 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2 + internal->dim_IMod_GetHosp_NoOx_Surv1 + internal->dim_IMod_GetHosp_NoOx_Surv2 + internal->dim_IMod_GetHosp_NoOx_Die1 + internal->dim_IMod_GetHosp_NoOx_Die2 + internal->dim_IMod_NoHosp_NoOx_Surv1 + internal->dim_IMod_NoHosp_NoOx_Surv2 + internal->dim_IMod_NoHosp_NoOx_Die1 + internal->dim_IMod_NoHosp_NoOx_Die2 + internal->dim_ISev_GetICU_GetOx_Surv1 + internal->dim_ISev_GetICU_GetOx_Surv2 + internal->dim_ISev_GetICU_GetOx_Die1 + internal->dim_ISev_GetICU_GetOx_Die2 + internal->dim_ISev_GetICU_NoOx_Surv1 + internal->dim_ISev_GetICU_NoOx_Surv2 + internal->dim_ISev_GetICU_NoOx_Die1 + internal->dim_ISev_GetICU_NoOx_Die2 + internal->dim_ISev_NoICU_NoOx_Surv1 + internal->dim_ISev_NoICU_NoOx_Surv2 + internal->dim_ISev_NoICU_NoOx_Die1 + internal->dim_ISev_NoICU_NoOx_Die2 + internal->dim_ICrit_GetICU_GetOx_GetMV_Surv1 + internal->dim_ICrit_GetICU_GetOx_GetMV_Surv2 + internal->dim_ICrit_GetICU_GetOx_GetMV_Die1 + internal->dim_ICrit_GetICU_GetOx_GetMV_Die2;
+  internal->offset_variable_ICrit_GetICU_GetOx_NoMV_Surv2 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2 + internal->dim_IMod_GetHosp_NoOx_Surv1 + internal->dim_IMod_GetHosp_NoOx_Surv2 + internal->dim_IMod_GetHosp_NoOx_Die1 + internal->dim_IMod_GetHosp_NoOx_Die2 + internal->dim_IMod_NoHosp_NoOx_Surv1 + internal->dim_IMod_NoHosp_NoOx_Surv2 + internal->dim_IMod_NoHosp_NoOx_Die1 + internal->dim_IMod_NoHosp_NoOx_Die2 + internal->dim_ISev_GetICU_GetOx_Surv1 + internal->dim_ISev_GetICU_GetOx_Surv2 + internal->dim_ISev_GetICU_GetOx_Die1 + internal->dim_ISev_GetICU_GetOx_Die2 + internal->dim_ISev_GetICU_NoOx_Surv1 + internal->dim_ISev_GetICU_NoOx_Surv2 + internal->dim_ISev_GetICU_NoOx_Die1 + internal->dim_ISev_GetICU_NoOx_Die2 + internal->dim_ISev_NoICU_NoOx_Surv1 + internal->dim_ISev_NoICU_NoOx_Surv2 + internal->dim_ISev_NoICU_NoOx_Die1 + internal->dim_ISev_NoICU_NoOx_Die2 + internal->dim_ICrit_GetICU_GetOx_GetMV_Surv1 + internal->dim_ICrit_GetICU_GetOx_GetMV_Surv2 + internal->dim_ICrit_GetICU_GetOx_GetMV_Die1 + internal->dim_ICrit_GetICU_GetOx_GetMV_Die2 + internal->dim_ICrit_GetICU_GetOx_NoMV_Surv1;
+  internal->offset_variable_ICrit_GetICU_NoOx_NoMV_Die1 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2 + internal->dim_IMod_GetHosp_NoOx_Surv1 + internal->dim_IMod_GetHosp_NoOx_Surv2 + internal->dim_IMod_GetHosp_NoOx_Die1 + internal->dim_IMod_GetHosp_NoOx_Die2 + internal->dim_IMod_NoHosp_NoOx_Surv1 + internal->dim_IMod_NoHosp_NoOx_Surv2 + internal->dim_IMod_NoHosp_NoOx_Die1 + internal->dim_IMod_NoHosp_NoOx_Die2 + internal->dim_ISev_GetICU_GetOx_Surv1 + internal->dim_ISev_GetICU_GetOx_Surv2 + internal->dim_ISev_GetICU_GetOx_Die1 + internal->dim_ISev_GetICU_GetOx_Die2 + internal->dim_ISev_GetICU_NoOx_Surv1 + internal->dim_ISev_GetICU_NoOx_Surv2 + internal->dim_ISev_GetICU_NoOx_Die1 + internal->dim_ISev_GetICU_NoOx_Die2 + internal->dim_ISev_NoICU_NoOx_Surv1 + internal->dim_ISev_NoICU_NoOx_Surv2 + internal->dim_ISev_NoICU_NoOx_Die1 + internal->dim_ISev_NoICU_NoOx_Die2 + internal->dim_ICrit_GetICU_GetOx_GetMV_Surv1 + internal->dim_ICrit_GetICU_GetOx_GetMV_Surv2 + internal->dim_ICrit_GetICU_GetOx_GetMV_Die1 + internal->dim_ICrit_GetICU_GetOx_GetMV_Die2 + internal->dim_ICrit_GetICU_GetOx_NoMV_Surv1 + internal->dim_ICrit_GetICU_GetOx_NoMV_Surv2 + internal->dim_ICrit_GetICU_GetOx_NoMV_Die1 + internal->dim_ICrit_GetICU_GetOx_NoMV_Die2 + internal->dim_ICrit_GetICU_NoOx_NoMV_Surv1 + internal->dim_ICrit_GetICU_NoOx_NoMV_Surv2;
+  internal->offset_variable_ICrit_GetICU_NoOx_NoMV_Die2 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2 + internal->dim_IMod_GetHosp_NoOx_Surv1 + internal->dim_IMod_GetHosp_NoOx_Surv2 + internal->dim_IMod_GetHosp_NoOx_Die1 + internal->dim_IMod_GetHosp_NoOx_Die2 + internal->dim_IMod_NoHosp_NoOx_Surv1 + internal->dim_IMod_NoHosp_NoOx_Surv2 + internal->dim_IMod_NoHosp_NoOx_Die1 + internal->dim_IMod_NoHosp_NoOx_Die2 + internal->dim_ISev_GetICU_GetOx_Surv1 + internal->dim_ISev_GetICU_GetOx_Surv2 + internal->dim_ISev_GetICU_GetOx_Die1 + internal->dim_ISev_GetICU_GetOx_Die2 + internal->dim_ISev_GetICU_NoOx_Surv1 + internal->dim_ISev_GetICU_NoOx_Surv2 + internal->dim_ISev_GetICU_NoOx_Die1 + internal->dim_ISev_GetICU_NoOx_Die2 + internal->dim_ISev_NoICU_NoOx_Surv1 + internal->dim_ISev_NoICU_NoOx_Surv2 + internal->dim_ISev_NoICU_NoOx_Die1 + internal->dim_ISev_NoICU_NoOx_Die2 + internal->dim_ICrit_GetICU_GetOx_GetMV_Surv1 + internal->dim_ICrit_GetICU_GetOx_GetMV_Surv2 + internal->dim_ICrit_GetICU_GetOx_GetMV_Die1 + internal->dim_ICrit_GetICU_GetOx_GetMV_Die2 + internal->dim_ICrit_GetICU_GetOx_NoMV_Surv1 + internal->dim_ICrit_GetICU_GetOx_NoMV_Surv2 + internal->dim_ICrit_GetICU_GetOx_NoMV_Die1 + internal->dim_ICrit_GetICU_GetOx_NoMV_Die2 + internal->dim_ICrit_GetICU_NoOx_NoMV_Surv1 + internal->dim_ICrit_GetICU_NoOx_NoMV_Surv2 + internal->dim_ICrit_GetICU_NoOx_NoMV_Die1;
+  internal->offset_variable_ICrit_GetICU_NoOx_NoMV_Surv1 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2 + internal->dim_IMod_GetHosp_NoOx_Surv1 + internal->dim_IMod_GetHosp_NoOx_Surv2 + internal->dim_IMod_GetHosp_NoOx_Die1 + internal->dim_IMod_GetHosp_NoOx_Die2 + internal->dim_IMod_NoHosp_NoOx_Surv1 + internal->dim_IMod_NoHosp_NoOx_Surv2 + internal->dim_IMod_NoHosp_NoOx_Die1 + internal->dim_IMod_NoHosp_NoOx_Die2 + internal->dim_ISev_GetICU_GetOx_Surv1 + internal->dim_ISev_GetICU_GetOx_Surv2 + internal->dim_ISev_GetICU_GetOx_Die1 + internal->dim_ISev_GetICU_GetOx_Die2 + internal->dim_ISev_GetICU_NoOx_Surv1 + internal->dim_ISev_GetICU_NoOx_Surv2 + internal->dim_ISev_GetICU_NoOx_Die1 + internal->dim_ISev_GetICU_NoOx_Die2 + internal->dim_ISev_NoICU_NoOx_Surv1 + internal->dim_ISev_NoICU_NoOx_Surv2 + internal->dim_ISev_NoICU_NoOx_Die1 + internal->dim_ISev_NoICU_NoOx_Die2 + internal->dim_ICrit_GetICU_GetOx_GetMV_Surv1 + internal->dim_ICrit_GetICU_GetOx_GetMV_Surv2 + internal->dim_ICrit_GetICU_GetOx_GetMV_Die1 + internal->dim_ICrit_GetICU_GetOx_GetMV_Die2 + internal->dim_ICrit_GetICU_GetOx_NoMV_Surv1 + internal->dim_ICrit_GetICU_GetOx_NoMV_Surv2 + internal->dim_ICrit_GetICU_GetOx_NoMV_Die1 + internal->dim_ICrit_GetICU_GetOx_NoMV_Die2;
+  internal->offset_variable_ICrit_GetICU_NoOx_NoMV_Surv2 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2 + internal->dim_IMod_GetHosp_NoOx_Surv1 + internal->dim_IMod_GetHosp_NoOx_Surv2 + internal->dim_IMod_GetHosp_NoOx_Die1 + internal->dim_IMod_GetHosp_NoOx_Die2 + internal->dim_IMod_NoHosp_NoOx_Surv1 + internal->dim_IMod_NoHosp_NoOx_Surv2 + internal->dim_IMod_NoHosp_NoOx_Die1 + internal->dim_IMod_NoHosp_NoOx_Die2 + internal->dim_ISev_GetICU_GetOx_Surv1 + internal->dim_ISev_GetICU_GetOx_Surv2 + internal->dim_ISev_GetICU_GetOx_Die1 + internal->dim_ISev_GetICU_GetOx_Die2 + internal->dim_ISev_GetICU_NoOx_Surv1 + internal->dim_ISev_GetICU_NoOx_Surv2 + internal->dim_ISev_GetICU_NoOx_Die1 + internal->dim_ISev_GetICU_NoOx_Die2 + internal->dim_ISev_NoICU_NoOx_Surv1 + internal->dim_ISev_NoICU_NoOx_Surv2 + internal->dim_ISev_NoICU_NoOx_Die1 + internal->dim_ISev_NoICU_NoOx_Die2 + internal->dim_ICrit_GetICU_GetOx_GetMV_Surv1 + internal->dim_ICrit_GetICU_GetOx_GetMV_Surv2 + internal->dim_ICrit_GetICU_GetOx_GetMV_Die1 + internal->dim_ICrit_GetICU_GetOx_GetMV_Die2 + internal->dim_ICrit_GetICU_GetOx_NoMV_Surv1 + internal->dim_ICrit_GetICU_GetOx_NoMV_Surv2 + internal->dim_ICrit_GetICU_GetOx_NoMV_Die1 + internal->dim_ICrit_GetICU_GetOx_NoMV_Die2 + internal->dim_ICrit_GetICU_NoOx_NoMV_Surv1;
+  internal->offset_variable_ICrit_NoICU_NoOx_NoMV_Die1 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2 + internal->dim_IMod_GetHosp_NoOx_Surv1 + internal->dim_IMod_GetHosp_NoOx_Surv2 + internal->dim_IMod_GetHosp_NoOx_Die1 + internal->dim_IMod_GetHosp_NoOx_Die2 + internal->dim_IMod_NoHosp_NoOx_Surv1 + internal->dim_IMod_NoHosp_NoOx_Surv2 + internal->dim_IMod_NoHosp_NoOx_Die1 + internal->dim_IMod_NoHosp_NoOx_Die2 + internal->dim_ISev_GetICU_GetOx_Surv1 + internal->dim_ISev_GetICU_GetOx_Surv2 + internal->dim_ISev_GetICU_GetOx_Die1 + internal->dim_ISev_GetICU_GetOx_Die2 + internal->dim_ISev_GetICU_NoOx_Surv1 + internal->dim_ISev_GetICU_NoOx_Surv2 + internal->dim_ISev_GetICU_NoOx_Die1 + internal->dim_ISev_GetICU_NoOx_Die2 + internal->dim_ISev_NoICU_NoOx_Surv1 + internal->dim_ISev_NoICU_NoOx_Surv2 + internal->dim_ISev_NoICU_NoOx_Die1 + internal->dim_ISev_NoICU_NoOx_Die2 + internal->dim_ICrit_GetICU_GetOx_GetMV_Surv1 + internal->dim_ICrit_GetICU_GetOx_GetMV_Surv2 + internal->dim_ICrit_GetICU_GetOx_GetMV_Die1 + internal->dim_ICrit_GetICU_GetOx_GetMV_Die2 + internal->dim_ICrit_GetICU_GetOx_NoMV_Surv1 + internal->dim_ICrit_GetICU_GetOx_NoMV_Surv2 + internal->dim_ICrit_GetICU_GetOx_NoMV_Die1 + internal->dim_ICrit_GetICU_GetOx_NoMV_Die2 + internal->dim_ICrit_GetICU_NoOx_NoMV_Surv1 + internal->dim_ICrit_GetICU_NoOx_NoMV_Surv2 + internal->dim_ICrit_GetICU_NoOx_NoMV_Die1 + internal->dim_ICrit_GetICU_NoOx_NoMV_Die2 + internal->dim_ICrit_NoICU_NoOx_NoMV_Surv1 + internal->dim_ICrit_NoICU_NoOx_NoMV_Surv2;
+  internal->offset_variable_ICrit_NoICU_NoOx_NoMV_Die2 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2 + internal->dim_IMod_GetHosp_NoOx_Surv1 + internal->dim_IMod_GetHosp_NoOx_Surv2 + internal->dim_IMod_GetHosp_NoOx_Die1 + internal->dim_IMod_GetHosp_NoOx_Die2 + internal->dim_IMod_NoHosp_NoOx_Surv1 + internal->dim_IMod_NoHosp_NoOx_Surv2 + internal->dim_IMod_NoHosp_NoOx_Die1 + internal->dim_IMod_NoHosp_NoOx_Die2 + internal->dim_ISev_GetICU_GetOx_Surv1 + internal->dim_ISev_GetICU_GetOx_Surv2 + internal->dim_ISev_GetICU_GetOx_Die1 + internal->dim_ISev_GetICU_GetOx_Die2 + internal->dim_ISev_GetICU_NoOx_Surv1 + internal->dim_ISev_GetICU_NoOx_Surv2 + internal->dim_ISev_GetICU_NoOx_Die1 + internal->dim_ISev_GetICU_NoOx_Die2 + internal->dim_ISev_NoICU_NoOx_Surv1 + internal->dim_ISev_NoICU_NoOx_Surv2 + internal->dim_ISev_NoICU_NoOx_Die1 + internal->dim_ISev_NoICU_NoOx_Die2 + internal->dim_ICrit_GetICU_GetOx_GetMV_Surv1 + internal->dim_ICrit_GetICU_GetOx_GetMV_Surv2 + internal->dim_ICrit_GetICU_GetOx_GetMV_Die1 + internal->dim_ICrit_GetICU_GetOx_GetMV_Die2 + internal->dim_ICrit_GetICU_GetOx_NoMV_Surv1 + internal->dim_ICrit_GetICU_GetOx_NoMV_Surv2 + internal->dim_ICrit_GetICU_GetOx_NoMV_Die1 + internal->dim_ICrit_GetICU_GetOx_NoMV_Die2 + internal->dim_ICrit_GetICU_NoOx_NoMV_Surv1 + internal->dim_ICrit_GetICU_NoOx_NoMV_Surv2 + internal->dim_ICrit_GetICU_NoOx_NoMV_Die1 + internal->dim_ICrit_GetICU_NoOx_NoMV_Die2 + internal->dim_ICrit_NoICU_NoOx_NoMV_Surv1 + internal->dim_ICrit_NoICU_NoOx_NoMV_Surv2 + internal->dim_ICrit_NoICU_NoOx_NoMV_Die1;
+  internal->offset_variable_ICrit_NoICU_NoOx_NoMV_Surv1 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2 + internal->dim_IMod_GetHosp_NoOx_Surv1 + internal->dim_IMod_GetHosp_NoOx_Surv2 + internal->dim_IMod_GetHosp_NoOx_Die1 + internal->dim_IMod_GetHosp_NoOx_Die2 + internal->dim_IMod_NoHosp_NoOx_Surv1 + internal->dim_IMod_NoHosp_NoOx_Surv2 + internal->dim_IMod_NoHosp_NoOx_Die1 + internal->dim_IMod_NoHosp_NoOx_Die2 + internal->dim_ISev_GetICU_GetOx_Surv1 + internal->dim_ISev_GetICU_GetOx_Surv2 + internal->dim_ISev_GetICU_GetOx_Die1 + internal->dim_ISev_GetICU_GetOx_Die2 + internal->dim_ISev_GetICU_NoOx_Surv1 + internal->dim_ISev_GetICU_NoOx_Surv2 + internal->dim_ISev_GetICU_NoOx_Die1 + internal->dim_ISev_GetICU_NoOx_Die2 + internal->dim_ISev_NoICU_NoOx_Surv1 + internal->dim_ISev_NoICU_NoOx_Surv2 + internal->dim_ISev_NoICU_NoOx_Die1 + internal->dim_ISev_NoICU_NoOx_Die2 + internal->dim_ICrit_GetICU_GetOx_GetMV_Surv1 + internal->dim_ICrit_GetICU_GetOx_GetMV_Surv2 + internal->dim_ICrit_GetICU_GetOx_GetMV_Die1 + internal->dim_ICrit_GetICU_GetOx_GetMV_Die2 + internal->dim_ICrit_GetICU_GetOx_NoMV_Surv1 + internal->dim_ICrit_GetICU_GetOx_NoMV_Surv2 + internal->dim_ICrit_GetICU_GetOx_NoMV_Die1 + internal->dim_ICrit_GetICU_GetOx_NoMV_Die2 + internal->dim_ICrit_GetICU_NoOx_NoMV_Surv1 + internal->dim_ICrit_GetICU_NoOx_NoMV_Surv2 + internal->dim_ICrit_GetICU_NoOx_NoMV_Die1 + internal->dim_ICrit_GetICU_NoOx_NoMV_Die2;
+  internal->offset_variable_ICrit_NoICU_NoOx_NoMV_Surv2 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2 + internal->dim_IMod_GetHosp_NoOx_Surv1 + internal->dim_IMod_GetHosp_NoOx_Surv2 + internal->dim_IMod_GetHosp_NoOx_Die1 + internal->dim_IMod_GetHosp_NoOx_Die2 + internal->dim_IMod_NoHosp_NoOx_Surv1 + internal->dim_IMod_NoHosp_NoOx_Surv2 + internal->dim_IMod_NoHosp_NoOx_Die1 + internal->dim_IMod_NoHosp_NoOx_Die2 + internal->dim_ISev_GetICU_GetOx_Surv1 + internal->dim_ISev_GetICU_GetOx_Surv2 + internal->dim_ISev_GetICU_GetOx_Die1 + internal->dim_ISev_GetICU_GetOx_Die2 + internal->dim_ISev_GetICU_NoOx_Surv1 + internal->dim_ISev_GetICU_NoOx_Surv2 + internal->dim_ISev_GetICU_NoOx_Die1 + internal->dim_ISev_GetICU_NoOx_Die2 + internal->dim_ISev_NoICU_NoOx_Surv1 + internal->dim_ISev_NoICU_NoOx_Surv2 + internal->dim_ISev_NoICU_NoOx_Die1 + internal->dim_ISev_NoICU_NoOx_Die2 + internal->dim_ICrit_GetICU_GetOx_GetMV_Surv1 + internal->dim_ICrit_GetICU_GetOx_GetMV_Surv2 + internal->dim_ICrit_GetICU_GetOx_GetMV_Die1 + internal->dim_ICrit_GetICU_GetOx_GetMV_Die2 + internal->dim_ICrit_GetICU_GetOx_NoMV_Surv1 + internal->dim_ICrit_GetICU_GetOx_NoMV_Surv2 + internal->dim_ICrit_GetICU_GetOx_NoMV_Die1 + internal->dim_ICrit_GetICU_GetOx_NoMV_Die2 + internal->dim_ICrit_GetICU_NoOx_NoMV_Surv1 + internal->dim_ICrit_GetICU_NoOx_NoMV_Surv2 + internal->dim_ICrit_GetICU_NoOx_NoMV_Die1 + internal->dim_ICrit_GetICU_NoOx_NoMV_Die2 + internal->dim_ICrit_NoICU_NoOx_NoMV_Surv1;
+  internal->offset_variable_IMild = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp;
+  internal->offset_variable_IMild_Drug_5 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2;
+  internal->offset_variable_IMod_GetHosp_GetOx_Die1 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2;
+  internal->offset_variable_IMod_GetHosp_GetOx_Die2 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1;
+  internal->offset_variable_IMod_GetHosp_GetOx_Surv1 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2;
+  internal->offset_variable_IMod_GetHosp_GetOx_Surv2 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1;
+  internal->offset_variable_IMod_GetHosp_NoOx_Die1 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2 + internal->dim_IMod_GetHosp_NoOx_Surv1 + internal->dim_IMod_GetHosp_NoOx_Surv2;
+  internal->offset_variable_IMod_GetHosp_NoOx_Die2 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2 + internal->dim_IMod_GetHosp_NoOx_Surv1 + internal->dim_IMod_GetHosp_NoOx_Surv2 + internal->dim_IMod_GetHosp_NoOx_Die1;
+  internal->offset_variable_IMod_GetHosp_NoOx_Surv1 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2;
+  internal->offset_variable_IMod_GetHosp_NoOx_Surv2 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2 + internal->dim_IMod_GetHosp_NoOx_Surv1;
+  internal->offset_variable_IMod_NoHosp_NoOx_Die1 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2 + internal->dim_IMod_GetHosp_NoOx_Surv1 + internal->dim_IMod_GetHosp_NoOx_Surv2 + internal->dim_IMod_GetHosp_NoOx_Die1 + internal->dim_IMod_GetHosp_NoOx_Die2 + internal->dim_IMod_NoHosp_NoOx_Surv1 + internal->dim_IMod_NoHosp_NoOx_Surv2;
+  internal->offset_variable_IMod_NoHosp_NoOx_Die2 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2 + internal->dim_IMod_GetHosp_NoOx_Surv1 + internal->dim_IMod_GetHosp_NoOx_Surv2 + internal->dim_IMod_GetHosp_NoOx_Die1 + internal->dim_IMod_GetHosp_NoOx_Die2 + internal->dim_IMod_NoHosp_NoOx_Surv1 + internal->dim_IMod_NoHosp_NoOx_Surv2 + internal->dim_IMod_NoHosp_NoOx_Die1;
+  internal->offset_variable_IMod_NoHosp_NoOx_Surv1 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2 + internal->dim_IMod_GetHosp_NoOx_Surv1 + internal->dim_IMod_GetHosp_NoOx_Surv2 + internal->dim_IMod_GetHosp_NoOx_Die1 + internal->dim_IMod_GetHosp_NoOx_Die2;
+  internal->offset_variable_IMod_NoHosp_NoOx_Surv2 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2 + internal->dim_IMod_GetHosp_NoOx_Surv1 + internal->dim_IMod_GetHosp_NoOx_Surv2 + internal->dim_IMod_GetHosp_NoOx_Die1 + internal->dim_IMod_GetHosp_NoOx_Die2 + internal->dim_IMod_NoHosp_NoOx_Surv1;
+  internal->offset_variable_IRec1 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5;
+  internal->offset_variable_IRec2 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1;
+  internal->offset_variable_ISev_GetICU_GetOx_Die1 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2 + internal->dim_IMod_GetHosp_NoOx_Surv1 + internal->dim_IMod_GetHosp_NoOx_Surv2 + internal->dim_IMod_GetHosp_NoOx_Die1 + internal->dim_IMod_GetHosp_NoOx_Die2 + internal->dim_IMod_NoHosp_NoOx_Surv1 + internal->dim_IMod_NoHosp_NoOx_Surv2 + internal->dim_IMod_NoHosp_NoOx_Die1 + internal->dim_IMod_NoHosp_NoOx_Die2 + internal->dim_ISev_GetICU_GetOx_Surv1 + internal->dim_ISev_GetICU_GetOx_Surv2;
+  internal->offset_variable_ISev_GetICU_GetOx_Die2 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2 + internal->dim_IMod_GetHosp_NoOx_Surv1 + internal->dim_IMod_GetHosp_NoOx_Surv2 + internal->dim_IMod_GetHosp_NoOx_Die1 + internal->dim_IMod_GetHosp_NoOx_Die2 + internal->dim_IMod_NoHosp_NoOx_Surv1 + internal->dim_IMod_NoHosp_NoOx_Surv2 + internal->dim_IMod_NoHosp_NoOx_Die1 + internal->dim_IMod_NoHosp_NoOx_Die2 + internal->dim_ISev_GetICU_GetOx_Surv1 + internal->dim_ISev_GetICU_GetOx_Surv2 + internal->dim_ISev_GetICU_GetOx_Die1;
+  internal->offset_variable_ISev_GetICU_GetOx_Surv1 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2 + internal->dim_IMod_GetHosp_NoOx_Surv1 + internal->dim_IMod_GetHosp_NoOx_Surv2 + internal->dim_IMod_GetHosp_NoOx_Die1 + internal->dim_IMod_GetHosp_NoOx_Die2 + internal->dim_IMod_NoHosp_NoOx_Surv1 + internal->dim_IMod_NoHosp_NoOx_Surv2 + internal->dim_IMod_NoHosp_NoOx_Die1 + internal->dim_IMod_NoHosp_NoOx_Die2;
+  internal->offset_variable_ISev_GetICU_GetOx_Surv2 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2 + internal->dim_IMod_GetHosp_NoOx_Surv1 + internal->dim_IMod_GetHosp_NoOx_Surv2 + internal->dim_IMod_GetHosp_NoOx_Die1 + internal->dim_IMod_GetHosp_NoOx_Die2 + internal->dim_IMod_NoHosp_NoOx_Surv1 + internal->dim_IMod_NoHosp_NoOx_Surv2 + internal->dim_IMod_NoHosp_NoOx_Die1 + internal->dim_IMod_NoHosp_NoOx_Die2 + internal->dim_ISev_GetICU_GetOx_Surv1;
+  internal->offset_variable_ISev_GetICU_NoOx_Die1 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2 + internal->dim_IMod_GetHosp_NoOx_Surv1 + internal->dim_IMod_GetHosp_NoOx_Surv2 + internal->dim_IMod_GetHosp_NoOx_Die1 + internal->dim_IMod_GetHosp_NoOx_Die2 + internal->dim_IMod_NoHosp_NoOx_Surv1 + internal->dim_IMod_NoHosp_NoOx_Surv2 + internal->dim_IMod_NoHosp_NoOx_Die1 + internal->dim_IMod_NoHosp_NoOx_Die2 + internal->dim_ISev_GetICU_GetOx_Surv1 + internal->dim_ISev_GetICU_GetOx_Surv2 + internal->dim_ISev_GetICU_GetOx_Die1 + internal->dim_ISev_GetICU_GetOx_Die2 + internal->dim_ISev_GetICU_NoOx_Surv1 + internal->dim_ISev_GetICU_NoOx_Surv2;
+  internal->offset_variable_ISev_GetICU_NoOx_Die2 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2 + internal->dim_IMod_GetHosp_NoOx_Surv1 + internal->dim_IMod_GetHosp_NoOx_Surv2 + internal->dim_IMod_GetHosp_NoOx_Die1 + internal->dim_IMod_GetHosp_NoOx_Die2 + internal->dim_IMod_NoHosp_NoOx_Surv1 + internal->dim_IMod_NoHosp_NoOx_Surv2 + internal->dim_IMod_NoHosp_NoOx_Die1 + internal->dim_IMod_NoHosp_NoOx_Die2 + internal->dim_ISev_GetICU_GetOx_Surv1 + internal->dim_ISev_GetICU_GetOx_Surv2 + internal->dim_ISev_GetICU_GetOx_Die1 + internal->dim_ISev_GetICU_GetOx_Die2 + internal->dim_ISev_GetICU_NoOx_Surv1 + internal->dim_ISev_GetICU_NoOx_Surv2 + internal->dim_ISev_GetICU_NoOx_Die1;
+  internal->offset_variable_ISev_GetICU_NoOx_Surv1 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2 + internal->dim_IMod_GetHosp_NoOx_Surv1 + internal->dim_IMod_GetHosp_NoOx_Surv2 + internal->dim_IMod_GetHosp_NoOx_Die1 + internal->dim_IMod_GetHosp_NoOx_Die2 + internal->dim_IMod_NoHosp_NoOx_Surv1 + internal->dim_IMod_NoHosp_NoOx_Surv2 + internal->dim_IMod_NoHosp_NoOx_Die1 + internal->dim_IMod_NoHosp_NoOx_Die2 + internal->dim_ISev_GetICU_GetOx_Surv1 + internal->dim_ISev_GetICU_GetOx_Surv2 + internal->dim_ISev_GetICU_GetOx_Die1 + internal->dim_ISev_GetICU_GetOx_Die2;
+  internal->offset_variable_ISev_GetICU_NoOx_Surv2 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2 + internal->dim_IMod_GetHosp_NoOx_Surv1 + internal->dim_IMod_GetHosp_NoOx_Surv2 + internal->dim_IMod_GetHosp_NoOx_Die1 + internal->dim_IMod_GetHosp_NoOx_Die2 + internal->dim_IMod_NoHosp_NoOx_Surv1 + internal->dim_IMod_NoHosp_NoOx_Surv2 + internal->dim_IMod_NoHosp_NoOx_Die1 + internal->dim_IMod_NoHosp_NoOx_Die2 + internal->dim_ISev_GetICU_GetOx_Surv1 + internal->dim_ISev_GetICU_GetOx_Surv2 + internal->dim_ISev_GetICU_GetOx_Die1 + internal->dim_ISev_GetICU_GetOx_Die2 + internal->dim_ISev_GetICU_NoOx_Surv1;
+  internal->offset_variable_ISev_NoICU_NoOx_Die1 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2 + internal->dim_IMod_GetHosp_NoOx_Surv1 + internal->dim_IMod_GetHosp_NoOx_Surv2 + internal->dim_IMod_GetHosp_NoOx_Die1 + internal->dim_IMod_GetHosp_NoOx_Die2 + internal->dim_IMod_NoHosp_NoOx_Surv1 + internal->dim_IMod_NoHosp_NoOx_Surv2 + internal->dim_IMod_NoHosp_NoOx_Die1 + internal->dim_IMod_NoHosp_NoOx_Die2 + internal->dim_ISev_GetICU_GetOx_Surv1 + internal->dim_ISev_GetICU_GetOx_Surv2 + internal->dim_ISev_GetICU_GetOx_Die1 + internal->dim_ISev_GetICU_GetOx_Die2 + internal->dim_ISev_GetICU_NoOx_Surv1 + internal->dim_ISev_GetICU_NoOx_Surv2 + internal->dim_ISev_GetICU_NoOx_Die1 + internal->dim_ISev_GetICU_NoOx_Die2 + internal->dim_ISev_NoICU_NoOx_Surv1 + internal->dim_ISev_NoICU_NoOx_Surv2;
+  internal->offset_variable_ISev_NoICU_NoOx_Die2 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2 + internal->dim_IMod_GetHosp_NoOx_Surv1 + internal->dim_IMod_GetHosp_NoOx_Surv2 + internal->dim_IMod_GetHosp_NoOx_Die1 + internal->dim_IMod_GetHosp_NoOx_Die2 + internal->dim_IMod_NoHosp_NoOx_Surv1 + internal->dim_IMod_NoHosp_NoOx_Surv2 + internal->dim_IMod_NoHosp_NoOx_Die1 + internal->dim_IMod_NoHosp_NoOx_Die2 + internal->dim_ISev_GetICU_GetOx_Surv1 + internal->dim_ISev_GetICU_GetOx_Surv2 + internal->dim_ISev_GetICU_GetOx_Die1 + internal->dim_ISev_GetICU_GetOx_Die2 + internal->dim_ISev_GetICU_NoOx_Surv1 + internal->dim_ISev_GetICU_NoOx_Surv2 + internal->dim_ISev_GetICU_NoOx_Die1 + internal->dim_ISev_GetICU_NoOx_Die2 + internal->dim_ISev_NoICU_NoOx_Surv1 + internal->dim_ISev_NoICU_NoOx_Surv2 + internal->dim_ISev_NoICU_NoOx_Die1;
+  internal->offset_variable_ISev_NoICU_NoOx_Surv1 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2 + internal->dim_IMod_GetHosp_NoOx_Surv1 + internal->dim_IMod_GetHosp_NoOx_Surv2 + internal->dim_IMod_GetHosp_NoOx_Die1 + internal->dim_IMod_GetHosp_NoOx_Die2 + internal->dim_IMod_NoHosp_NoOx_Surv1 + internal->dim_IMod_NoHosp_NoOx_Surv2 + internal->dim_IMod_NoHosp_NoOx_Die1 + internal->dim_IMod_NoHosp_NoOx_Die2 + internal->dim_ISev_GetICU_GetOx_Surv1 + internal->dim_ISev_GetICU_GetOx_Surv2 + internal->dim_ISev_GetICU_GetOx_Die1 + internal->dim_ISev_GetICU_GetOx_Die2 + internal->dim_ISev_GetICU_NoOx_Surv1 + internal->dim_ISev_GetICU_NoOx_Surv2 + internal->dim_ISev_GetICU_NoOx_Die1 + internal->dim_ISev_GetICU_NoOx_Die2;
+  internal->offset_variable_ISev_NoICU_NoOx_Surv2 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2 + internal->dim_IMod_GetHosp_NoOx_Surv1 + internal->dim_IMod_GetHosp_NoOx_Surv2 + internal->dim_IMod_GetHosp_NoOx_Die1 + internal->dim_IMod_GetHosp_NoOx_Die2 + internal->dim_IMod_NoHosp_NoOx_Surv1 + internal->dim_IMod_NoHosp_NoOx_Surv2 + internal->dim_IMod_NoHosp_NoOx_Die1 + internal->dim_IMod_NoHosp_NoOx_Die2 + internal->dim_ISev_GetICU_GetOx_Surv1 + internal->dim_ISev_GetICU_GetOx_Surv2 + internal->dim_ISev_GetICU_GetOx_Die1 + internal->dim_ISev_GetICU_GetOx_Die2 + internal->dim_ISev_GetICU_NoOx_Surv1 + internal->dim_ISev_GetICU_NoOx_Surv2 + internal->dim_ISev_GetICU_NoOx_Die1 + internal->dim_ISev_GetICU_NoOx_Die2 + internal->dim_ISev_NoICU_NoOx_Surv1;
+  internal->offset_variable_PE1 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS;
+  internal->offset_variable_PE2 = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1;
+  internal->offset_variable_PS = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D;
+  internal->offset_variable_R = 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2;
+  internal->PE1_0 = (double*) user_get_array(user, false, internal->PE1_0, "PE1_0", NA_REAL, NA_REAL, 1, internal->dim_PE1_0);
+  internal->PE2_0 = (double*) user_get_array(user, false, internal->PE2_0, "PE2_0", NA_REAL, NA_REAL, 1, internal->dim_PE2_0);
+  internal->prob_asymp = (double*) user_get_array(user, false, internal->prob_asymp, "prob_asymp", NA_REAL, NA_REAL, 1, internal->dim_prob_asymp);
+  internal->prob_critical = (double*) user_get_array(user, false, internal->prob_critical, "prob_critical", NA_REAL, NA_REAL, 1, internal->dim_prob_critical);
+  internal->prob_critical_death_get_ICU_get_ox_get_MV_baseline = (double*) user_get_array(user, false, internal->prob_critical_death_get_ICU_get_ox_get_MV_baseline, "prob_critical_death_get_ICU_get_ox_get_MV_baseline", NA_REAL, NA_REAL, 1, internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline);
+  internal->prob_critical_death_get_ICU_get_ox_no_MV_baseline = (double*) user_get_array(user, false, internal->prob_critical_death_get_ICU_get_ox_no_MV_baseline, "prob_critical_death_get_ICU_get_ox_no_MV_baseline", NA_REAL, NA_REAL, 1, internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline);
+  internal->prob_critical_death_get_ICU_no_ox_no_MV_baseline = (double*) user_get_array(user, false, internal->prob_critical_death_get_ICU_no_ox_no_MV_baseline, "prob_critical_death_get_ICU_no_ox_no_MV_baseline", NA_REAL, NA_REAL, 1, internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline);
+  internal->prob_critical_death_no_ICU_no_ox_no_MV = (double*) user_get_array(user, false, internal->prob_critical_death_no_ICU_no_ox_no_MV, "prob_critical_death_no_ICU_no_ox_no_MV", NA_REAL, NA_REAL, 1, internal->dim_prob_critical_death_no_ICU_no_ox_no_MV);
+  internal->prob_hosp = (double*) user_get_array(user, false, internal->prob_hosp, "prob_hosp", NA_REAL, NA_REAL, 1, internal->dim_prob_hosp);
+  internal->prob_moderate_death_get_hosp_get_ox_baseline = (double*) user_get_array(user, false, internal->prob_moderate_death_get_hosp_get_ox_baseline, "prob_moderate_death_get_hosp_get_ox_baseline", NA_REAL, NA_REAL, 1, internal->dim_prob_moderate_death_get_hosp_get_ox_baseline);
+  internal->prob_moderate_death_get_hosp_no_ox_baseline = (double*) user_get_array(user, false, internal->prob_moderate_death_get_hosp_no_ox_baseline, "prob_moderate_death_get_hosp_no_ox_baseline", NA_REAL, NA_REAL, 1, internal->dim_prob_moderate_death_get_hosp_no_ox_baseline);
+  internal->prob_moderate_death_no_hosp_no_ox = (double*) user_get_array(user, false, internal->prob_moderate_death_no_hosp_no_ox, "prob_moderate_death_no_hosp_no_ox", NA_REAL, NA_REAL, 1, internal->dim_prob_moderate_death_no_hosp_no_ox);
+  internal->prob_severe = (double*) user_get_array(user, false, internal->prob_severe, "prob_severe", NA_REAL, NA_REAL, 1, internal->dim_prob_severe);
+  internal->prob_severe_death_get_ICU_get_ox_baseline = (double*) user_get_array(user, false, internal->prob_severe_death_get_ICU_get_ox_baseline, "prob_severe_death_get_ICU_get_ox_baseline", NA_REAL, NA_REAL, 1, internal->dim_prob_severe_death_get_ICU_get_ox_baseline);
+  internal->prob_severe_death_get_ICU_no_ox_baseline = (double*) user_get_array(user, false, internal->prob_severe_death_get_ICU_no_ox_baseline, "prob_severe_death_get_ICU_no_ox_baseline", NA_REAL, NA_REAL, 1, internal->dim_prob_severe_death_get_ICU_no_ox_baseline);
+  internal->prob_severe_death_no_ICU_no_ox = (double*) user_get_array(user, false, internal->prob_severe_death_no_ICU_no_ox, "prob_severe_death_no_ICU_no_ox", NA_REAL, NA_REAL, 1, internal->dim_prob_severe_death_no_ICU_no_ox);
+  internal->PS_0 = (double*) user_get_array(user, false, internal->PS_0, "PS_0", NA_REAL, NA_REAL, 1, internal->dim_PS_0);
+  internal->R_0 = (double*) user_get_array(user, false, internal->R_0, "R_0", NA_REAL, NA_REAL, 1, internal->dim_R_0);
+  internal->S_0 = (double*) user_get_array(user, false, internal->S_0, "S_0", NA_REAL, NA_REAL, 1, internal->dim_S_0);
+  Free(internal->m);
+  internal->m = (double*) Calloc(internal->dim_m, double);
+  Free(internal->s_ij);
+  internal->s_ij = (double*) Calloc(internal->dim_s_ij, double);
+  internal->beta_set = (double*) user_get_array(user, false, internal->beta_set, "beta_set", NA_REAL, NA_REAL, 1, internal->dim_beta_set);
+  internal->dim_mix_mat_set = internal->dim_mix_mat_set_1 * internal->dim_mix_mat_set_2 * internal->dim_mix_mat_set_3;
+  internal->dim_mix_mat_set_12 = internal->dim_mix_mat_set_1 * internal->dim_mix_mat_set_2;
+  internal->hosp_bed_capacity = (double*) user_get_array(user, false, internal->hosp_bed_capacity, "hosp_bed_capacity", NA_REAL, NA_REAL, 1, internal->dim_hosp_bed_capacity);
+  internal->ICU_bed_capacity = (double*) user_get_array(user, false, internal->ICU_bed_capacity, "ICU_bed_capacity", NA_REAL, NA_REAL, 1, internal->dim_ICU_bed_capacity);
+  for (int i = 1; i <= internal->dim_D_Community; ++i) {
+    internal->initial_D_Community[i - 1] = internal->D_Community_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_D_Hospital; ++i) {
+    internal->initial_D_Hospital[i - 1] = internal->D_Hospital_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_E1; ++i) {
+    internal->initial_E1[i - 1] = internal->E1_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_E2; ++i) {
+    internal->initial_E2[i - 1] = internal->E2_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_IAsymp; ++i) {
+    internal->initial_IAsymp[i - 1] = internal->IAsymp_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ICase1; ++i) {
+    internal->initial_ICase1[i - 1] = internal->ICase1_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ICase1_Drug_5; ++i) {
+    internal->initial_ICase1_Drug_5[i - 1] = internal->ICase1_Drug_5_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ICase2; ++i) {
+    internal->initial_ICase2[i - 1] = internal->ICase2_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ICase2_Drug_5; ++i) {
+    internal->initial_ICase2_Drug_5[i - 1] = internal->ICase2_Drug_5_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ICrit_GetICU_GetOx_GetMV_Die1; ++i) {
+    internal->initial_ICrit_GetICU_GetOx_GetMV_Die1[i - 1] = internal->ICrit_GetICU_GetOx_GetMV_Die1_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ICrit_GetICU_GetOx_GetMV_Die2; ++i) {
+    internal->initial_ICrit_GetICU_GetOx_GetMV_Die2[i - 1] = internal->ICrit_GetICU_GetOx_GetMV_Die2_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ICrit_GetICU_GetOx_GetMV_Surv1; ++i) {
+    internal->initial_ICrit_GetICU_GetOx_GetMV_Surv1[i - 1] = internal->ICrit_GetICU_GetOx_GetMV_Surv1_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ICrit_GetICU_GetOx_GetMV_Surv2; ++i) {
+    internal->initial_ICrit_GetICU_GetOx_GetMV_Surv2[i - 1] = internal->ICrit_GetICU_GetOx_GetMV_Surv2_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ICrit_GetICU_GetOx_NoMV_Die1; ++i) {
+    internal->initial_ICrit_GetICU_GetOx_NoMV_Die1[i - 1] = internal->ICrit_GetICU_GetOx_NoMV_Die1_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ICrit_GetICU_GetOx_NoMV_Die2; ++i) {
+    internal->initial_ICrit_GetICU_GetOx_NoMV_Die2[i - 1] = internal->ICrit_GetICU_GetOx_NoMV_Die2_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ICrit_GetICU_GetOx_NoMV_Surv1; ++i) {
+    internal->initial_ICrit_GetICU_GetOx_NoMV_Surv1[i - 1] = internal->ICrit_GetICU_GetOx_NoMV_Surv1_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ICrit_GetICU_GetOx_NoMV_Surv2; ++i) {
+    internal->initial_ICrit_GetICU_GetOx_NoMV_Surv2[i - 1] = internal->ICrit_GetICU_GetOx_NoMV_Surv2_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ICrit_GetICU_NoOx_NoMV_Die1; ++i) {
+    internal->initial_ICrit_GetICU_NoOx_NoMV_Die1[i - 1] = internal->ICrit_GetICU_NoOx_NoMV_Die1_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ICrit_GetICU_NoOx_NoMV_Die2; ++i) {
+    internal->initial_ICrit_GetICU_NoOx_NoMV_Die2[i - 1] = internal->ICrit_GetICU_NoOx_NoMV_Die2_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ICrit_GetICU_NoOx_NoMV_Surv1; ++i) {
+    internal->initial_ICrit_GetICU_NoOx_NoMV_Surv1[i - 1] = internal->ICrit_GetICU_NoOx_NoMV_Surv1_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ICrit_GetICU_NoOx_NoMV_Surv2; ++i) {
+    internal->initial_ICrit_GetICU_NoOx_NoMV_Surv2[i - 1] = internal->ICrit_GetICU_NoOx_NoMV_Surv2_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ICrit_NoICU_NoOx_NoMV_Die1; ++i) {
+    internal->initial_ICrit_NoICU_NoOx_NoMV_Die1[i - 1] = internal->ICrit_NoICU_NoOx_NoMV_Die1_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ICrit_NoICU_NoOx_NoMV_Die2; ++i) {
+    internal->initial_ICrit_NoICU_NoOx_NoMV_Die2[i - 1] = internal->ICrit_NoICU_NoOx_NoMV_Die2_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ICrit_NoICU_NoOx_NoMV_Surv1; ++i) {
+    internal->initial_ICrit_NoICU_NoOx_NoMV_Surv1[i - 1] = internal->ICrit_NoICU_NoOx_NoMV_Surv1_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ICrit_NoICU_NoOx_NoMV_Surv2; ++i) {
+    internal->initial_ICrit_NoICU_NoOx_NoMV_Surv2[i - 1] = internal->ICrit_NoICU_NoOx_NoMV_Surv2_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_IMild; ++i) {
+    internal->initial_IMild[i - 1] = internal->IMild_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_IMild_Drug_5; ++i) {
+    internal->initial_IMild_Drug_5[i - 1] = internal->IMild_Drug_5_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_IMod_GetHosp_GetOx_Die1; ++i) {
+    internal->initial_IMod_GetHosp_GetOx_Die1[i - 1] = internal->IMod_GetHosp_GetOx_Die1_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_IMod_GetHosp_GetOx_Die2; ++i) {
+    internal->initial_IMod_GetHosp_GetOx_Die2[i - 1] = internal->IMod_GetHosp_GetOx_Die2_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_IMod_GetHosp_GetOx_Surv1; ++i) {
+    internal->initial_IMod_GetHosp_GetOx_Surv1[i - 1] = internal->IMod_GetHosp_GetOx_Surv1_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_IMod_GetHosp_GetOx_Surv2; ++i) {
+    internal->initial_IMod_GetHosp_GetOx_Surv2[i - 1] = internal->IMod_GetHosp_GetOx_Surv2_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_IMod_GetHosp_NoOx_Die1; ++i) {
+    internal->initial_IMod_GetHosp_NoOx_Die1[i - 1] = internal->IMod_GetHosp_NoOx_Die1_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_IMod_GetHosp_NoOx_Die2; ++i) {
+    internal->initial_IMod_GetHosp_NoOx_Die2[i - 1] = internal->IMod_GetHosp_NoOx_Die2_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_IMod_GetHosp_NoOx_Surv1; ++i) {
+    internal->initial_IMod_GetHosp_NoOx_Surv1[i - 1] = internal->IMod_GetHosp_NoOx_Surv1_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_IMod_GetHosp_NoOx_Surv2; ++i) {
+    internal->initial_IMod_GetHosp_NoOx_Surv2[i - 1] = internal->IMod_GetHosp_NoOx_Surv2_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_IMod_NoHosp_NoOx_Die1; ++i) {
+    internal->initial_IMod_NoHosp_NoOx_Die1[i - 1] = internal->IMod_NoHosp_NoOx_Die1_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_IMod_NoHosp_NoOx_Die2; ++i) {
+    internal->initial_IMod_NoHosp_NoOx_Die2[i - 1] = internal->IMod_NoHosp_NoOx_Die2_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_IMod_NoHosp_NoOx_Surv1; ++i) {
+    internal->initial_IMod_NoHosp_NoOx_Surv1[i - 1] = internal->IMod_NoHosp_NoOx_Surv1_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_IMod_NoHosp_NoOx_Surv2; ++i) {
+    internal->initial_IMod_NoHosp_NoOx_Surv2[i - 1] = internal->IMod_NoHosp_NoOx_Surv2_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_IRec1; ++i) {
+    internal->initial_IRec1[i - 1] = internal->IRec1_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_IRec2; ++i) {
+    internal->initial_IRec2[i - 1] = internal->IRec2_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ISev_GetICU_GetOx_Die1; ++i) {
+    internal->initial_ISev_GetICU_GetOx_Die1[i - 1] = internal->ISev_GetICU_GetOx_Die1_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ISev_GetICU_GetOx_Die2; ++i) {
+    internal->initial_ISev_GetICU_GetOx_Die2[i - 1] = internal->ISev_GetICU_GetOx_Die2_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ISev_GetICU_GetOx_Surv1; ++i) {
+    internal->initial_ISev_GetICU_GetOx_Surv1[i - 1] = internal->ISev_GetICU_GetOx_Surv1_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ISev_GetICU_GetOx_Surv2; ++i) {
+    internal->initial_ISev_GetICU_GetOx_Surv2[i - 1] = internal->ISev_GetICU_GetOx_Surv2_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ISev_GetICU_NoOx_Die1; ++i) {
+    internal->initial_ISev_GetICU_NoOx_Die1[i - 1] = internal->ISev_GetICU_NoOx_Die1_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ISev_GetICU_NoOx_Die2; ++i) {
+    internal->initial_ISev_GetICU_NoOx_Die2[i - 1] = internal->ISev_GetICU_NoOx_Die2_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ISev_GetICU_NoOx_Surv1; ++i) {
+    internal->initial_ISev_GetICU_NoOx_Surv1[i - 1] = internal->ISev_GetICU_NoOx_Surv1_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ISev_GetICU_NoOx_Surv2; ++i) {
+    internal->initial_ISev_GetICU_NoOx_Surv2[i - 1] = internal->ISev_GetICU_NoOx_Surv2_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ISev_NoICU_NoOx_Die1; ++i) {
+    internal->initial_ISev_NoICU_NoOx_Die1[i - 1] = internal->ISev_NoICU_NoOx_Die1_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ISev_NoICU_NoOx_Die2; ++i) {
+    internal->initial_ISev_NoICU_NoOx_Die2[i - 1] = internal->ISev_NoICU_NoOx_Die2_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ISev_NoICU_NoOx_Surv1; ++i) {
+    internal->initial_ISev_NoICU_NoOx_Surv1[i - 1] = internal->ISev_NoICU_NoOx_Surv1_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ISev_NoICU_NoOx_Surv2; ++i) {
+    internal->initial_ISev_NoICU_NoOx_Surv2[i - 1] = internal->ISev_NoICU_NoOx_Surv2_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_PE1; ++i) {
+    internal->initial_PE1[i - 1] = internal->PE1_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_PE2; ++i) {
+    internal->initial_PE2[i - 1] = internal->PE2_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_PS; ++i) {
+    internal->initial_PS[i - 1] = internal->PS_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_R; ++i) {
+    internal->initial_R[i - 1] = internal->R_0[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_S; ++i) {
+    internal->initial_S[i - 1] = internal->S_0[i - 1];
+  }
+  internal->input_baseline_oxygen_demand = (double*) user_get_array(user, false, internal->input_baseline_oxygen_demand, "input_baseline_oxygen_demand", NA_REAL, NA_REAL, 1, internal->dim_input_baseline_oxygen_demand);
+  internal->input_oxygen_supply = (double*) user_get_array(user, false, internal->input_oxygen_supply, "input_oxygen_supply", NA_REAL, NA_REAL, 1, internal->dim_input_oxygen_supply);
+  for (int i = 1; i <= internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13; ++i) {
+    internal->prob_critical_death_get_ICU_get_ox_get_MV_Drug_13[i - 1] = ((1 - internal->drug_13_prop_treat) * internal->prob_critical_death_get_ICU_get_ox_get_MV_baseline[i - 1]) + (internal->drug_13_prop_treat * internal->drug_13_GetOx_GetMV_effect_size * internal->prob_critical_death_get_ICU_get_ox_get_MV_baseline[i - 1]);
+  }
+  for (int i = 1; i <= internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13; ++i) {
+    internal->prob_critical_death_get_ICU_get_ox_no_MV_Drug_13[i - 1] = ((1 - internal->drug_13_prop_treat) * internal->prob_critical_death_get_ICU_get_ox_no_MV_baseline[i - 1]) + (internal->drug_13_prop_treat * internal->drug_13_GetOx_NoMV_effect_size * internal->prob_critical_death_get_ICU_get_ox_no_MV_baseline[i - 1]);
+  }
+  for (int i = 1; i <= internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13; ++i) {
+    internal->prob_critical_death_get_ICU_no_ox_no_MV_Drug_13[i - 1] = ((1 - internal->drug_13_prop_treat) * internal->prob_critical_death_get_ICU_no_ox_no_MV_baseline[i - 1]) + (internal->drug_13_prop_treat * internal->drug_13_NoOx_NoMV_effect_size * internal->prob_critical_death_get_ICU_no_ox_no_MV_baseline[i - 1]);
+  }
+  for (int i = 1; i <= internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11; ++i) {
+    internal->prob_moderate_death_get_hosp_get_ox_Drug_11[i - 1] = ((1 - internal->drug_11_prop_treat) * internal->prob_moderate_death_get_hosp_get_ox_baseline[i - 1]) + (internal->drug_11_prop_treat * internal->drug_11_GetOx_effect_size * internal->prob_moderate_death_get_hosp_get_ox_baseline[i - 1]);
+  }
+  for (int i = 1; i <= internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11; ++i) {
+    internal->prob_moderate_death_get_hosp_no_ox_Drug_11[i - 1] = ((1 - internal->drug_11_prop_treat) * internal->prob_moderate_death_get_hosp_no_ox_baseline[i - 1]) + (internal->drug_11_prop_treat * internal->drug_11_NoOx_effect_size * internal->prob_moderate_death_get_hosp_no_ox_baseline[i - 1]);
+  }
+  for (int i = 1; i <= internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12; ++i) {
+    internal->prob_severe_death_get_ICU_get_ox_Drug_12[i - 1] = ((1 - internal->drug_12_prop_treat) * internal->prob_severe_death_get_ICU_get_ox_baseline[i - 1]) + (internal->drug_12_prop_treat * internal->drug_12_GetOx_effect_size * internal->prob_severe_death_get_ICU_get_ox_baseline[i - 1]);
+  }
+  for (int i = 1; i <= internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12; ++i) {
+    internal->prob_severe_death_get_ICU_no_ox_Drug_12[i - 1] = ((1 - internal->drug_12_prop_treat) * internal->prob_severe_death_get_ICU_no_ox_baseline[i - 1]) + (internal->drug_12_prop_treat * internal->drug_12_NoOx_effect_size * internal->prob_severe_death_get_ICU_no_ox_baseline[i - 1]);
+  }
+  interpolate_check_y(internal->dim_tt_baseline_oxygen_demand, internal->dim_input_baseline_oxygen_demand, 0, "input_baseline_oxygen_demand", "baseline_oxygen_demand");
+  cinterpolate_free(internal->interpolate_baseline_oxygen_demand);
+  internal->interpolate_baseline_oxygen_demand = cinterpolate_alloc("constant", internal->dim_tt_baseline_oxygen_demand, 1, internal->tt_baseline_oxygen_demand, internal->input_baseline_oxygen_demand, true, false);
+  interpolate_check_y(internal->dim_tt_beta, internal->dim_beta_set, 0, "beta_set", "beta");
+  cinterpolate_free(internal->interpolate_beta);
+  internal->interpolate_beta = cinterpolate_alloc("constant", internal->dim_tt_beta, 1, internal->tt_beta, internal->beta_set, true, false);
+  interpolate_check_y(internal->dim_tt_hosp_beds, internal->dim_hosp_bed_capacity, 0, "hosp_bed_capacity", "current_hosp_bed_capacity");
+  cinterpolate_free(internal->interpolate_current_hosp_bed_capacity);
+  internal->interpolate_current_hosp_bed_capacity = cinterpolate_alloc("constant", internal->dim_tt_hosp_beds, 1, internal->tt_hosp_beds, internal->hosp_bed_capacity, true, false);
+  interpolate_check_y(internal->dim_tt_ICU_beds, internal->dim_ICU_bed_capacity, 0, "ICU_bed_capacity", "current_ICU_bed_capacity");
+  cinterpolate_free(internal->interpolate_current_ICU_bed_capacity);
+  internal->interpolate_current_ICU_bed_capacity = cinterpolate_alloc("constant", internal->dim_tt_ICU_beds, 1, internal->tt_ICU_beds, internal->ICU_bed_capacity, true, false);
+  interpolate_check_y(internal->dim_tt_oxygen_supply, internal->dim_input_oxygen_supply, 0, "input_oxygen_supply", "oxygen_supply");
+  cinterpolate_free(internal->interpolate_oxygen_supply);
+  internal->interpolate_oxygen_supply = cinterpolate_alloc("constant", internal->dim_tt_oxygen_supply, 1, internal->tt_oxygen_supply, internal->input_oxygen_supply, true, false);
+  internal->mix_mat_set = (double*) user_get_array(user, false, internal->mix_mat_set, "mix_mat_set", NA_REAL, NA_REAL, 3, internal->dim_mix_mat_set_1, internal->dim_mix_mat_set_2, internal->dim_mix_mat_set_3);
+  for (int i = 1; i <= internal->dim_prob_critical_death_get_ICU_get_ox_get_MV; ++i) {
+    internal->prob_critical_death_get_ICU_get_ox_get_MV[i - 1] = (internal->drug_13_indic_ICrit_GetICU_GetOx_GetMV == 1 ? internal->prob_critical_death_get_ICU_get_ox_get_MV_Drug_13[i - 1] : internal->prob_critical_death_get_ICU_get_ox_get_MV_baseline[i - 1]);
+  }
+  for (int i = 1; i <= internal->dim_prob_critical_death_get_ICU_get_ox_no_MV; ++i) {
+    internal->prob_critical_death_get_ICU_get_ox_no_MV[i - 1] = (internal->drug_13_indic_ICrit_GetICU_GetOx_NoMV == 1 ? internal->prob_critical_death_get_ICU_get_ox_no_MV_Drug_13[i - 1] : internal->prob_critical_death_get_ICU_get_ox_no_MV_baseline[i - 1]);
+  }
+  for (int i = 1; i <= internal->dim_prob_critical_death_get_ICU_no_ox_no_MV; ++i) {
+    internal->prob_critical_death_get_ICU_no_ox_no_MV[i - 1] = (internal->drug_13_indic_ICrit_GetICU_NoOx_NoMV == 1 ? internal->prob_critical_death_get_ICU_no_ox_no_MV_Drug_13[i - 1] : internal->prob_critical_death_get_ICU_no_ox_no_MV_baseline[i - 1]);
+  }
+  for (int i = 1; i <= internal->dim_prob_moderate_death_get_hosp_get_ox; ++i) {
+    internal->prob_moderate_death_get_hosp_get_ox[i - 1] = (internal->drug_11_indic_IMod_GetHosp_GetOx == 1 ? internal->prob_moderate_death_get_hosp_get_ox_Drug_11[i - 1] : internal->prob_moderate_death_get_hosp_get_ox_baseline[i - 1]);
+  }
+  for (int i = 1; i <= internal->dim_prob_moderate_death_get_hosp_no_ox; ++i) {
+    internal->prob_moderate_death_get_hosp_no_ox[i - 1] = (internal->drug_11_indic_IMod_GetHosp_NoOx == 1 ? internal->prob_moderate_death_get_hosp_no_ox_Drug_11[i - 1] : internal->prob_moderate_death_get_hosp_no_ox_baseline[i - 1]);
+  }
+  for (int i = 1; i <= internal->dim_prob_severe_death_get_ICU_get_ox; ++i) {
+    internal->prob_severe_death_get_ICU_get_ox[i - 1] = (internal->drug_12_indic_ISev_GetICU_GetOx == 1 ? internal->prob_severe_death_get_ICU_get_ox_Drug_12[i - 1] : internal->prob_severe_death_get_ICU_get_ox_baseline[i - 1]);
+  }
+  for (int i = 1; i <= internal->dim_prob_severe_death_get_ICU_no_ox; ++i) {
+    internal->prob_severe_death_get_ICU_no_ox[i - 1] = (internal->drug_12_indic_ISev_GetICU_NoOx == 1 ? internal->prob_severe_death_get_ICU_no_ox_Drug_12[i - 1] : internal->prob_severe_death_get_ICU_no_ox_baseline[i - 1]);
+  }
+  interpolate_check_y(internal->dim_tt_matrix, internal->dim_mix_mat_set_1, 1, "mix_mat_set", "m");
+  interpolate_check_y(internal->dim_m_1, internal->dim_mix_mat_set_2, 2, "mix_mat_set", "m");
+  interpolate_check_y(internal->dim_m_2, internal->dim_mix_mat_set_3, 3, "mix_mat_set", "m");
+  cinterpolate_free(internal->interpolate_m);
+  internal->interpolate_m = cinterpolate_alloc("constant", internal->dim_tt_matrix, internal->dim_m, internal->tt_matrix, internal->mix_mat_set, true, false);
+  return R_NilValue;
+}
+SEXP deterministic_apothecary_SEIR_metadata(SEXP internal_p) {
+  deterministic_apothecary_SEIR_internal *internal = deterministic_apothecary_SEIR_get_internal(internal_p, 1);
+  SEXP ret = PROTECT(allocVector(VECSXP, 4));
+  SEXP nms = PROTECT(allocVector(STRSXP, 4));
+  SET_STRING_ELT(nms, 0, mkChar("variable_order"));
+  SET_STRING_ELT(nms, 1, mkChar("output_order"));
+  SET_STRING_ELT(nms, 2, mkChar("n_out"));
+  SET_STRING_ELT(nms, 3, mkChar("interpolate_t"));
+  setAttrib(ret, R_NamesSymbol, nms);
+  SEXP variable_length = PROTECT(allocVector(VECSXP, 60));
+  SEXP variable_names = PROTECT(allocVector(STRSXP, 60));
+  setAttrib(variable_length, R_NamesSymbol, variable_names);
+  SET_VECTOR_ELT(variable_length, 0, R_NilValue);
+  SET_VECTOR_ELT(variable_length, 1, ScalarInteger(internal->dim_S));
+  SET_VECTOR_ELT(variable_length, 2, ScalarInteger(internal->dim_E1));
+  SET_VECTOR_ELT(variable_length, 3, ScalarInteger(internal->dim_E2));
+  SET_VECTOR_ELT(variable_length, 4, ScalarInteger(internal->dim_IAsymp));
+  SET_VECTOR_ELT(variable_length, 5, ScalarInteger(internal->dim_IMild));
+  SET_VECTOR_ELT(variable_length, 6, ScalarInteger(internal->dim_ICase1));
+  SET_VECTOR_ELT(variable_length, 7, ScalarInteger(internal->dim_ICase2));
+  SET_VECTOR_ELT(variable_length, 8, ScalarInteger(internal->dim_IMild_Drug_5));
+  SET_VECTOR_ELT(variable_length, 9, ScalarInteger(internal->dim_ICase1_Drug_5));
+  SET_VECTOR_ELT(variable_length, 10, ScalarInteger(internal->dim_ICase2_Drug_5));
+  SET_VECTOR_ELT(variable_length, 11, ScalarInteger(internal->dim_IRec1));
+  SET_VECTOR_ELT(variable_length, 12, ScalarInteger(internal->dim_IRec2));
+  SET_VECTOR_ELT(variable_length, 13, ScalarInteger(internal->dim_R));
+  SET_VECTOR_ELT(variable_length, 14, ScalarInteger(internal->dim_D_Community));
+  SET_VECTOR_ELT(variable_length, 15, ScalarInteger(internal->dim_D_Hospital));
+  SET_VECTOR_ELT(variable_length, 16, ScalarInteger(internal->dim_D));
+  SET_VECTOR_ELT(variable_length, 17, ScalarInteger(internal->dim_PS));
+  SET_VECTOR_ELT(variable_length, 18, ScalarInteger(internal->dim_PE1));
+  SET_VECTOR_ELT(variable_length, 19, ScalarInteger(internal->dim_PE2));
+  SET_VECTOR_ELT(variable_length, 20, ScalarInteger(internal->dim_IMod_GetHosp_GetOx_Surv1));
+  SET_VECTOR_ELT(variable_length, 21, ScalarInteger(internal->dim_IMod_GetHosp_GetOx_Surv2));
+  SET_VECTOR_ELT(variable_length, 22, ScalarInteger(internal->dim_IMod_GetHosp_GetOx_Die1));
+  SET_VECTOR_ELT(variable_length, 23, ScalarInteger(internal->dim_IMod_GetHosp_GetOx_Die2));
+  SET_VECTOR_ELT(variable_length, 24, ScalarInteger(internal->dim_IMod_GetHosp_NoOx_Surv1));
+  SET_VECTOR_ELT(variable_length, 25, ScalarInteger(internal->dim_IMod_GetHosp_NoOx_Surv2));
+  SET_VECTOR_ELT(variable_length, 26, ScalarInteger(internal->dim_IMod_GetHosp_NoOx_Die1));
+  SET_VECTOR_ELT(variable_length, 27, ScalarInteger(internal->dim_IMod_GetHosp_NoOx_Die2));
+  SET_VECTOR_ELT(variable_length, 28, ScalarInteger(internal->dim_IMod_NoHosp_NoOx_Surv1));
+  SET_VECTOR_ELT(variable_length, 29, ScalarInteger(internal->dim_IMod_NoHosp_NoOx_Surv2));
+  SET_VECTOR_ELT(variable_length, 30, ScalarInteger(internal->dim_IMod_NoHosp_NoOx_Die1));
+  SET_VECTOR_ELT(variable_length, 31, ScalarInteger(internal->dim_IMod_NoHosp_NoOx_Die2));
+  SET_VECTOR_ELT(variable_length, 32, ScalarInteger(internal->dim_ISev_GetICU_GetOx_Surv1));
+  SET_VECTOR_ELT(variable_length, 33, ScalarInteger(internal->dim_ISev_GetICU_GetOx_Surv2));
+  SET_VECTOR_ELT(variable_length, 34, ScalarInteger(internal->dim_ISev_GetICU_GetOx_Die1));
+  SET_VECTOR_ELT(variable_length, 35, ScalarInteger(internal->dim_ISev_GetICU_GetOx_Die2));
+  SET_VECTOR_ELT(variable_length, 36, ScalarInteger(internal->dim_ISev_GetICU_NoOx_Surv1));
+  SET_VECTOR_ELT(variable_length, 37, ScalarInteger(internal->dim_ISev_GetICU_NoOx_Surv2));
+  SET_VECTOR_ELT(variable_length, 38, ScalarInteger(internal->dim_ISev_GetICU_NoOx_Die1));
+  SET_VECTOR_ELT(variable_length, 39, ScalarInteger(internal->dim_ISev_GetICU_NoOx_Die2));
+  SET_VECTOR_ELT(variable_length, 40, ScalarInteger(internal->dim_ISev_NoICU_NoOx_Surv1));
+  SET_VECTOR_ELT(variable_length, 41, ScalarInteger(internal->dim_ISev_NoICU_NoOx_Surv2));
+  SET_VECTOR_ELT(variable_length, 42, ScalarInteger(internal->dim_ISev_NoICU_NoOx_Die1));
+  SET_VECTOR_ELT(variable_length, 43, ScalarInteger(internal->dim_ISev_NoICU_NoOx_Die2));
+  SET_VECTOR_ELT(variable_length, 44, ScalarInteger(internal->dim_ICrit_GetICU_GetOx_GetMV_Surv1));
+  SET_VECTOR_ELT(variable_length, 45, ScalarInteger(internal->dim_ICrit_GetICU_GetOx_GetMV_Surv2));
+  SET_VECTOR_ELT(variable_length, 46, ScalarInteger(internal->dim_ICrit_GetICU_GetOx_GetMV_Die1));
+  SET_VECTOR_ELT(variable_length, 47, ScalarInteger(internal->dim_ICrit_GetICU_GetOx_GetMV_Die2));
+  SET_VECTOR_ELT(variable_length, 48, ScalarInteger(internal->dim_ICrit_GetICU_GetOx_NoMV_Surv1));
+  SET_VECTOR_ELT(variable_length, 49, ScalarInteger(internal->dim_ICrit_GetICU_GetOx_NoMV_Surv2));
+  SET_VECTOR_ELT(variable_length, 50, ScalarInteger(internal->dim_ICrit_GetICU_GetOx_NoMV_Die1));
+  SET_VECTOR_ELT(variable_length, 51, ScalarInteger(internal->dim_ICrit_GetICU_GetOx_NoMV_Die2));
+  SET_VECTOR_ELT(variable_length, 52, ScalarInteger(internal->dim_ICrit_GetICU_NoOx_NoMV_Surv1));
+  SET_VECTOR_ELT(variable_length, 53, ScalarInteger(internal->dim_ICrit_GetICU_NoOx_NoMV_Surv2));
+  SET_VECTOR_ELT(variable_length, 54, ScalarInteger(internal->dim_ICrit_GetICU_NoOx_NoMV_Die1));
+  SET_VECTOR_ELT(variable_length, 55, ScalarInteger(internal->dim_ICrit_GetICU_NoOx_NoMV_Die2));
+  SET_VECTOR_ELT(variable_length, 56, ScalarInteger(internal->dim_ICrit_NoICU_NoOx_NoMV_Surv1));
+  SET_VECTOR_ELT(variable_length, 57, ScalarInteger(internal->dim_ICrit_NoICU_NoOx_NoMV_Surv2));
+  SET_VECTOR_ELT(variable_length, 58, ScalarInteger(internal->dim_ICrit_NoICU_NoOx_NoMV_Die1));
+  SET_VECTOR_ELT(variable_length, 59, ScalarInteger(internal->dim_ICrit_NoICU_NoOx_NoMV_Die2));
+  SET_STRING_ELT(variable_names, 0, mkChar("oxygen_availability"));
+  SET_STRING_ELT(variable_names, 1, mkChar("S"));
+  SET_STRING_ELT(variable_names, 2, mkChar("E1"));
+  SET_STRING_ELT(variable_names, 3, mkChar("E2"));
+  SET_STRING_ELT(variable_names, 4, mkChar("IAsymp"));
+  SET_STRING_ELT(variable_names, 5, mkChar("IMild"));
+  SET_STRING_ELT(variable_names, 6, mkChar("ICase1"));
+  SET_STRING_ELT(variable_names, 7, mkChar("ICase2"));
+  SET_STRING_ELT(variable_names, 8, mkChar("IMild_Drug_5"));
+  SET_STRING_ELT(variable_names, 9, mkChar("ICase1_Drug_5"));
+  SET_STRING_ELT(variable_names, 10, mkChar("ICase2_Drug_5"));
+  SET_STRING_ELT(variable_names, 11, mkChar("IRec1"));
+  SET_STRING_ELT(variable_names, 12, mkChar("IRec2"));
+  SET_STRING_ELT(variable_names, 13, mkChar("R"));
+  SET_STRING_ELT(variable_names, 14, mkChar("D_Community"));
+  SET_STRING_ELT(variable_names, 15, mkChar("D_Hospital"));
+  SET_STRING_ELT(variable_names, 16, mkChar("D"));
+  SET_STRING_ELT(variable_names, 17, mkChar("PS"));
+  SET_STRING_ELT(variable_names, 18, mkChar("PE1"));
+  SET_STRING_ELT(variable_names, 19, mkChar("PE2"));
+  SET_STRING_ELT(variable_names, 20, mkChar("IMod_GetHosp_GetOx_Surv1"));
+  SET_STRING_ELT(variable_names, 21, mkChar("IMod_GetHosp_GetOx_Surv2"));
+  SET_STRING_ELT(variable_names, 22, mkChar("IMod_GetHosp_GetOx_Die1"));
+  SET_STRING_ELT(variable_names, 23, mkChar("IMod_GetHosp_GetOx_Die2"));
+  SET_STRING_ELT(variable_names, 24, mkChar("IMod_GetHosp_NoOx_Surv1"));
+  SET_STRING_ELT(variable_names, 25, mkChar("IMod_GetHosp_NoOx_Surv2"));
+  SET_STRING_ELT(variable_names, 26, mkChar("IMod_GetHosp_NoOx_Die1"));
+  SET_STRING_ELT(variable_names, 27, mkChar("IMod_GetHosp_NoOx_Die2"));
+  SET_STRING_ELT(variable_names, 28, mkChar("IMod_NoHosp_NoOx_Surv1"));
+  SET_STRING_ELT(variable_names, 29, mkChar("IMod_NoHosp_NoOx_Surv2"));
+  SET_STRING_ELT(variable_names, 30, mkChar("IMod_NoHosp_NoOx_Die1"));
+  SET_STRING_ELT(variable_names, 31, mkChar("IMod_NoHosp_NoOx_Die2"));
+  SET_STRING_ELT(variable_names, 32, mkChar("ISev_GetICU_GetOx_Surv1"));
+  SET_STRING_ELT(variable_names, 33, mkChar("ISev_GetICU_GetOx_Surv2"));
+  SET_STRING_ELT(variable_names, 34, mkChar("ISev_GetICU_GetOx_Die1"));
+  SET_STRING_ELT(variable_names, 35, mkChar("ISev_GetICU_GetOx_Die2"));
+  SET_STRING_ELT(variable_names, 36, mkChar("ISev_GetICU_NoOx_Surv1"));
+  SET_STRING_ELT(variable_names, 37, mkChar("ISev_GetICU_NoOx_Surv2"));
+  SET_STRING_ELT(variable_names, 38, mkChar("ISev_GetICU_NoOx_Die1"));
+  SET_STRING_ELT(variable_names, 39, mkChar("ISev_GetICU_NoOx_Die2"));
+  SET_STRING_ELT(variable_names, 40, mkChar("ISev_NoICU_NoOx_Surv1"));
+  SET_STRING_ELT(variable_names, 41, mkChar("ISev_NoICU_NoOx_Surv2"));
+  SET_STRING_ELT(variable_names, 42, mkChar("ISev_NoICU_NoOx_Die1"));
+  SET_STRING_ELT(variable_names, 43, mkChar("ISev_NoICU_NoOx_Die2"));
+  SET_STRING_ELT(variable_names, 44, mkChar("ICrit_GetICU_GetOx_GetMV_Surv1"));
+  SET_STRING_ELT(variable_names, 45, mkChar("ICrit_GetICU_GetOx_GetMV_Surv2"));
+  SET_STRING_ELT(variable_names, 46, mkChar("ICrit_GetICU_GetOx_GetMV_Die1"));
+  SET_STRING_ELT(variable_names, 47, mkChar("ICrit_GetICU_GetOx_GetMV_Die2"));
+  SET_STRING_ELT(variable_names, 48, mkChar("ICrit_GetICU_GetOx_NoMV_Surv1"));
+  SET_STRING_ELT(variable_names, 49, mkChar("ICrit_GetICU_GetOx_NoMV_Surv2"));
+  SET_STRING_ELT(variable_names, 50, mkChar("ICrit_GetICU_GetOx_NoMV_Die1"));
+  SET_STRING_ELT(variable_names, 51, mkChar("ICrit_GetICU_GetOx_NoMV_Die2"));
+  SET_STRING_ELT(variable_names, 52, mkChar("ICrit_GetICU_NoOx_NoMV_Surv1"));
+  SET_STRING_ELT(variable_names, 53, mkChar("ICrit_GetICU_NoOx_NoMV_Surv2"));
+  SET_STRING_ELT(variable_names, 54, mkChar("ICrit_GetICU_NoOx_NoMV_Die1"));
+  SET_STRING_ELT(variable_names, 55, mkChar("ICrit_GetICU_NoOx_NoMV_Die2"));
+  SET_STRING_ELT(variable_names, 56, mkChar("ICrit_NoICU_NoOx_NoMV_Surv1"));
+  SET_STRING_ELT(variable_names, 57, mkChar("ICrit_NoICU_NoOx_NoMV_Surv2"));
+  SET_STRING_ELT(variable_names, 58, mkChar("ICrit_NoICU_NoOx_NoMV_Die1"));
+  SET_STRING_ELT(variable_names, 59, mkChar("ICrit_NoICU_NoOx_NoMV_Die2"));
+  SET_VECTOR_ELT(ret, 0, variable_length);
+  UNPROTECT(2);
+  SEXP output_length = PROTECT(allocVector(VECSXP, 130));
+  SEXP output_names = PROTECT(allocVector(STRSXP, 130));
+  setAttrib(output_length, R_NamesSymbol, output_names);
+  SET_VECTOR_ELT(output_length, 0, R_NilValue);
+  SET_VECTOR_ELT(output_length, 1, R_NilValue);
+  SET_VECTOR_ELT(output_length, 2, R_NilValue);
+  SET_VECTOR_ELT(output_length, 3, R_NilValue);
+  SET_VECTOR_ELT(output_length, 4, R_NilValue);
+  SET_VECTOR_ELT(output_length, 5, R_NilValue);
+  SET_VECTOR_ELT(output_length, 6, R_NilValue);
+  SET_VECTOR_ELT(output_length, 7, R_NilValue);
+  SET_VECTOR_ELT(output_length, 8, R_NilValue);
+  SET_VECTOR_ELT(output_length, 9, R_NilValue);
+  SET_VECTOR_ELT(output_length, 10, R_NilValue);
+  SET_VECTOR_ELT(output_length, 11, R_NilValue);
+  SET_VECTOR_ELT(output_length, 12, R_NilValue);
+  SET_VECTOR_ELT(output_length, 13, R_NilValue);
+  SET_VECTOR_ELT(output_length, 14, R_NilValue);
+  SET_VECTOR_ELT(output_length, 15, R_NilValue);
+  SET_VECTOR_ELT(output_length, 16, R_NilValue);
+  SET_VECTOR_ELT(output_length, 17, R_NilValue);
+  SET_VECTOR_ELT(output_length, 18, R_NilValue);
+  SET_VECTOR_ELT(output_length, 19, R_NilValue);
+  SET_VECTOR_ELT(output_length, 20, R_NilValue);
+  SET_VECTOR_ELT(output_length, 21, R_NilValue);
+  SET_VECTOR_ELT(output_length, 22, R_NilValue);
+  SET_VECTOR_ELT(output_length, 23, R_NilValue);
+  SET_VECTOR_ELT(output_length, 24, R_NilValue);
+  SET_VECTOR_ELT(output_length, 25, R_NilValue);
+  SET_VECTOR_ELT(output_length, 26, R_NilValue);
+  SET_VECTOR_ELT(output_length, 27, R_NilValue);
+  SET_VECTOR_ELT(output_length, 28, R_NilValue);
+  SET_VECTOR_ELT(output_length, 29, R_NilValue);
+  SET_VECTOR_ELT(output_length, 30, R_NilValue);
+  SET_VECTOR_ELT(output_length, 31, R_NilValue);
+  SET_VECTOR_ELT(output_length, 32, R_NilValue);
+  SET_VECTOR_ELT(output_length, 33, R_NilValue);
+  SET_VECTOR_ELT(output_length, 34, R_NilValue);
+  SET_VECTOR_ELT(output_length, 35, R_NilValue);
+  SET_VECTOR_ELT(output_length, 36, R_NilValue);
+  SET_VECTOR_ELT(output_length, 37, R_NilValue);
+  SET_VECTOR_ELT(output_length, 38, R_NilValue);
+  SET_VECTOR_ELT(output_length, 39, R_NilValue);
+  SET_VECTOR_ELT(output_length, 40, R_NilValue);
+  SET_VECTOR_ELT(output_length, 41, R_NilValue);
+  SET_VECTOR_ELT(output_length, 42, R_NilValue);
+  SET_VECTOR_ELT(output_length, 43, R_NilValue);
+  SET_VECTOR_ELT(output_length, 44, ScalarInteger(internal->dim_n_S_PS));
+  SET_VECTOR_ELT(output_length, 45, ScalarInteger(internal->dim_n_PS_PE1));
+  SET_VECTOR_ELT(output_length, 46, ScalarInteger(internal->dim_n_PS_S));
+  SET_VECTOR_ELT(output_length, 47, ScalarInteger(internal->dim_n_PE1_PE2));
+  SET_VECTOR_ELT(output_length, 48, ScalarInteger(internal->dim_n_PE2_I));
+  SET_VECTOR_ELT(output_length, 49, ScalarInteger(internal->dim_n_PE2_ICase1_initial));
+  SET_VECTOR_ELT(output_length, 50, ScalarInteger(internal->dim_n_PE2_ICase1));
+  SET_VECTOR_ELT(output_length, 51, ScalarInteger(internal->dim_n_E2_ICase1_initial));
+  SET_VECTOR_ELT(output_length, 52, ScalarInteger(internal->dim_n_E2_ICase1));
+  SET_VECTOR_ELT(output_length, 53, ScalarInteger(internal->dim_n_E2_IAsymp));
+  SET_VECTOR_ELT(output_length, 54, ScalarInteger(internal->dim_n_E2_IMild));
+  SET_VECTOR_ELT(output_length, 55, ScalarInteger(internal->dim_n_E2_IMild_Drug_5));
+  SET_VECTOR_ELT(output_length, 56, ScalarInteger(internal->dim_n_E2_IMild_No_Drug_5));
+  SET_VECTOR_ELT(output_length, 57, ScalarInteger(internal->dim_n_PE2_IMild));
+  SET_VECTOR_ELT(output_length, 58, ScalarInteger(internal->dim_n_PE2_IMild_Drug_5));
+  SET_VECTOR_ELT(output_length, 59, ScalarInteger(internal->dim_n_PE2_IMild_No_Drug_5));
+  SET_VECTOR_ELT(output_length, 60, ScalarInteger(internal->dim_n_E2_ICase1_Drug_5));
+  SET_VECTOR_ELT(output_length, 61, ScalarInteger(internal->dim_n_E2_ICase1_No_Drug_5));
+  SET_VECTOR_ELT(output_length, 62, ScalarInteger(internal->dim_n_PE2_ICase1_Drug_5));
+  SET_VECTOR_ELT(output_length, 63, ScalarInteger(internal->dim_n_PE2_ICase1_No_Drug_5));
+  SET_VECTOR_ELT(output_length, 64, ScalarInteger(internal->dim_number_req_ICU_initial));
+  SET_VECTOR_ELT(output_length, 65, ScalarInteger(internal->dim_number_req_ICU));
+  SET_VECTOR_ELT(output_length, 66, ScalarInteger(internal->dim_number_req_ICU_MV_initial));
+  SET_VECTOR_ELT(output_length, 67, ScalarInteger(internal->dim_number_req_ICU_MV));
+  SET_VECTOR_ELT(output_length, 68, ScalarInteger(internal->dim_n_ISev_GetICU_GetOx_Die1));
+  SET_VECTOR_ELT(output_length, 69, ScalarInteger(internal->dim_n_ISev_GetICU_GetOx_Surv1));
+  SET_VECTOR_ELT(output_length, 70, ScalarInteger(internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2));
+  SET_VECTOR_ELT(output_length, 71, ScalarInteger(internal->dim_prob_moderate_death_get_hosp_get_ox_baseline));
+  SET_VECTOR_ELT(output_length, 72, ScalarInteger(internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11));
+  SET_VECTOR_ELT(output_length, 73, ScalarInteger(internal->dim_prob_moderate_death_get_hosp_get_ox));
+  SET_VECTOR_ELT(output_length, 74, ScalarInteger(internal->dim_prob_moderate_death_get_hosp_no_ox_baseline));
+  SET_VECTOR_ELT(output_length, 75, ScalarInteger(internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11));
+  SET_VECTOR_ELT(output_length, 76, ScalarInteger(internal->dim_prob_moderate_death_get_hosp_no_ox));
+  SET_VECTOR_ELT(output_length, 77, ScalarInteger(internal->dim_prob_severe_death_get_ICU_get_ox_baseline));
+  SET_VECTOR_ELT(output_length, 78, ScalarInteger(internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12));
+  SET_VECTOR_ELT(output_length, 79, ScalarInteger(internal->dim_prob_severe_death_get_ICU_get_ox));
+  SET_VECTOR_ELT(output_length, 80, ScalarInteger(internal->dim_prob_severe_death_get_ICU_no_ox_baseline));
+  SET_VECTOR_ELT(output_length, 81, ScalarInteger(internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12));
+  SET_VECTOR_ELT(output_length, 82, ScalarInteger(internal->dim_prob_severe_death_get_ICU_no_ox));
+  SET_VECTOR_ELT(output_length, 83, ScalarInteger(internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline));
+  SET_VECTOR_ELT(output_length, 84, ScalarInteger(internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13));
+  SET_VECTOR_ELT(output_length, 85, ScalarInteger(internal->dim_prob_critical_death_get_ICU_get_ox_get_MV));
+  SET_VECTOR_ELT(output_length, 86, ScalarInteger(internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline));
+  SET_VECTOR_ELT(output_length, 87, ScalarInteger(internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13));
+  SET_VECTOR_ELT(output_length, 88, ScalarInteger(internal->dim_prob_critical_death_get_ICU_get_ox_no_MV));
+  SET_VECTOR_ELT(output_length, 89, ScalarInteger(internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline));
+  SET_VECTOR_ELT(output_length, 90, ScalarInteger(internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13));
+  SET_VECTOR_ELT(output_length, 91, ScalarInteger(internal->dim_prob_critical_death_get_ICU_no_ox_no_MV));
+  SET_VECTOR_ELT(output_length, 92, ScalarInteger(internal->dim_n_S_E1));
+  SET_VECTOR_ELT(output_length, 93, ScalarInteger(internal->dim_n_E1_E2));
+  SET_VECTOR_ELT(output_length, 94, ScalarInteger(internal->dim_n_E2_I));
+  SET_VECTOR_ELT(output_length, 95, ScalarInteger(internal->dim_n_IMild_R));
+  SET_VECTOR_ELT(output_length, 96, ScalarInteger(internal->dim_n_ICase1_ICase2));
+  SET_VECTOR_ELT(output_length, 97, ScalarInteger(internal->dim_n_ICase2_Hosp));
+  SET_VECTOR_ELT(output_length, 98, ScalarInteger(internal->dim_n_IRec1_IRec2));
+  SET_VECTOR_ELT(output_length, 99, ScalarInteger(internal->dim_n_IRec2_R));
+  SET_VECTOR_ELT(output_length, 100, ScalarInteger(internal->dim_number_GetICU));
+  SET_VECTOR_ELT(output_length, 101, ScalarInteger(internal->dim_number_NotICU));
+  SET_VECTOR_ELT(output_length, 102, ScalarInteger(internal->dim_number_NotICU_NotOx_NotMV));
+  SET_VECTOR_ELT(output_length, 103, ScalarInteger(internal->dim_number_NotICU_NotOx));
+  SET_VECTOR_ELT(output_length, 104, ScalarInteger(internal->dim_number_req_Hosp));
+  SET_VECTOR_ELT(output_length, 105, ScalarInteger(internal->dim_number_GetHosp));
+  SET_VECTOR_ELT(output_length, 106, ScalarInteger(internal->dim_number_NotHosp));
+  SET_VECTOR_ELT(output_length, 107, ScalarInteger(internal->dim_number_GetHosp_Ox));
+  SET_VECTOR_ELT(output_length, 108, ScalarInteger(internal->dim_number_GetHosp_NoOx));
+  SET_VECTOR_ELT(output_length, 109, ScalarInteger(internal->dim_number_req_ICU_Ox));
+  SET_VECTOR_ELT(output_length, 110, ScalarInteger(internal->dim_number_GetICU_GetOx_NeedMV));
+  SET_VECTOR_ELT(output_length, 111, ScalarInteger(internal->dim_number_GetICU_NoOx));
+  SET_VECTOR_ELT(output_length, 112, ScalarInteger(internal->dim_number_GetICU_NoOx_NeedMV));
+  SET_VECTOR_ELT(output_length, 113, ScalarInteger(internal->dim_number_GetICU_GetOx_GetMV));
+  SET_VECTOR_ELT(output_length, 114, ScalarInteger(internal->dim_number_GetICU_GetOx_NoMV));
+  SET_VECTOR_ELT(output_length, 115, ScalarInteger(internal->dim_number_GetICU_GetOx));
+  SET_VECTOR_ELT(output_length, 116, ScalarInteger(internal->dim_n_IMod_GetHosp_GetOx_Die2_D_Hospital));
+  SET_VECTOR_ELT(output_length, 117, ScalarInteger(internal->dim_n_IMod_GetHosp_GetOx_Surv2_R));
+  SET_VECTOR_ELT(output_length, 118, ScalarInteger(internal->dim_n_IMod_GetHosp_NoOx_Die2_D_Hospital));
+  SET_VECTOR_ELT(output_length, 119, ScalarInteger(internal->dim_n_IMod_GetHosp_NoOx_Surv2_R));
+  SET_VECTOR_ELT(output_length, 120, ScalarInteger(internal->dim_n_ISev_GetICU_GetOx_Die2_D_Hospital));
+  SET_VECTOR_ELT(output_length, 121, ScalarInteger(internal->dim_n_ISev_GetICU_GetOx_Surv2_Rec));
+  SET_VECTOR_ELT(output_length, 122, ScalarInteger(internal->dim_n_ISev_GetICU_NoOx_Die2_D_Hospital));
+  SET_VECTOR_ELT(output_length, 123, ScalarInteger(internal->dim_n_ISev_GetICU_NoOx_Surv2_Rec));
+  SET_VECTOR_ELT(output_length, 124, ScalarInteger(internal->dim_n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital));
+  SET_VECTOR_ELT(output_length, 125, ScalarInteger(internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec));
+  SET_VECTOR_ELT(output_length, 126, ScalarInteger(internal->dim_n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital));
+  SET_VECTOR_ELT(output_length, 127, ScalarInteger(internal->dim_n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec));
+  SET_VECTOR_ELT(output_length, 128, ScalarInteger(internal->dim_n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital));
+  SET_VECTOR_ELT(output_length, 129, ScalarInteger(internal->dim_n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec));
+  SET_STRING_ELT(output_names, 0, mkChar("time"));
+  SET_STRING_ELT(output_names, 1, mkChar("pop"));
+  SET_STRING_ELT(output_names, 2, mkChar("gamma_IMild"));
+  SET_STRING_ELT(output_names, 3, mkChar("gamma_IMild_Drug_4"));
+  SET_STRING_ELT(output_names, 4, mkChar("gamma_IMod_GetHosp_GetOx_Surv"));
+  SET_STRING_ELT(output_names, 5, mkChar("gamma_IMod_GetHosp_GetOx_Surv_Drug_8"));
+  SET_STRING_ELT(output_names, 6, mkChar("gamma_IMod_GetHosp_NoOx_Surv"));
+  SET_STRING_ELT(output_names, 7, mkChar("gamma_IMod_GetHosp_NoOx_Surv_Drug_8"));
+  SET_STRING_ELT(output_names, 8, mkChar("gamma_ISev_GetICU_GetOx_Surv"));
+  SET_STRING_ELT(output_names, 9, mkChar("gamma_ISev_GetICU_GetOx_Surv_Drug_9"));
+  SET_STRING_ELT(output_names, 10, mkChar("gamma_ISev_GetICU_NoOx_Surv"));
+  SET_STRING_ELT(output_names, 11, mkChar("gamma_ISev_GetICU_NoOx_Surv_Drug_9"));
+  SET_STRING_ELT(output_names, 12, mkChar("gamma_ICrit_GetICU_GetOx_GetMV_Surv"));
+  SET_STRING_ELT(output_names, 13, mkChar("gamma_ICrit_GetICU_GetOx_GetMV_Surv_Drug_10"));
+  SET_STRING_ELT(output_names, 14, mkChar("gamma_ICrit_GetICU_GetOx_NoMV_Surv"));
+  SET_STRING_ELT(output_names, 15, mkChar("gamma_ICrit_GetICU_GetOx_NoMV_Surv_Drug_10"));
+  SET_STRING_ELT(output_names, 16, mkChar("gamma_ICrit_GetICU_NoOx_NoMV_Surv"));
+  SET_STRING_ELT(output_names, 17, mkChar("gamma_ICrit_GetICU_NoOx_NoMV_Surv_Drug_10"));
+  SET_STRING_ELT(output_names, 18, mkChar("total_req_ICU"));
+  SET_STRING_ELT(output_names, 19, mkChar("ICU_occ"));
+  SET_STRING_ELT(output_names, 20, mkChar("current_free_ICU"));
+  SET_STRING_ELT(output_names, 21, mkChar("total_GetICU"));
+  SET_STRING_ELT(output_names, 22, mkChar("total_req_Hosp"));
+  SET_STRING_ELT(output_names, 23, mkChar("hosp_occ"));
+  SET_STRING_ELT(output_names, 24, mkChar("current_free_hosp"));
+  SET_STRING_ELT(output_names, 25, mkChar("total_GetHosp"));
+  SET_STRING_ELT(output_names, 26, mkChar("oxygen_supply"));
+  SET_STRING_ELT(output_names, 27, mkChar("leftover"));
+  SET_STRING_ELT(output_names, 28, mkChar("baseline_oxygen_demand"));
+  SET_STRING_ELT(output_names, 29, mkChar("prop_ox_hosp_beds"));
+  SET_STRING_ELT(output_names, 30, mkChar("available_oxygen_for_hosp_beds"));
+  SET_STRING_ELT(output_names, 31, mkChar("available_oxygen_for_ICU_beds"));
+  SET_STRING_ELT(output_names, 32, mkChar("total_GetHosp_GetOx"));
+  SET_STRING_ELT(output_names, 33, mkChar("total_req_ICU_MV"));
+  SET_STRING_ELT(output_names, 34, mkChar("total_req_ICU_Ox"));
+  SET_STRING_ELT(output_names, 35, mkChar("MV_occ"));
+  SET_STRING_ELT(output_names, 36, mkChar("current_free_MV"));
+  SET_STRING_ELT(output_names, 37, mkChar("available_oxygen_for_ICU_MV"));
+  SET_STRING_ELT(output_names, 38, mkChar("available_oxygen_for_ICU_Ox"));
+  SET_STRING_ELT(output_names, 39, mkChar("total_GetICU_GetOx_Need_MV"));
+  SET_STRING_ELT(output_names, 40, mkChar("total_GetICU_GetOx_GetMV"));
+  SET_STRING_ELT(output_names, 41, mkChar("oxygen_used"));
+  SET_STRING_ELT(output_names, 42, mkChar("oxygen_needed_overall"));
+  SET_STRING_ELT(output_names, 43, mkChar("temp_leftover"));
+  SET_STRING_ELT(output_names, 44, mkChar("n_S_PS"));
+  SET_STRING_ELT(output_names, 45, mkChar("n_PS_PE1"));
+  SET_STRING_ELT(output_names, 46, mkChar("n_PS_S"));
+  SET_STRING_ELT(output_names, 47, mkChar("n_PE1_PE2"));
+  SET_STRING_ELT(output_names, 48, mkChar("n_PE2_I"));
+  SET_STRING_ELT(output_names, 49, mkChar("n_PE2_ICase1_initial"));
+  SET_STRING_ELT(output_names, 50, mkChar("n_PE2_ICase1"));
+  SET_STRING_ELT(output_names, 51, mkChar("n_E2_ICase1_initial"));
+  SET_STRING_ELT(output_names, 52, mkChar("n_E2_ICase1"));
+  SET_STRING_ELT(output_names, 53, mkChar("n_E2_IAsymp"));
+  SET_STRING_ELT(output_names, 54, mkChar("n_E2_IMild"));
+  SET_STRING_ELT(output_names, 55, mkChar("n_E2_IMild_Drug_5"));
+  SET_STRING_ELT(output_names, 56, mkChar("n_E2_IMild_No_Drug_5"));
+  SET_STRING_ELT(output_names, 57, mkChar("n_PE2_IMild"));
+  SET_STRING_ELT(output_names, 58, mkChar("n_PE2_IMild_Drug_5"));
+  SET_STRING_ELT(output_names, 59, mkChar("n_PE2_IMild_No_Drug_5"));
+  SET_STRING_ELT(output_names, 60, mkChar("n_E2_ICase1_Drug_5"));
+  SET_STRING_ELT(output_names, 61, mkChar("n_E2_ICase1_No_Drug_5"));
+  SET_STRING_ELT(output_names, 62, mkChar("n_PE2_ICase1_Drug_5"));
+  SET_STRING_ELT(output_names, 63, mkChar("n_PE2_ICase1_No_Drug_5"));
+  SET_STRING_ELT(output_names, 64, mkChar("number_req_ICU_initial"));
+  SET_STRING_ELT(output_names, 65, mkChar("number_req_ICU"));
+  SET_STRING_ELT(output_names, 66, mkChar("number_req_ICU_MV_initial"));
+  SET_STRING_ELT(output_names, 67, mkChar("number_req_ICU_MV"));
+  SET_STRING_ELT(output_names, 68, mkChar("n_ISev_GetICU_GetOx_Die1"));
+  SET_STRING_ELT(output_names, 69, mkChar("n_ISev_GetICU_GetOx_Surv1"));
+  SET_STRING_ELT(output_names, 70, mkChar("n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2"));
+  SET_STRING_ELT(output_names, 71, mkChar("prob_moderate_death_get_hosp_get_ox_baseline"));
+  SET_STRING_ELT(output_names, 72, mkChar("prob_moderate_death_get_hosp_get_ox_Drug_11"));
+  SET_STRING_ELT(output_names, 73, mkChar("prob_moderate_death_get_hosp_get_ox"));
+  SET_STRING_ELT(output_names, 74, mkChar("prob_moderate_death_get_hosp_no_ox_baseline"));
+  SET_STRING_ELT(output_names, 75, mkChar("prob_moderate_death_get_hosp_no_ox_Drug_11"));
+  SET_STRING_ELT(output_names, 76, mkChar("prob_moderate_death_get_hosp_no_ox"));
+  SET_STRING_ELT(output_names, 77, mkChar("prob_severe_death_get_ICU_get_ox_baseline"));
+  SET_STRING_ELT(output_names, 78, mkChar("prob_severe_death_get_ICU_get_ox_Drug_12"));
+  SET_STRING_ELT(output_names, 79, mkChar("prob_severe_death_get_ICU_get_ox"));
+  SET_STRING_ELT(output_names, 80, mkChar("prob_severe_death_get_ICU_no_ox_baseline"));
+  SET_STRING_ELT(output_names, 81, mkChar("prob_severe_death_get_ICU_no_ox_Drug_12"));
+  SET_STRING_ELT(output_names, 82, mkChar("prob_severe_death_get_ICU_no_ox"));
+  SET_STRING_ELT(output_names, 83, mkChar("prob_critical_death_get_ICU_get_ox_get_MV_baseline"));
+  SET_STRING_ELT(output_names, 84, mkChar("prob_critical_death_get_ICU_get_ox_get_MV_Drug_13"));
+  SET_STRING_ELT(output_names, 85, mkChar("prob_critical_death_get_ICU_get_ox_get_MV"));
+  SET_STRING_ELT(output_names, 86, mkChar("prob_critical_death_get_ICU_get_ox_no_MV_baseline"));
+  SET_STRING_ELT(output_names, 87, mkChar("prob_critical_death_get_ICU_get_ox_no_MV_Drug_13"));
+  SET_STRING_ELT(output_names, 88, mkChar("prob_critical_death_get_ICU_get_ox_no_MV"));
+  SET_STRING_ELT(output_names, 89, mkChar("prob_critical_death_get_ICU_no_ox_no_MV_baseline"));
+  SET_STRING_ELT(output_names, 90, mkChar("prob_critical_death_get_ICU_no_ox_no_MV_Drug_13"));
+  SET_STRING_ELT(output_names, 91, mkChar("prob_critical_death_get_ICU_no_ox_no_MV"));
+  SET_STRING_ELT(output_names, 92, mkChar("n_S_E1"));
+  SET_STRING_ELT(output_names, 93, mkChar("n_E1_E2"));
+  SET_STRING_ELT(output_names, 94, mkChar("n_E2_I"));
+  SET_STRING_ELT(output_names, 95, mkChar("n_IMild_R"));
+  SET_STRING_ELT(output_names, 96, mkChar("n_ICase1_ICase2"));
+  SET_STRING_ELT(output_names, 97, mkChar("n_ICase2_Hosp"));
+  SET_STRING_ELT(output_names, 98, mkChar("n_IRec1_IRec2"));
+  SET_STRING_ELT(output_names, 99, mkChar("n_IRec2_R"));
+  SET_STRING_ELT(output_names, 100, mkChar("number_GetICU"));
+  SET_STRING_ELT(output_names, 101, mkChar("number_NotICU"));
+  SET_STRING_ELT(output_names, 102, mkChar("number_NotICU_NotOx_NotMV"));
+  SET_STRING_ELT(output_names, 103, mkChar("number_NotICU_NotOx"));
+  SET_STRING_ELT(output_names, 104, mkChar("number_req_Hosp"));
+  SET_STRING_ELT(output_names, 105, mkChar("number_GetHosp"));
+  SET_STRING_ELT(output_names, 106, mkChar("number_NotHosp"));
+  SET_STRING_ELT(output_names, 107, mkChar("number_GetHosp_Ox"));
+  SET_STRING_ELT(output_names, 108, mkChar("number_GetHosp_NoOx"));
+  SET_STRING_ELT(output_names, 109, mkChar("number_req_ICU_Ox"));
+  SET_STRING_ELT(output_names, 110, mkChar("number_GetICU_GetOx_NeedMV"));
+  SET_STRING_ELT(output_names, 111, mkChar("number_GetICU_NoOx"));
+  SET_STRING_ELT(output_names, 112, mkChar("number_GetICU_NoOx_NeedMV"));
+  SET_STRING_ELT(output_names, 113, mkChar("number_GetICU_GetOx_GetMV"));
+  SET_STRING_ELT(output_names, 114, mkChar("number_GetICU_GetOx_NoMV"));
+  SET_STRING_ELT(output_names, 115, mkChar("number_GetICU_GetOx"));
+  SET_STRING_ELT(output_names, 116, mkChar("n_IMod_GetHosp_GetOx_Die2_D_Hospital"));
+  SET_STRING_ELT(output_names, 117, mkChar("n_IMod_GetHosp_GetOx_Surv2_R"));
+  SET_STRING_ELT(output_names, 118, mkChar("n_IMod_GetHosp_NoOx_Die2_D_Hospital"));
+  SET_STRING_ELT(output_names, 119, mkChar("n_IMod_GetHosp_NoOx_Surv2_R"));
+  SET_STRING_ELT(output_names, 120, mkChar("n_ISev_GetICU_GetOx_Die2_D_Hospital"));
+  SET_STRING_ELT(output_names, 121, mkChar("n_ISev_GetICU_GetOx_Surv2_Rec"));
+  SET_STRING_ELT(output_names, 122, mkChar("n_ISev_GetICU_NoOx_Die2_D_Hospital"));
+  SET_STRING_ELT(output_names, 123, mkChar("n_ISev_GetICU_NoOx_Surv2_Rec"));
+  SET_STRING_ELT(output_names, 124, mkChar("n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital"));
+  SET_STRING_ELT(output_names, 125, mkChar("n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec"));
+  SET_STRING_ELT(output_names, 126, mkChar("n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital"));
+  SET_STRING_ELT(output_names, 127, mkChar("n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec"));
+  SET_STRING_ELT(output_names, 128, mkChar("n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital"));
+  SET_STRING_ELT(output_names, 129, mkChar("n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec"));
+  SET_VECTOR_ELT(ret, 1, output_length);
+  UNPROTECT(2);
+  SET_VECTOR_ELT(ret, 2, ScalarInteger(44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I + internal->dim_n_IMild_R + internal->dim_n_ICase1_ICase2 + internal->dim_n_ICase2_Hosp + internal->dim_n_IRec1_IRec2 + internal->dim_n_IRec2_R + internal->dim_number_GetICU + internal->dim_number_NotICU + internal->dim_number_NotICU_NotOx_NotMV + internal->dim_number_NotICU_NotOx + internal->dim_number_req_Hosp + internal->dim_number_GetHosp + internal->dim_number_NotHosp + internal->dim_number_GetHosp_Ox + internal->dim_number_GetHosp_NoOx + internal->dim_number_req_ICU_Ox + internal->dim_number_GetICU_GetOx_NeedMV + internal->dim_number_GetICU_NoOx + internal->dim_number_GetICU_NoOx_NeedMV + internal->dim_number_GetICU_GetOx_GetMV + internal->dim_number_GetICU_GetOx_NoMV + internal->dim_number_GetICU_GetOx + internal->dim_n_IMod_GetHosp_GetOx_Die2_D_Hospital + internal->dim_n_IMod_GetHosp_GetOx_Surv2_R + internal->dim_n_IMod_GetHosp_NoOx_Die2_D_Hospital + internal->dim_n_IMod_GetHosp_NoOx_Surv2_R + internal->dim_n_ISev_GetICU_GetOx_Die2_D_Hospital + internal->dim_n_ISev_GetICU_GetOx_Surv2_Rec + internal->dim_n_ISev_GetICU_NoOx_Die2_D_Hospital + internal->dim_n_ISev_GetICU_NoOx_Surv2_Rec + internal->dim_n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital + internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec + internal->dim_n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital + internal->dim_n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec + internal->dim_n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital + internal->dim_n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec));
+  SEXP interpolate_t = PROTECT(allocVector(VECSXP, 3));
+  SEXP interpolate_t_nms = PROTECT(allocVector(STRSXP, 3));
+  setAttrib(interpolate_t, R_NamesSymbol, interpolate_t_nms);
+  SET_VECTOR_ELT(interpolate_t, 0, ScalarReal(fmax(internal->tt_baseline_oxygen_demand[0], fmax(internal->tt_beta[0], fmax(internal->tt_hosp_beds[0], fmax(internal->tt_ICU_beds[0], fmax(internal->tt_matrix[0], internal->tt_oxygen_supply[0])))))));
+  SET_VECTOR_ELT(interpolate_t, 1, ScalarReal(R_PosInf));
+  SET_STRING_ELT(interpolate_t_nms, 0, mkChar("min"));
+  SET_STRING_ELT(interpolate_t_nms, 1, mkChar("max"));
+  SET_VECTOR_ELT(ret, 3, interpolate_t);
+  UNPROTECT(2);
+  UNPROTECT(2);
+  return ret;
+}
+SEXP deterministic_apothecary_SEIR_initial_conditions(SEXP internal_p, SEXP t_ptr) {
+  deterministic_apothecary_SEIR_internal *internal = deterministic_apothecary_SEIR_get_internal(internal_p, 1);
+  SEXP r_state = PROTECT(allocVector(REALSXP, 1 + internal->dim_S + internal->dim_E1 + internal->dim_E2 + internal->dim_IAsymp + internal->dim_IMild + internal->dim_ICase1 + internal->dim_ICase2 + internal->dim_IMild_Drug_5 + internal->dim_ICase1_Drug_5 + internal->dim_ICase2_Drug_5 + internal->dim_IRec1 + internal->dim_IRec2 + internal->dim_R + internal->dim_D_Community + internal->dim_D_Hospital + internal->dim_D + internal->dim_PS + internal->dim_PE1 + internal->dim_PE2 + internal->dim_IMod_GetHosp_GetOx_Surv1 + internal->dim_IMod_GetHosp_GetOx_Surv2 + internal->dim_IMod_GetHosp_GetOx_Die1 + internal->dim_IMod_GetHosp_GetOx_Die2 + internal->dim_IMod_GetHosp_NoOx_Surv1 + internal->dim_IMod_GetHosp_NoOx_Surv2 + internal->dim_IMod_GetHosp_NoOx_Die1 + internal->dim_IMod_GetHosp_NoOx_Die2 + internal->dim_IMod_NoHosp_NoOx_Surv1 + internal->dim_IMod_NoHosp_NoOx_Surv2 + internal->dim_IMod_NoHosp_NoOx_Die1 + internal->dim_IMod_NoHosp_NoOx_Die2 + internal->dim_ISev_GetICU_GetOx_Surv1 + internal->dim_ISev_GetICU_GetOx_Surv2 + internal->dim_ISev_GetICU_GetOx_Die1 + internal->dim_ISev_GetICU_GetOx_Die2 + internal->dim_ISev_GetICU_NoOx_Surv1 + internal->dim_ISev_GetICU_NoOx_Surv2 + internal->dim_ISev_GetICU_NoOx_Die1 + internal->dim_ISev_GetICU_NoOx_Die2 + internal->dim_ISev_NoICU_NoOx_Surv1 + internal->dim_ISev_NoICU_NoOx_Surv2 + internal->dim_ISev_NoICU_NoOx_Die1 + internal->dim_ISev_NoICU_NoOx_Die2 + internal->dim_ICrit_GetICU_GetOx_GetMV_Surv1 + internal->dim_ICrit_GetICU_GetOx_GetMV_Surv2 + internal->dim_ICrit_GetICU_GetOx_GetMV_Die1 + internal->dim_ICrit_GetICU_GetOx_GetMV_Die2 + internal->dim_ICrit_GetICU_GetOx_NoMV_Surv1 + internal->dim_ICrit_GetICU_GetOx_NoMV_Surv2 + internal->dim_ICrit_GetICU_GetOx_NoMV_Die1 + internal->dim_ICrit_GetICU_GetOx_NoMV_Die2 + internal->dim_ICrit_GetICU_NoOx_NoMV_Surv1 + internal->dim_ICrit_GetICU_NoOx_NoMV_Surv2 + internal->dim_ICrit_GetICU_NoOx_NoMV_Die1 + internal->dim_ICrit_GetICU_NoOx_NoMV_Die2 + internal->dim_ICrit_NoICU_NoOx_NoMV_Surv1 + internal->dim_ICrit_NoICU_NoOx_NoMV_Surv2 + internal->dim_ICrit_NoICU_NoOx_NoMV_Die1 + internal->dim_ICrit_NoICU_NoOx_NoMV_Die2));
+  double * state = REAL(r_state);
+  state[0] = internal->initial_oxygen_availability;
+  memcpy(state + 1, internal->initial_S, internal->dim_S * sizeof(double));
+  memcpy(state + internal->offset_variable_E1, internal->initial_E1, internal->dim_E1 * sizeof(double));
+  memcpy(state + internal->offset_variable_E2, internal->initial_E2, internal->dim_E2 * sizeof(double));
+  memcpy(state + internal->offset_variable_IAsymp, internal->initial_IAsymp, internal->dim_IAsymp * sizeof(double));
+  memcpy(state + internal->offset_variable_IMild, internal->initial_IMild, internal->dim_IMild * sizeof(double));
+  memcpy(state + internal->offset_variable_ICase1, internal->initial_ICase1, internal->dim_ICase1 * sizeof(double));
+  memcpy(state + internal->offset_variable_ICase2, internal->initial_ICase2, internal->dim_ICase2 * sizeof(double));
+  memcpy(state + internal->offset_variable_IMild_Drug_5, internal->initial_IMild_Drug_5, internal->dim_IMild_Drug_5 * sizeof(double));
+  memcpy(state + internal->offset_variable_ICase1_Drug_5, internal->initial_ICase1_Drug_5, internal->dim_ICase1_Drug_5 * sizeof(double));
+  memcpy(state + internal->offset_variable_ICase2_Drug_5, internal->initial_ICase2_Drug_5, internal->dim_ICase2_Drug_5 * sizeof(double));
+  memcpy(state + internal->offset_variable_IRec1, internal->initial_IRec1, internal->dim_IRec1 * sizeof(double));
+  memcpy(state + internal->offset_variable_IRec2, internal->initial_IRec2, internal->dim_IRec2 * sizeof(double));
+  memcpy(state + internal->offset_variable_R, internal->initial_R, internal->dim_R * sizeof(double));
+  memcpy(state + internal->offset_variable_D_Community, internal->initial_D_Community, internal->dim_D_Community * sizeof(double));
+  memcpy(state + internal->offset_variable_D_Hospital, internal->initial_D_Hospital, internal->dim_D_Hospital * sizeof(double));
+  memcpy(state + internal->offset_variable_D, internal->initial_D, internal->dim_D * sizeof(double));
+  memcpy(state + internal->offset_variable_PS, internal->initial_PS, internal->dim_PS * sizeof(double));
+  memcpy(state + internal->offset_variable_PE1, internal->initial_PE1, internal->dim_PE1 * sizeof(double));
+  memcpy(state + internal->offset_variable_PE2, internal->initial_PE2, internal->dim_PE2 * sizeof(double));
+  memcpy(state + internal->offset_variable_IMod_GetHosp_GetOx_Surv1, internal->initial_IMod_GetHosp_GetOx_Surv1, internal->dim_IMod_GetHosp_GetOx_Surv1 * sizeof(double));
+  memcpy(state + internal->offset_variable_IMod_GetHosp_GetOx_Surv2, internal->initial_IMod_GetHosp_GetOx_Surv2, internal->dim_IMod_GetHosp_GetOx_Surv2 * sizeof(double));
+  memcpy(state + internal->offset_variable_IMod_GetHosp_GetOx_Die1, internal->initial_IMod_GetHosp_GetOx_Die1, internal->dim_IMod_GetHosp_GetOx_Die1 * sizeof(double));
+  memcpy(state + internal->offset_variable_IMod_GetHosp_GetOx_Die2, internal->initial_IMod_GetHosp_GetOx_Die2, internal->dim_IMod_GetHosp_GetOx_Die2 * sizeof(double));
+  memcpy(state + internal->offset_variable_IMod_GetHosp_NoOx_Surv1, internal->initial_IMod_GetHosp_NoOx_Surv1, internal->dim_IMod_GetHosp_NoOx_Surv1 * sizeof(double));
+  memcpy(state + internal->offset_variable_IMod_GetHosp_NoOx_Surv2, internal->initial_IMod_GetHosp_NoOx_Surv2, internal->dim_IMod_GetHosp_NoOx_Surv2 * sizeof(double));
+  memcpy(state + internal->offset_variable_IMod_GetHosp_NoOx_Die1, internal->initial_IMod_GetHosp_NoOx_Die1, internal->dim_IMod_GetHosp_NoOx_Die1 * sizeof(double));
+  memcpy(state + internal->offset_variable_IMod_GetHosp_NoOx_Die2, internal->initial_IMod_GetHosp_NoOx_Die2, internal->dim_IMod_GetHosp_NoOx_Die2 * sizeof(double));
+  memcpy(state + internal->offset_variable_IMod_NoHosp_NoOx_Surv1, internal->initial_IMod_NoHosp_NoOx_Surv1, internal->dim_IMod_NoHosp_NoOx_Surv1 * sizeof(double));
+  memcpy(state + internal->offset_variable_IMod_NoHosp_NoOx_Surv2, internal->initial_IMod_NoHosp_NoOx_Surv2, internal->dim_IMod_NoHosp_NoOx_Surv2 * sizeof(double));
+  memcpy(state + internal->offset_variable_IMod_NoHosp_NoOx_Die1, internal->initial_IMod_NoHosp_NoOx_Die1, internal->dim_IMod_NoHosp_NoOx_Die1 * sizeof(double));
+  memcpy(state + internal->offset_variable_IMod_NoHosp_NoOx_Die2, internal->initial_IMod_NoHosp_NoOx_Die2, internal->dim_IMod_NoHosp_NoOx_Die2 * sizeof(double));
+  memcpy(state + internal->offset_variable_ISev_GetICU_GetOx_Surv1, internal->initial_ISev_GetICU_GetOx_Surv1, internal->dim_ISev_GetICU_GetOx_Surv1 * sizeof(double));
+  memcpy(state + internal->offset_variable_ISev_GetICU_GetOx_Surv2, internal->initial_ISev_GetICU_GetOx_Surv2, internal->dim_ISev_GetICU_GetOx_Surv2 * sizeof(double));
+  memcpy(state + internal->offset_variable_ISev_GetICU_GetOx_Die1, internal->initial_ISev_GetICU_GetOx_Die1, internal->dim_ISev_GetICU_GetOx_Die1 * sizeof(double));
+  memcpy(state + internal->offset_variable_ISev_GetICU_GetOx_Die2, internal->initial_ISev_GetICU_GetOx_Die2, internal->dim_ISev_GetICU_GetOx_Die2 * sizeof(double));
+  memcpy(state + internal->offset_variable_ISev_GetICU_NoOx_Surv1, internal->initial_ISev_GetICU_NoOx_Surv1, internal->dim_ISev_GetICU_NoOx_Surv1 * sizeof(double));
+  memcpy(state + internal->offset_variable_ISev_GetICU_NoOx_Surv2, internal->initial_ISev_GetICU_NoOx_Surv2, internal->dim_ISev_GetICU_NoOx_Surv2 * sizeof(double));
+  memcpy(state + internal->offset_variable_ISev_GetICU_NoOx_Die1, internal->initial_ISev_GetICU_NoOx_Die1, internal->dim_ISev_GetICU_NoOx_Die1 * sizeof(double));
+  memcpy(state + internal->offset_variable_ISev_GetICU_NoOx_Die2, internal->initial_ISev_GetICU_NoOx_Die2, internal->dim_ISev_GetICU_NoOx_Die2 * sizeof(double));
+  memcpy(state + internal->offset_variable_ISev_NoICU_NoOx_Surv1, internal->initial_ISev_NoICU_NoOx_Surv1, internal->dim_ISev_NoICU_NoOx_Surv1 * sizeof(double));
+  memcpy(state + internal->offset_variable_ISev_NoICU_NoOx_Surv2, internal->initial_ISev_NoICU_NoOx_Surv2, internal->dim_ISev_NoICU_NoOx_Surv2 * sizeof(double));
+  memcpy(state + internal->offset_variable_ISev_NoICU_NoOx_Die1, internal->initial_ISev_NoICU_NoOx_Die1, internal->dim_ISev_NoICU_NoOx_Die1 * sizeof(double));
+  memcpy(state + internal->offset_variable_ISev_NoICU_NoOx_Die2, internal->initial_ISev_NoICU_NoOx_Die2, internal->dim_ISev_NoICU_NoOx_Die2 * sizeof(double));
+  memcpy(state + internal->offset_variable_ICrit_GetICU_GetOx_GetMV_Surv1, internal->initial_ICrit_GetICU_GetOx_GetMV_Surv1, internal->dim_ICrit_GetICU_GetOx_GetMV_Surv1 * sizeof(double));
+  memcpy(state + internal->offset_variable_ICrit_GetICU_GetOx_GetMV_Surv2, internal->initial_ICrit_GetICU_GetOx_GetMV_Surv2, internal->dim_ICrit_GetICU_GetOx_GetMV_Surv2 * sizeof(double));
+  memcpy(state + internal->offset_variable_ICrit_GetICU_GetOx_GetMV_Die1, internal->initial_ICrit_GetICU_GetOx_GetMV_Die1, internal->dim_ICrit_GetICU_GetOx_GetMV_Die1 * sizeof(double));
+  memcpy(state + internal->offset_variable_ICrit_GetICU_GetOx_GetMV_Die2, internal->initial_ICrit_GetICU_GetOx_GetMV_Die2, internal->dim_ICrit_GetICU_GetOx_GetMV_Die2 * sizeof(double));
+  memcpy(state + internal->offset_variable_ICrit_GetICU_GetOx_NoMV_Surv1, internal->initial_ICrit_GetICU_GetOx_NoMV_Surv1, internal->dim_ICrit_GetICU_GetOx_NoMV_Surv1 * sizeof(double));
+  memcpy(state + internal->offset_variable_ICrit_GetICU_GetOx_NoMV_Surv2, internal->initial_ICrit_GetICU_GetOx_NoMV_Surv2, internal->dim_ICrit_GetICU_GetOx_NoMV_Surv2 * sizeof(double));
+  memcpy(state + internal->offset_variable_ICrit_GetICU_GetOx_NoMV_Die1, internal->initial_ICrit_GetICU_GetOx_NoMV_Die1, internal->dim_ICrit_GetICU_GetOx_NoMV_Die1 * sizeof(double));
+  memcpy(state + internal->offset_variable_ICrit_GetICU_GetOx_NoMV_Die2, internal->initial_ICrit_GetICU_GetOx_NoMV_Die2, internal->dim_ICrit_GetICU_GetOx_NoMV_Die2 * sizeof(double));
+  memcpy(state + internal->offset_variable_ICrit_GetICU_NoOx_NoMV_Surv1, internal->initial_ICrit_GetICU_NoOx_NoMV_Surv1, internal->dim_ICrit_GetICU_NoOx_NoMV_Surv1 * sizeof(double));
+  memcpy(state + internal->offset_variable_ICrit_GetICU_NoOx_NoMV_Surv2, internal->initial_ICrit_GetICU_NoOx_NoMV_Surv2, internal->dim_ICrit_GetICU_NoOx_NoMV_Surv2 * sizeof(double));
+  memcpy(state + internal->offset_variable_ICrit_GetICU_NoOx_NoMV_Die1, internal->initial_ICrit_GetICU_NoOx_NoMV_Die1, internal->dim_ICrit_GetICU_NoOx_NoMV_Die1 * sizeof(double));
+  memcpy(state + internal->offset_variable_ICrit_GetICU_NoOx_NoMV_Die2, internal->initial_ICrit_GetICU_NoOx_NoMV_Die2, internal->dim_ICrit_GetICU_NoOx_NoMV_Die2 * sizeof(double));
+  memcpy(state + internal->offset_variable_ICrit_NoICU_NoOx_NoMV_Surv1, internal->initial_ICrit_NoICU_NoOx_NoMV_Surv1, internal->dim_ICrit_NoICU_NoOx_NoMV_Surv1 * sizeof(double));
+  memcpy(state + internal->offset_variable_ICrit_NoICU_NoOx_NoMV_Surv2, internal->initial_ICrit_NoICU_NoOx_NoMV_Surv2, internal->dim_ICrit_NoICU_NoOx_NoMV_Surv2 * sizeof(double));
+  memcpy(state + internal->offset_variable_ICrit_NoICU_NoOx_NoMV_Die1, internal->initial_ICrit_NoICU_NoOx_NoMV_Die1, internal->dim_ICrit_NoICU_NoOx_NoMV_Die1 * sizeof(double));
+  memcpy(state + internal->offset_variable_ICrit_NoICU_NoOx_NoMV_Die2, internal->initial_ICrit_NoICU_NoOx_NoMV_Die2, internal->dim_ICrit_NoICU_NoOx_NoMV_Die2 * sizeof(double));
+  UNPROTECT(1);
+  return r_state;
+}
+void deterministic_apothecary_SEIR_rhs(deterministic_apothecary_SEIR_internal* internal, double t, double * state, double * dstatedt, double * output) {
+  double oxygen_availability = state[0];
+  double * S = state + 1;
+  double * E1 = state + internal->offset_variable_E1;
+  double * E2 = state + internal->offset_variable_E2;
+  double * IAsymp = state + internal->offset_variable_IAsymp;
+  double * IMild = state + internal->offset_variable_IMild;
+  double * ICase1 = state + internal->offset_variable_ICase1;
+  double * ICase2 = state + internal->offset_variable_ICase2;
+  double * IMild_Drug_5 = state + internal->offset_variable_IMild_Drug_5;
+  double * ICase1_Drug_5 = state + internal->offset_variable_ICase1_Drug_5;
+  double * ICase2_Drug_5 = state + internal->offset_variable_ICase2_Drug_5;
+  double * PS = state + internal->offset_variable_PS;
+  double * PE1 = state + internal->offset_variable_PE1;
+  double * PE2 = state + internal->offset_variable_PE2;
+  double * IMod_GetHosp_GetOx_Die1 = state + internal->offset_variable_IMod_GetHosp_GetOx_Die1;
+  double * IMod_GetHosp_GetOx_Die2 = state + internal->offset_variable_IMod_GetHosp_GetOx_Die2;
+  double * IMod_GetHosp_GetOx_Surv1 = state + internal->offset_variable_IMod_GetHosp_GetOx_Surv1;
+  double * IMod_GetHosp_GetOx_Surv2 = state + internal->offset_variable_IMod_GetHosp_GetOx_Surv2;
+  double * IMod_GetHosp_NoOx_Die1 = state + internal->offset_variable_IMod_GetHosp_NoOx_Die1;
+  double * IMod_GetHosp_NoOx_Die2 = state + internal->offset_variable_IMod_GetHosp_NoOx_Die2;
+  double * IMod_GetHosp_NoOx_Surv1 = state + internal->offset_variable_IMod_GetHosp_NoOx_Surv1;
+  double * IMod_GetHosp_NoOx_Surv2 = state + internal->offset_variable_IMod_GetHosp_NoOx_Surv2;
+  double * IMod_NoHosp_NoOx_Die1 = state + internal->offset_variable_IMod_NoHosp_NoOx_Die1;
+  double * IMod_NoHosp_NoOx_Die2 = state + internal->offset_variable_IMod_NoHosp_NoOx_Die2;
+  double * IMod_NoHosp_NoOx_Surv1 = state + internal->offset_variable_IMod_NoHosp_NoOx_Surv1;
+  double * IMod_NoHosp_NoOx_Surv2 = state + internal->offset_variable_IMod_NoHosp_NoOx_Surv2;
+  double * ISev_GetICU_GetOx_Die1 = state + internal->offset_variable_ISev_GetICU_GetOx_Die1;
+  double * ISev_GetICU_GetOx_Die2 = state + internal->offset_variable_ISev_GetICU_GetOx_Die2;
+  double * ISev_GetICU_GetOx_Surv1 = state + internal->offset_variable_ISev_GetICU_GetOx_Surv1;
+  double * ISev_GetICU_GetOx_Surv2 = state + internal->offset_variable_ISev_GetICU_GetOx_Surv2;
+  double * ISev_GetICU_NoOx_Die1 = state + internal->offset_variable_ISev_GetICU_NoOx_Die1;
+  double * ISev_GetICU_NoOx_Die2 = state + internal->offset_variable_ISev_GetICU_NoOx_Die2;
+  double * ISev_GetICU_NoOx_Surv1 = state + internal->offset_variable_ISev_GetICU_NoOx_Surv1;
+  double * ISev_GetICU_NoOx_Surv2 = state + internal->offset_variable_ISev_GetICU_NoOx_Surv2;
+  double * ISev_NoICU_NoOx_Die1 = state + internal->offset_variable_ISev_NoICU_NoOx_Die1;
+  double * ISev_NoICU_NoOx_Die2 = state + internal->offset_variable_ISev_NoICU_NoOx_Die2;
+  double * ISev_NoICU_NoOx_Surv1 = state + internal->offset_variable_ISev_NoICU_NoOx_Surv1;
+  double * ISev_NoICU_NoOx_Surv2 = state + internal->offset_variable_ISev_NoICU_NoOx_Surv2;
+  double * ICrit_GetICU_GetOx_GetMV_Die1 = state + internal->offset_variable_ICrit_GetICU_GetOx_GetMV_Die1;
+  double * ICrit_GetICU_GetOx_GetMV_Die2 = state + internal->offset_variable_ICrit_GetICU_GetOx_GetMV_Die2;
+  double * ICrit_GetICU_GetOx_GetMV_Surv1 = state + internal->offset_variable_ICrit_GetICU_GetOx_GetMV_Surv1;
+  double * ICrit_GetICU_GetOx_GetMV_Surv2 = state + internal->offset_variable_ICrit_GetICU_GetOx_GetMV_Surv2;
+  double * ICrit_GetICU_GetOx_NoMV_Die1 = state + internal->offset_variable_ICrit_GetICU_GetOx_NoMV_Die1;
+  double * ICrit_GetICU_GetOx_NoMV_Die2 = state + internal->offset_variable_ICrit_GetICU_GetOx_NoMV_Die2;
+  double * ICrit_GetICU_GetOx_NoMV_Surv1 = state + internal->offset_variable_ICrit_GetICU_GetOx_NoMV_Surv1;
+  double * ICrit_GetICU_GetOx_NoMV_Surv2 = state + internal->offset_variable_ICrit_GetICU_GetOx_NoMV_Surv2;
+  double * ICrit_GetICU_NoOx_NoMV_Die1 = state + internal->offset_variable_ICrit_GetICU_NoOx_NoMV_Die1;
+  double * ICrit_GetICU_NoOx_NoMV_Die2 = state + internal->offset_variable_ICrit_GetICU_NoOx_NoMV_Die2;
+  double * ICrit_GetICU_NoOx_NoMV_Surv1 = state + internal->offset_variable_ICrit_GetICU_NoOx_NoMV_Surv1;
+  double * ICrit_GetICU_NoOx_NoMV_Surv2 = state + internal->offset_variable_ICrit_GetICU_NoOx_NoMV_Surv2;
+  double * ICrit_NoICU_NoOx_NoMV_Die1 = state + internal->offset_variable_ICrit_NoICU_NoOx_NoMV_Die1;
+  double * ICrit_NoICU_NoOx_NoMV_Die2 = state + internal->offset_variable_ICrit_NoICU_NoOx_NoMV_Die2;
+  double * ICrit_NoICU_NoOx_NoMV_Surv1 = state + internal->offset_variable_ICrit_NoICU_NoOx_NoMV_Surv1;
+  double * ICrit_NoICU_NoOx_NoMV_Surv2 = state + internal->offset_variable_ICrit_NoICU_NoOx_NoMV_Surv2;
+  double * IRec1 = state + internal->offset_variable_IRec1;
+  double * IRec2 = state + internal->offset_variable_IRec2;
+  double hosp_occ = odin_sum1(IMod_GetHosp_GetOx_Surv1, 0, internal->dim_IMod_GetHosp_GetOx_Surv1) + odin_sum1(IMod_GetHosp_GetOx_Surv2, 0, internal->dim_IMod_GetHosp_GetOx_Surv2) + odin_sum1(IMod_GetHosp_GetOx_Die1, 0, internal->dim_IMod_GetHosp_GetOx_Die1) + odin_sum1(IMod_GetHosp_GetOx_Die2, 0, internal->dim_IMod_GetHosp_GetOx_Die2) + odin_sum1(IMod_GetHosp_NoOx_Surv1, 0, internal->dim_IMod_GetHosp_NoOx_Surv1) + odin_sum1(IMod_GetHosp_NoOx_Surv2, 0, internal->dim_IMod_GetHosp_NoOx_Surv2) + odin_sum1(IMod_GetHosp_NoOx_Die1, 0, internal->dim_IMod_GetHosp_NoOx_Die1) + odin_sum1(IMod_GetHosp_NoOx_Die2, 0, internal->dim_IMod_GetHosp_NoOx_Die2) + odin_sum1(IRec1, 0, internal->dim_IRec1) + odin_sum1(IRec2, 0, internal->dim_IRec2);
+  double ICU_occ = odin_sum1(ISev_GetICU_GetOx_Surv1, 0, internal->dim_ISev_GetICU_GetOx_Surv1) + odin_sum1(ISev_GetICU_GetOx_Surv2, 0, internal->dim_ISev_GetICU_GetOx_Surv2) + odin_sum1(ISev_GetICU_GetOx_Die1, 0, internal->dim_ISev_GetICU_GetOx_Die1) + odin_sum1(ISev_GetICU_GetOx_Die2, 0, internal->dim_ISev_GetICU_GetOx_Die2) + odin_sum1(ISev_GetICU_NoOx_Surv1, 0, internal->dim_ISev_GetICU_NoOx_Surv1) + odin_sum1(ISev_GetICU_NoOx_Surv2, 0, internal->dim_ISev_GetICU_NoOx_Surv2) + odin_sum1(ISev_GetICU_NoOx_Die1, 0, internal->dim_ISev_GetICU_NoOx_Die1) + odin_sum1(ISev_GetICU_NoOx_Die2, 0, internal->dim_ISev_GetICU_NoOx_Die2) + odin_sum1(ICrit_GetICU_GetOx_GetMV_Surv1, 0, internal->dim_ICrit_GetICU_GetOx_GetMV_Surv1) + odin_sum1(ICrit_GetICU_GetOx_GetMV_Surv2, 0, internal->dim_ICrit_GetICU_GetOx_GetMV_Surv2) + odin_sum1(ICrit_GetICU_GetOx_GetMV_Die1, 0, internal->dim_ICrit_GetICU_GetOx_GetMV_Die1) + odin_sum1(ICrit_GetICU_GetOx_GetMV_Die2, 0, internal->dim_ICrit_GetICU_GetOx_GetMV_Die2) + odin_sum1(ICrit_GetICU_GetOx_NoMV_Surv1, 0, internal->dim_ICrit_GetICU_GetOx_NoMV_Surv1) + odin_sum1(ICrit_GetICU_GetOx_NoMV_Surv2, 0, internal->dim_ICrit_GetICU_GetOx_NoMV_Surv2) + odin_sum1(ICrit_GetICU_GetOx_NoMV_Die1, 0, internal->dim_ICrit_GetICU_GetOx_NoMV_Die1) + odin_sum1(ICrit_GetICU_GetOx_NoMV_Die2, 0, internal->dim_ICrit_GetICU_GetOx_NoMV_Die2) + odin_sum1(ICrit_GetICU_NoOx_NoMV_Surv1, 0, internal->dim_ICrit_GetICU_NoOx_NoMV_Surv1) + odin_sum1(ICrit_GetICU_NoOx_NoMV_Surv2, 0, internal->dim_ICrit_GetICU_NoOx_NoMV_Surv2) + odin_sum1(ICrit_GetICU_NoOx_NoMV_Die1, 0, internal->dim_ICrit_GetICU_NoOx_NoMV_Die1) + odin_sum1(ICrit_GetICU_NoOx_NoMV_Die2, 0, internal->dim_ICrit_GetICU_NoOx_NoMV_Die2);
+  double MV_occ = odin_sum1(ICrit_GetICU_GetOx_GetMV_Surv1, 0, internal->dim_ICrit_GetICU_GetOx_GetMV_Surv1) + odin_sum1(ICrit_GetICU_GetOx_GetMV_Surv2, 0, internal->dim_ICrit_GetICU_GetOx_GetMV_Surv2) + odin_sum1(ICrit_GetICU_GetOx_GetMV_Die1, 0, internal->dim_ICrit_GetICU_GetOx_GetMV_Die1) + odin_sum1(ICrit_GetICU_GetOx_GetMV_Die2, 0, internal->dim_ICrit_GetICU_GetOx_GetMV_Die2);
+  double time = t;
+  for (int i = 1; i <= internal->dim_n_E1_E2; ++i) {
+    internal->n_E1_E2[i - 1] = internal->gamma_E * E1[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_E2_I; ++i) {
+    internal->n_E2_I[i - 1] = internal->gamma_E * E2[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_IAsymp_R; ++i) {
+    internal->n_IAsymp_R[i - 1] = internal->gamma_IAsymp * IAsymp[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_ICase1_Drug_5_ICase2_Drug_5; ++i) {
+    internal->n_ICase1_Drug_5_ICase2_Drug_5[i - 1] = internal->gamma_ICase * ICase1_Drug_5[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_ICase1_ICase2; ++i) {
+    internal->n_ICase1_ICase2[i - 1] = internal->gamma_ICase * ICase1[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_ICase2_Drug_5_Hosp; ++i) {
+    internal->n_ICase2_Drug_5_Hosp[i - 1] = internal->gamma_ICase * ICase2_Drug_5[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_ICase2_Hosp; ++i) {
+    internal->n_ICase2_Hosp[i - 1] = internal->gamma_ICase * ICase2[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_ICrit_GetICU_GetOx_GetMV_Die1_ICrit_GetICU_GetOx_GetMV_Die2; ++i) {
+    internal->n_ICrit_GetICU_GetOx_GetMV_Die1_ICrit_GetICU_GetOx_GetMV_Die2[i - 1] = ICrit_GetICU_GetOx_GetMV_Die1[i - 1] * internal->gamma_ICrit_GetICU_GetOx_GetMV_Die;
+  }
+  for (int i = 1; i <= internal->dim_n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital; ++i) {
+    internal->n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital[i - 1] = ICrit_GetICU_GetOx_GetMV_Die2[i - 1] * internal->gamma_ICrit_GetICU_GetOx_GetMV_Die;
+  }
+  for (int i = 1; i <= internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv1_ICrit_GetICU_GetOx_GetMV_Surv2; ++i) {
+    internal->n_ICrit_GetICU_GetOx_GetMV_Surv1_ICrit_GetICU_GetOx_GetMV_Surv2[i - 1] = (internal->drug_10_indic_ICrit_GetICU_GetOx_GetMV == 1 ? ICrit_GetICU_GetOx_GetMV_Surv1[i - 1] * internal->gamma_ICrit_GetICU_GetOx_GetMV_Surv_Drug_10 : ICrit_GetICU_GetOx_GetMV_Surv1[i - 1] * internal->gamma_ICrit_GetICU_GetOx_GetMV_Surv);
+  }
+  for (int i = 1; i <= internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec; ++i) {
+    internal->n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec[i - 1] = (internal->drug_10_indic_ICrit_GetICU_GetOx_GetMV == 1 ? ICrit_GetICU_GetOx_GetMV_Surv2[i - 1] * internal->gamma_ICrit_GetICU_GetOx_GetMV_Surv_Drug_10 : ICrit_GetICU_GetOx_GetMV_Surv2[i - 1] * internal->gamma_ICrit_GetICU_GetOx_GetMV_Surv);
+  }
+  for (int i = 1; i <= internal->dim_n_ICrit_GetICU_GetOx_NoMV_Die1_ICrit_GetICU_GetOx_NoMV_Die2; ++i) {
+    internal->n_ICrit_GetICU_GetOx_NoMV_Die1_ICrit_GetICU_GetOx_NoMV_Die2[i - 1] = ICrit_GetICU_GetOx_NoMV_Die1[i - 1] * internal->gamma_ICrit_GetICU_GetOx_NoMV_Die;
+  }
+  for (int i = 1; i <= internal->dim_n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital; ++i) {
+    internal->n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital[i - 1] = ICrit_GetICU_GetOx_NoMV_Die2[i - 1] * internal->gamma_ICrit_GetICU_GetOx_NoMV_Die;
+  }
+  for (int i = 1; i <= internal->dim_n_ICrit_GetICU_GetOx_NoMV_Surv1_ICrit_GetICU_GetOx_NoMV_Surv2; ++i) {
+    internal->n_ICrit_GetICU_GetOx_NoMV_Surv1_ICrit_GetICU_GetOx_NoMV_Surv2[i - 1] = (internal->drug_10_indic_ICrit_GetICU_GetOx_NoMV == 1 ? ICrit_GetICU_GetOx_NoMV_Surv1[i - 1] * internal->gamma_ICrit_GetICU_GetOx_NoMV_Surv_Drug_10 : ICrit_GetICU_GetOx_NoMV_Surv1[i - 1] * internal->gamma_ICrit_GetICU_GetOx_NoMV_Surv);
+  }
+  for (int i = 1; i <= internal->dim_n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec; ++i) {
+    internal->n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec[i - 1] = (internal->drug_10_indic_ICrit_GetICU_GetOx_NoMV == 1 ? ICrit_GetICU_GetOx_NoMV_Surv2[i - 1] * internal->gamma_ICrit_GetICU_GetOx_NoMV_Surv_Drug_10 : ICrit_GetICU_GetOx_NoMV_Surv2[i - 1] * internal->gamma_ICrit_GetICU_GetOx_NoMV_Surv);
+  }
+  for (int i = 1; i <= internal->dim_n_ICrit_GetICU_NoOx_NoMV_Die1_ICrit_GetICU_NoOx_NoMV_Die2; ++i) {
+    internal->n_ICrit_GetICU_NoOx_NoMV_Die1_ICrit_GetICU_NoOx_NoMV_Die2[i - 1] = ICrit_GetICU_NoOx_NoMV_Die1[i - 1] * internal->gamma_ICrit_GetICU_NoOx_NoMV_Die;
+  }
+  for (int i = 1; i <= internal->dim_n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital; ++i) {
+    internal->n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital[i - 1] = ICrit_GetICU_NoOx_NoMV_Die2[i - 1] * internal->gamma_ICrit_GetICU_NoOx_NoMV_Die;
+  }
+  for (int i = 1; i <= internal->dim_n_ICrit_GetICU_NoOx_NoMV_Surv1_ICrit_GetICU_NoOx_NoMV_Surv2; ++i) {
+    internal->n_ICrit_GetICU_NoOx_NoMV_Surv1_ICrit_GetICU_NoOx_NoMV_Surv2[i - 1] = (internal->drug_10_indic_ICrit_GetICU_NoOx_NoMV == 1 ? ICrit_GetICU_NoOx_NoMV_Surv1[i - 1] * internal->gamma_ICrit_GetICU_NoOx_NoMV_Surv_Drug_10 : ICrit_GetICU_NoOx_NoMV_Surv1[i - 1] * internal->gamma_ICrit_GetICU_NoOx_NoMV_Surv);
+  }
+  for (int i = 1; i <= internal->dim_n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec; ++i) {
+    internal->n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec[i - 1] = (internal->drug_10_indic_ICrit_GetICU_NoOx_NoMV == 1 ? ICrit_GetICU_NoOx_NoMV_Surv2[i - 1] * internal->gamma_ICrit_GetICU_NoOx_NoMV_Surv_Drug_10 : ICrit_GetICU_NoOx_NoMV_Surv2[i - 1] * internal->gamma_ICrit_GetICU_NoOx_NoMV_Surv);
+  }
+  for (int i = 1; i <= internal->dim_n_ICrit_NoICU_NoOx_NoMV_Die1_ICrit_NoICU_NoOx_NoMV_Die2; ++i) {
+    internal->n_ICrit_NoICU_NoOx_NoMV_Die1_ICrit_NoICU_NoOx_NoMV_Die2[i - 1] = ICrit_NoICU_NoOx_NoMV_Die1[i - 1] * internal->gamma_ICrit_NoICU_NoOx_NoMV_Die;
+  }
+  for (int i = 1; i <= internal->dim_n_ICrit_NoICU_NoOx_NoMV_Die2_D_Community; ++i) {
+    internal->n_ICrit_NoICU_NoOx_NoMV_Die2_D_Community[i - 1] = ICrit_NoICU_NoOx_NoMV_Die2[i - 1] * internal->gamma_ICrit_NoICU_NoOx_NoMV_Die;
+  }
+  for (int i = 1; i <= internal->dim_n_ICrit_NoICU_NoOx_NoMV_Surv1_ICrit_NoICU_NoOx_NoMV_Surv2; ++i) {
+    internal->n_ICrit_NoICU_NoOx_NoMV_Surv1_ICrit_NoICU_NoOx_NoMV_Surv2[i - 1] = ICrit_NoICU_NoOx_NoMV_Surv1[i - 1] * internal->gamma_ICrit_NoICU_NoOx_NoMV_Surv;
+  }
+  for (int i = 1; i <= internal->dim_n_ICrit_NoICU_NoOx_NoMV_Surv2_R; ++i) {
+    internal->n_ICrit_NoICU_NoOx_NoMV_Surv2_R[i - 1] = ICrit_NoICU_NoOx_NoMV_Surv2[i - 1] * internal->gamma_ICrit_NoICU_NoOx_NoMV_Surv;
+  }
+  for (int i = 1; i <= internal->dim_n_IMild_Drug_5_R; ++i) {
+    internal->n_IMild_Drug_5_R[i - 1] = (internal->drug_4_indic == 1 ? internal->gamma_IMild_Drug_4 * IMild_Drug_5[i - 1] : internal->gamma_IMild * IMild_Drug_5[i - 1]);
+  }
+  for (int i = 1; i <= internal->dim_n_IMild_R; ++i) {
+    internal->n_IMild_R[i - 1] = (internal->drug_4_indic == 1 ? internal->gamma_IMild_Drug_4 * IMild[i - 1] : internal->gamma_IMild * IMild[i - 1]);
+  }
+  for (int i = 1; i <= internal->dim_n_IMod_GetHosp_GetOx_Die1_IMod_GetHosp_GetOx_Die2; ++i) {
+    internal->n_IMod_GetHosp_GetOx_Die1_IMod_GetHosp_GetOx_Die2[i - 1] = IMod_GetHosp_GetOx_Die1[i - 1] * internal->gamma_IMod_GetHosp_GetOx_Die;
+  }
+  for (int i = 1; i <= internal->dim_n_IMod_GetHosp_GetOx_Die2_D_Hospital; ++i) {
+    internal->n_IMod_GetHosp_GetOx_Die2_D_Hospital[i - 1] = IMod_GetHosp_GetOx_Die2[i - 1] * internal->gamma_IMod_GetHosp_GetOx_Die;
+  }
+  for (int i = 1; i <= internal->dim_n_IMod_GetHosp_GetOx_Surv1_IMod_GetHosp_GetOx_Surv2; ++i) {
+    internal->n_IMod_GetHosp_GetOx_Surv1_IMod_GetHosp_GetOx_Surv2[i - 1] = (internal->drug_8_indic_IMod_GetHosp_GetOx == 1 ? IMod_GetHosp_GetOx_Surv1[i - 1] * internal->gamma_IMod_GetHosp_GetOx_Surv_Drug_8 : IMod_GetHosp_GetOx_Surv1[i - 1] * internal->gamma_IMod_GetHosp_GetOx_Surv);
+  }
+  for (int i = 1; i <= internal->dim_n_IMod_GetHosp_GetOx_Surv2_R; ++i) {
+    internal->n_IMod_GetHosp_GetOx_Surv2_R[i - 1] = (internal->drug_8_indic_IMod_GetHosp_GetOx == 1 ? IMod_GetHosp_GetOx_Surv2[i - 1] * internal->gamma_IMod_GetHosp_GetOx_Surv_Drug_8 : IMod_GetHosp_GetOx_Surv2[i - 1] * internal->gamma_IMod_GetHosp_GetOx_Surv);
+  }
+  for (int i = 1; i <= internal->dim_n_IMod_GetHosp_NoOx_Die1_IMod_GetHosp_NoOx_Die2; ++i) {
+    internal->n_IMod_GetHosp_NoOx_Die1_IMod_GetHosp_NoOx_Die2[i - 1] = IMod_GetHosp_NoOx_Die1[i - 1] * internal->gamma_IMod_GetHosp_NoOx_Die;
+  }
+  for (int i = 1; i <= internal->dim_n_IMod_GetHosp_NoOx_Die2_D_Hospital; ++i) {
+    internal->n_IMod_GetHosp_NoOx_Die2_D_Hospital[i - 1] = IMod_GetHosp_NoOx_Die2[i - 1] * internal->gamma_IMod_GetHosp_NoOx_Die;
+  }
+  for (int i = 1; i <= internal->dim_n_IMod_GetHosp_NoOx_Surv1_IMod_GetHosp_NoOx_Surv2; ++i) {
+    internal->n_IMod_GetHosp_NoOx_Surv1_IMod_GetHosp_NoOx_Surv2[i - 1] = (internal->drug_8_indic_IMod_GetHosp_NoOx == 1 ? IMod_GetHosp_NoOx_Surv1[i - 1] * internal->gamma_IMod_GetHosp_NoOx_Surv_Drug_8 : IMod_GetHosp_NoOx_Surv1[i - 1] * internal->gamma_IMod_GetHosp_NoOx_Surv);
+  }
+  for (int i = 1; i <= internal->dim_n_IMod_GetHosp_NoOx_Surv2_R; ++i) {
+    internal->n_IMod_GetHosp_NoOx_Surv2_R[i - 1] = (internal->drug_8_indic_IMod_GetHosp_NoOx == 1 ? IMod_GetHosp_NoOx_Surv2[i - 1] * internal->gamma_IMod_GetHosp_NoOx_Surv_Drug_8 : IMod_GetHosp_NoOx_Surv2[i - 1] * internal->gamma_IMod_GetHosp_NoOx_Surv);
+  }
+  for (int i = 1; i <= internal->dim_n_IMod_NoHosp_NoOx_Die1_IMod_NoHosp_NoOx_Die2; ++i) {
+    internal->n_IMod_NoHosp_NoOx_Die1_IMod_NoHosp_NoOx_Die2[i - 1] = IMod_NoHosp_NoOx_Die1[i - 1] * internal->gamma_IMod_NoHosp_NoOx_Die;
+  }
+  for (int i = 1; i <= internal->dim_n_IMod_NoHosp_NoOx_Die2_D_Community; ++i) {
+    internal->n_IMod_NoHosp_NoOx_Die2_D_Community[i - 1] = IMod_NoHosp_NoOx_Die2[i - 1] * internal->gamma_IMod_NoHosp_NoOx_Die;
+  }
+  for (int i = 1; i <= internal->dim_n_IMod_NoHosp_NoOx_Surv1_IMod_NoHosp_NoOx_Surv2; ++i) {
+    internal->n_IMod_NoHosp_NoOx_Surv1_IMod_NoHosp_NoOx_Surv2[i - 1] = IMod_NoHosp_NoOx_Surv1[i - 1] * internal->gamma_IMod_NoHosp_NoOx_Surv;
+  }
+  for (int i = 1; i <= internal->dim_n_IMod_NoHosp_NoOx_Surv2_R; ++i) {
+    internal->n_IMod_NoHosp_NoOx_Surv2_R[i - 1] = IMod_NoHosp_NoOx_Surv2[i - 1] * internal->gamma_IMod_NoHosp_NoOx_Surv;
+  }
+  for (int i = 1; i <= internal->dim_n_IRec1_IRec2; ++i) {
+    internal->n_IRec1_IRec2[i - 1] = internal->gamma_rec * IRec1[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_IRec2_R; ++i) {
+    internal->n_IRec2_R[i - 1] = internal->gamma_rec * IRec2[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_ISev_GetICU_GetOx_Die1_ISev_GetICU_GetOx_Die2; ++i) {
+    internal->n_ISev_GetICU_GetOx_Die1_ISev_GetICU_GetOx_Die2[i - 1] = ISev_GetICU_GetOx_Die1[i - 1] * internal->gamma_ISev_GetICU_GetOx_Die;
+  }
+  for (int i = 1; i <= internal->dim_n_ISev_GetICU_GetOx_Die2_D_Hospital; ++i) {
+    internal->n_ISev_GetICU_GetOx_Die2_D_Hospital[i - 1] = ISev_GetICU_GetOx_Die2[i - 1] * internal->gamma_ISev_GetICU_GetOx_Die;
+  }
+  for (int i = 1; i <= internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2; ++i) {
+    internal->n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2[i - 1] = (internal->drug_9_indic_ISev_GetICU_GetOx == 1 ? ISev_GetICU_GetOx_Surv1[i - 1] * internal->gamma_ISev_GetICU_GetOx_Surv_Drug_9 : ISev_GetICU_GetOx_Surv1[i - 1] * internal->gamma_ISev_GetICU_GetOx_Surv);
+  }
+  for (int i = 1; i <= internal->dim_n_ISev_GetICU_GetOx_Surv2_Rec; ++i) {
+    internal->n_ISev_GetICU_GetOx_Surv2_Rec[i - 1] = (internal->drug_9_indic_ISev_GetICU_GetOx == 1 ? ISev_GetICU_GetOx_Surv2[i - 1] * internal->gamma_ISev_GetICU_GetOx_Surv_Drug_9 : ISev_GetICU_GetOx_Surv2[i - 1] * internal->gamma_ISev_GetICU_GetOx_Surv);
+  }
+  for (int i = 1; i <= internal->dim_n_ISev_GetICU_NoOx_Die1_ISev_GetICU_NoOx_Die2; ++i) {
+    internal->n_ISev_GetICU_NoOx_Die1_ISev_GetICU_NoOx_Die2[i - 1] = ISev_GetICU_NoOx_Die1[i - 1] * internal->gamma_ISev_GetICU_NoOx_Die;
+  }
+  for (int i = 1; i <= internal->dim_n_ISev_GetICU_NoOx_Die2_D_Hospital; ++i) {
+    internal->n_ISev_GetICU_NoOx_Die2_D_Hospital[i - 1] = ISev_GetICU_NoOx_Die2[i - 1] * internal->gamma_ISev_GetICU_NoOx_Die;
+  }
+  for (int i = 1; i <= internal->dim_n_ISev_GetICU_NoOx_Surv1_ISev_GetICU_NoOx_Surv2; ++i) {
+    internal->n_ISev_GetICU_NoOx_Surv1_ISev_GetICU_NoOx_Surv2[i - 1] = (internal->drug_9_indic_ISev_GetICU_NoOx == 1 ? ISev_GetICU_NoOx_Surv1[i - 1] * internal->gamma_ISev_GetICU_NoOx_Surv_Drug_9 : ISev_GetICU_NoOx_Surv1[i - 1] * internal->gamma_ISev_GetICU_NoOx_Surv);
+  }
+  for (int i = 1; i <= internal->dim_n_ISev_GetICU_NoOx_Surv2_Rec; ++i) {
+    internal->n_ISev_GetICU_NoOx_Surv2_Rec[i - 1] = (internal->drug_9_indic_ISev_GetICU_NoOx == 1 ? ISev_GetICU_NoOx_Surv2[i - 1] * internal->gamma_ISev_GetICU_NoOx_Surv_Drug_9 : ISev_GetICU_NoOx_Surv2[i - 1] * internal->gamma_ISev_GetICU_NoOx_Surv);
+  }
+  for (int i = 1; i <= internal->dim_n_ISev_NoICU_NoOx_Die1_ISev_NoICU_NoOx_Die2; ++i) {
+    internal->n_ISev_NoICU_NoOx_Die1_ISev_NoICU_NoOx_Die2[i - 1] = ISev_NoICU_NoOx_Die1[i - 1] * internal->gamma_ISev_NoICU_NoOx_Die;
+  }
+  for (int i = 1; i <= internal->dim_n_ISev_NoICU_NoOx_Die2_D_Community; ++i) {
+    internal->n_ISev_NoICU_NoOx_Die2_D_Community[i - 1] = ISev_NoICU_NoOx_Die2[i - 1] * internal->gamma_ISev_NoICU_NoOx_Die;
+  }
+  for (int i = 1; i <= internal->dim_n_ISev_NoICU_NoOx_Surv1_ISev_NoICU_NoOx_Surv2; ++i) {
+    internal->n_ISev_NoICU_NoOx_Surv1_ISev_NoICU_NoOx_Surv2[i - 1] = ISev_NoICU_NoOx_Surv1[i - 1] * internal->gamma_ISev_NoICU_NoOx_Surv;
+  }
+  for (int i = 1; i <= internal->dim_n_ISev_NoICU_NoOx_Surv2_R; ++i) {
+    internal->n_ISev_NoICU_NoOx_Surv2_R[i - 1] = ISev_NoICU_NoOx_Surv2[i - 1] * internal->gamma_ISev_NoICU_NoOx_Surv;
+  }
+  for (int i = 1; i <= internal->dim_n_PE1_PE2; ++i) {
+    internal->n_PE1_PE2[i - 1] = internal->gamma_E * PE1[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_PE2_I; ++i) {
+    internal->n_PE2_I[i - 1] = internal->gamma_E * PE2[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_PS_S; ++i) {
+    internal->n_PS_S[i - 1] = internal->prophylactic_drug_wane * PS[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_S_PS; ++i) {
+    internal->n_S_PS[i - 1] = ((time == internal->prophylactic_drug_timing_1 || time == internal->prophylactic_drug_timing_2) && (internal->drug_1_indic == 1 || internal->drug_2_indic == 1) ? internal->prophylactic_prop_treat * S[i - 1] : 0);
+  }
+  for (int i = 1; i <= internal->dim_temp; ++i) {
+    internal->temp[i - 1] = (internal->rel_inf_asymp * IAsymp[i - 1]) + (internal->rel_inf_mild * IMild[i - 1]) + ICase1[i - 1] + ICase2[i - 1] + (internal->rel_inf_mild * internal->drug_5_effect_size * IMild_Drug_5[i - 1]) + ICase1_Drug_5[i - 1] * internal->drug_5_effect_size + ICase2_Drug_5[i - 1] * internal->drug_5_effect_size;
+  }
+  double current_free_MV = internal->MV_capacity + odin_sum1(internal->n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec, 0, internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec) + odin_sum1(internal->n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital, 0, internal->dim_n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital) - MV_occ;
+  for (int i = 1; i <= internal->dim_D; ++i) {
+    dstatedt[internal->offset_variable_D + i - 1] = internal->n_IMod_NoHosp_NoOx_Die2_D_Community[i - 1] + internal->n_ISev_NoICU_NoOx_Die2_D_Community[i - 1] + internal->n_ICrit_NoICU_NoOx_NoMV_Die2_D_Community[i - 1] + internal->n_IMod_GetHosp_GetOx_Die2_D_Hospital[i - 1] + internal->n_IMod_GetHosp_NoOx_Die2_D_Hospital[i - 1] + internal->n_ISev_GetICU_GetOx_Die2_D_Hospital[i - 1] + internal->n_ISev_GetICU_NoOx_Die2_D_Hospital[i - 1] + internal->n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital[i - 1] + internal->n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital[i - 1] + internal->n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_D_Community; ++i) {
+    dstatedt[internal->offset_variable_D_Community + i - 1] = internal->n_IMod_NoHosp_NoOx_Die2_D_Community[i - 1] + internal->n_ISev_NoICU_NoOx_Die2_D_Community[i - 1] + internal->n_ICrit_NoICU_NoOx_NoMV_Die2_D_Community[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_D_Hospital; ++i) {
+    dstatedt[internal->offset_variable_D_Hospital + i - 1] = internal->n_IMod_GetHosp_GetOx_Die2_D_Hospital[i - 1] + internal->n_IMod_GetHosp_NoOx_Die2_D_Hospital[i - 1] + internal->n_ISev_GetICU_GetOx_Die2_D_Hospital[i - 1] + internal->n_ISev_GetICU_NoOx_Die2_D_Hospital[i - 1] + internal->n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital[i - 1] + internal->n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital[i - 1] + internal->n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_E2; ++i) {
+    dstatedt[internal->offset_variable_E2 + i - 1] = internal->n_E1_E2[i - 1] - internal->n_E2_I[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ICase2; ++i) {
+    dstatedt[internal->offset_variable_ICase2 + i - 1] = internal->n_ICase1_ICase2[i - 1] - internal->n_ICase2_Hosp[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ICase2_Drug_5; ++i) {
+    dstatedt[internal->offset_variable_ICase2_Drug_5 + i - 1] = internal->n_ICase1_Drug_5_ICase2_Drug_5[i - 1] - internal->n_ICase2_Drug_5_Hosp[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ICrit_GetICU_GetOx_GetMV_Die2; ++i) {
+    dstatedt[internal->offset_variable_ICrit_GetICU_GetOx_GetMV_Die2 + i - 1] = internal->n_ICrit_GetICU_GetOx_GetMV_Die1_ICrit_GetICU_GetOx_GetMV_Die2[i - 1] - internal->n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ICrit_GetICU_GetOx_GetMV_Surv2; ++i) {
+    dstatedt[internal->offset_variable_ICrit_GetICU_GetOx_GetMV_Surv2 + i - 1] = internal->n_ICrit_GetICU_GetOx_GetMV_Surv1_ICrit_GetICU_GetOx_GetMV_Surv2[i - 1] - internal->n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ICrit_GetICU_GetOx_NoMV_Die2; ++i) {
+    dstatedt[internal->offset_variable_ICrit_GetICU_GetOx_NoMV_Die2 + i - 1] = internal->n_ICrit_GetICU_GetOx_NoMV_Die1_ICrit_GetICU_GetOx_NoMV_Die2[i - 1] - internal->n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ICrit_GetICU_GetOx_NoMV_Surv2; ++i) {
+    dstatedt[internal->offset_variable_ICrit_GetICU_GetOx_NoMV_Surv2 + i - 1] = internal->n_ICrit_GetICU_GetOx_NoMV_Surv1_ICrit_GetICU_GetOx_NoMV_Surv2[i - 1] - internal->n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ICrit_GetICU_NoOx_NoMV_Die2; ++i) {
+    dstatedt[internal->offset_variable_ICrit_GetICU_NoOx_NoMV_Die2 + i - 1] = internal->n_ICrit_GetICU_NoOx_NoMV_Die1_ICrit_GetICU_NoOx_NoMV_Die2[i - 1] - internal->n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ICrit_GetICU_NoOx_NoMV_Surv2; ++i) {
+    dstatedt[internal->offset_variable_ICrit_GetICU_NoOx_NoMV_Surv2 + i - 1] = internal->n_ICrit_GetICU_NoOx_NoMV_Surv1_ICrit_GetICU_NoOx_NoMV_Surv2[i - 1] - internal->n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ICrit_NoICU_NoOx_NoMV_Die2; ++i) {
+    dstatedt[internal->offset_variable_ICrit_NoICU_NoOx_NoMV_Die2 + i - 1] = internal->n_ICrit_NoICU_NoOx_NoMV_Die1_ICrit_NoICU_NoOx_NoMV_Die2[i - 1] - internal->n_ICrit_NoICU_NoOx_NoMV_Die2_D_Community[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ICrit_NoICU_NoOx_NoMV_Surv2; ++i) {
+    dstatedt[internal->offset_variable_ICrit_NoICU_NoOx_NoMV_Surv2 + i - 1] = internal->n_ICrit_NoICU_NoOx_NoMV_Surv1_ICrit_NoICU_NoOx_NoMV_Surv2[i - 1] - internal->n_ICrit_NoICU_NoOx_NoMV_Surv2_R[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_IMod_GetHosp_GetOx_Die2; ++i) {
+    dstatedt[internal->offset_variable_IMod_GetHosp_GetOx_Die2 + i - 1] = internal->n_IMod_GetHosp_GetOx_Die1_IMod_GetHosp_GetOx_Die2[i - 1] - internal->n_IMod_GetHosp_GetOx_Die2_D_Hospital[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_IMod_GetHosp_GetOx_Surv2; ++i) {
+    dstatedt[internal->offset_variable_IMod_GetHosp_GetOx_Surv2 + i - 1] = internal->n_IMod_GetHosp_GetOx_Surv1_IMod_GetHosp_GetOx_Surv2[i - 1] - internal->n_IMod_GetHosp_GetOx_Surv2_R[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_IMod_GetHosp_NoOx_Die2; ++i) {
+    dstatedt[internal->offset_variable_IMod_GetHosp_NoOx_Die2 + i - 1] = internal->n_IMod_GetHosp_NoOx_Die1_IMod_GetHosp_NoOx_Die2[i - 1] - internal->n_IMod_GetHosp_NoOx_Die2_D_Hospital[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_IMod_GetHosp_NoOx_Surv2; ++i) {
+    dstatedt[internal->offset_variable_IMod_GetHosp_NoOx_Surv2 + i - 1] = internal->n_IMod_GetHosp_NoOx_Surv1_IMod_GetHosp_NoOx_Surv2[i - 1] - internal->n_IMod_GetHosp_NoOx_Surv2_R[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_IMod_NoHosp_NoOx_Die2; ++i) {
+    dstatedt[internal->offset_variable_IMod_NoHosp_NoOx_Die2 + i - 1] = internal->n_IMod_NoHosp_NoOx_Die1_IMod_NoHosp_NoOx_Die2[i - 1] - internal->n_IMod_NoHosp_NoOx_Die2_D_Community[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_IMod_NoHosp_NoOx_Surv2; ++i) {
+    dstatedt[internal->offset_variable_IMod_NoHosp_NoOx_Surv2 + i - 1] = internal->n_IMod_NoHosp_NoOx_Surv1_IMod_NoHosp_NoOx_Surv2[i - 1] - internal->n_IMod_NoHosp_NoOx_Surv2_R[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_IRec1; ++i) {
+    dstatedt[internal->offset_variable_IRec1 + i - 1] = internal->n_ISev_GetICU_GetOx_Surv2_Rec[i - 1] + internal->n_ISev_GetICU_NoOx_Surv2_Rec[i - 1] + internal->n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec[i - 1] + internal->n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec[i - 1] + internal->n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec[i - 1] - internal->n_IRec1_IRec2[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_IRec2; ++i) {
+    dstatedt[internal->offset_variable_IRec2 + i - 1] = internal->n_IRec1_IRec2[i - 1] - internal->n_IRec2_R[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ISev_GetICU_GetOx_Die2; ++i) {
+    dstatedt[internal->offset_variable_ISev_GetICU_GetOx_Die2 + i - 1] = internal->n_ISev_GetICU_GetOx_Die1_ISev_GetICU_GetOx_Die2[i - 1] - internal->n_ISev_GetICU_GetOx_Die2_D_Hospital[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ISev_GetICU_GetOx_Surv2; ++i) {
+    dstatedt[internal->offset_variable_ISev_GetICU_GetOx_Surv2 + i - 1] = internal->n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2[i - 1] - internal->n_ISev_GetICU_GetOx_Surv2_Rec[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ISev_GetICU_NoOx_Die2; ++i) {
+    dstatedt[internal->offset_variable_ISev_GetICU_NoOx_Die2 + i - 1] = internal->n_ISev_GetICU_NoOx_Die1_ISev_GetICU_NoOx_Die2[i - 1] - internal->n_ISev_GetICU_NoOx_Die2_D_Hospital[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ISev_GetICU_NoOx_Surv2; ++i) {
+    dstatedt[internal->offset_variable_ISev_GetICU_NoOx_Surv2 + i - 1] = internal->n_ISev_GetICU_NoOx_Surv1_ISev_GetICU_NoOx_Surv2[i - 1] - internal->n_ISev_GetICU_NoOx_Surv2_Rec[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ISev_NoICU_NoOx_Die2; ++i) {
+    dstatedt[internal->offset_variable_ISev_NoICU_NoOx_Die2 + i - 1] = internal->n_ISev_NoICU_NoOx_Die1_ISev_NoICU_NoOx_Die2[i - 1] - internal->n_ISev_NoICU_NoOx_Die2_D_Community[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ISev_NoICU_NoOx_Surv2; ++i) {
+    dstatedt[internal->offset_variable_ISev_NoICU_NoOx_Surv2 + i - 1] = internal->n_ISev_NoICU_NoOx_Surv1_ISev_NoICU_NoOx_Surv2[i - 1] - internal->n_ISev_NoICU_NoOx_Surv2_R[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_PE2; ++i) {
+    dstatedt[internal->offset_variable_PE2 + i - 1] = internal->n_PE1_PE2[i - 1] - internal->n_PE2_I[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_R; ++i) {
+    dstatedt[internal->offset_variable_R + i - 1] = internal->n_IAsymp_R[i - 1] + internal->n_IMild_R[i - 1] + internal->n_IMild_Drug_5_R[i - 1] + internal->n_IRec2_R[i - 1] + internal->n_IMod_GetHosp_GetOx_Surv2_R[i - 1] + internal->n_IMod_GetHosp_NoOx_Surv2_R[i - 1] + internal->n_IMod_NoHosp_NoOx_Surv2_R[i - 1] + internal->n_ISev_NoICU_NoOx_Surv2_R[i - 1] + internal->n_ICrit_NoICU_NoOx_NoMV_Surv2_R[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_E2_ICase1_initial; ++i) {
+    internal->n_E2_ICase1_initial[i - 1] = internal->n_E2_I[i - 1] * internal->prob_hosp[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_PE2_ICase1_initial; ++i) {
+    internal->n_PE2_ICase1_initial[i - 1] = internal->n_PE2_I[i - 1] * internal->prob_hosp[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_number_req_ICU_initial; ++i) {
+    internal->number_req_ICU_initial[i - 1] = (internal->n_ICase2_Hosp[i - 1] + internal->n_ICase2_Drug_5_Hosp[i - 1]) * internal->prob_severe[i - 1];
+  }
+  double baseline_oxygen_demand = 0.0;
+  cinterpolate_eval(t, internal->interpolate_baseline_oxygen_demand, &baseline_oxygen_demand);
+  double beta = 0.0;
+  cinterpolate_eval(t, internal->interpolate_beta, &beta);
+  double current_hosp_bed_capacity = 0.0;
+  cinterpolate_eval(t, internal->interpolate_current_hosp_bed_capacity, &current_hosp_bed_capacity);
+  double current_ICU_bed_capacity = 0.0;
+  cinterpolate_eval(t, internal->interpolate_current_ICU_bed_capacity, &current_ICU_bed_capacity);
+  for (int i = 1; i <= internal->dim_n_E2_ICase1; ++i) {
+    internal->n_E2_ICase1[i - 1] = (internal->drug_3_indic == 1 ? internal->n_E2_ICase1_initial[i - 1] * (1 - internal->drug_3_prop_treat * internal->drug_3_effect_size) : internal->n_E2_ICase1_initial[i - 1]);
+  }
+  for (int i = 1; i <= internal->dim_n_PE2_ICase1; ++i) {
+    internal->n_PE2_ICase1[i - 1] = (internal->drug_2_indic == 1 ? internal->n_E2_ICase1_initial[i - 1] * (1 - internal->drug_2_effect_size) : internal->n_PE2_ICase1_initial[i - 1]);
+  }
+  for (int i = 1; i <= internal->dim_number_req_ICU; ++i) {
+    internal->number_req_ICU[i - 1] = (internal->drug_6_indic == 1 ? internal->number_req_ICU_initial[i - 1] * (1 - (internal->drug_6_prop_treat * internal->drug_6_effect_size)) : internal->number_req_ICU_initial[i - 1]);
+  }
+  double oxygen_supply = 0.0;
+  cinterpolate_eval(t, internal->interpolate_oxygen_supply, &oxygen_supply);
+  double current_free_hosp = current_hosp_bed_capacity + odin_sum1(internal->n_IMod_GetHosp_GetOx_Surv2_R, 0, internal->dim_n_IMod_GetHosp_GetOx_Surv2_R) + odin_sum1(internal->n_IMod_GetHosp_GetOx_Die2_D_Hospital, 0, internal->dim_n_IMod_GetHosp_GetOx_Die2_D_Hospital) + odin_sum1(internal->n_IMod_GetHosp_NoOx_Surv2_R, 0, internal->dim_n_IMod_GetHosp_NoOx_Surv2_R) + odin_sum1(internal->n_IMod_GetHosp_NoOx_Die2_D_Hospital, 0, internal->dim_n_IMod_GetHosp_NoOx_Die2_D_Hospital) + odin_sum1(internal->n_IRec2_R, 0, internal->dim_n_IRec2_R) - odin_sum1(internal->n_ISev_GetICU_GetOx_Surv2_Rec, 0, internal->dim_n_ISev_GetICU_GetOx_Surv2_Rec) - odin_sum1(internal->n_ISev_GetICU_NoOx_Surv2_Rec, 0, internal->dim_n_ISev_GetICU_NoOx_Surv2_Rec) - odin_sum1(internal->n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec, 0, internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec) - odin_sum1(internal->n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec, 0, internal->dim_n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec) - odin_sum1(internal->n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec, 0, internal->dim_n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec) - hosp_occ;
+  double current_free_ICU = current_ICU_bed_capacity + odin_sum1(internal->n_ISev_GetICU_GetOx_Surv2_Rec, 0, internal->dim_n_ISev_GetICU_GetOx_Surv2_Rec) + odin_sum1(internal->n_ISev_GetICU_GetOx_Die2_D_Hospital, 0, internal->dim_n_ISev_GetICU_GetOx_Die2_D_Hospital) + odin_sum1(internal->n_ISev_GetICU_NoOx_Surv2_Rec, 0, internal->dim_n_ISev_GetICU_NoOx_Surv2_Rec) + odin_sum1(internal->n_ISev_GetICU_NoOx_Die2_D_Hospital, 0, internal->dim_n_ISev_GetICU_NoOx_Die2_D_Hospital) + odin_sum1(internal->n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec, 0, internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec) + odin_sum1(internal->n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital, 0, internal->dim_n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital) + odin_sum1(internal->n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec, 0, internal->dim_n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec) + odin_sum1(internal->n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital, 0, internal->dim_n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital) + odin_sum1(internal->n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec, 0, internal->dim_n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec) + odin_sum1(internal->n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital, 0, internal->dim_n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital) - ICU_occ;
+  cinterpolate_eval(t, internal->interpolate_m, internal->m);
+  for (int i = 1; i <= internal->dim_n_E2_ICase1_Drug_5; ++i) {
+    internal->n_E2_ICase1_Drug_5[i - 1] = (internal->drug_5_indic_ICase == 1 ? internal->n_E2_ICase1[i - 1] * internal->drug_5_prop_treat : 0);
+  }
+  for (int i = 1; i <= internal->dim_n_E2_ICase1_No_Drug_5; ++i) {
+    internal->n_E2_ICase1_No_Drug_5[i - 1] = (internal->drug_5_indic_ICase == 1 ? internal->n_E2_ICase1[i - 1] * (1 - internal->drug_5_prop_treat) : internal->n_E2_ICase1[i - 1]);
+  }
+  for (int i = 1; i <= internal->dim_n_E2_IMild_or_IAsymp; ++i) {
+    internal->n_E2_IMild_or_IAsymp[i - 1] = internal->n_E2_I[i - 1] - internal->n_E2_ICase1[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_PE2_ICase1_Drug_5; ++i) {
+    internal->n_PE2_ICase1_Drug_5[i - 1] = (internal->drug_5_indic_ICase == 1 ? internal->n_PE2_ICase1[i - 1] * internal->drug_5_prop_treat : 0);
+  }
+  for (int i = 1; i <= internal->dim_n_PE2_ICase1_No_Drug_5; ++i) {
+    internal->n_PE2_ICase1_No_Drug_5[i - 1] = (internal->drug_5_indic_ICase == 1 ? internal->n_PE2_ICase1[i - 1] * (1 - internal->drug_5_prop_treat) : internal->n_PE2_ICase1[i - 1]);
+  }
+  for (int i = 1; i <= internal->dim_n_PE2_IMild_or_IAsymp; ++i) {
+    internal->n_PE2_IMild_or_IAsymp[i - 1] = internal->n_PE2_I[i - 1] - internal->n_PE2_ICase1[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_number_req_Hosp; ++i) {
+    internal->number_req_Hosp[i - 1] = (internal->n_ICase2_Hosp[i - 1] + internal->n_ICase2_Drug_5_Hosp[i - 1]) - internal->number_req_ICU[i - 1];
+  }
+  double total_req_ICU = odin_sum1(internal->number_req_ICU, 0, internal->dim_number_req_ICU);
+  for (int i = 1; i <= internal->dim_ICase1; ++i) {
+    dstatedt[internal->offset_variable_ICase1 + i - 1] = internal->n_E2_ICase1_No_Drug_5[i - 1] + internal->n_PE2_ICase1_No_Drug_5[i - 1] - internal->n_ICase1_ICase2[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ICase1_Drug_5; ++i) {
+    dstatedt[internal->offset_variable_ICase1_Drug_5 + i - 1] = internal->n_E2_ICase1_Drug_5[i - 1] + internal->n_PE2_ICase1_Drug_5[i - 1] - internal->n_ICase1_Drug_5_ICase2_Drug_5[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_E2_IAsymp; ++i) {
+    internal->n_E2_IAsymp[i - 1] = internal->n_E2_IMild_or_IAsymp[i - 1] * internal->prob_asymp[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_PE2_IAsymp; ++i) {
+    internal->n_PE2_IAsymp[i - 1] = internal->n_PE2_IMild_or_IAsymp[i - 1] * internal->prob_asymp[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_s_ij_1; ++i) {
+    for (int j = 1; j <= internal->dim_s_ij_2; ++j) {
+      internal->s_ij[i - 1 + internal->dim_s_ij_1 * (j - 1)] = internal->m[internal->dim_m_1 * (j - 1) + i - 1] * internal->temp[j - 1];
+    }
+  }
+  double total_GetICU = (current_free_ICU <= 0 ? 0 : ((current_free_ICU - total_req_ICU >= 0 ? total_req_ICU : (current_free_ICU))));
+  double total_req_Hosp = odin_sum1(internal->number_req_Hosp, 0, internal->dim_number_req_Hosp);
+  for (int i = 1; i <= internal->dim_IAsymp; ++i) {
+    dstatedt[internal->offset_variable_IAsymp + i - 1] = internal->n_E2_IAsymp[i - 1] + internal->n_PE2_IAsymp[i - 1] - internal->n_IAsymp_R[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_lambda; ++i) {
+    internal->lambda[i - 1] = beta * odin_sum2(internal->s_ij, i - 1, i, 0, internal->dim_s_ij_2, internal->dim_s_ij_1);
+  }
+  for (int i = 1; i <= internal->dim_n_E2_IMild; ++i) {
+    internal->n_E2_IMild[i - 1] = (internal->n_E2_IMild_or_IAsymp[i - 1] - internal->n_E2_IAsymp[i - 1]) + (internal->n_E2_ICase1_initial[i - 1] - internal->n_E2_ICase1[i - 1]);
+  }
+  for (int i = 1; i <= internal->dim_n_PE2_IMild; ++i) {
+    internal->n_PE2_IMild[i - 1] = (internal->n_PE2_IMild_or_IAsymp[i - 1] - internal->n_PE2_IAsymp[i - 1]) + (internal->n_PE2_ICase1_initial[i - 1] - internal->n_PE2_ICase1[i - 1]);
+  }
+  for (int i = 1; i <= internal->dim_number_GetICU; ++i) {
+    internal->number_GetICU[i - 1] = (total_req_ICU == 0 ? 0 : internal->number_req_ICU[i - 1] / (double) odin_sum1(internal->number_req_ICU, 0, internal->dim_number_req_ICU) * total_GetICU);
+  }
+  double total_GetHosp = (current_free_hosp <= 0 ? 0 : ((current_free_hosp - total_req_Hosp >= 0 ? total_req_Hosp : (current_free_hosp))));
+  for (int i = 1; i <= internal->dim_n_E2_IMild_Drug_5; ++i) {
+    internal->n_E2_IMild_Drug_5[i - 1] = (internal->drug_5_indic_IMild == 1 ? internal->n_E2_IMild[i - 1] * internal->drug_5_prop_treat : 0);
+  }
+  for (int i = 1; i <= internal->dim_n_E2_IMild_No_Drug_5; ++i) {
+    internal->n_E2_IMild_No_Drug_5[i - 1] = (internal->drug_5_indic_IMild == 1 ? internal->n_E2_IMild[i - 1] * (1 - internal->drug_5_prop_treat) : internal->n_E2_IMild[i - 1]);
+  }
+  for (int i = 1; i <= internal->dim_n_PE2_IMild_Drug_5; ++i) {
+    internal->n_PE2_IMild_Drug_5[i - 1] = (internal->drug_5_indic_IMild == 1 ? internal->n_PE2_IMild[i - 1] * internal->drug_5_prop_treat : 0);
+  }
+  for (int i = 1; i <= internal->dim_n_PE2_IMild_No_Drug_5; ++i) {
+    internal->n_PE2_IMild_No_Drug_5[i - 1] = (internal->drug_5_indic_IMild == 1 ? internal->n_PE2_IMild[i - 1] * (1 - internal->drug_5_prop_treat) : internal->n_PE2_IMild[i - 1]);
+  }
+  for (int i = 1; i <= internal->dim_n_PS_PE1; ++i) {
+    internal->n_PS_PE1[i - 1] = (internal->drug_1_indic == 1 ? internal->lambda[i - 1] * internal->drug_1_effect_size * PS[i - 1] : internal->lambda[i - 1] * PS[i - 1]);
+  }
+  for (int i = 1; i <= internal->dim_n_S_E1; ++i) {
+    internal->n_S_E1[i - 1] = internal->lambda[i - 1] * S[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_number_GetHosp; ++i) {
+    internal->number_GetHosp[i - 1] = (total_req_Hosp == 0 ? 0 : internal->number_req_Hosp[i - 1] / (double) odin_sum1(internal->number_req_Hosp, 0, internal->dim_number_req_Hosp) * total_GetHosp);
+  }
+  for (int i = 1; i <= internal->dim_number_NotICU; ++i) {
+    internal->number_NotICU[i - 1] = internal->number_req_ICU[i - 1] - internal->number_GetICU[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_number_req_ICU_MV_initial; ++i) {
+    internal->number_req_ICU_MV_initial[i - 1] = internal->number_GetICU[i - 1] * internal->prob_critical[i - 1];
+  }
+  double prop_ox_hosp_beds = (total_GetHosp == 0 && total_GetICU == 0 ? 0 : (total_GetHosp / (double) (total_GetHosp + total_GetICU * internal->severe_critical_case_oxygen_consumption_multiplier)));
+  double available_oxygen_for_hosp_beds = fround(prop_ox_hosp_beds * oxygen_availability, 0);
+  for (int i = 1; i <= internal->dim_E1; ++i) {
+    dstatedt[internal->offset_variable_E1 + i - 1] = internal->n_S_E1[i - 1] - internal->n_E1_E2[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_IMild; ++i) {
+    dstatedt[internal->offset_variable_IMild + i - 1] = internal->n_E2_IMild_No_Drug_5[i - 1] + internal->n_PE2_IMild_No_Drug_5[i - 1] - internal->n_IMild_R[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_IMild_Drug_5; ++i) {
+    dstatedt[internal->offset_variable_IMild_Drug_5 + i - 1] = internal->n_E2_IMild_Drug_5[i - 1] + internal->n_PE2_IMild_Drug_5[i - 1] - internal->n_IMild_Drug_5_R[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_PE1; ++i) {
+    dstatedt[internal->offset_variable_PE1 + i - 1] = internal->n_PS_PE1[i - 1] - internal->n_PE1_PE2[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_PS; ++i) {
+    dstatedt[internal->offset_variable_PS + i - 1] = internal->n_S_PS[i - 1] - internal->n_PS_S[i - 1] - internal->n_PS_PE1[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_S; ++i) {
+    dstatedt[1 + i - 1] = -(internal->n_S_E1[i - 1]) - internal->n_S_PS[i - 1] + internal->n_PS_S[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_number_NotHosp; ++i) {
+    internal->number_NotHosp[i - 1] = internal->number_req_Hosp[i - 1] - internal->number_GetHosp[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_number_NotICU_NotOx_NotMV; ++i) {
+    internal->number_NotICU_NotOx_NotMV[i - 1] = internal->number_NotICU[i - 1] * internal->prob_critical[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_number_req_ICU_MV; ++i) {
+    internal->number_req_ICU_MV[i - 1] = (internal->drug_7_indic == 1 ? internal->number_req_ICU_MV_initial[i - 1] * (1 - (internal->drug_7_prop_treat * internal->drug_7_effect_size)) : internal->number_req_ICU_MV_initial[i - 1]);
+  }
+  double available_oxygen_for_ICU_beds = floor((oxygen_availability - available_oxygen_for_hosp_beds) / (double) internal->severe_critical_case_oxygen_consumption_multiplier);
+  for (int i = 1; i <= internal->dim_n_ICrit_NoICU_NoOx_NoMV_Die1; ++i) {
+    internal->n_ICrit_NoICU_NoOx_NoMV_Die1[i - 1] = internal->number_NotICU_NotOx_NotMV[i - 1] * internal->prob_critical_death_no_ICU_no_ox_no_MV[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_IMod_NoHosp_NoOx_Die1; ++i) {
+    internal->n_IMod_NoHosp_NoOx_Die1[i - 1] = internal->number_NotHosp[i - 1] * internal->prob_moderate_death_no_hosp_no_ox[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_number_NotICU_NotOx; ++i) {
+    internal->number_NotICU_NotOx[i - 1] = internal->number_NotICU[i - 1] - internal->number_NotICU_NotOx_NotMV[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_number_req_ICU_Ox; ++i) {
+    internal->number_req_ICU_Ox[i - 1] = internal->number_GetICU[i - 1] - internal->number_req_ICU_MV[i - 1];
+  }
+  double total_GetHosp_GetOx = (available_oxygen_for_hosp_beds <= 0 ? 0 : ((available_oxygen_for_hosp_beds - total_GetHosp >= 0 ? total_GetHosp : (available_oxygen_for_hosp_beds))));
+  double total_req_ICU_MV = odin_sum1(internal->number_req_ICU_MV, 0, internal->dim_number_req_ICU_MV);
+  for (int i = 1; i <= internal->dim_ICrit_NoICU_NoOx_NoMV_Die1; ++i) {
+    dstatedt[internal->offset_variable_ICrit_NoICU_NoOx_NoMV_Die1 + i - 1] = internal->n_ICrit_NoICU_NoOx_NoMV_Die1[i - 1] - internal->n_ICrit_NoICU_NoOx_NoMV_Die1_ICrit_NoICU_NoOx_NoMV_Die2[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_IMod_NoHosp_NoOx_Die1; ++i) {
+    dstatedt[internal->offset_variable_IMod_NoHosp_NoOx_Die1 + i - 1] = internal->n_IMod_NoHosp_NoOx_Die1[i - 1] - internal->n_IMod_NoHosp_NoOx_Die1_IMod_NoHosp_NoOx_Die2[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_ICrit_NoICU_NoOx_NoMV_Surv1; ++i) {
+    internal->n_ICrit_NoICU_NoOx_NoMV_Surv1[i - 1] = internal->number_NotICU_NotOx_NotMV[i - 1] - internal->n_ICrit_NoICU_NoOx_NoMV_Die1[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_IMod_NoHosp_NoOx_Surv1; ++i) {
+    internal->n_IMod_NoHosp_NoOx_Surv1[i - 1] = internal->number_NotHosp[i - 1] - internal->n_IMod_NoHosp_NoOx_Die1[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_ISev_NoICU_NoOx_Die1; ++i) {
+    internal->n_ISev_NoICU_NoOx_Die1[i - 1] = internal->number_NotICU_NotOx[i - 1] * internal->prob_severe_death_no_ICU_no_ox[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_number_GetHosp_Ox; ++i) {
+    internal->number_GetHosp_Ox[i - 1] = (total_GetHosp_GetOx == 0 ? 0 : internal->number_GetHosp[i - 1] / (double) odin_sum1(internal->number_GetHosp, 0, internal->dim_number_GetHosp) * total_GetHosp_GetOx);
+  }
+  double total_req_ICU_Ox = odin_sum1(internal->number_req_ICU_Ox, 0, internal->dim_number_req_ICU_Ox);
+  double available_oxygen_for_ICU_MV = (total_req_ICU_MV == 0 && total_req_ICU_Ox == 0 ? 0 : (fround(available_oxygen_for_ICU_beds * total_req_ICU_MV / (double) (total_req_ICU_MV + total_req_ICU_Ox), 0)));
+  for (int i = 1; i <= internal->dim_ICrit_NoICU_NoOx_NoMV_Surv1; ++i) {
+    dstatedt[internal->offset_variable_ICrit_NoICU_NoOx_NoMV_Surv1 + i - 1] = internal->n_ICrit_NoICU_NoOx_NoMV_Surv1[i - 1] - internal->n_ICrit_NoICU_NoOx_NoMV_Surv1_ICrit_NoICU_NoOx_NoMV_Surv2[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_IMod_NoHosp_NoOx_Surv1; ++i) {
+    dstatedt[internal->offset_variable_IMod_NoHosp_NoOx_Surv1 + i - 1] = internal->n_IMod_NoHosp_NoOx_Surv1[i - 1] - internal->n_IMod_NoHosp_NoOx_Surv1_IMod_NoHosp_NoOx_Surv2[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ISev_NoICU_NoOx_Die1; ++i) {
+    dstatedt[internal->offset_variable_ISev_NoICU_NoOx_Die1 + i - 1] = internal->n_ISev_NoICU_NoOx_Die1[i - 1] - internal->n_ISev_NoICU_NoOx_Die1_ISev_NoICU_NoOx_Die2[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_IMod_GetHosp_GetOx_Die1; ++i) {
+    internal->n_IMod_GetHosp_GetOx_Die1[i - 1] = internal->number_GetHosp_Ox[i - 1] * internal->prob_moderate_death_get_hosp_get_ox[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_ISev_NoICU_NoOx_Surv1; ++i) {
+    internal->n_ISev_NoICU_NoOx_Surv1[i - 1] = internal->number_NotICU_NotOx[i - 1] - internal->n_ISev_NoICU_NoOx_Die1[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_number_GetHosp_NoOx; ++i) {
+    internal->number_GetHosp_NoOx[i - 1] = internal->number_GetHosp[i - 1] - internal->number_GetHosp_Ox[i - 1];
+  }
+  double available_oxygen_for_ICU_Ox = available_oxygen_for_ICU_beds - available_oxygen_for_ICU_MV;
+  for (int i = 1; i <= internal->dim_IMod_GetHosp_GetOx_Die1; ++i) {
+    dstatedt[internal->offset_variable_IMod_GetHosp_GetOx_Die1 + i - 1] = internal->n_IMod_GetHosp_GetOx_Die1[i - 1] - internal->n_IMod_GetHosp_GetOx_Die1_IMod_GetHosp_GetOx_Die2[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ISev_NoICU_NoOx_Surv1; ++i) {
+    dstatedt[internal->offset_variable_ISev_NoICU_NoOx_Surv1 + i - 1] = internal->n_ISev_NoICU_NoOx_Surv1[i - 1] - internal->n_ISev_NoICU_NoOx_Surv1_ISev_NoICU_NoOx_Surv2[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_IMod_GetHosp_GetOx_Surv1; ++i) {
+    internal->n_IMod_GetHosp_GetOx_Surv1[i - 1] = internal->number_GetHosp_Ox[i - 1] - internal->n_IMod_GetHosp_GetOx_Die1[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_IMod_GetHosp_NoOx_Die1; ++i) {
+    internal->n_IMod_GetHosp_NoOx_Die1[i - 1] = internal->number_GetHosp_NoOx[i - 1] * internal->prob_moderate_death_get_hosp_no_ox[i - 1];
+  }
+  double total_GetICU_GetOx_Need_MV = (available_oxygen_for_ICU_MV <= 0 ? 0 : ((available_oxygen_for_ICU_MV - total_req_ICU_MV >= 0 ? total_req_ICU_MV : (available_oxygen_for_ICU_MV))));
+  for (int i = 1; i <= internal->dim_IMod_GetHosp_GetOx_Surv1; ++i) {
+    dstatedt[internal->offset_variable_IMod_GetHosp_GetOx_Surv1 + i - 1] = internal->n_IMod_GetHosp_GetOx_Surv1[i - 1] - internal->n_IMod_GetHosp_GetOx_Surv1_IMod_GetHosp_GetOx_Surv2[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_IMod_GetHosp_NoOx_Die1; ++i) {
+    dstatedt[internal->offset_variable_IMod_GetHosp_NoOx_Die1 + i - 1] = internal->n_IMod_GetHosp_NoOx_Die1[i - 1] - internal->n_IMod_GetHosp_NoOx_Die1_IMod_GetHosp_NoOx_Die2[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_IMod_GetHosp_NoOx_Surv1; ++i) {
+    internal->n_IMod_GetHosp_NoOx_Surv1[i - 1] = internal->number_GetHosp_NoOx[i - 1] - internal->n_IMod_GetHosp_NoOx_Die1[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_number_GetICU_GetOx_NeedMV; ++i) {
+    internal->number_GetICU_GetOx_NeedMV[i - 1] = (total_GetICU_GetOx_Need_MV == 0 ? 0 : internal->number_req_ICU_MV[i - 1] / (double) odin_sum1(internal->number_req_ICU_MV, 0, internal->dim_number_req_ICU_MV) * total_GetICU_GetOx_Need_MV);
+  }
+  double total_GetICU_GetOx_GetMV = (current_free_MV <= 0 ? 0 : ((current_free_MV - total_GetICU_GetOx_Need_MV >= 0 ? total_GetICU_GetOx_Need_MV : (current_free_MV))));
+  double total_GetICU_GetOx_Only = (available_oxygen_for_ICU_Ox <= 0 ? 0 : ((available_oxygen_for_ICU_Ox - total_req_ICU_Ox >= 0 ? total_req_ICU_Ox : (available_oxygen_for_ICU_Ox))));
+  for (int i = 1; i <= internal->dim_IMod_GetHosp_NoOx_Surv1; ++i) {
+    dstatedt[internal->offset_variable_IMod_GetHosp_NoOx_Surv1 + i - 1] = internal->n_IMod_GetHosp_NoOx_Surv1[i - 1] - internal->n_IMod_GetHosp_NoOx_Surv1_IMod_GetHosp_NoOx_Surv2[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_number_GetICU_GetOx; ++i) {
+    internal->number_GetICU_GetOx[i - 1] = (total_GetICU_GetOx_Only == 0 ? 0 : internal->number_req_ICU_Ox[i - 1] / (double) odin_sum1(internal->number_req_ICU_Ox, 0, internal->dim_number_req_ICU_Ox) * total_GetICU_GetOx_Only);
+  }
+  for (int i = 1; i <= internal->dim_number_GetICU_GetOx_GetMV; ++i) {
+    internal->number_GetICU_GetOx_GetMV[i - 1] = (total_GetICU_GetOx_GetMV == 0 ? 0 : internal->number_GetICU_GetOx_NeedMV[i - 1] / (double) odin_sum1(internal->number_GetICU_GetOx_NeedMV, 0, internal->dim_number_GetICU_GetOx_NeedMV) * total_GetICU_GetOx_GetMV);
+  }
+  for (int i = 1; i <= internal->dim_number_GetICU_NoOx_NeedMV; ++i) {
+    internal->number_GetICU_NoOx_NeedMV[i - 1] = internal->number_req_ICU_MV[i - 1] - internal->number_GetICU_GetOx_NeedMV[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_ICrit_GetICU_GetOx_GetMV_Die1; ++i) {
+    internal->n_ICrit_GetICU_GetOx_GetMV_Die1[i - 1] = internal->number_GetICU_GetOx_GetMV[i - 1] * internal->prob_critical_death_get_ICU_get_ox_get_MV[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_ICrit_GetICU_NoOx_NoMV_Die1; ++i) {
+    internal->n_ICrit_GetICU_NoOx_NoMV_Die1[i - 1] = internal->number_GetICU_NoOx_NeedMV[i - 1] * internal->prob_critical_death_get_ICU_no_ox_no_MV[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_ISev_GetICU_GetOx_Die1; ++i) {
+    internal->n_ISev_GetICU_GetOx_Die1[i - 1] = internal->number_GetICU_GetOx[i - 1] * internal->prob_severe_death_get_ICU_get_ox[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_number_GetICU_GetOx_NoMV; ++i) {
+    internal->number_GetICU_GetOx_NoMV[i - 1] = internal->number_GetICU_GetOx_NeedMV[i - 1] - internal->number_GetICU_GetOx_GetMV[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_number_GetICU_NoOx; ++i) {
+    internal->number_GetICU_NoOx[i - 1] = internal->number_req_ICU_Ox[i - 1] - internal->number_GetICU_GetOx[i - 1];
+  }
+  double temp_leftover = oxygen_supply - baseline_oxygen_demand - odin_sum1(internal->number_GetHosp_Ox, 0, internal->dim_number_GetHosp_Ox) - (odin_sum1(internal->number_GetICU_GetOx_NeedMV, 0, internal->dim_number_GetICU_GetOx_NeedMV) + odin_sum1(internal->number_GetICU_GetOx, 0, internal->dim_number_GetICU_GetOx)) * internal->severe_critical_case_oxygen_consumption_multiplier;
+  for (int i = 1; i <= internal->dim_ICrit_GetICU_GetOx_GetMV_Die1; ++i) {
+    dstatedt[internal->offset_variable_ICrit_GetICU_GetOx_GetMV_Die1 + i - 1] = internal->n_ICrit_GetICU_GetOx_GetMV_Die1[i - 1] - internal->n_ICrit_GetICU_GetOx_GetMV_Die1_ICrit_GetICU_GetOx_GetMV_Die2[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ICrit_GetICU_NoOx_NoMV_Die1; ++i) {
+    dstatedt[internal->offset_variable_ICrit_GetICU_NoOx_NoMV_Die1 + i - 1] = internal->n_ICrit_GetICU_NoOx_NoMV_Die1[i - 1] - internal->n_ICrit_GetICU_NoOx_NoMV_Die1_ICrit_GetICU_NoOx_NoMV_Die2[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ISev_GetICU_GetOx_Die1; ++i) {
+    dstatedt[internal->offset_variable_ISev_GetICU_GetOx_Die1 + i - 1] = internal->n_ISev_GetICU_GetOx_Die1[i - 1] - internal->n_ISev_GetICU_GetOx_Die1_ISev_GetICU_GetOx_Die2[i - 1];
+  }
+  double leftover = (temp_leftover < 0 ? 0 : ((temp_leftover >= internal->max_leftover ? internal->max_leftover : temp_leftover)));
+  for (int i = 1; i <= internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv1; ++i) {
+    internal->n_ICrit_GetICU_GetOx_GetMV_Surv1[i - 1] = internal->number_GetICU_GetOx_GetMV[i - 1] - internal->n_ICrit_GetICU_GetOx_GetMV_Die1[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_ICrit_GetICU_GetOx_NoMV_Die1; ++i) {
+    internal->n_ICrit_GetICU_GetOx_NoMV_Die1[i - 1] = internal->number_GetICU_GetOx_NoMV[i - 1] * internal->prob_critical_death_get_ICU_get_ox_no_MV[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_ICrit_GetICU_NoOx_NoMV_Surv1; ++i) {
+    internal->n_ICrit_GetICU_NoOx_NoMV_Surv1[i - 1] = internal->number_GetICU_NoOx_NeedMV[i - 1] - internal->n_ICrit_GetICU_NoOx_NoMV_Die1[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_ISev_GetICU_GetOx_Surv1; ++i) {
+    internal->n_ISev_GetICU_GetOx_Surv1[i - 1] = internal->number_GetICU_GetOx[i - 1] - internal->n_ISev_GetICU_GetOx_Die1[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_ISev_GetICU_NoOx_Die1; ++i) {
+    internal->n_ISev_GetICU_NoOx_Die1[i - 1] = internal->number_GetICU_NoOx[i - 1] * internal->prob_severe_death_get_ICU_no_ox[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ICrit_GetICU_GetOx_GetMV_Surv1; ++i) {
+    dstatedt[internal->offset_variable_ICrit_GetICU_GetOx_GetMV_Surv1 + i - 1] = internal->n_ICrit_GetICU_GetOx_GetMV_Surv1[i - 1] - internal->n_ICrit_GetICU_GetOx_GetMV_Surv1_ICrit_GetICU_GetOx_GetMV_Surv2[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ICrit_GetICU_GetOx_NoMV_Die1; ++i) {
+    dstatedt[internal->offset_variable_ICrit_GetICU_GetOx_NoMV_Die1 + i - 1] = internal->n_ICrit_GetICU_GetOx_NoMV_Die1[i - 1] - internal->n_ICrit_GetICU_GetOx_NoMV_Die1_ICrit_GetICU_GetOx_NoMV_Die2[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ICrit_GetICU_NoOx_NoMV_Surv1; ++i) {
+    dstatedt[internal->offset_variable_ICrit_GetICU_NoOx_NoMV_Surv1 + i - 1] = internal->n_ICrit_GetICU_NoOx_NoMV_Surv1[i - 1] - internal->n_ICrit_GetICU_NoOx_NoMV_Surv1_ICrit_GetICU_NoOx_NoMV_Surv2[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ISev_GetICU_GetOx_Surv1; ++i) {
+    dstatedt[internal->offset_variable_ISev_GetICU_GetOx_Surv1 + i - 1] = internal->n_ISev_GetICU_GetOx_Surv1[i - 1] - internal->n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ISev_GetICU_NoOx_Die1; ++i) {
+    dstatedt[internal->offset_variable_ISev_GetICU_NoOx_Die1 + i - 1] = internal->n_ISev_GetICU_NoOx_Die1[i - 1] - internal->n_ISev_GetICU_NoOx_Die1_ISev_GetICU_NoOx_Die2[i - 1];
+  }
+  dstatedt[0] = oxygen_supply + leftover - baseline_oxygen_demand;
+  for (int i = 1; i <= internal->dim_n_ICrit_GetICU_GetOx_NoMV_Surv1; ++i) {
+    internal->n_ICrit_GetICU_GetOx_NoMV_Surv1[i - 1] = internal->number_GetICU_GetOx_NoMV[i - 1] - internal->n_ICrit_GetICU_GetOx_NoMV_Die1[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_ISev_GetICU_NoOx_Surv1; ++i) {
+    internal->n_ISev_GetICU_NoOx_Surv1[i - 1] = internal->number_GetICU_NoOx[i - 1] - internal->n_ISev_GetICU_NoOx_Die1[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ICrit_GetICU_GetOx_NoMV_Surv1; ++i) {
+    dstatedt[internal->offset_variable_ICrit_GetICU_GetOx_NoMV_Surv1 + i - 1] = internal->n_ICrit_GetICU_GetOx_NoMV_Surv1[i - 1] - internal->n_ICrit_GetICU_GetOx_NoMV_Surv1_ICrit_GetICU_GetOx_NoMV_Surv2[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_ISev_GetICU_NoOx_Surv1; ++i) {
+    dstatedt[internal->offset_variable_ISev_GetICU_NoOx_Surv1 + i - 1] = internal->n_ISev_GetICU_NoOx_Surv1[i - 1] - internal->n_ISev_GetICU_NoOx_Surv1_ISev_GetICU_NoOx_Surv2[i - 1];
+  }
+  if (output) {
+    double * D_Community = state + internal->offset_variable_D_Community;
+    double * D_Hospital = state + internal->offset_variable_D_Hospital;
+    double * R = state + internal->offset_variable_R;
+    output[12] = internal->gamma_ICrit_GetICU_GetOx_GetMV_Surv;
+    output[14] = internal->gamma_ICrit_GetICU_GetOx_NoMV_Surv;
+    output[16] = internal->gamma_ICrit_GetICU_NoOx_NoMV_Surv;
+    output[2] = internal->gamma_IMild;
+    output[4] = internal->gamma_IMod_GetHosp_GetOx_Surv;
+    output[6] = internal->gamma_IMod_GetHosp_NoOx_Surv;
+    output[8] = internal->gamma_ISev_GetICU_GetOx_Surv;
+    output[10] = internal->gamma_ISev_GetICU_NoOx_Surv;
+    double pop = odin_sum1(S, 0, internal->dim_S) + odin_sum1(E1, 0, internal->dim_E1) + odin_sum1(E2, 0, internal->dim_E2) + odin_sum1(IAsymp, 0, internal->dim_IAsymp) + odin_sum1(IMild, 0, internal->dim_IMild) + odin_sum1(ICase1, 0, internal->dim_ICase1) + odin_sum1(ICase2, 0, internal->dim_ICase2) + odin_sum1(IRec1, 0, internal->dim_IRec1) + odin_sum1(IRec2, 0, internal->dim_IRec2) + odin_sum1(R, 0, internal->dim_R) + odin_sum1(D_Community, 0, internal->dim_D_Community) + odin_sum1(D_Hospital, 0, internal->dim_D_Hospital) + odin_sum1(PS, 0, internal->dim_PS) + odin_sum1(PE1, 0, internal->dim_PE1) + odin_sum1(PE2, 0, internal->dim_PE2) + odin_sum1(IMild_Drug_5, 0, internal->dim_IMild_Drug_5) + odin_sum1(ICase1_Drug_5, 0, internal->dim_ICase1_Drug_5) + odin_sum1(ICase2_Drug_5, 0, internal->dim_ICase2_Drug_5) + odin_sum1(IMod_GetHosp_GetOx_Surv1, 0, internal->dim_IMod_GetHosp_GetOx_Surv1) + odin_sum1(IMod_GetHosp_GetOx_Surv2, 0, internal->dim_IMod_GetHosp_GetOx_Surv2) + odin_sum1(IMod_GetHosp_GetOx_Die1, 0, internal->dim_IMod_GetHosp_GetOx_Die1) + odin_sum1(IMod_GetHosp_GetOx_Die2, 0, internal->dim_IMod_GetHosp_GetOx_Die2) + odin_sum1(IMod_GetHosp_NoOx_Surv1, 0, internal->dim_IMod_GetHosp_NoOx_Surv1) + odin_sum1(IMod_GetHosp_NoOx_Surv2, 0, internal->dim_IMod_GetHosp_NoOx_Surv2) + odin_sum1(IMod_GetHosp_NoOx_Die1, 0, internal->dim_IMod_GetHosp_NoOx_Die1) + odin_sum1(IMod_GetHosp_NoOx_Die2, 0, internal->dim_IMod_GetHosp_NoOx_Die2) + odin_sum1(IMod_NoHosp_NoOx_Surv1, 0, internal->dim_IMod_NoHosp_NoOx_Surv1) + odin_sum1(IMod_NoHosp_NoOx_Surv2, 0, internal->dim_IMod_NoHosp_NoOx_Surv2) + odin_sum1(IMod_NoHosp_NoOx_Die1, 0, internal->dim_IMod_NoHosp_NoOx_Die1) + odin_sum1(IMod_NoHosp_NoOx_Die2, 0, internal->dim_IMod_NoHosp_NoOx_Die2) + odin_sum1(ISev_GetICU_GetOx_Surv1, 0, internal->dim_ISev_GetICU_GetOx_Surv1) + odin_sum1(ISev_GetICU_GetOx_Surv2, 0, internal->dim_ISev_GetICU_GetOx_Surv2) + odin_sum1(ISev_GetICU_GetOx_Die1, 0, internal->dim_ISev_GetICU_GetOx_Die1) + odin_sum1(ISev_GetICU_GetOx_Die2, 0, internal->dim_ISev_GetICU_GetOx_Die2) + odin_sum1(ISev_GetICU_NoOx_Surv1, 0, internal->dim_ISev_GetICU_NoOx_Surv1) + odin_sum1(ISev_GetICU_NoOx_Surv2, 0, internal->dim_ISev_GetICU_NoOx_Surv2) + odin_sum1(ISev_GetICU_NoOx_Die1, 0, internal->dim_ISev_GetICU_NoOx_Die1) + odin_sum1(ISev_GetICU_NoOx_Die2, 0, internal->dim_ISev_GetICU_NoOx_Die2) + odin_sum1(ISev_NoICU_NoOx_Surv1, 0, internal->dim_ISev_NoICU_NoOx_Surv1) + odin_sum1(ISev_NoICU_NoOx_Surv2, 0, internal->dim_ISev_NoICU_NoOx_Surv2) + odin_sum1(ISev_NoICU_NoOx_Die1, 0, internal->dim_ISev_NoICU_NoOx_Die1) + odin_sum1(ISev_NoICU_NoOx_Die2, 0, internal->dim_ISev_NoICU_NoOx_Die2) + odin_sum1(ICrit_GetICU_GetOx_GetMV_Surv1, 0, internal->dim_ICrit_GetICU_GetOx_GetMV_Surv1) + odin_sum1(ICrit_GetICU_GetOx_GetMV_Surv2, 0, internal->dim_ICrit_GetICU_GetOx_GetMV_Surv2) + odin_sum1(ICrit_GetICU_GetOx_GetMV_Die1, 0, internal->dim_ICrit_GetICU_GetOx_GetMV_Die1) + odin_sum1(ICrit_GetICU_GetOx_GetMV_Die2, 0, internal->dim_ICrit_GetICU_GetOx_GetMV_Die2) + odin_sum1(ICrit_GetICU_GetOx_NoMV_Surv1, 0, internal->dim_ICrit_GetICU_GetOx_NoMV_Surv1) + odin_sum1(ICrit_GetICU_GetOx_NoMV_Surv2, 0, internal->dim_ICrit_GetICU_GetOx_NoMV_Surv2) + odin_sum1(ICrit_GetICU_GetOx_NoMV_Die1, 0, internal->dim_ICrit_GetICU_GetOx_NoMV_Die1) + odin_sum1(ICrit_GetICU_GetOx_NoMV_Die2, 0, internal->dim_ICrit_GetICU_GetOx_NoMV_Die2) + odin_sum1(ICrit_GetICU_NoOx_NoMV_Surv1, 0, internal->dim_ICrit_GetICU_NoOx_NoMV_Surv1) + odin_sum1(ICrit_GetICU_NoOx_NoMV_Surv2, 0, internal->dim_ICrit_GetICU_NoOx_NoMV_Surv2) + odin_sum1(ICrit_GetICU_NoOx_NoMV_Die1, 0, internal->dim_ICrit_GetICU_NoOx_NoMV_Die1) + odin_sum1(ICrit_GetICU_NoOx_NoMV_Die2, 0, internal->dim_ICrit_GetICU_NoOx_NoMV_Die2) + odin_sum1(ICrit_NoICU_NoOx_NoMV_Surv1, 0, internal->dim_ICrit_NoICU_NoOx_NoMV_Surv1) + odin_sum1(ICrit_NoICU_NoOx_NoMV_Surv2, 0, internal->dim_ICrit_NoICU_NoOx_NoMV_Surv2) + odin_sum1(ICrit_NoICU_NoOx_NoMV_Die1, 0, internal->dim_ICrit_NoICU_NoOx_NoMV_Die1) + odin_sum1(ICrit_NoICU_NoOx_NoMV_Die2, 0, internal->dim_ICrit_NoICU_NoOx_NoMV_Die2);
+    output[13] = internal->gamma_ICrit_GetICU_GetOx_GetMV_Surv_Drug_10;
+    output[15] = internal->gamma_ICrit_GetICU_GetOx_NoMV_Surv_Drug_10;
+    output[17] = internal->gamma_ICrit_GetICU_NoOx_NoMV_Surv_Drug_10;
+    output[3] = internal->gamma_IMild_Drug_4;
+    output[5] = internal->gamma_IMod_GetHosp_GetOx_Surv_Drug_8;
+    output[7] = internal->gamma_IMod_GetHosp_NoOx_Surv_Drug_8;
+    output[9] = internal->gamma_ISev_GetICU_GetOx_Surv_Drug_9;
+    output[11] = internal->gamma_ISev_GetICU_NoOx_Surv_Drug_9;
+    output[23] = hosp_occ;
+    output[19] = ICU_occ;
+    output[35] = MV_occ;
+    output[1] = pop;
+    output[0] = time;
+    memcpy(output + internal->offset_output_prob_critical_death_get_ICU_get_ox_get_MV_baseline, internal->prob_critical_death_get_ICU_get_ox_get_MV_baseline, internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline * sizeof(double));
+    memcpy(output + internal->offset_output_prob_critical_death_get_ICU_get_ox_no_MV_baseline, internal->prob_critical_death_get_ICU_get_ox_no_MV_baseline, internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline * sizeof(double));
+    memcpy(output + internal->offset_output_prob_critical_death_get_ICU_no_ox_no_MV_baseline, internal->prob_critical_death_get_ICU_no_ox_no_MV_baseline, internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline * sizeof(double));
+    memcpy(output + internal->offset_output_prob_moderate_death_get_hosp_get_ox_baseline, internal->prob_moderate_death_get_hosp_get_ox_baseline, internal->dim_prob_moderate_death_get_hosp_get_ox_baseline * sizeof(double));
+    memcpy(output + internal->offset_output_prob_moderate_death_get_hosp_no_ox_baseline, internal->prob_moderate_death_get_hosp_no_ox_baseline, internal->dim_prob_moderate_death_get_hosp_no_ox_baseline * sizeof(double));
+    memcpy(output + internal->offset_output_prob_severe_death_get_ICU_get_ox_baseline, internal->prob_severe_death_get_ICU_get_ox_baseline, internal->dim_prob_severe_death_get_ICU_get_ox_baseline * sizeof(double));
+    memcpy(output + internal->offset_output_prob_severe_death_get_ICU_no_ox_baseline, internal->prob_severe_death_get_ICU_no_ox_baseline, internal->dim_prob_severe_death_get_ICU_no_ox_baseline * sizeof(double));
+    memcpy(output + internal->offset_output_n_E1_E2, internal->n_E1_E2, internal->dim_n_E1_E2 * sizeof(double));
+    memcpy(output + internal->offset_output_n_E2_I, internal->n_E2_I, internal->dim_n_E2_I * sizeof(double));
+    memcpy(output + internal->offset_output_n_ICase1_ICase2, internal->n_ICase1_ICase2, internal->dim_n_ICase1_ICase2 * sizeof(double));
+    memcpy(output + internal->offset_output_n_ICase2_Hosp, internal->n_ICase2_Hosp, internal->dim_n_ICase2_Hosp * sizeof(double));
+    memcpy(output + internal->offset_output_n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital, internal->n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital, internal->dim_n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital * sizeof(double));
+    memcpy(output + internal->offset_output_n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec, internal->n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec, internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec * sizeof(double));
+    memcpy(output + internal->offset_output_n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital, internal->n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital, internal->dim_n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital * sizeof(double));
+    memcpy(output + internal->offset_output_n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec, internal->n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec, internal->dim_n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec * sizeof(double));
+    memcpy(output + internal->offset_output_n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital, internal->n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital, internal->dim_n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital * sizeof(double));
+    memcpy(output + internal->offset_output_n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec, internal->n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec, internal->dim_n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec * sizeof(double));
+    memcpy(output + internal->offset_output_n_IMild_R, internal->n_IMild_R, internal->dim_n_IMild_R * sizeof(double));
+    memcpy(output + internal->offset_output_n_IMod_GetHosp_GetOx_Die2_D_Hospital, internal->n_IMod_GetHosp_GetOx_Die2_D_Hospital, internal->dim_n_IMod_GetHosp_GetOx_Die2_D_Hospital * sizeof(double));
+    memcpy(output + internal->offset_output_n_IMod_GetHosp_GetOx_Surv2_R, internal->n_IMod_GetHosp_GetOx_Surv2_R, internal->dim_n_IMod_GetHosp_GetOx_Surv2_R * sizeof(double));
+    memcpy(output + internal->offset_output_n_IMod_GetHosp_NoOx_Die2_D_Hospital, internal->n_IMod_GetHosp_NoOx_Die2_D_Hospital, internal->dim_n_IMod_GetHosp_NoOx_Die2_D_Hospital * sizeof(double));
+    memcpy(output + internal->offset_output_n_IMod_GetHosp_NoOx_Surv2_R, internal->n_IMod_GetHosp_NoOx_Surv2_R, internal->dim_n_IMod_GetHosp_NoOx_Surv2_R * sizeof(double));
+    memcpy(output + internal->offset_output_n_IRec1_IRec2, internal->n_IRec1_IRec2, internal->dim_n_IRec1_IRec2 * sizeof(double));
+    memcpy(output + internal->offset_output_n_IRec2_R, internal->n_IRec2_R, internal->dim_n_IRec2_R * sizeof(double));
+    memcpy(output + internal->offset_output_n_ISev_GetICU_GetOx_Die2_D_Hospital, internal->n_ISev_GetICU_GetOx_Die2_D_Hospital, internal->dim_n_ISev_GetICU_GetOx_Die2_D_Hospital * sizeof(double));
+    memcpy(output + internal->offset_output_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2, internal->n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2, internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 * sizeof(double));
+    memcpy(output + internal->offset_output_n_ISev_GetICU_GetOx_Surv2_Rec, internal->n_ISev_GetICU_GetOx_Surv2_Rec, internal->dim_n_ISev_GetICU_GetOx_Surv2_Rec * sizeof(double));
+    memcpy(output + internal->offset_output_n_ISev_GetICU_NoOx_Die2_D_Hospital, internal->n_ISev_GetICU_NoOx_Die2_D_Hospital, internal->dim_n_ISev_GetICU_NoOx_Die2_D_Hospital * sizeof(double));
+    memcpy(output + internal->offset_output_n_ISev_GetICU_NoOx_Surv2_Rec, internal->n_ISev_GetICU_NoOx_Surv2_Rec, internal->dim_n_ISev_GetICU_NoOx_Surv2_Rec * sizeof(double));
+    memcpy(output + internal->offset_output_n_PE1_PE2, internal->n_PE1_PE2, internal->dim_n_PE1_PE2 * sizeof(double));
+    memcpy(output + internal->offset_output_n_PE2_I, internal->n_PE2_I, internal->dim_n_PE2_I * sizeof(double));
+    memcpy(output + internal->offset_output_n_PS_S, internal->n_PS_S, internal->dim_n_PS_S * sizeof(double));
+    memcpy(output + 44, internal->n_S_PS, internal->dim_n_S_PS * sizeof(double));
+    memcpy(output + internal->offset_output_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13, internal->prob_critical_death_get_ICU_get_ox_get_MV_Drug_13, internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 * sizeof(double));
+    memcpy(output + internal->offset_output_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13, internal->prob_critical_death_get_ICU_get_ox_no_MV_Drug_13, internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 * sizeof(double));
+    memcpy(output + internal->offset_output_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13, internal->prob_critical_death_get_ICU_no_ox_no_MV_Drug_13, internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 * sizeof(double));
+    memcpy(output + internal->offset_output_prob_moderate_death_get_hosp_get_ox_Drug_11, internal->prob_moderate_death_get_hosp_get_ox_Drug_11, internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 * sizeof(double));
+    memcpy(output + internal->offset_output_prob_moderate_death_get_hosp_no_ox_Drug_11, internal->prob_moderate_death_get_hosp_no_ox_Drug_11, internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 * sizeof(double));
+    memcpy(output + internal->offset_output_prob_severe_death_get_ICU_get_ox_Drug_12, internal->prob_severe_death_get_ICU_get_ox_Drug_12, internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 * sizeof(double));
+    memcpy(output + internal->offset_output_prob_severe_death_get_ICU_no_ox_Drug_12, internal->prob_severe_death_get_ICU_no_ox_Drug_12, internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 * sizeof(double));
+    output[36] = current_free_MV;
+    memcpy(output + internal->offset_output_n_E2_ICase1_initial, internal->n_E2_ICase1_initial, internal->dim_n_E2_ICase1_initial * sizeof(double));
+    memcpy(output + internal->offset_output_n_PE2_ICase1_initial, internal->n_PE2_ICase1_initial, internal->dim_n_PE2_ICase1_initial * sizeof(double));
+    memcpy(output + internal->offset_output_number_req_ICU_initial, internal->number_req_ICU_initial, internal->dim_number_req_ICU_initial * sizeof(double));
+    memcpy(output + internal->offset_output_prob_critical_death_get_ICU_get_ox_get_MV, internal->prob_critical_death_get_ICU_get_ox_get_MV, internal->dim_prob_critical_death_get_ICU_get_ox_get_MV * sizeof(double));
+    memcpy(output + internal->offset_output_prob_critical_death_get_ICU_get_ox_no_MV, internal->prob_critical_death_get_ICU_get_ox_no_MV, internal->dim_prob_critical_death_get_ICU_get_ox_no_MV * sizeof(double));
+    memcpy(output + internal->offset_output_prob_critical_death_get_ICU_no_ox_no_MV, internal->prob_critical_death_get_ICU_no_ox_no_MV, internal->dim_prob_critical_death_get_ICU_no_ox_no_MV * sizeof(double));
+    memcpy(output + internal->offset_output_prob_moderate_death_get_hosp_get_ox, internal->prob_moderate_death_get_hosp_get_ox, internal->dim_prob_moderate_death_get_hosp_get_ox * sizeof(double));
+    memcpy(output + internal->offset_output_prob_moderate_death_get_hosp_no_ox, internal->prob_moderate_death_get_hosp_no_ox, internal->dim_prob_moderate_death_get_hosp_no_ox * sizeof(double));
+    memcpy(output + internal->offset_output_prob_severe_death_get_ICU_get_ox, internal->prob_severe_death_get_ICU_get_ox, internal->dim_prob_severe_death_get_ICU_get_ox * sizeof(double));
+    memcpy(output + internal->offset_output_prob_severe_death_get_ICU_no_ox, internal->prob_severe_death_get_ICU_no_ox, internal->dim_prob_severe_death_get_ICU_no_ox * sizeof(double));
+    output[28] = baseline_oxygen_demand;
+    memcpy(output + internal->offset_output_n_E2_ICase1, internal->n_E2_ICase1, internal->dim_n_E2_ICase1 * sizeof(double));
+    memcpy(output + internal->offset_output_n_PE2_ICase1, internal->n_PE2_ICase1, internal->dim_n_PE2_ICase1 * sizeof(double));
+    memcpy(output + internal->offset_output_number_req_ICU, internal->number_req_ICU, internal->dim_number_req_ICU * sizeof(double));
+    output[26] = oxygen_supply;
+    output[24] = current_free_hosp;
+    output[20] = current_free_ICU;
+    memcpy(output + internal->offset_output_n_E2_ICase1_Drug_5, internal->n_E2_ICase1_Drug_5, internal->dim_n_E2_ICase1_Drug_5 * sizeof(double));
+    memcpy(output + internal->offset_output_n_E2_ICase1_No_Drug_5, internal->n_E2_ICase1_No_Drug_5, internal->dim_n_E2_ICase1_No_Drug_5 * sizeof(double));
+    memcpy(output + internal->offset_output_n_PE2_ICase1_Drug_5, internal->n_PE2_ICase1_Drug_5, internal->dim_n_PE2_ICase1_Drug_5 * sizeof(double));
+    memcpy(output + internal->offset_output_n_PE2_ICase1_No_Drug_5, internal->n_PE2_ICase1_No_Drug_5, internal->dim_n_PE2_ICase1_No_Drug_5 * sizeof(double));
+    memcpy(output + internal->offset_output_number_req_Hosp, internal->number_req_Hosp, internal->dim_number_req_Hosp * sizeof(double));
+    output[18] = total_req_ICU;
+    memcpy(output + internal->offset_output_n_E2_IAsymp, internal->n_E2_IAsymp, internal->dim_n_E2_IAsymp * sizeof(double));
+    output[21] = total_GetICU;
+    output[22] = total_req_Hosp;
+    memcpy(output + internal->offset_output_n_E2_IMild, internal->n_E2_IMild, internal->dim_n_E2_IMild * sizeof(double));
+    memcpy(output + internal->offset_output_n_PE2_IMild, internal->n_PE2_IMild, internal->dim_n_PE2_IMild * sizeof(double));
+    memcpy(output + internal->offset_output_number_GetICU, internal->number_GetICU, internal->dim_number_GetICU * sizeof(double));
+    output[25] = total_GetHosp;
+    memcpy(output + internal->offset_output_n_E2_IMild_Drug_5, internal->n_E2_IMild_Drug_5, internal->dim_n_E2_IMild_Drug_5 * sizeof(double));
+    memcpy(output + internal->offset_output_n_E2_IMild_No_Drug_5, internal->n_E2_IMild_No_Drug_5, internal->dim_n_E2_IMild_No_Drug_5 * sizeof(double));
+    memcpy(output + internal->offset_output_n_PE2_IMild_Drug_5, internal->n_PE2_IMild_Drug_5, internal->dim_n_PE2_IMild_Drug_5 * sizeof(double));
+    memcpy(output + internal->offset_output_n_PE2_IMild_No_Drug_5, internal->n_PE2_IMild_No_Drug_5, internal->dim_n_PE2_IMild_No_Drug_5 * sizeof(double));
+    memcpy(output + internal->offset_output_n_PS_PE1, internal->n_PS_PE1, internal->dim_n_PS_PE1 * sizeof(double));
+    memcpy(output + internal->offset_output_n_S_E1, internal->n_S_E1, internal->dim_n_S_E1 * sizeof(double));
+    memcpy(output + internal->offset_output_number_GetHosp, internal->number_GetHosp, internal->dim_number_GetHosp * sizeof(double));
+    memcpy(output + internal->offset_output_number_NotICU, internal->number_NotICU, internal->dim_number_NotICU * sizeof(double));
+    memcpy(output + internal->offset_output_number_req_ICU_MV_initial, internal->number_req_ICU_MV_initial, internal->dim_number_req_ICU_MV_initial * sizeof(double));
+    output[29] = prop_ox_hosp_beds;
+    output[30] = available_oxygen_for_hosp_beds;
+    memcpy(output + internal->offset_output_number_NotHosp, internal->number_NotHosp, internal->dim_number_NotHosp * sizeof(double));
+    memcpy(output + internal->offset_output_number_NotICU_NotOx_NotMV, internal->number_NotICU_NotOx_NotMV, internal->dim_number_NotICU_NotOx_NotMV * sizeof(double));
+    memcpy(output + internal->offset_output_number_req_ICU_MV, internal->number_req_ICU_MV, internal->dim_number_req_ICU_MV * sizeof(double));
+    output[31] = available_oxygen_for_ICU_beds;
+    memcpy(output + internal->offset_output_number_NotICU_NotOx, internal->number_NotICU_NotOx, internal->dim_number_NotICU_NotOx * sizeof(double));
+    memcpy(output + internal->offset_output_number_req_ICU_Ox, internal->number_req_ICU_Ox, internal->dim_number_req_ICU_Ox * sizeof(double));
+    output[32] = total_GetHosp_GetOx;
+    output[33] = total_req_ICU_MV;
+    double oxygen_needed_overall = odin_sum1(internal->number_req_Hosp, 0, internal->dim_number_req_Hosp) + (odin_sum1(internal->number_req_ICU_MV, 0, internal->dim_number_req_ICU_MV) + odin_sum1(internal->number_req_ICU_Ox, 0, internal->dim_number_req_ICU_Ox)) * internal->severe_critical_case_oxygen_consumption_multiplier;
+    memcpy(output + internal->offset_output_number_GetHosp_Ox, internal->number_GetHosp_Ox, internal->dim_number_GetHosp_Ox * sizeof(double));
+    output[42] = oxygen_needed_overall;
+    output[34] = total_req_ICU_Ox;
+    output[37] = available_oxygen_for_ICU_MV;
+    memcpy(output + internal->offset_output_number_GetHosp_NoOx, internal->number_GetHosp_NoOx, internal->dim_number_GetHosp_NoOx * sizeof(double));
+    output[38] = available_oxygen_for_ICU_Ox;
+    output[39] = total_GetICU_GetOx_Need_MV;
+    memcpy(output + internal->offset_output_number_GetICU_GetOx_NeedMV, internal->number_GetICU_GetOx_NeedMV, internal->dim_number_GetICU_GetOx_NeedMV * sizeof(double));
+    output[40] = total_GetICU_GetOx_GetMV;
+    memcpy(output + internal->offset_output_number_GetICU_GetOx, internal->number_GetICU_GetOx, internal->dim_number_GetICU_GetOx * sizeof(double));
+    memcpy(output + internal->offset_output_number_GetICU_GetOx_GetMV, internal->number_GetICU_GetOx_GetMV, internal->dim_number_GetICU_GetOx_GetMV * sizeof(double));
+    memcpy(output + internal->offset_output_number_GetICU_NoOx_NeedMV, internal->number_GetICU_NoOx_NeedMV, internal->dim_number_GetICU_NoOx_NeedMV * sizeof(double));
+    double oxygen_used = odin_sum1(internal->number_GetHosp_Ox, 0, internal->dim_number_GetHosp_Ox) + (odin_sum1(internal->number_GetICU_GetOx_NeedMV, 0, internal->dim_number_GetICU_GetOx_NeedMV) + odin_sum1(internal->number_GetICU_GetOx, 0, internal->dim_number_GetICU_GetOx)) * internal->severe_critical_case_oxygen_consumption_multiplier;
+    memcpy(output + internal->offset_output_n_ISev_GetICU_GetOx_Die1, internal->n_ISev_GetICU_GetOx_Die1, internal->dim_n_ISev_GetICU_GetOx_Die1 * sizeof(double));
+    memcpy(output + internal->offset_output_number_GetICU_GetOx_NoMV, internal->number_GetICU_GetOx_NoMV, internal->dim_number_GetICU_GetOx_NoMV * sizeof(double));
+    memcpy(output + internal->offset_output_number_GetICU_NoOx, internal->number_GetICU_NoOx, internal->dim_number_GetICU_NoOx * sizeof(double));
+    output[41] = oxygen_used;
+    output[43] = temp_leftover;
+    output[27] = leftover;
+    memcpy(output + internal->offset_output_n_ISev_GetICU_GetOx_Surv1, internal->n_ISev_GetICU_GetOx_Surv1, internal->dim_n_ISev_GetICU_GetOx_Surv1 * sizeof(double));
+  }
+}
+void deterministic_apothecary_SEIR_rhs_dde(size_t neq, double t, double * state, double * dstatedt, void * internal) {
+  deterministic_apothecary_SEIR_rhs((deterministic_apothecary_SEIR_internal*)internal, t, state, dstatedt, NULL);
+}
+void deterministic_apothecary_SEIR_rhs_desolve(int * neq, double * t, double * state, double * dstatedt, double * output, int * np) {
+  deterministic_apothecary_SEIR_rhs(deterministic_apothecary_SEIR_internal_ds, *t, state, dstatedt, output);
+}
+void deterministic_apothecary_SEIR_output_dde(size_t n_eq, double t, double * state, size_t n_output, double * output, void * internal_p) {
+  deterministic_apothecary_SEIR_internal *internal = (deterministic_apothecary_SEIR_internal*) internal_p;
+  double oxygen_availability = state[0];
+  double * S = state + 1;
+  double * E1 = state + internal->offset_variable_E1;
+  double * E2 = state + internal->offset_variable_E2;
+  double * IAsymp = state + internal->offset_variable_IAsymp;
+  double * IMild = state + internal->offset_variable_IMild;
+  double * ICase1 = state + internal->offset_variable_ICase1;
+  double * ICase2 = state + internal->offset_variable_ICase2;
+  double * IMild_Drug_5 = state + internal->offset_variable_IMild_Drug_5;
+  double * ICase1_Drug_5 = state + internal->offset_variable_ICase1_Drug_5;
+  double * ICase2_Drug_5 = state + internal->offset_variable_ICase2_Drug_5;
+  double * PS = state + internal->offset_variable_PS;
+  double * PE1 = state + internal->offset_variable_PE1;
+  double * PE2 = state + internal->offset_variable_PE2;
+  double * IMod_GetHosp_GetOx_Die1 = state + internal->offset_variable_IMod_GetHosp_GetOx_Die1;
+  double * IMod_GetHosp_GetOx_Die2 = state + internal->offset_variable_IMod_GetHosp_GetOx_Die2;
+  double * IMod_GetHosp_GetOx_Surv1 = state + internal->offset_variable_IMod_GetHosp_GetOx_Surv1;
+  double * IMod_GetHosp_GetOx_Surv2 = state + internal->offset_variable_IMod_GetHosp_GetOx_Surv2;
+  double * IMod_GetHosp_NoOx_Die1 = state + internal->offset_variable_IMod_GetHosp_NoOx_Die1;
+  double * IMod_GetHosp_NoOx_Die2 = state + internal->offset_variable_IMod_GetHosp_NoOx_Die2;
+  double * IMod_GetHosp_NoOx_Surv1 = state + internal->offset_variable_IMod_GetHosp_NoOx_Surv1;
+  double * IMod_GetHosp_NoOx_Surv2 = state + internal->offset_variable_IMod_GetHosp_NoOx_Surv2;
+  double * IMod_NoHosp_NoOx_Die1 = state + internal->offset_variable_IMod_NoHosp_NoOx_Die1;
+  double * IMod_NoHosp_NoOx_Die2 = state + internal->offset_variable_IMod_NoHosp_NoOx_Die2;
+  double * IMod_NoHosp_NoOx_Surv1 = state + internal->offset_variable_IMod_NoHosp_NoOx_Surv1;
+  double * IMod_NoHosp_NoOx_Surv2 = state + internal->offset_variable_IMod_NoHosp_NoOx_Surv2;
+  double * ISev_GetICU_GetOx_Die1 = state + internal->offset_variable_ISev_GetICU_GetOx_Die1;
+  double * ISev_GetICU_GetOx_Die2 = state + internal->offset_variable_ISev_GetICU_GetOx_Die2;
+  double * ISev_GetICU_GetOx_Surv1 = state + internal->offset_variable_ISev_GetICU_GetOx_Surv1;
+  double * ISev_GetICU_GetOx_Surv2 = state + internal->offset_variable_ISev_GetICU_GetOx_Surv2;
+  double * ISev_GetICU_NoOx_Die1 = state + internal->offset_variable_ISev_GetICU_NoOx_Die1;
+  double * ISev_GetICU_NoOx_Die2 = state + internal->offset_variable_ISev_GetICU_NoOx_Die2;
+  double * ISev_GetICU_NoOx_Surv1 = state + internal->offset_variable_ISev_GetICU_NoOx_Surv1;
+  double * ISev_GetICU_NoOx_Surv2 = state + internal->offset_variable_ISev_GetICU_NoOx_Surv2;
+  double * ISev_NoICU_NoOx_Die1 = state + internal->offset_variable_ISev_NoICU_NoOx_Die1;
+  double * ISev_NoICU_NoOx_Die2 = state + internal->offset_variable_ISev_NoICU_NoOx_Die2;
+  double * ISev_NoICU_NoOx_Surv1 = state + internal->offset_variable_ISev_NoICU_NoOx_Surv1;
+  double * ISev_NoICU_NoOx_Surv2 = state + internal->offset_variable_ISev_NoICU_NoOx_Surv2;
+  double * ICrit_GetICU_GetOx_GetMV_Die1 = state + internal->offset_variable_ICrit_GetICU_GetOx_GetMV_Die1;
+  double * ICrit_GetICU_GetOx_GetMV_Die2 = state + internal->offset_variable_ICrit_GetICU_GetOx_GetMV_Die2;
+  double * ICrit_GetICU_GetOx_GetMV_Surv1 = state + internal->offset_variable_ICrit_GetICU_GetOx_GetMV_Surv1;
+  double * ICrit_GetICU_GetOx_GetMV_Surv2 = state + internal->offset_variable_ICrit_GetICU_GetOx_GetMV_Surv2;
+  double * ICrit_GetICU_GetOx_NoMV_Die1 = state + internal->offset_variable_ICrit_GetICU_GetOx_NoMV_Die1;
+  double * ICrit_GetICU_GetOx_NoMV_Die2 = state + internal->offset_variable_ICrit_GetICU_GetOx_NoMV_Die2;
+  double * ICrit_GetICU_GetOx_NoMV_Surv1 = state + internal->offset_variable_ICrit_GetICU_GetOx_NoMV_Surv1;
+  double * ICrit_GetICU_GetOx_NoMV_Surv2 = state + internal->offset_variable_ICrit_GetICU_GetOx_NoMV_Surv2;
+  double * ICrit_GetICU_NoOx_NoMV_Die1 = state + internal->offset_variable_ICrit_GetICU_NoOx_NoMV_Die1;
+  double * ICrit_GetICU_NoOx_NoMV_Die2 = state + internal->offset_variable_ICrit_GetICU_NoOx_NoMV_Die2;
+  double * ICrit_GetICU_NoOx_NoMV_Surv1 = state + internal->offset_variable_ICrit_GetICU_NoOx_NoMV_Surv1;
+  double * ICrit_GetICU_NoOx_NoMV_Surv2 = state + internal->offset_variable_ICrit_GetICU_NoOx_NoMV_Surv2;
+  double * ICrit_NoICU_NoOx_NoMV_Die1 = state + internal->offset_variable_ICrit_NoICU_NoOx_NoMV_Die1;
+  double * ICrit_NoICU_NoOx_NoMV_Die2 = state + internal->offset_variable_ICrit_NoICU_NoOx_NoMV_Die2;
+  double * ICrit_NoICU_NoOx_NoMV_Surv1 = state + internal->offset_variable_ICrit_NoICU_NoOx_NoMV_Surv1;
+  double * ICrit_NoICU_NoOx_NoMV_Surv2 = state + internal->offset_variable_ICrit_NoICU_NoOx_NoMV_Surv2;
+  double * IRec1 = state + internal->offset_variable_IRec1;
+  double * IRec2 = state + internal->offset_variable_IRec2;
+  double * D_Community = state + internal->offset_variable_D_Community;
+  double * D_Hospital = state + internal->offset_variable_D_Hospital;
+  double * R = state + internal->offset_variable_R;
+  double hosp_occ = odin_sum1(IMod_GetHosp_GetOx_Surv1, 0, internal->dim_IMod_GetHosp_GetOx_Surv1) + odin_sum1(IMod_GetHosp_GetOx_Surv2, 0, internal->dim_IMod_GetHosp_GetOx_Surv2) + odin_sum1(IMod_GetHosp_GetOx_Die1, 0, internal->dim_IMod_GetHosp_GetOx_Die1) + odin_sum1(IMod_GetHosp_GetOx_Die2, 0, internal->dim_IMod_GetHosp_GetOx_Die2) + odin_sum1(IMod_GetHosp_NoOx_Surv1, 0, internal->dim_IMod_GetHosp_NoOx_Surv1) + odin_sum1(IMod_GetHosp_NoOx_Surv2, 0, internal->dim_IMod_GetHosp_NoOx_Surv2) + odin_sum1(IMod_GetHosp_NoOx_Die1, 0, internal->dim_IMod_GetHosp_NoOx_Die1) + odin_sum1(IMod_GetHosp_NoOx_Die2, 0, internal->dim_IMod_GetHosp_NoOx_Die2) + odin_sum1(IRec1, 0, internal->dim_IRec1) + odin_sum1(IRec2, 0, internal->dim_IRec2);
+  double ICU_occ = odin_sum1(ISev_GetICU_GetOx_Surv1, 0, internal->dim_ISev_GetICU_GetOx_Surv1) + odin_sum1(ISev_GetICU_GetOx_Surv2, 0, internal->dim_ISev_GetICU_GetOx_Surv2) + odin_sum1(ISev_GetICU_GetOx_Die1, 0, internal->dim_ISev_GetICU_GetOx_Die1) + odin_sum1(ISev_GetICU_GetOx_Die2, 0, internal->dim_ISev_GetICU_GetOx_Die2) + odin_sum1(ISev_GetICU_NoOx_Surv1, 0, internal->dim_ISev_GetICU_NoOx_Surv1) + odin_sum1(ISev_GetICU_NoOx_Surv2, 0, internal->dim_ISev_GetICU_NoOx_Surv2) + odin_sum1(ISev_GetICU_NoOx_Die1, 0, internal->dim_ISev_GetICU_NoOx_Die1) + odin_sum1(ISev_GetICU_NoOx_Die2, 0, internal->dim_ISev_GetICU_NoOx_Die2) + odin_sum1(ICrit_GetICU_GetOx_GetMV_Surv1, 0, internal->dim_ICrit_GetICU_GetOx_GetMV_Surv1) + odin_sum1(ICrit_GetICU_GetOx_GetMV_Surv2, 0, internal->dim_ICrit_GetICU_GetOx_GetMV_Surv2) + odin_sum1(ICrit_GetICU_GetOx_GetMV_Die1, 0, internal->dim_ICrit_GetICU_GetOx_GetMV_Die1) + odin_sum1(ICrit_GetICU_GetOx_GetMV_Die2, 0, internal->dim_ICrit_GetICU_GetOx_GetMV_Die2) + odin_sum1(ICrit_GetICU_GetOx_NoMV_Surv1, 0, internal->dim_ICrit_GetICU_GetOx_NoMV_Surv1) + odin_sum1(ICrit_GetICU_GetOx_NoMV_Surv2, 0, internal->dim_ICrit_GetICU_GetOx_NoMV_Surv2) + odin_sum1(ICrit_GetICU_GetOx_NoMV_Die1, 0, internal->dim_ICrit_GetICU_GetOx_NoMV_Die1) + odin_sum1(ICrit_GetICU_GetOx_NoMV_Die2, 0, internal->dim_ICrit_GetICU_GetOx_NoMV_Die2) + odin_sum1(ICrit_GetICU_NoOx_NoMV_Surv1, 0, internal->dim_ICrit_GetICU_NoOx_NoMV_Surv1) + odin_sum1(ICrit_GetICU_NoOx_NoMV_Surv2, 0, internal->dim_ICrit_GetICU_NoOx_NoMV_Surv2) + odin_sum1(ICrit_GetICU_NoOx_NoMV_Die1, 0, internal->dim_ICrit_GetICU_NoOx_NoMV_Die1) + odin_sum1(ICrit_GetICU_NoOx_NoMV_Die2, 0, internal->dim_ICrit_GetICU_NoOx_NoMV_Die2);
+  double MV_occ = odin_sum1(ICrit_GetICU_GetOx_GetMV_Surv1, 0, internal->dim_ICrit_GetICU_GetOx_GetMV_Surv1) + odin_sum1(ICrit_GetICU_GetOx_GetMV_Surv2, 0, internal->dim_ICrit_GetICU_GetOx_GetMV_Surv2) + odin_sum1(ICrit_GetICU_GetOx_GetMV_Die1, 0, internal->dim_ICrit_GetICU_GetOx_GetMV_Die1) + odin_sum1(ICrit_GetICU_GetOx_GetMV_Die2, 0, internal->dim_ICrit_GetICU_GetOx_GetMV_Die2);
+  output[12] = internal->gamma_ICrit_GetICU_GetOx_GetMV_Surv;
+  output[14] = internal->gamma_ICrit_GetICU_GetOx_NoMV_Surv;
+  output[16] = internal->gamma_ICrit_GetICU_NoOx_NoMV_Surv;
+  output[2] = internal->gamma_IMild;
+  output[4] = internal->gamma_IMod_GetHosp_GetOx_Surv;
+  output[6] = internal->gamma_IMod_GetHosp_NoOx_Surv;
+  output[8] = internal->gamma_ISev_GetICU_GetOx_Surv;
+  output[10] = internal->gamma_ISev_GetICU_NoOx_Surv;
+  double pop = odin_sum1(S, 0, internal->dim_S) + odin_sum1(E1, 0, internal->dim_E1) + odin_sum1(E2, 0, internal->dim_E2) + odin_sum1(IAsymp, 0, internal->dim_IAsymp) + odin_sum1(IMild, 0, internal->dim_IMild) + odin_sum1(ICase1, 0, internal->dim_ICase1) + odin_sum1(ICase2, 0, internal->dim_ICase2) + odin_sum1(IRec1, 0, internal->dim_IRec1) + odin_sum1(IRec2, 0, internal->dim_IRec2) + odin_sum1(R, 0, internal->dim_R) + odin_sum1(D_Community, 0, internal->dim_D_Community) + odin_sum1(D_Hospital, 0, internal->dim_D_Hospital) + odin_sum1(PS, 0, internal->dim_PS) + odin_sum1(PE1, 0, internal->dim_PE1) + odin_sum1(PE2, 0, internal->dim_PE2) + odin_sum1(IMild_Drug_5, 0, internal->dim_IMild_Drug_5) + odin_sum1(ICase1_Drug_5, 0, internal->dim_ICase1_Drug_5) + odin_sum1(ICase2_Drug_5, 0, internal->dim_ICase2_Drug_5) + odin_sum1(IMod_GetHosp_GetOx_Surv1, 0, internal->dim_IMod_GetHosp_GetOx_Surv1) + odin_sum1(IMod_GetHosp_GetOx_Surv2, 0, internal->dim_IMod_GetHosp_GetOx_Surv2) + odin_sum1(IMod_GetHosp_GetOx_Die1, 0, internal->dim_IMod_GetHosp_GetOx_Die1) + odin_sum1(IMod_GetHosp_GetOx_Die2, 0, internal->dim_IMod_GetHosp_GetOx_Die2) + odin_sum1(IMod_GetHosp_NoOx_Surv1, 0, internal->dim_IMod_GetHosp_NoOx_Surv1) + odin_sum1(IMod_GetHosp_NoOx_Surv2, 0, internal->dim_IMod_GetHosp_NoOx_Surv2) + odin_sum1(IMod_GetHosp_NoOx_Die1, 0, internal->dim_IMod_GetHosp_NoOx_Die1) + odin_sum1(IMod_GetHosp_NoOx_Die2, 0, internal->dim_IMod_GetHosp_NoOx_Die2) + odin_sum1(IMod_NoHosp_NoOx_Surv1, 0, internal->dim_IMod_NoHosp_NoOx_Surv1) + odin_sum1(IMod_NoHosp_NoOx_Surv2, 0, internal->dim_IMod_NoHosp_NoOx_Surv2) + odin_sum1(IMod_NoHosp_NoOx_Die1, 0, internal->dim_IMod_NoHosp_NoOx_Die1) + odin_sum1(IMod_NoHosp_NoOx_Die2, 0, internal->dim_IMod_NoHosp_NoOx_Die2) + odin_sum1(ISev_GetICU_GetOx_Surv1, 0, internal->dim_ISev_GetICU_GetOx_Surv1) + odin_sum1(ISev_GetICU_GetOx_Surv2, 0, internal->dim_ISev_GetICU_GetOx_Surv2) + odin_sum1(ISev_GetICU_GetOx_Die1, 0, internal->dim_ISev_GetICU_GetOx_Die1) + odin_sum1(ISev_GetICU_GetOx_Die2, 0, internal->dim_ISev_GetICU_GetOx_Die2) + odin_sum1(ISev_GetICU_NoOx_Surv1, 0, internal->dim_ISev_GetICU_NoOx_Surv1) + odin_sum1(ISev_GetICU_NoOx_Surv2, 0, internal->dim_ISev_GetICU_NoOx_Surv2) + odin_sum1(ISev_GetICU_NoOx_Die1, 0, internal->dim_ISev_GetICU_NoOx_Die1) + odin_sum1(ISev_GetICU_NoOx_Die2, 0, internal->dim_ISev_GetICU_NoOx_Die2) + odin_sum1(ISev_NoICU_NoOx_Surv1, 0, internal->dim_ISev_NoICU_NoOx_Surv1) + odin_sum1(ISev_NoICU_NoOx_Surv2, 0, internal->dim_ISev_NoICU_NoOx_Surv2) + odin_sum1(ISev_NoICU_NoOx_Die1, 0, internal->dim_ISev_NoICU_NoOx_Die1) + odin_sum1(ISev_NoICU_NoOx_Die2, 0, internal->dim_ISev_NoICU_NoOx_Die2) + odin_sum1(ICrit_GetICU_GetOx_GetMV_Surv1, 0, internal->dim_ICrit_GetICU_GetOx_GetMV_Surv1) + odin_sum1(ICrit_GetICU_GetOx_GetMV_Surv2, 0, internal->dim_ICrit_GetICU_GetOx_GetMV_Surv2) + odin_sum1(ICrit_GetICU_GetOx_GetMV_Die1, 0, internal->dim_ICrit_GetICU_GetOx_GetMV_Die1) + odin_sum1(ICrit_GetICU_GetOx_GetMV_Die2, 0, internal->dim_ICrit_GetICU_GetOx_GetMV_Die2) + odin_sum1(ICrit_GetICU_GetOx_NoMV_Surv1, 0, internal->dim_ICrit_GetICU_GetOx_NoMV_Surv1) + odin_sum1(ICrit_GetICU_GetOx_NoMV_Surv2, 0, internal->dim_ICrit_GetICU_GetOx_NoMV_Surv2) + odin_sum1(ICrit_GetICU_GetOx_NoMV_Die1, 0, internal->dim_ICrit_GetICU_GetOx_NoMV_Die1) + odin_sum1(ICrit_GetICU_GetOx_NoMV_Die2, 0, internal->dim_ICrit_GetICU_GetOx_NoMV_Die2) + odin_sum1(ICrit_GetICU_NoOx_NoMV_Surv1, 0, internal->dim_ICrit_GetICU_NoOx_NoMV_Surv1) + odin_sum1(ICrit_GetICU_NoOx_NoMV_Surv2, 0, internal->dim_ICrit_GetICU_NoOx_NoMV_Surv2) + odin_sum1(ICrit_GetICU_NoOx_NoMV_Die1, 0, internal->dim_ICrit_GetICU_NoOx_NoMV_Die1) + odin_sum1(ICrit_GetICU_NoOx_NoMV_Die2, 0, internal->dim_ICrit_GetICU_NoOx_NoMV_Die2) + odin_sum1(ICrit_NoICU_NoOx_NoMV_Surv1, 0, internal->dim_ICrit_NoICU_NoOx_NoMV_Surv1) + odin_sum1(ICrit_NoICU_NoOx_NoMV_Surv2, 0, internal->dim_ICrit_NoICU_NoOx_NoMV_Surv2) + odin_sum1(ICrit_NoICU_NoOx_NoMV_Die1, 0, internal->dim_ICrit_NoICU_NoOx_NoMV_Die1) + odin_sum1(ICrit_NoICU_NoOx_NoMV_Die2, 0, internal->dim_ICrit_NoICU_NoOx_NoMV_Die2);
+  double time = t;
+  output[13] = internal->gamma_ICrit_GetICU_GetOx_GetMV_Surv_Drug_10;
+  output[15] = internal->gamma_ICrit_GetICU_GetOx_NoMV_Surv_Drug_10;
+  output[17] = internal->gamma_ICrit_GetICU_NoOx_NoMV_Surv_Drug_10;
+  output[3] = internal->gamma_IMild_Drug_4;
+  output[5] = internal->gamma_IMod_GetHosp_GetOx_Surv_Drug_8;
+  output[7] = internal->gamma_IMod_GetHosp_NoOx_Surv_Drug_8;
+  output[9] = internal->gamma_ISev_GetICU_GetOx_Surv_Drug_9;
+  output[11] = internal->gamma_ISev_GetICU_NoOx_Surv_Drug_9;
+  output[23] = hosp_occ;
+  output[19] = ICU_occ;
+  output[35] = MV_occ;
+  output[1] = pop;
+  output[0] = time;
+  for (int i = 1; i <= internal->dim_n_E1_E2; ++i) {
+    internal->n_E1_E2[i - 1] = internal->gamma_E * E1[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_E2_I; ++i) {
+    internal->n_E2_I[i - 1] = internal->gamma_E * E2[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_ICase1_ICase2; ++i) {
+    internal->n_ICase1_ICase2[i - 1] = internal->gamma_ICase * ICase1[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_ICase2_Drug_5_Hosp; ++i) {
+    internal->n_ICase2_Drug_5_Hosp[i - 1] = internal->gamma_ICase * ICase2_Drug_5[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_ICase2_Hosp; ++i) {
+    internal->n_ICase2_Hosp[i - 1] = internal->gamma_ICase * ICase2[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital; ++i) {
+    internal->n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital[i - 1] = ICrit_GetICU_GetOx_GetMV_Die2[i - 1] * internal->gamma_ICrit_GetICU_GetOx_GetMV_Die;
+  }
+  for (int i = 1; i <= internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec; ++i) {
+    internal->n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec[i - 1] = (internal->drug_10_indic_ICrit_GetICU_GetOx_GetMV == 1 ? ICrit_GetICU_GetOx_GetMV_Surv2[i - 1] * internal->gamma_ICrit_GetICU_GetOx_GetMV_Surv_Drug_10 : ICrit_GetICU_GetOx_GetMV_Surv2[i - 1] * internal->gamma_ICrit_GetICU_GetOx_GetMV_Surv);
+  }
+  for (int i = 1; i <= internal->dim_n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital; ++i) {
+    internal->n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital[i - 1] = ICrit_GetICU_GetOx_NoMV_Die2[i - 1] * internal->gamma_ICrit_GetICU_GetOx_NoMV_Die;
+  }
+  for (int i = 1; i <= internal->dim_n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec; ++i) {
+    internal->n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec[i - 1] = (internal->drug_10_indic_ICrit_GetICU_GetOx_NoMV == 1 ? ICrit_GetICU_GetOx_NoMV_Surv2[i - 1] * internal->gamma_ICrit_GetICU_GetOx_NoMV_Surv_Drug_10 : ICrit_GetICU_GetOx_NoMV_Surv2[i - 1] * internal->gamma_ICrit_GetICU_GetOx_NoMV_Surv);
+  }
+  for (int i = 1; i <= internal->dim_n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital; ++i) {
+    internal->n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital[i - 1] = ICrit_GetICU_NoOx_NoMV_Die2[i - 1] * internal->gamma_ICrit_GetICU_NoOx_NoMV_Die;
+  }
+  for (int i = 1; i <= internal->dim_n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec; ++i) {
+    internal->n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec[i - 1] = (internal->drug_10_indic_ICrit_GetICU_NoOx_NoMV == 1 ? ICrit_GetICU_NoOx_NoMV_Surv2[i - 1] * internal->gamma_ICrit_GetICU_NoOx_NoMV_Surv_Drug_10 : ICrit_GetICU_NoOx_NoMV_Surv2[i - 1] * internal->gamma_ICrit_GetICU_NoOx_NoMV_Surv);
+  }
+  for (int i = 1; i <= internal->dim_n_IMild_R; ++i) {
+    internal->n_IMild_R[i - 1] = (internal->drug_4_indic == 1 ? internal->gamma_IMild_Drug_4 * IMild[i - 1] : internal->gamma_IMild * IMild[i - 1]);
+  }
+  for (int i = 1; i <= internal->dim_n_IMod_GetHosp_GetOx_Die2_D_Hospital; ++i) {
+    internal->n_IMod_GetHosp_GetOx_Die2_D_Hospital[i - 1] = IMod_GetHosp_GetOx_Die2[i - 1] * internal->gamma_IMod_GetHosp_GetOx_Die;
+  }
+  for (int i = 1; i <= internal->dim_n_IMod_GetHosp_GetOx_Surv2_R; ++i) {
+    internal->n_IMod_GetHosp_GetOx_Surv2_R[i - 1] = (internal->drug_8_indic_IMod_GetHosp_GetOx == 1 ? IMod_GetHosp_GetOx_Surv2[i - 1] * internal->gamma_IMod_GetHosp_GetOx_Surv_Drug_8 : IMod_GetHosp_GetOx_Surv2[i - 1] * internal->gamma_IMod_GetHosp_GetOx_Surv);
+  }
+  for (int i = 1; i <= internal->dim_n_IMod_GetHosp_NoOx_Die2_D_Hospital; ++i) {
+    internal->n_IMod_GetHosp_NoOx_Die2_D_Hospital[i - 1] = IMod_GetHosp_NoOx_Die2[i - 1] * internal->gamma_IMod_GetHosp_NoOx_Die;
+  }
+  for (int i = 1; i <= internal->dim_n_IMod_GetHosp_NoOx_Surv2_R; ++i) {
+    internal->n_IMod_GetHosp_NoOx_Surv2_R[i - 1] = (internal->drug_8_indic_IMod_GetHosp_NoOx == 1 ? IMod_GetHosp_NoOx_Surv2[i - 1] * internal->gamma_IMod_GetHosp_NoOx_Surv_Drug_8 : IMod_GetHosp_NoOx_Surv2[i - 1] * internal->gamma_IMod_GetHosp_NoOx_Surv);
+  }
+  for (int i = 1; i <= internal->dim_n_IRec1_IRec2; ++i) {
+    internal->n_IRec1_IRec2[i - 1] = internal->gamma_rec * IRec1[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_IRec2_R; ++i) {
+    internal->n_IRec2_R[i - 1] = internal->gamma_rec * IRec2[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_ISev_GetICU_GetOx_Die2_D_Hospital; ++i) {
+    internal->n_ISev_GetICU_GetOx_Die2_D_Hospital[i - 1] = ISev_GetICU_GetOx_Die2[i - 1] * internal->gamma_ISev_GetICU_GetOx_Die;
+  }
+  for (int i = 1; i <= internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2; ++i) {
+    internal->n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2[i - 1] = (internal->drug_9_indic_ISev_GetICU_GetOx == 1 ? ISev_GetICU_GetOx_Surv1[i - 1] * internal->gamma_ISev_GetICU_GetOx_Surv_Drug_9 : ISev_GetICU_GetOx_Surv1[i - 1] * internal->gamma_ISev_GetICU_GetOx_Surv);
+  }
+  for (int i = 1; i <= internal->dim_n_ISev_GetICU_GetOx_Surv2_Rec; ++i) {
+    internal->n_ISev_GetICU_GetOx_Surv2_Rec[i - 1] = (internal->drug_9_indic_ISev_GetICU_GetOx == 1 ? ISev_GetICU_GetOx_Surv2[i - 1] * internal->gamma_ISev_GetICU_GetOx_Surv_Drug_9 : ISev_GetICU_GetOx_Surv2[i - 1] * internal->gamma_ISev_GetICU_GetOx_Surv);
+  }
+  for (int i = 1; i <= internal->dim_n_ISev_GetICU_NoOx_Die2_D_Hospital; ++i) {
+    internal->n_ISev_GetICU_NoOx_Die2_D_Hospital[i - 1] = ISev_GetICU_NoOx_Die2[i - 1] * internal->gamma_ISev_GetICU_NoOx_Die;
+  }
+  for (int i = 1; i <= internal->dim_n_ISev_GetICU_NoOx_Surv2_Rec; ++i) {
+    internal->n_ISev_GetICU_NoOx_Surv2_Rec[i - 1] = (internal->drug_9_indic_ISev_GetICU_NoOx == 1 ? ISev_GetICU_NoOx_Surv2[i - 1] * internal->gamma_ISev_GetICU_NoOx_Surv_Drug_9 : ISev_GetICU_NoOx_Surv2[i - 1] * internal->gamma_ISev_GetICU_NoOx_Surv);
+  }
+  for (int i = 1; i <= internal->dim_n_PE1_PE2; ++i) {
+    internal->n_PE1_PE2[i - 1] = internal->gamma_E * PE1[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_PE2_I; ++i) {
+    internal->n_PE2_I[i - 1] = internal->gamma_E * PE2[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_PS_S; ++i) {
+    internal->n_PS_S[i - 1] = internal->prophylactic_drug_wane * PS[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_S_PS; ++i) {
+    internal->n_S_PS[i - 1] = ((time == internal->prophylactic_drug_timing_1 || time == internal->prophylactic_drug_timing_2) && (internal->drug_1_indic == 1 || internal->drug_2_indic == 1) ? internal->prophylactic_prop_treat * S[i - 1] : 0);
+  }
+  memcpy(output + internal->offset_output_prob_critical_death_get_ICU_get_ox_get_MV_baseline, internal->prob_critical_death_get_ICU_get_ox_get_MV_baseline, internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline * sizeof(double));
+  memcpy(output + internal->offset_output_prob_critical_death_get_ICU_get_ox_no_MV_baseline, internal->prob_critical_death_get_ICU_get_ox_no_MV_baseline, internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline * sizeof(double));
+  memcpy(output + internal->offset_output_prob_critical_death_get_ICU_no_ox_no_MV_baseline, internal->prob_critical_death_get_ICU_no_ox_no_MV_baseline, internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline * sizeof(double));
+  memcpy(output + internal->offset_output_prob_moderate_death_get_hosp_get_ox_baseline, internal->prob_moderate_death_get_hosp_get_ox_baseline, internal->dim_prob_moderate_death_get_hosp_get_ox_baseline * sizeof(double));
+  memcpy(output + internal->offset_output_prob_moderate_death_get_hosp_no_ox_baseline, internal->prob_moderate_death_get_hosp_no_ox_baseline, internal->dim_prob_moderate_death_get_hosp_no_ox_baseline * sizeof(double));
+  memcpy(output + internal->offset_output_prob_severe_death_get_ICU_get_ox_baseline, internal->prob_severe_death_get_ICU_get_ox_baseline, internal->dim_prob_severe_death_get_ICU_get_ox_baseline * sizeof(double));
+  memcpy(output + internal->offset_output_prob_severe_death_get_ICU_no_ox_baseline, internal->prob_severe_death_get_ICU_no_ox_baseline, internal->dim_prob_severe_death_get_ICU_no_ox_baseline * sizeof(double));
+  for (int i = 1; i <= internal->dim_temp; ++i) {
+    internal->temp[i - 1] = (internal->rel_inf_asymp * IAsymp[i - 1]) + (internal->rel_inf_mild * IMild[i - 1]) + ICase1[i - 1] + ICase2[i - 1] + (internal->rel_inf_mild * internal->drug_5_effect_size * IMild_Drug_5[i - 1]) + ICase1_Drug_5[i - 1] * internal->drug_5_effect_size + ICase2_Drug_5[i - 1] * internal->drug_5_effect_size;
+  }
+  double current_free_MV = internal->MV_capacity + odin_sum1(internal->n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec, 0, internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec) + odin_sum1(internal->n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital, 0, internal->dim_n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital) - MV_occ;
+  for (int i = 1; i <= internal->dim_n_E2_ICase1_initial; ++i) {
+    internal->n_E2_ICase1_initial[i - 1] = internal->n_E2_I[i - 1] * internal->prob_hosp[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_PE2_ICase1_initial; ++i) {
+    internal->n_PE2_ICase1_initial[i - 1] = internal->n_PE2_I[i - 1] * internal->prob_hosp[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_number_req_ICU_initial; ++i) {
+    internal->number_req_ICU_initial[i - 1] = (internal->n_ICase2_Hosp[i - 1] + internal->n_ICase2_Drug_5_Hosp[i - 1]) * internal->prob_severe[i - 1];
+  }
+  memcpy(output + internal->offset_output_n_E1_E2, internal->n_E1_E2, internal->dim_n_E1_E2 * sizeof(double));
+  memcpy(output + internal->offset_output_n_E2_I, internal->n_E2_I, internal->dim_n_E2_I * sizeof(double));
+  memcpy(output + internal->offset_output_n_ICase1_ICase2, internal->n_ICase1_ICase2, internal->dim_n_ICase1_ICase2 * sizeof(double));
+  memcpy(output + internal->offset_output_n_ICase2_Hosp, internal->n_ICase2_Hosp, internal->dim_n_ICase2_Hosp * sizeof(double));
+  memcpy(output + internal->offset_output_n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital, internal->n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital, internal->dim_n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital * sizeof(double));
+  memcpy(output + internal->offset_output_n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec, internal->n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec, internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec * sizeof(double));
+  memcpy(output + internal->offset_output_n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital, internal->n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital, internal->dim_n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital * sizeof(double));
+  memcpy(output + internal->offset_output_n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec, internal->n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec, internal->dim_n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec * sizeof(double));
+  memcpy(output + internal->offset_output_n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital, internal->n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital, internal->dim_n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital * sizeof(double));
+  memcpy(output + internal->offset_output_n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec, internal->n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec, internal->dim_n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec * sizeof(double));
+  memcpy(output + internal->offset_output_n_IMild_R, internal->n_IMild_R, internal->dim_n_IMild_R * sizeof(double));
+  memcpy(output + internal->offset_output_n_IMod_GetHosp_GetOx_Die2_D_Hospital, internal->n_IMod_GetHosp_GetOx_Die2_D_Hospital, internal->dim_n_IMod_GetHosp_GetOx_Die2_D_Hospital * sizeof(double));
+  memcpy(output + internal->offset_output_n_IMod_GetHosp_GetOx_Surv2_R, internal->n_IMod_GetHosp_GetOx_Surv2_R, internal->dim_n_IMod_GetHosp_GetOx_Surv2_R * sizeof(double));
+  memcpy(output + internal->offset_output_n_IMod_GetHosp_NoOx_Die2_D_Hospital, internal->n_IMod_GetHosp_NoOx_Die2_D_Hospital, internal->dim_n_IMod_GetHosp_NoOx_Die2_D_Hospital * sizeof(double));
+  memcpy(output + internal->offset_output_n_IMod_GetHosp_NoOx_Surv2_R, internal->n_IMod_GetHosp_NoOx_Surv2_R, internal->dim_n_IMod_GetHosp_NoOx_Surv2_R * sizeof(double));
+  memcpy(output + internal->offset_output_n_IRec1_IRec2, internal->n_IRec1_IRec2, internal->dim_n_IRec1_IRec2 * sizeof(double));
+  memcpy(output + internal->offset_output_n_IRec2_R, internal->n_IRec2_R, internal->dim_n_IRec2_R * sizeof(double));
+  memcpy(output + internal->offset_output_n_ISev_GetICU_GetOx_Die2_D_Hospital, internal->n_ISev_GetICU_GetOx_Die2_D_Hospital, internal->dim_n_ISev_GetICU_GetOx_Die2_D_Hospital * sizeof(double));
+  memcpy(output + internal->offset_output_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2, internal->n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2, internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 * sizeof(double));
+  memcpy(output + internal->offset_output_n_ISev_GetICU_GetOx_Surv2_Rec, internal->n_ISev_GetICU_GetOx_Surv2_Rec, internal->dim_n_ISev_GetICU_GetOx_Surv2_Rec * sizeof(double));
+  memcpy(output + internal->offset_output_n_ISev_GetICU_NoOx_Die2_D_Hospital, internal->n_ISev_GetICU_NoOx_Die2_D_Hospital, internal->dim_n_ISev_GetICU_NoOx_Die2_D_Hospital * sizeof(double));
+  memcpy(output + internal->offset_output_n_ISev_GetICU_NoOx_Surv2_Rec, internal->n_ISev_GetICU_NoOx_Surv2_Rec, internal->dim_n_ISev_GetICU_NoOx_Surv2_Rec * sizeof(double));
+  memcpy(output + internal->offset_output_n_PE1_PE2, internal->n_PE1_PE2, internal->dim_n_PE1_PE2 * sizeof(double));
+  memcpy(output + internal->offset_output_n_PE2_I, internal->n_PE2_I, internal->dim_n_PE2_I * sizeof(double));
+  memcpy(output + internal->offset_output_n_PS_S, internal->n_PS_S, internal->dim_n_PS_S * sizeof(double));
+  memcpy(output + 44, internal->n_S_PS, internal->dim_n_S_PS * sizeof(double));
+  memcpy(output + internal->offset_output_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13, internal->prob_critical_death_get_ICU_get_ox_get_MV_Drug_13, internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 * sizeof(double));
+  memcpy(output + internal->offset_output_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13, internal->prob_critical_death_get_ICU_get_ox_no_MV_Drug_13, internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 * sizeof(double));
+  memcpy(output + internal->offset_output_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13, internal->prob_critical_death_get_ICU_no_ox_no_MV_Drug_13, internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 * sizeof(double));
+  memcpy(output + internal->offset_output_prob_moderate_death_get_hosp_get_ox_Drug_11, internal->prob_moderate_death_get_hosp_get_ox_Drug_11, internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 * sizeof(double));
+  memcpy(output + internal->offset_output_prob_moderate_death_get_hosp_no_ox_Drug_11, internal->prob_moderate_death_get_hosp_no_ox_Drug_11, internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 * sizeof(double));
+  memcpy(output + internal->offset_output_prob_severe_death_get_ICU_get_ox_Drug_12, internal->prob_severe_death_get_ICU_get_ox_Drug_12, internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 * sizeof(double));
+  memcpy(output + internal->offset_output_prob_severe_death_get_ICU_no_ox_Drug_12, internal->prob_severe_death_get_ICU_no_ox_Drug_12, internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 * sizeof(double));
+  double baseline_oxygen_demand = 0.0;
+  cinterpolate_eval(t, internal->interpolate_baseline_oxygen_demand, &baseline_oxygen_demand);
+  double beta = 0.0;
+  cinterpolate_eval(t, internal->interpolate_beta, &beta);
+  double current_hosp_bed_capacity = 0.0;
+  cinterpolate_eval(t, internal->interpolate_current_hosp_bed_capacity, &current_hosp_bed_capacity);
+  double current_ICU_bed_capacity = 0.0;
+  cinterpolate_eval(t, internal->interpolate_current_ICU_bed_capacity, &current_ICU_bed_capacity);
+  for (int i = 1; i <= internal->dim_n_E2_ICase1; ++i) {
+    internal->n_E2_ICase1[i - 1] = (internal->drug_3_indic == 1 ? internal->n_E2_ICase1_initial[i - 1] * (1 - internal->drug_3_prop_treat * internal->drug_3_effect_size) : internal->n_E2_ICase1_initial[i - 1]);
+  }
+  for (int i = 1; i <= internal->dim_n_PE2_ICase1; ++i) {
+    internal->n_PE2_ICase1[i - 1] = (internal->drug_2_indic == 1 ? internal->n_E2_ICase1_initial[i - 1] * (1 - internal->drug_2_effect_size) : internal->n_PE2_ICase1_initial[i - 1]);
+  }
+  for (int i = 1; i <= internal->dim_number_req_ICU; ++i) {
+    internal->number_req_ICU[i - 1] = (internal->drug_6_indic == 1 ? internal->number_req_ICU_initial[i - 1] * (1 - (internal->drug_6_prop_treat * internal->drug_6_effect_size)) : internal->number_req_ICU_initial[i - 1]);
+  }
+  output[36] = current_free_MV;
+  memcpy(output + internal->offset_output_n_E2_ICase1_initial, internal->n_E2_ICase1_initial, internal->dim_n_E2_ICase1_initial * sizeof(double));
+  memcpy(output + internal->offset_output_n_PE2_ICase1_initial, internal->n_PE2_ICase1_initial, internal->dim_n_PE2_ICase1_initial * sizeof(double));
+  memcpy(output + internal->offset_output_number_req_ICU_initial, internal->number_req_ICU_initial, internal->dim_number_req_ICU_initial * sizeof(double));
+  memcpy(output + internal->offset_output_prob_critical_death_get_ICU_get_ox_get_MV, internal->prob_critical_death_get_ICU_get_ox_get_MV, internal->dim_prob_critical_death_get_ICU_get_ox_get_MV * sizeof(double));
+  memcpy(output + internal->offset_output_prob_critical_death_get_ICU_get_ox_no_MV, internal->prob_critical_death_get_ICU_get_ox_no_MV, internal->dim_prob_critical_death_get_ICU_get_ox_no_MV * sizeof(double));
+  memcpy(output + internal->offset_output_prob_critical_death_get_ICU_no_ox_no_MV, internal->prob_critical_death_get_ICU_no_ox_no_MV, internal->dim_prob_critical_death_get_ICU_no_ox_no_MV * sizeof(double));
+  memcpy(output + internal->offset_output_prob_moderate_death_get_hosp_get_ox, internal->prob_moderate_death_get_hosp_get_ox, internal->dim_prob_moderate_death_get_hosp_get_ox * sizeof(double));
+  memcpy(output + internal->offset_output_prob_moderate_death_get_hosp_no_ox, internal->prob_moderate_death_get_hosp_no_ox, internal->dim_prob_moderate_death_get_hosp_no_ox * sizeof(double));
+  memcpy(output + internal->offset_output_prob_severe_death_get_ICU_get_ox, internal->prob_severe_death_get_ICU_get_ox, internal->dim_prob_severe_death_get_ICU_get_ox * sizeof(double));
+  memcpy(output + internal->offset_output_prob_severe_death_get_ICU_no_ox, internal->prob_severe_death_get_ICU_no_ox, internal->dim_prob_severe_death_get_ICU_no_ox * sizeof(double));
+  double oxygen_supply = 0.0;
+  cinterpolate_eval(t, internal->interpolate_oxygen_supply, &oxygen_supply);
+  double current_free_hosp = current_hosp_bed_capacity + odin_sum1(internal->n_IMod_GetHosp_GetOx_Surv2_R, 0, internal->dim_n_IMod_GetHosp_GetOx_Surv2_R) + odin_sum1(internal->n_IMod_GetHosp_GetOx_Die2_D_Hospital, 0, internal->dim_n_IMod_GetHosp_GetOx_Die2_D_Hospital) + odin_sum1(internal->n_IMod_GetHosp_NoOx_Surv2_R, 0, internal->dim_n_IMod_GetHosp_NoOx_Surv2_R) + odin_sum1(internal->n_IMod_GetHosp_NoOx_Die2_D_Hospital, 0, internal->dim_n_IMod_GetHosp_NoOx_Die2_D_Hospital) + odin_sum1(internal->n_IRec2_R, 0, internal->dim_n_IRec2_R) - odin_sum1(internal->n_ISev_GetICU_GetOx_Surv2_Rec, 0, internal->dim_n_ISev_GetICU_GetOx_Surv2_Rec) - odin_sum1(internal->n_ISev_GetICU_NoOx_Surv2_Rec, 0, internal->dim_n_ISev_GetICU_NoOx_Surv2_Rec) - odin_sum1(internal->n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec, 0, internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec) - odin_sum1(internal->n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec, 0, internal->dim_n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec) - odin_sum1(internal->n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec, 0, internal->dim_n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec) - hosp_occ;
+  double current_free_ICU = current_ICU_bed_capacity + odin_sum1(internal->n_ISev_GetICU_GetOx_Surv2_Rec, 0, internal->dim_n_ISev_GetICU_GetOx_Surv2_Rec) + odin_sum1(internal->n_ISev_GetICU_GetOx_Die2_D_Hospital, 0, internal->dim_n_ISev_GetICU_GetOx_Die2_D_Hospital) + odin_sum1(internal->n_ISev_GetICU_NoOx_Surv2_Rec, 0, internal->dim_n_ISev_GetICU_NoOx_Surv2_Rec) + odin_sum1(internal->n_ISev_GetICU_NoOx_Die2_D_Hospital, 0, internal->dim_n_ISev_GetICU_NoOx_Die2_D_Hospital) + odin_sum1(internal->n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec, 0, internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec) + odin_sum1(internal->n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital, 0, internal->dim_n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital) + odin_sum1(internal->n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec, 0, internal->dim_n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec) + odin_sum1(internal->n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital, 0, internal->dim_n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital) + odin_sum1(internal->n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec, 0, internal->dim_n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec) + odin_sum1(internal->n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital, 0, internal->dim_n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital) - ICU_occ;
+  cinterpolate_eval(t, internal->interpolate_m, internal->m);
+  for (int i = 1; i <= internal->dim_n_E2_ICase1_Drug_5; ++i) {
+    internal->n_E2_ICase1_Drug_5[i - 1] = (internal->drug_5_indic_ICase == 1 ? internal->n_E2_ICase1[i - 1] * internal->drug_5_prop_treat : 0);
+  }
+  for (int i = 1; i <= internal->dim_n_E2_ICase1_No_Drug_5; ++i) {
+    internal->n_E2_ICase1_No_Drug_5[i - 1] = (internal->drug_5_indic_ICase == 1 ? internal->n_E2_ICase1[i - 1] * (1 - internal->drug_5_prop_treat) : internal->n_E2_ICase1[i - 1]);
+  }
+  for (int i = 1; i <= internal->dim_n_E2_IMild_or_IAsymp; ++i) {
+    internal->n_E2_IMild_or_IAsymp[i - 1] = internal->n_E2_I[i - 1] - internal->n_E2_ICase1[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_PE2_ICase1_Drug_5; ++i) {
+    internal->n_PE2_ICase1_Drug_5[i - 1] = (internal->drug_5_indic_ICase == 1 ? internal->n_PE2_ICase1[i - 1] * internal->drug_5_prop_treat : 0);
+  }
+  for (int i = 1; i <= internal->dim_n_PE2_ICase1_No_Drug_5; ++i) {
+    internal->n_PE2_ICase1_No_Drug_5[i - 1] = (internal->drug_5_indic_ICase == 1 ? internal->n_PE2_ICase1[i - 1] * (1 - internal->drug_5_prop_treat) : internal->n_PE2_ICase1[i - 1]);
+  }
+  for (int i = 1; i <= internal->dim_n_PE2_IMild_or_IAsymp; ++i) {
+    internal->n_PE2_IMild_or_IAsymp[i - 1] = internal->n_PE2_I[i - 1] - internal->n_PE2_ICase1[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_number_req_Hosp; ++i) {
+    internal->number_req_Hosp[i - 1] = (internal->n_ICase2_Hosp[i - 1] + internal->n_ICase2_Drug_5_Hosp[i - 1]) - internal->number_req_ICU[i - 1];
+  }
+  output[28] = baseline_oxygen_demand;
+  memcpy(output + internal->offset_output_n_E2_ICase1, internal->n_E2_ICase1, internal->dim_n_E2_ICase1 * sizeof(double));
+  memcpy(output + internal->offset_output_n_PE2_ICase1, internal->n_PE2_ICase1, internal->dim_n_PE2_ICase1 * sizeof(double));
+  memcpy(output + internal->offset_output_number_req_ICU, internal->number_req_ICU, internal->dim_number_req_ICU * sizeof(double));
+  output[26] = oxygen_supply;
+  double total_req_ICU = odin_sum1(internal->number_req_ICU, 0, internal->dim_number_req_ICU);
+  for (int i = 1; i <= internal->dim_n_E2_IAsymp; ++i) {
+    internal->n_E2_IAsymp[i - 1] = internal->n_E2_IMild_or_IAsymp[i - 1] * internal->prob_asymp[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_n_PE2_IAsymp; ++i) {
+    internal->n_PE2_IAsymp[i - 1] = internal->n_PE2_IMild_or_IAsymp[i - 1] * internal->prob_asymp[i - 1];
+  }
+  output[24] = current_free_hosp;
+  output[20] = current_free_ICU;
+  memcpy(output + internal->offset_output_n_E2_ICase1_Drug_5, internal->n_E2_ICase1_Drug_5, internal->dim_n_E2_ICase1_Drug_5 * sizeof(double));
+  memcpy(output + internal->offset_output_n_E2_ICase1_No_Drug_5, internal->n_E2_ICase1_No_Drug_5, internal->dim_n_E2_ICase1_No_Drug_5 * sizeof(double));
+  memcpy(output + internal->offset_output_n_PE2_ICase1_Drug_5, internal->n_PE2_ICase1_Drug_5, internal->dim_n_PE2_ICase1_Drug_5 * sizeof(double));
+  memcpy(output + internal->offset_output_n_PE2_ICase1_No_Drug_5, internal->n_PE2_ICase1_No_Drug_5, internal->dim_n_PE2_ICase1_No_Drug_5 * sizeof(double));
+  memcpy(output + internal->offset_output_number_req_Hosp, internal->number_req_Hosp, internal->dim_number_req_Hosp * sizeof(double));
+  output[18] = total_req_ICU;
+  for (int i = 1; i <= internal->dim_s_ij_1; ++i) {
+    for (int j = 1; j <= internal->dim_s_ij_2; ++j) {
+      internal->s_ij[i - 1 + internal->dim_s_ij_1 * (j - 1)] = internal->m[internal->dim_m_1 * (j - 1) + i - 1] * internal->temp[j - 1];
+    }
+  }
+  double total_GetICU = (current_free_ICU <= 0 ? 0 : ((current_free_ICU - total_req_ICU >= 0 ? total_req_ICU : (current_free_ICU))));
+  double total_req_Hosp = odin_sum1(internal->number_req_Hosp, 0, internal->dim_number_req_Hosp);
+  for (int i = 1; i <= internal->dim_lambda; ++i) {
+    internal->lambda[i - 1] = beta * odin_sum2(internal->s_ij, i - 1, i, 0, internal->dim_s_ij_2, internal->dim_s_ij_1);
+  }
+  for (int i = 1; i <= internal->dim_n_E2_IMild; ++i) {
+    internal->n_E2_IMild[i - 1] = (internal->n_E2_IMild_or_IAsymp[i - 1] - internal->n_E2_IAsymp[i - 1]) + (internal->n_E2_ICase1_initial[i - 1] - internal->n_E2_ICase1[i - 1]);
+  }
+  for (int i = 1; i <= internal->dim_n_PE2_IMild; ++i) {
+    internal->n_PE2_IMild[i - 1] = (internal->n_PE2_IMild_or_IAsymp[i - 1] - internal->n_PE2_IAsymp[i - 1]) + (internal->n_PE2_ICase1_initial[i - 1] - internal->n_PE2_ICase1[i - 1]);
+  }
+  for (int i = 1; i <= internal->dim_number_GetICU; ++i) {
+    internal->number_GetICU[i - 1] = (total_req_ICU == 0 ? 0 : internal->number_req_ICU[i - 1] / (double) odin_sum1(internal->number_req_ICU, 0, internal->dim_number_req_ICU) * total_GetICU);
+  }
+  memcpy(output + internal->offset_output_n_E2_IAsymp, internal->n_E2_IAsymp, internal->dim_n_E2_IAsymp * sizeof(double));
+  output[21] = total_GetICU;
+  output[22] = total_req_Hosp;
+  double total_GetHosp = (current_free_hosp <= 0 ? 0 : ((current_free_hosp - total_req_Hosp >= 0 ? total_req_Hosp : (current_free_hosp))));
+  for (int i = 1; i <= internal->dim_n_E2_IMild_Drug_5; ++i) {
+    internal->n_E2_IMild_Drug_5[i - 1] = (internal->drug_5_indic_IMild == 1 ? internal->n_E2_IMild[i - 1] * internal->drug_5_prop_treat : 0);
+  }
+  for (int i = 1; i <= internal->dim_n_E2_IMild_No_Drug_5; ++i) {
+    internal->n_E2_IMild_No_Drug_5[i - 1] = (internal->drug_5_indic_IMild == 1 ? internal->n_E2_IMild[i - 1] * (1 - internal->drug_5_prop_treat) : internal->n_E2_IMild[i - 1]);
+  }
+  for (int i = 1; i <= internal->dim_n_PE2_IMild_Drug_5; ++i) {
+    internal->n_PE2_IMild_Drug_5[i - 1] = (internal->drug_5_indic_IMild == 1 ? internal->n_PE2_IMild[i - 1] * internal->drug_5_prop_treat : 0);
+  }
+  for (int i = 1; i <= internal->dim_n_PE2_IMild_No_Drug_5; ++i) {
+    internal->n_PE2_IMild_No_Drug_5[i - 1] = (internal->drug_5_indic_IMild == 1 ? internal->n_PE2_IMild[i - 1] * (1 - internal->drug_5_prop_treat) : internal->n_PE2_IMild[i - 1]);
+  }
+  for (int i = 1; i <= internal->dim_n_PS_PE1; ++i) {
+    internal->n_PS_PE1[i - 1] = (internal->drug_1_indic == 1 ? internal->lambda[i - 1] * internal->drug_1_effect_size * PS[i - 1] : internal->lambda[i - 1] * PS[i - 1]);
+  }
+  for (int i = 1; i <= internal->dim_n_S_E1; ++i) {
+    internal->n_S_E1[i - 1] = internal->lambda[i - 1] * S[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_number_GetHosp; ++i) {
+    internal->number_GetHosp[i - 1] = (total_req_Hosp == 0 ? 0 : internal->number_req_Hosp[i - 1] / (double) odin_sum1(internal->number_req_Hosp, 0, internal->dim_number_req_Hosp) * total_GetHosp);
+  }
+  for (int i = 1; i <= internal->dim_number_NotICU; ++i) {
+    internal->number_NotICU[i - 1] = internal->number_req_ICU[i - 1] - internal->number_GetICU[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_number_req_ICU_MV_initial; ++i) {
+    internal->number_req_ICU_MV_initial[i - 1] = internal->number_GetICU[i - 1] * internal->prob_critical[i - 1];
+  }
+  memcpy(output + internal->offset_output_n_E2_IMild, internal->n_E2_IMild, internal->dim_n_E2_IMild * sizeof(double));
+  memcpy(output + internal->offset_output_n_PE2_IMild, internal->n_PE2_IMild, internal->dim_n_PE2_IMild * sizeof(double));
+  memcpy(output + internal->offset_output_number_GetICU, internal->number_GetICU, internal->dim_number_GetICU * sizeof(double));
+  output[25] = total_GetHosp;
+  double prop_ox_hosp_beds = (total_GetHosp == 0 && total_GetICU == 0 ? 0 : (total_GetHosp / (double) (total_GetHosp + total_GetICU * internal->severe_critical_case_oxygen_consumption_multiplier)));
+  double available_oxygen_for_hosp_beds = fround(prop_ox_hosp_beds * oxygen_availability, 0);
+  for (int i = 1; i <= internal->dim_number_NotHosp; ++i) {
+    internal->number_NotHosp[i - 1] = internal->number_req_Hosp[i - 1] - internal->number_GetHosp[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_number_NotICU_NotOx_NotMV; ++i) {
+    internal->number_NotICU_NotOx_NotMV[i - 1] = internal->number_NotICU[i - 1] * internal->prob_critical[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_number_req_ICU_MV; ++i) {
+    internal->number_req_ICU_MV[i - 1] = (internal->drug_7_indic == 1 ? internal->number_req_ICU_MV_initial[i - 1] * (1 - (internal->drug_7_prop_treat * internal->drug_7_effect_size)) : internal->number_req_ICU_MV_initial[i - 1]);
+  }
+  memcpy(output + internal->offset_output_n_E2_IMild_Drug_5, internal->n_E2_IMild_Drug_5, internal->dim_n_E2_IMild_Drug_5 * sizeof(double));
+  memcpy(output + internal->offset_output_n_E2_IMild_No_Drug_5, internal->n_E2_IMild_No_Drug_5, internal->dim_n_E2_IMild_No_Drug_5 * sizeof(double));
+  memcpy(output + internal->offset_output_n_PE2_IMild_Drug_5, internal->n_PE2_IMild_Drug_5, internal->dim_n_PE2_IMild_Drug_5 * sizeof(double));
+  memcpy(output + internal->offset_output_n_PE2_IMild_No_Drug_5, internal->n_PE2_IMild_No_Drug_5, internal->dim_n_PE2_IMild_No_Drug_5 * sizeof(double));
+  memcpy(output + internal->offset_output_n_PS_PE1, internal->n_PS_PE1, internal->dim_n_PS_PE1 * sizeof(double));
+  memcpy(output + internal->offset_output_n_S_E1, internal->n_S_E1, internal->dim_n_S_E1 * sizeof(double));
+  memcpy(output + internal->offset_output_number_GetHosp, internal->number_GetHosp, internal->dim_number_GetHosp * sizeof(double));
+  memcpy(output + internal->offset_output_number_NotICU, internal->number_NotICU, internal->dim_number_NotICU * sizeof(double));
+  memcpy(output + internal->offset_output_number_req_ICU_MV_initial, internal->number_req_ICU_MV_initial, internal->dim_number_req_ICU_MV_initial * sizeof(double));
+  output[29] = prop_ox_hosp_beds;
+  double available_oxygen_for_ICU_beds = floor((oxygen_availability - available_oxygen_for_hosp_beds) / (double) internal->severe_critical_case_oxygen_consumption_multiplier);
+  for (int i = 1; i <= internal->dim_number_NotICU_NotOx; ++i) {
+    internal->number_NotICU_NotOx[i - 1] = internal->number_NotICU[i - 1] - internal->number_NotICU_NotOx_NotMV[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_number_req_ICU_Ox; ++i) {
+    internal->number_req_ICU_Ox[i - 1] = internal->number_GetICU[i - 1] - internal->number_req_ICU_MV[i - 1];
+  }
+  output[30] = available_oxygen_for_hosp_beds;
+  memcpy(output + internal->offset_output_number_NotHosp, internal->number_NotHosp, internal->dim_number_NotHosp * sizeof(double));
+  memcpy(output + internal->offset_output_number_NotICU_NotOx_NotMV, internal->number_NotICU_NotOx_NotMV, internal->dim_number_NotICU_NotOx_NotMV * sizeof(double));
+  memcpy(output + internal->offset_output_number_req_ICU_MV, internal->number_req_ICU_MV, internal->dim_number_req_ICU_MV * sizeof(double));
+  double total_GetHosp_GetOx = (available_oxygen_for_hosp_beds <= 0 ? 0 : ((available_oxygen_for_hosp_beds - total_GetHosp >= 0 ? total_GetHosp : (available_oxygen_for_hosp_beds))));
+  double total_req_ICU_MV = odin_sum1(internal->number_req_ICU_MV, 0, internal->dim_number_req_ICU_MV);
+  for (int i = 1; i <= internal->dim_number_GetHosp_Ox; ++i) {
+    internal->number_GetHosp_Ox[i - 1] = (total_GetHosp_GetOx == 0 ? 0 : internal->number_GetHosp[i - 1] / (double) odin_sum1(internal->number_GetHosp, 0, internal->dim_number_GetHosp) * total_GetHosp_GetOx);
+  }
+  output[31] = available_oxygen_for_ICU_beds;
+  memcpy(output + internal->offset_output_number_NotICU_NotOx, internal->number_NotICU_NotOx, internal->dim_number_NotICU_NotOx * sizeof(double));
+  memcpy(output + internal->offset_output_number_req_ICU_Ox, internal->number_req_ICU_Ox, internal->dim_number_req_ICU_Ox * sizeof(double));
+  output[32] = total_GetHosp_GetOx;
+  output[33] = total_req_ICU_MV;
+  double oxygen_needed_overall = odin_sum1(internal->number_req_Hosp, 0, internal->dim_number_req_Hosp) + (odin_sum1(internal->number_req_ICU_MV, 0, internal->dim_number_req_ICU_MV) + odin_sum1(internal->number_req_ICU_Ox, 0, internal->dim_number_req_ICU_Ox)) * internal->severe_critical_case_oxygen_consumption_multiplier;
+  double total_req_ICU_Ox = odin_sum1(internal->number_req_ICU_Ox, 0, internal->dim_number_req_ICU_Ox);
+  double available_oxygen_for_ICU_MV = (total_req_ICU_MV == 0 && total_req_ICU_Ox == 0 ? 0 : (fround(available_oxygen_for_ICU_beds * total_req_ICU_MV / (double) (total_req_ICU_MV + total_req_ICU_Ox), 0)));
+  for (int i = 1; i <= internal->dim_number_GetHosp_NoOx; ++i) {
+    internal->number_GetHosp_NoOx[i - 1] = internal->number_GetHosp[i - 1] - internal->number_GetHosp_Ox[i - 1];
+  }
+  memcpy(output + internal->offset_output_number_GetHosp_Ox, internal->number_GetHosp_Ox, internal->dim_number_GetHosp_Ox * sizeof(double));
+  output[42] = oxygen_needed_overall;
+  output[34] = total_req_ICU_Ox;
+  double available_oxygen_for_ICU_Ox = available_oxygen_for_ICU_beds - available_oxygen_for_ICU_MV;
+  output[37] = available_oxygen_for_ICU_MV;
+  memcpy(output + internal->offset_output_number_GetHosp_NoOx, internal->number_GetHosp_NoOx, internal->dim_number_GetHosp_NoOx * sizeof(double));
+  double total_GetICU_GetOx_Need_MV = (available_oxygen_for_ICU_MV <= 0 ? 0 : ((available_oxygen_for_ICU_MV - total_req_ICU_MV >= 0 ? total_req_ICU_MV : (available_oxygen_for_ICU_MV))));
+  for (int i = 1; i <= internal->dim_number_GetICU_GetOx_NeedMV; ++i) {
+    internal->number_GetICU_GetOx_NeedMV[i - 1] = (total_GetICU_GetOx_Need_MV == 0 ? 0 : internal->number_req_ICU_MV[i - 1] / (double) odin_sum1(internal->number_req_ICU_MV, 0, internal->dim_number_req_ICU_MV) * total_GetICU_GetOx_Need_MV);
+  }
+  output[38] = available_oxygen_for_ICU_Ox;
+  output[39] = total_GetICU_GetOx_Need_MV;
+  double total_GetICU_GetOx_GetMV = (current_free_MV <= 0 ? 0 : ((current_free_MV - total_GetICU_GetOx_Need_MV >= 0 ? total_GetICU_GetOx_Need_MV : (current_free_MV))));
+  double total_GetICU_GetOx_Only = (available_oxygen_for_ICU_Ox <= 0 ? 0 : ((available_oxygen_for_ICU_Ox - total_req_ICU_Ox >= 0 ? total_req_ICU_Ox : (available_oxygen_for_ICU_Ox))));
+  for (int i = 1; i <= internal->dim_number_GetICU_GetOx; ++i) {
+    internal->number_GetICU_GetOx[i - 1] = (total_GetICU_GetOx_Only == 0 ? 0 : internal->number_req_ICU_Ox[i - 1] / (double) odin_sum1(internal->number_req_ICU_Ox, 0, internal->dim_number_req_ICU_Ox) * total_GetICU_GetOx_Only);
+  }
+  for (int i = 1; i <= internal->dim_number_GetICU_GetOx_GetMV; ++i) {
+    internal->number_GetICU_GetOx_GetMV[i - 1] = (total_GetICU_GetOx_GetMV == 0 ? 0 : internal->number_GetICU_GetOx_NeedMV[i - 1] / (double) odin_sum1(internal->number_GetICU_GetOx_NeedMV, 0, internal->dim_number_GetICU_GetOx_NeedMV) * total_GetICU_GetOx_GetMV);
+  }
+  for (int i = 1; i <= internal->dim_number_GetICU_NoOx_NeedMV; ++i) {
+    internal->number_GetICU_NoOx_NeedMV[i - 1] = internal->number_req_ICU_MV[i - 1] - internal->number_GetICU_GetOx_NeedMV[i - 1];
+  }
+  memcpy(output + internal->offset_output_number_GetICU_GetOx_NeedMV, internal->number_GetICU_GetOx_NeedMV, internal->dim_number_GetICU_GetOx_NeedMV * sizeof(double));
+  output[40] = total_GetICU_GetOx_GetMV;
+  for (int i = 1; i <= internal->dim_n_ISev_GetICU_GetOx_Die1; ++i) {
+    internal->n_ISev_GetICU_GetOx_Die1[i - 1] = internal->number_GetICU_GetOx[i - 1] * internal->prob_severe_death_get_ICU_get_ox[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_number_GetICU_GetOx_NoMV; ++i) {
+    internal->number_GetICU_GetOx_NoMV[i - 1] = internal->number_GetICU_GetOx_NeedMV[i - 1] - internal->number_GetICU_GetOx_GetMV[i - 1];
+  }
+  for (int i = 1; i <= internal->dim_number_GetICU_NoOx; ++i) {
+    internal->number_GetICU_NoOx[i - 1] = internal->number_req_ICU_Ox[i - 1] - internal->number_GetICU_GetOx[i - 1];
+  }
+  memcpy(output + internal->offset_output_number_GetICU_GetOx, internal->number_GetICU_GetOx, internal->dim_number_GetICU_GetOx * sizeof(double));
+  memcpy(output + internal->offset_output_number_GetICU_GetOx_GetMV, internal->number_GetICU_GetOx_GetMV, internal->dim_number_GetICU_GetOx_GetMV * sizeof(double));
+  memcpy(output + internal->offset_output_number_GetICU_NoOx_NeedMV, internal->number_GetICU_NoOx_NeedMV, internal->dim_number_GetICU_NoOx_NeedMV * sizeof(double));
+  double oxygen_used = odin_sum1(internal->number_GetHosp_Ox, 0, internal->dim_number_GetHosp_Ox) + (odin_sum1(internal->number_GetICU_GetOx_NeedMV, 0, internal->dim_number_GetICU_GetOx_NeedMV) + odin_sum1(internal->number_GetICU_GetOx, 0, internal->dim_number_GetICU_GetOx)) * internal->severe_critical_case_oxygen_consumption_multiplier;
+  double temp_leftover = oxygen_supply - baseline_oxygen_demand - odin_sum1(internal->number_GetHosp_Ox, 0, internal->dim_number_GetHosp_Ox) - (odin_sum1(internal->number_GetICU_GetOx_NeedMV, 0, internal->dim_number_GetICU_GetOx_NeedMV) + odin_sum1(internal->number_GetICU_GetOx, 0, internal->dim_number_GetICU_GetOx)) * internal->severe_critical_case_oxygen_consumption_multiplier;
+  double leftover = (temp_leftover < 0 ? 0 : ((temp_leftover >= internal->max_leftover ? internal->max_leftover : temp_leftover)));
+  for (int i = 1; i <= internal->dim_n_ISev_GetICU_GetOx_Surv1; ++i) {
+    internal->n_ISev_GetICU_GetOx_Surv1[i - 1] = internal->number_GetICU_GetOx[i - 1] - internal->n_ISev_GetICU_GetOx_Die1[i - 1];
+  }
+  memcpy(output + internal->offset_output_n_ISev_GetICU_GetOx_Die1, internal->n_ISev_GetICU_GetOx_Die1, internal->dim_n_ISev_GetICU_GetOx_Die1 * sizeof(double));
+  memcpy(output + internal->offset_output_number_GetICU_GetOx_NoMV, internal->number_GetICU_GetOx_NoMV, internal->dim_number_GetICU_GetOx_NoMV * sizeof(double));
+  memcpy(output + internal->offset_output_number_GetICU_NoOx, internal->number_GetICU_NoOx, internal->dim_number_GetICU_NoOx * sizeof(double));
+  output[41] = oxygen_used;
+  output[43] = temp_leftover;
+  output[27] = leftover;
+  memcpy(output + internal->offset_output_n_ISev_GetICU_GetOx_Surv1, internal->n_ISev_GetICU_GetOx_Surv1, internal->dim_n_ISev_GetICU_GetOx_Surv1 * sizeof(double));
+}
+SEXP deterministic_apothecary_SEIR_rhs_r(SEXP internal_p, SEXP t, SEXP state) {
+  SEXP dstatedt = PROTECT(allocVector(REALSXP, LENGTH(state)));
+  deterministic_apothecary_SEIR_internal *internal = deterministic_apothecary_SEIR_get_internal(internal_p, 1);
+  SEXP output_ptr = PROTECT(allocVector(REALSXP, 44 + internal->dim_n_S_PS + internal->dim_n_PS_PE1 + internal->dim_n_PS_S + internal->dim_n_PE1_PE2 + internal->dim_n_PE2_I + internal->dim_n_PE2_ICase1_initial + internal->dim_n_PE2_ICase1 + internal->dim_n_E2_ICase1_initial + internal->dim_n_E2_ICase1 + internal->dim_n_E2_IAsymp + internal->dim_n_E2_IMild + internal->dim_n_E2_IMild_Drug_5 + internal->dim_n_E2_IMild_No_Drug_5 + internal->dim_n_PE2_IMild + internal->dim_n_PE2_IMild_Drug_5 + internal->dim_n_PE2_IMild_No_Drug_5 + internal->dim_n_E2_ICase1_Drug_5 + internal->dim_n_E2_ICase1_No_Drug_5 + internal->dim_n_PE2_ICase1_Drug_5 + internal->dim_n_PE2_ICase1_No_Drug_5 + internal->dim_number_req_ICU_initial + internal->dim_number_req_ICU + internal->dim_number_req_ICU_MV_initial + internal->dim_number_req_ICU_MV + internal->dim_n_ISev_GetICU_GetOx_Die1 + internal->dim_n_ISev_GetICU_GetOx_Surv1 + internal->dim_n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2 + internal->dim_prob_moderate_death_get_hosp_get_ox_baseline + internal->dim_prob_moderate_death_get_hosp_get_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_get_ox + internal->dim_prob_moderate_death_get_hosp_no_ox_baseline + internal->dim_prob_moderate_death_get_hosp_no_ox_Drug_11 + internal->dim_prob_moderate_death_get_hosp_no_ox + internal->dim_prob_severe_death_get_ICU_get_ox_baseline + internal->dim_prob_severe_death_get_ICU_get_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_get_ox + internal->dim_prob_severe_death_get_ICU_no_ox_baseline + internal->dim_prob_severe_death_get_ICU_no_ox_Drug_12 + internal->dim_prob_severe_death_get_ICU_no_ox + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_get_MV + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_get_ox_no_MV + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_baseline + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV_Drug_13 + internal->dim_prob_critical_death_get_ICU_no_ox_no_MV + internal->dim_n_S_E1 + internal->dim_n_E1_E2 + internal->dim_n_E2_I + internal->dim_n_IMild_R + internal->dim_n_ICase1_ICase2 + internal->dim_n_ICase2_Hosp + internal->dim_n_IRec1_IRec2 + internal->dim_n_IRec2_R + internal->dim_number_GetICU + internal->dim_number_NotICU + internal->dim_number_NotICU_NotOx_NotMV + internal->dim_number_NotICU_NotOx + internal->dim_number_req_Hosp + internal->dim_number_GetHosp + internal->dim_number_NotHosp + internal->dim_number_GetHosp_Ox + internal->dim_number_GetHosp_NoOx + internal->dim_number_req_ICU_Ox + internal->dim_number_GetICU_GetOx_NeedMV + internal->dim_number_GetICU_NoOx + internal->dim_number_GetICU_NoOx_NeedMV + internal->dim_number_GetICU_GetOx_GetMV + internal->dim_number_GetICU_GetOx_NoMV + internal->dim_number_GetICU_GetOx + internal->dim_n_IMod_GetHosp_GetOx_Die2_D_Hospital + internal->dim_n_IMod_GetHosp_GetOx_Surv2_R + internal->dim_n_IMod_GetHosp_NoOx_Die2_D_Hospital + internal->dim_n_IMod_GetHosp_NoOx_Surv2_R + internal->dim_n_ISev_GetICU_GetOx_Die2_D_Hospital + internal->dim_n_ISev_GetICU_GetOx_Surv2_Rec + internal->dim_n_ISev_GetICU_NoOx_Die2_D_Hospital + internal->dim_n_ISev_GetICU_NoOx_Surv2_Rec + internal->dim_n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital + internal->dim_n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec + internal->dim_n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital + internal->dim_n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec + internal->dim_n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital + internal->dim_n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec));
+  setAttrib(dstatedt, install("output"), output_ptr);
+  UNPROTECT(1);
+  double *output = REAL(output_ptr);
+  deterministic_apothecary_SEIR_rhs(internal, REAL(t)[0], REAL(state), REAL(dstatedt), output);
+  UNPROTECT(1);
+  return dstatedt;
 }
 double user_get_scalar_double(SEXP user, const char *name,
                               double default_value, double min, double max) {

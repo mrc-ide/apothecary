@@ -3,6 +3,9 @@
 #' @export
 run_apothecary <- function(
 
+  # model type
+  model = "deterministic",
+
   # demography
   country = NULL,
   population = NULL,
@@ -296,16 +299,23 @@ run_apothecary <- function(
 
 
   # Running the Model
-  mod <- apothecary_SEIR(user = pars, unused_user_action = "ignore")
-  t <- seq(from = 1, to = time_period/dt)
-
-  # if we ar doing day return then proceed in steps of day length
-  # We also will do an extra day so we know the numebr of infections/deaths
-  # that would happen in the last day
-  if (day_return) {
-    t <- round(seq(1/dt, length(t)+(1/dt), by=1/dt))
+  if (model == "deterministic") {
+    mod <- deterministic_apothecary_SEIR(user = pars, unused_user_action = "ignore")
+    t <- seq(from = 1, to = time_period, by = dt)
+    if (day_return) {
+      t <- seq(from = 1, to = time_period, by = 1)
+    }
+    results <- mod$run(t, replicate = 1)
+  } else if (model == "stochastic") {
+    mod <- apothecary_SEIR(user = pars, unused_user_action = "ignore")
+    t <- seq(from = 1, to = time_period/dt)
+    if (day_return) {
+      t <- round(seq(1/dt, length(t)+(1/dt), by=1/dt))
+    }
+    results <- mod$run(t, replicate = replicates)
+  } else {
+    stop("Error: specify model as deterministic or stochastic")
   }
-  results <- mod$run(t, replicate = replicates)
 
   out <- list(output = results, raw_parameters = pars, model = mod)
   out <- structure(out, class = "squire_simulation")

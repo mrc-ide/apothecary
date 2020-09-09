@@ -262,7 +262,7 @@ ICU_occ <- sum(ISev_GetICU_GetOx_Surv1) + sum(ISev_GetICU_GetOx_Surv2) + sum(ISe
            sum(ICrit_GetICU_NoOx_NoMV_Surv1) + sum(ICrit_GetICU_NoOx_NoMV_Surv2) + sum(ICrit_GetICU_NoOx_NoMV_Die1) + sum(ICrit_GetICU_NoOx_NoMV_Die2)
 
 # Calculating New Occupancy After Taking Into Account Individuals Leaving ICU Beds This Timestep
-current_free_ICU <- ICU_bed_capacity +
+current_free_ICU <- current_ICU_bed_capacity +
                     sum(n_ISev_GetICU_GetOx_Surv2_Rec) + sum(n_ISev_GetICU_GetOx_Die2_D_Hospital) +
                     sum(n_ISev_GetICU_NoOx_Surv2_Rec) + sum(n_ISev_GetICU_NoOx_Die2_D_Hospital) +
                     sum(n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec) + sum(n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital) +
@@ -295,7 +295,7 @@ hosp_occ <- sum(IMod_GetHosp_GetOx_Surv1) + sum(IMod_GetHosp_GetOx_Surv2) + sum(
             sum(IRec1) + sum(IRec2)
 
 # Totting Hospital Bed Occupancy Up After Taking Account of Individuals Leaving Hospital Beds to Recovery and Entering from ICU
-current_free_hosp <- hosp_bed_capacity +
+current_free_hosp <- current_hosp_bed_capacity +
                      sum(n_IMod_GetHosp_GetOx_Surv2_R) + sum(n_IMod_GetHosp_GetOx_Die2_D_Hospital) +
                      sum(n_IMod_GetHosp_NoOx_Surv2_R) + sum(n_IMod_GetHosp_NoOx_Die2_D_Hospital) +
                      sum(n_IRec2_R) -
@@ -501,6 +501,10 @@ deriv(D_Community[]) <- n_IMod_NoHosp_NoOx_Die2_D_Community[i] + n_ISev_NoICU_No
 deriv(D_Hospital[]) <- n_IMod_GetHosp_GetOx_Die2_D_Hospital[i] + n_IMod_GetHosp_NoOx_Die2_D_Hospital[i] +
                        n_ISev_GetICU_GetOx_Die2_D_Hospital[i] + n_ISev_GetICU_NoOx_Die2_D_Hospital[i] +
                        n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital[i] + n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital[i] + n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital[i]
+deriv(D[]) <- n_IMod_NoHosp_NoOx_Die2_D_Community[i] + n_ISev_NoICU_NoOx_Die2_D_Community[i] + n_ICrit_NoICU_NoOx_NoMV_Die2_D_Community[i] +
+              n_IMod_GetHosp_GetOx_Die2_D_Hospital[i] + n_IMod_GetHosp_NoOx_Die2_D_Hospital[i] +
+              n_ISev_GetICU_GetOx_Die2_D_Hospital[i] + n_ISev_GetICU_NoOx_Die2_D_Hospital[i] +
+              n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital[i] + n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital[i] + n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital[i]
 deriv(R[]) <- n_IAsymp_R[i] + n_IMild_R[i] + n_IMild_Drug_5_R[i] + n_IRec2_R[i] +
               n_IMod_GetHosp_GetOx_Surv2_R[i] + n_IMod_GetHosp_NoOx_Surv2_R[i] + n_IMod_NoHosp_NoOx_Surv2_R[i] +
               n_ISev_NoICU_NoOx_Surv2_R[i] +
@@ -531,17 +535,17 @@ lambda[] <- beta * sum(s_ij[i, ])
 
 ## INTERPOLATION FOR CHANGING HOSPITAL AND ICU BED CAPACITY OVER TIME
 ##------------------------------------------------------------------------------
-hosp_bed_capacity <- interpolate(tt_hosp_beds, hosp_beds, "constant")
+current_hosp_bed_capacity <- interpolate(tt_hosp_beds, hosp_bed_capacity, "constant")
 tt_hosp_beds[] <- user()
-hosp_beds[] <- user()
+hosp_bed_capacity[] <- user()
 dim(tt_hosp_beds) <- user()
-dim(hosp_beds) <- length(tt_hosp_beds)
+dim(hosp_bed_capacity) <- length(tt_hosp_beds)
 
-ICU_bed_capacity <- interpolate(tt_ICU_beds, ICU_beds, "constant")
+current_ICU_bed_capacity <- interpolate(tt_ICU_beds, ICU_bed_capacity, "constant")
 tt_ICU_beds[] <- user()
-ICU_beds[] <- user()
+ICU_bed_capacity[] <- user()
 dim(tt_ICU_beds) <- user()
-dim(ICU_beds) <- length(tt_ICU_beds)
+dim(ICU_bed_capacity) <- length(tt_ICU_beds)
 
 ##  INTERPOLATION FOR PARAMETERS DESCRIBING THE AVAILABILITY OF HEALTHCARE MATERIALS LIKE OXYGEN OR MV
 ##----------------------------------------------------------------------------------------------------
@@ -580,6 +584,7 @@ initial(IRec2[]) <- IRec2_0[i]
 initial(R[]) <- R_0[i]
 initial(D_Community[]) <- D_Community_0[i]
 initial(D_Hospital[]) <- D_Hospital_0[i]
+initial(D[]) <- 0
 initial(PS[]) <- PS_0[i]
 initial(PE1[]) <- PE1_0[i]
 initial(PE2[]) <- PE2_0[i]
@@ -772,6 +777,7 @@ dim(IRec2_0) <- N_age
 dim(R_0) <- N_age
 dim(D_Community_0) <- N_age
 dim(D_Hospital_0) <- N_age
+dim(D) <- N_age
 
 dim(PS_0) <- N_age
 dim(PE1_0) <- N_age

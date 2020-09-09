@@ -107,9 +107,6 @@ beta_set <- squire::beta_est_explicit(dur_IMild = 1/(overall$gamma_IMild),
                                       R0 = 3)
 overall$beta_set <- beta_set
 
-# Initialising the Model
-x <- odin::odin("inst/odin/thera_healthcare_ext_SEIR.R")
-
 # Bed Related Parameters
 overall$hosp_beds <- 10000000
 overall$ICU_beds <- 10000000
@@ -123,21 +120,34 @@ overall$max_leftover <- 1000000
 # MV Related Parameters
 overall$MV_capacity <- 1000000000
 
+
 # Running the Model
-set.seed(100)
+x <- odin::odin("inst/odin/apothecary_SEIR.R")
 overall$dt <- 0.1
-mod <- apothecary_SEIR(user = overall)
+mod <- x(user = overall, unused_user_action = "ignore")
 t <- seq(from = 0, to = 250/0.1)
 results <- mod$run(t, replicate = 1)
 index <- squire:::odin_index(mod)
 
+x <- apothecary_parameters(country = "France", hosp_beds = 100000000, ICU_beds = 10000000)
+set.seed(100)
+overall$dt <- 0.1
+mod <- apothecary_SEIR(user = x)
+t <- seq(from = 0, to = 250/0.1)
+results <- mod$run(t, replicate = 1)
+index <- squire:::odin_index(mod)
+
+params <- apothecary_parameters(country = "France")
+x <- run_apothecary(country = "France", hosp_beds = 100000000, ICU_beds = 10000000)
+results <- x$output
+index <- apothecary::odin_index(x$model)
 plot(apply(results[, index$S, 1], 1, sum))
 plot(apply(results[, index$IMild, 1], 1, sum))
 plot(apply(results[, index$ICase1, 1], 1, sum))
 plot(apply(results[, index$ICase2, 1], 1, sum))
 plot(apply(results[, index$R, 1], 1, sum))
-plot(apply(results[, index$D_Community, 1], 1, sum))
 plot(apply(results[, index$D_Hospital, 1], 1, sum))
+plot(apply(results[, index$D_Community, 1], 1, sum))
 
 
 # Checking Hospital Occupancy

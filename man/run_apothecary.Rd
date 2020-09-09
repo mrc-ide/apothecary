@@ -5,6 +5,7 @@
 \title{Run the apothecary SEIR model}
 \usage{
 run_apothecary(
+  model = "deterministic",
   country = NULL,
   population = NULL,
   tt_contact_matrix = 0,
