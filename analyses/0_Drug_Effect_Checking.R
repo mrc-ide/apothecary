@@ -8,16 +8,57 @@ devtools::load_all()
 source("run_rep_settings_function.R")
 
 # Checking Drug Property 1
-x <- run_apothecary(country = "France", R0 = 1.5, tt_R0 = 0, hosp_beds = 100000000000, ICU_beds = 10000000000,
+x <- run_apothecary(country = "France", R0 = 1.5, tt_R0 = 0, hosp_bed_capacity = 100000000000, ICU_bed_capacity = 10000000000,
                     day_return = FALSE, seeding_cases = 100,
                     drug_1_indic = 1, drug_1_effect_size = 0.75,
                     prophylactic_drug_timing_1 = 150,
                     prophylactic_drug_timing_2 = 200,
                     prophylactic_prop_treat = 0.5,
-                    prophylactic_drug_wane = 0.01)
+                    prophylactic_drug_wane = 0.01, model = "stochastic")
 
-index <- squire:::odin_index(x$model)
-plot(apply(x$output[, index$PS, 1], 1, sum), type = "l")
+y <- run_apothecary(country = "France", R0 = 1.5, tt_R0 = 0, hosp_bed_capacity = 100000000000, ICU_bed_capacity = 10000000000,
+                    day_return = FALSE, seeding_cases = 100,
+                    drug_1_indic = 1, drug_1_effect_size = 0.75,
+                    prophylactic_drug_timing_1 = 150,
+                    prophylactic_drug_timing_2 = 151,
+                    prophylactic_prop_treat = 0.5,
+                    prophylactic_drug_wane = 0.01, model = "deterministic", dt = 1)
+
+x_index <- squire:::odin_index(x$model)
+y_index <- squire:::odin_index(y$model)
+
+plot(y$output[, y_index$x], type = "l")
+
+plot(x$output[, x_index$time, 1], apply(x$output[, x_index$n_S_PS, 1], 1, sum), col = "black", type = "l")
+lines(apply(y$output[, y_index$n_S_PS], 1, sum), col = "red", type = "l")
+
+plot(x$output[, x_index$time, 1], apply(x$output[, x_index$S, 1], 1, sum), col = "black", type = "l")
+lines(apply(y$output[, y_index$S], 1, sum), col = "red", type = "l")
+
+plot(x$output[, x_index$time, 1], apply(x$output[, x_index$PS, 1], 1, sum), col = "black", type = "l")
+lines(apply(y$output[, y_index$PS], 1, sum), col = "red", type = "l")
+
+plot(x$output[, x_index$time, 1], apply(x$output[, x_index$n_PS_S, 1], 1, sum), col = "black", type = "l")
+lines(apply(y$output[, y_index$n_PS_S], 1, sum), col = "red", type = "l")
+
+plot(x$output[, x_index$time, 1], apply(x$output[, x_index$n_PS_PE1, 1], 1, sum), col = "black", type = "l")
+lines(apply(y$output[, y_index$n_PS_PE1], 1, sum), col = "red", type = "l")
+
+
+plot(apply(y$output[, y_index$n_PS_PE1], 1, sum), col = "red", type = "l")
+
+plot(apply(y$output[, y_index$S], 1, sum))
+
+plot(apply(y$output[, y_index$PS], 1, sum), col = "red")
+
+y$output[, y_index$time]
+y$output[, y_index$t]
+
+x_index <- squire:::odin_index(x$model)
+y_index <- squire:::odin_index(y$model)
+plot(apply(x$output[, x_index$PS, 1], 1, sum), type = "l")
+lines(apply(y$output[, y_index$PS], 1, sum), col = "red")
+
 plot(apply(x$output[, index$n_S_PS, 1], 1, sum), type = "l")
 plot(apply(x$output[, index$n_leave_PS, 1], 1, sum), type = "l")
 lines(apply(x$output[, index$n_PS_S, 1], 1, sum), type = "l", col = "red")

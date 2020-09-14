@@ -413,7 +413,7 @@ number_NotHosp[] <- number_req_Hosp[i] - number_GetHosp[i] # Number of individua
 ## WORKING OUT HOW MUCH OXYGEN IS AVAILABILE AND HOW MANY INDIVIDUALS REQUIRING HOSPITAL/ICU BED RECEIVE IT
 ##---------------------------------------------------------------------------------------------------------
 # Updating Oxyen Availability With New Supply At Each Timestep, Subtract Off Baseline Demand and Add In Any O2 Leftover From Previous Timestep
-update(oxygen_availability) <- oxygen_supply + leftover - baseline_oxygen_demand
+update(oxygen_availability) <- oxygen_supply * dt + leftover - baseline_oxygen_demand * dt
 
 # Working Out Proportion of Oxygen Going to Hospital Beds vs ICU Beds, and Splitting ICU Oxygen Into Amounts for Each Disease Severity Category
 prop_ox_hosp_beds <- if (total_GetHosp == 0 && total_GetICU == 0) 0 else (total_GetHosp/(total_GetHosp + total_GetICU * severe_critical_case_oxygen_consumption_multiplier)) # proportion of available oxygen going to those in IMod (hospital beds)

@@ -123,6 +123,8 @@ logprior <- function(pars){
 }
 
 # Extracting Relevant Mobility Data and Creating R0_change & date_R0_change Objects
+suppressWarnings(future::plan(future::multiprocess()))
+
 tic()
 n_mcmc <- 1000
 pmcmc_res <- squire::pmcmc(data = data,
@@ -131,9 +133,9 @@ pmcmc_res <- squire::pmcmc(data = data,
                            n_particles = 1,
                            steps_per_day = 1,
                            log_likelihood = NULL,
-                           squire_model = squire:::deterministic_model(),
+                           squire_model = apothecary:::apothecary_deterministic_model(),
                            output_proposals = FALSE,
-                           n_chains = 3,
+                           n_chains = 1,
                            pars_obs = pars_obs,
                            pars_init = pars_init,
                            pars_min = pars_min,
