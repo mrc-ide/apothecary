@@ -1,39 +1,32 @@
-library(apothecary)
+devtools::load_all()
+library(tictoc)
+source("plot_output_function.R")
 
-base_check <- c("S", "E1", "E2", "IMild", "IAsymp", "ICase1", "ICase2", "R", "D_Hospital", "D_Community", "IRec1", "IRec2",
-                "IMod_GetHosp_GetOx_Surv1", "IMod_GetHosp_GetOx_Surv2", "IMod_GetHosp_GetOx_Die1", "IMod_GetHosp_GetOx_Die2",
-                "IMod_GetHosp_NoOx_Surv1", "IMod_GetHosp_NoOx_Surv2", "IMod_GetHosp_NoOx_Die1", "IMod_GetHosp_NoOx_Die2",
-                "IMod_NoHosp_NoOx_Surv1", "IMod_NoHosp_NoOx_Surv2", "IMod_NoHosp_NoOx_Die1", "IMod_NoHosp_NoOx_Die2",
-                "ISev_GetICU_GetOx_Surv1", "ISev_GetICU_GetOx_Surv2", "ISev_GetICU_GetOx_Die1", "ISev_GetICU_GetOx_Die2",
-                "ISev_GetICU_NoOx_Surv1", "ISev_GetICU_NoOx_Surv2", "ISev_GetICU_NoOx_Die1", "ISev_GetICU_NoOx_Die2",
-                "ISev_NoICU_NoOx_Surv1", "ISev_NoICU_NoOx_Surv2", "ISev_NoICU_NoOx_Die1", "ISev_NoICU_NoOx_Die2",
-                "ICrit_GetICU_GetOx_GetMV_Surv1", "ICrit_GetICU_GetOx_GetMV_Surv2", "ICrit_GetICU_GetOx_GetMV_Die1", "ICrit_GetICU_GetOx_GetMV_Die2",
-                "ICrit_GetICU_GetOx_NoMV_Surv1", "ICrit_GetICU_GetOx_NoMV_Surv2", "ICrit_GetICU_GetOx_NoMV_Die1", "ICrit_GetICU_GetOx_NoMV_Die2",
-                "ICrit_GetICU_NoOx_NoMV_Surv1", "ICrit_GetICU_NoOx_NoMV_Surv2", "ICrit_GetICU_NoOx_NoMV_Die1", "ICrit_GetICU_NoOx_NoMV_Die2",
-                "ICrit_NoICU_NoOx_NoMV_Surv1", "ICrit_NoICU_NoOx_NoMV_Surv2", "ICrit_NoICU_NoOx_NoMV_Die1", "ICrit_NoICU_NoOx_NoMV_Die2",
-                "hosp_occ", "ICU_occ", "MV_occ", "oxygen_needed_overall", "oxygen_used")
-
-# THIS BREAKS IT AND I DON'T KNOW WHY!!!!
-# y <- run_apothecary(country = "France", R0 = 1.5, tt_R0 = 0,
-#                     model = "deterministic", hosp_bed_capacity = 10000, ICU_bed_capacity = 2500,
-#                     input_oxygen_supply = 1375)
-# RUNS WHEN INPUT_OXYGEN_SUPPLY IS SET TO 1376
-
-# THIS BREAKS IT AND I DON'T KNOW WHY!!!!
-y <- run_apothecary(country = "France", R0 = 1.5, tt_R0 = 0,
-                    model = "deterministic", hosp_bed_capacity = 10000, ICU_bed_capacity = 2494,
-                    input_oxygen_supply = 1375)
-# RUNS WHEN ICU_BED_CAPACITY IS SET TO 2493
 dt <- 0.05
 x <- run_apothecary(country = "France", R0 = 1.5, tt_R0 = 0, dt = dt, model = "stochastic",
                     hosp_bed_capacity = 10000, ICU_bed_capacity = 2493,
-                     input_oxygen_supply = 1375, day_return = FALSE, max_leftover = 10)
+                    input_oxygen_supply = 500, day_return = FALSE, max_leftover = 2)
 y <- run_apothecary(country = "France", R0 = 1.5, tt_R0 = 0, model = "deterministic",
                     hosp_bed_capacity = 10000, ICU_bed_capacity = 2493,
-                    input_oxygen_supply = 1375)
+                    input_oxygen_supply = 500)
 x_index <- squire:::odin_index(x$model)
 y_index <- squire:::odin_index(y$model)
 plot_output(x, y, base_check)
+
+plot(x$output[, x_index$temp_leftover, 1])
+plot(x$output[, x_index$leftover, 1])
+
+# Receive Hospital Bed, Doesn't Get Oxygen - OUT BY A SUBSTANTIAL AMOUNT
+plot(x$output[, x_index$time, 1], apply(x$output[, x_index$number_GetHosp_NoOx, 1], 1, sum)/x$raw_parameters$dt, type = "l", col = "red")
+lines(apply(y$output[, y_index$number_GetHosp_NoOx], 1, sum), type = "l")
+sum(x$output[, x_index$number_GetHosp_NoOx, 1])
+sum(y$output[, y_index$number_GetHosp_NoOx])
+
+# Receives ICU Bed, Doesn't Get Oxygen - OUT BY A SUBSTANTIAL AMOUNT
+plot(x$output[, x_index$time, 1], apply(x$output[, x_index$number_GetICU_NoOx, 1], 1, sum)/x$raw_parameters$dt, type = "l", col = "red")
+lines(apply(y$output[, y_index$number_GetICU_NoOx], 1, sum), type = "l")
+sum(x$output[, x_index$number_GetICU_NoOx, 1])
+sum(y$output[, y_index$number_GetICU_NoOx])
 
 # Checking Same Numbers of People Get Beds - Appears Fine
 plot(x$output[, x_index$time, 1], apply(x$output[, x_index$n_ICase2_Hosp, 1], 1, sum)/x$raw_parameters$dt, type = "l")
@@ -69,6 +62,86 @@ lines(apply(y$output[, y_index$number_GetICU_GetOx_GetMV], 1, sum), type = "l")
 sum(x$output[, x_index$number_GetICU_GetOx_GetMV, 1])
 sum(y$output[, y_index$number_GetICU_GetOx_GetMV])
 
+# People Not Getting Hospital/ICU Beds = Identical and Looks Fine
+plot(x$output[, x_index$time, 1], apply(x$output[, x_index$number_NotHosp, 1], 1, sum)/x$raw_parameters$dt, type = "l", col = "red")
+lines(apply(y$output[, y_index$number_NotHosp], 1, sum), type = "l")
+sum(x$output[, x_index$number_NotHosp, 1])
+sum(y$output[, y_index$number_NotHosp])
+
+plot(x$output[, x_index$time, 1], apply(x$output[, x_index$number_NotICU, 1], 1, sum)/x$raw_parameters$dt, type = "l", col = "red")
+lines(apply(y$output[, y_index$number_NotICU], 1, sum), type = "l")
+sum(x$output[, x_index$number_NotICU, 1])
+sum(y$output[, y_index$number_NotICU])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+y <- run_apothecary(country = "France", R0 = 1.5, tt_R0 = 0, dt = 0.1,
+                    model = "stochastic", hosp_bed_capacity = 10000, ICU_bed_capacity = 300,
+                    input_oxygen_supply = 1000)
+
+y <- run_apothecary(country = "France", R0 = 1.5, tt_R0 = 0,
+                    model = "deterministic", hosp_bed_capacity = 10000, ICU_bed_capacity = 300,
+                    input_oxygen_supply = 1000)
+
+tic()
+y <- run_apothecary(country = "France", R0 = 1.5, tt_R0 = 0,
+                    model = "deterministic", hosp_bed_capacity = 10000, ICU_bed_capacity = 10,
+                    input_oxygen_supply = 10)
+toc()
+
+# when input_oxygen_supply = 5, takes 4 seconds to run
+# when input_oxygen_supply = 10, takes 21 seconds to run
+# when input_oxygen_supply = 15, takes 4 seconds to run
+# when input_oxygen_supply = 20, takes 1 second to run
+tic()
+for (i in 1:10) {
+  y <- run_apothecary(country = "France", R0 = 1.5, tt_R0 = 0,
+                      model = "deterministic", hosp_bed_capacity = 10000, ICU_bed_capacity = 0,
+                      input_oxygen_supply = 15)
+}
+toc()
+
+
+# THIS BREAKS IT AND I DON'T KNOW WHY!!!!
+# y <- run_apothecary(country = "France", R0 = 1.5, tt_R0 = 0,
+#                     model = "deterministic", hosp_bed_capacity = 10000, ICU_bed_capacity = 2500,
+#                     input_oxygen_supply = 1375)
+# RUNS WHEN INPUT_OXYGEN_SUPPLY IS SET TO 1376
+
+
+
+
+# THIS BREAKS IT AND I DON'T KNOW WHY!!!!
+y <- run_apothecary(country = "France", R0 = 1.5, tt_R0 = 0,
+                    model = "deterministic", hosp_bed_capacity = 10000, ICU_bed_capacity = 2494,
+                    input_oxygen_supply = 1375)
+# RUNS WHEN ICU_BED_CAPACITY IS SET TO 2493
+dt <- 0.01
+x <- run_apothecary(country = "France", R0 = 1.5, tt_R0 = 0, dt = dt, model = "stochastic",
+                    hosp_bed_capacity = 10000, ICU_bed_capacity = 2493,
+                     input_oxygen_supply = 1375, day_return = FALSE, max_leftover = 15)
+y <- run_apothecary(country = "France", R0 = 1.5, tt_R0 = 0, model = "deterministic",
+                    hosp_bed_capacity = 10000, ICU_bed_capacity = 2493,
+                    input_oxygen_supply = 1375)
+x_index <- squire:::odin_index(x$model)
+y_index <- squire:::odin_index(y$model)
 
 # Receive Hospital Bed, Doesn't Get Oxygen - OUT BY A SUBSTANTIAL AMOUNT
 plot(x$output[, x_index$time, 1], apply(x$output[, x_index$number_GetHosp_NoOx, 1], 1, sum)/x$raw_parameters$dt, type = "l", col = "red")
@@ -82,17 +155,6 @@ lines(apply(y$output[, y_index$number_GetICU_NoOx], 1, sum), type = "l")
 sum(x$output[, x_index$number_GetICU_NoOx, 1])
 sum(y$output[, y_index$number_GetICU_NoOx])
 
-
-# People Not Getting Hospital/ICU Beds = Identical and Looks Fine
-plot(x$output[, x_index$time, 1], apply(x$output[, x_index$number_NotHosp, 1], 1, sum)/x$raw_parameters$dt, type = "l", col = "red")
-lines(apply(y$output[, y_index$number_NotHosp], 1, sum), type = "l")
-sum(x$output[, x_index$number_NotHosp, 1])
-sum(y$output[, y_index$number_NotHosp])
-
-plot(x$output[, x_index$time, 1], apply(x$output[, x_index$number_NotICU, 1], 1, sum)/x$raw_parameters$dt, type = "l", col = "red")
-lines(apply(y$output[, y_index$number_NotICU], 1, sum), type = "l")
-sum(x$output[, x_index$number_NotICU, 1])
-sum(y$output[, y_index$number_NotICU])
 
 
 
