@@ -8,10 +8,13 @@ set.seed(100)
 par(mfrow = c(1, 2))
 
 # Run without drugs but unlimited healthcare capacity
-x_no_drugs <- run_apothecary(country = "France", hosp_bed_capacity = 100000000, ICU_bed_capacity = 10000000, day_return = TRUE)
+x_no_drugs <- run_apothecary(country = "France", hosp_bed_capacity = 100000000, ICU_bed_capacity = 10000000,
+                             day_return = TRUE, model = "stochastic", dt = 0.1)
 results_no_drugs <- x_no_drugs$output
 index <- apothecary:::odin_index(x_no_drugs$model)
-plot(apply(results_no_drugs[, index$D_Hospital], 1, sum)/max(apply(results_no_drugs[, index$D_Hospital], 1, sum)),
+plot(apply(results_no_drugs[, index$S, 1], 1, sum)/max(apply(results_no_drugs[, index$S, 1], 1, sum)),
+     type = "l", lwd = 3, ylab = "Cumulative Deaths", xlab = "Day")
+plot(apply(results_no_drugs[, index$D_Hospital, 1], 1, sum)/max(apply(results_no_drugs[, index$D_Hospital, 1], 1, sum)),
      type = "l", lwd = 3, ylab = "Cumulative Deaths", xlab = "Day")
 
 x_no_drugs <- run_apothecary(country = "France", hosp_bed_capacity = 100000000, ICU_bed_capacity = 10000000, day_return = TRUE)

@@ -106,13 +106,14 @@ apothecary_parameters <- function(
   ICU_bed_capacity  = NULL,
   tt_hosp_beds = 0,
   tt_ICU_beds = 0,
-  tt_oxygen_supply = 0,
-  input_oxygen_supply = 1000000000,
-  tt_baseline_oxygen_demand = 0,
-  input_baseline_oxygen_demand = 0,
-  oxygen_availability_0 = 1000000000,
-  max_leftover = 0,
-  severe_critical_case_oxygen_consumption_multiplier = 1.5,
+
+  # oxygen related quantities
+  prop_ox_hosp_beds = 1,
+  prop_ox_ICU_beds = 1,
+  tt_prop_ox_hosp_beds = 0,
+  tt_prop_ox_ICU_beds = 0,
+
+  # mechanival ventilation related quantities
   MV_capacity = 1000000000,
 
   # transmission related parameters
@@ -288,6 +289,7 @@ apothecary_parameters <- function(
     }
   }
 
+
   # Initial state and matrix formatting
   # ----------------------------------------------------------------------------
 
@@ -358,13 +360,10 @@ apothecary_parameters <- function(
                     hosp_bed_capacity = hosp_bed_capacity,
                     tt_ICU_beds = tt_ICU_beds/dt,
                     ICU_bed_capacity = ICU_bed_capacity,
-                    tt_oxygen_supply = tt_oxygen_supply/dt,
-                    input_oxygen_supply = input_oxygen_supply,
-                    tt_baseline_oxygen_demand = tt_baseline_oxygen_demand/dt,
-                    input_baseline_oxygen_demand = input_baseline_oxygen_demand,
-                    oxygen_availability_0 = oxygen_availability_0,
-                    max_leftover = max_leftover,
-                    severe_critical_case_oxygen_consumption_multiplier = severe_critical_case_oxygen_consumption_multiplier,
+                    prop_ox_hosp_beds = prop_ox_hosp_beds,
+                    prop_ox_ICU_beds = prop_ox_ICU_beds,
+                    tt_prop_ox_hosp_beds = tt_prop_ox_hosp_beds/dt,
+                    tt_prop_ox_ICU_beds = tt_prop_ox_ICU_beds/dt,
                     MV_capacity = MV_capacity,
                     dt = dt,
                     N_age = N_age,
