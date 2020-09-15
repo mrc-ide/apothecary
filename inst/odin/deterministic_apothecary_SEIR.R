@@ -219,9 +219,6 @@ n_E2_IMild[] <- (n_E2_IMild_or_IAsymp[i] - n_E2_IAsymp[i]) + (n_E2_ICase1_initia
 n_E2_IMild_Drug_5[] <- if (drug_5_indic_IMild == 1) n_E2_IMild[i] * drug_5_prop_treat else 0
 n_E2_IMild_No_Drug_5[] <- if (drug_5_indic_IMild == 1) n_E2_IMild[i] * (1 - drug_5_prop_treat) else n_E2_IMild[i]
 
-x <- if (((time > prophylactic_drug_timing_1  && time <= prophylactic_drug_timing_1 + 1) || (time > prophylactic_drug_timing_2  && time <= prophylactic_drug_timing_2 + 1)) && (drug_1_indic == 1|| drug_2_indic == 1)) 1 else 0
-output(x) <- TRUE
-
 n_S_PS[] <- if (((time > prophylactic_drug_timing_1  && time <= prophylactic_drug_timing_1 + 1) || (time > prophylactic_drug_timing_2  && time <= prophylactic_drug_timing_2 + 1)) && (drug_1_indic == 1|| drug_2_indic == 1)) log(1/(1-prophylactic_prop_treat)) * S[i] else 0
 n_PS_S[] <- prophylactic_drug_wane * PS[i]
 n_PS_PE1[] <- if (drug_1_indic == 1) lambda[i] * drug_1_effect_size * PS[i] else lambda[i] * PS[i]
@@ -314,7 +311,7 @@ number_NotHosp[] <- number_req_Hosp[i] - number_GetHosp[i]
 ## WORKING OUT HOW MUCH OXYGEN IS AVAILABILE AND HOW MANY INDIVIDUALS REQUIRING HOSPITAL/ICU BED RECEIVE IT
 ##---------------------------------------------------------------------------------------------------------
 # Updating Oxyen Availability With New Supply At Each Timestep, Subtract Off Baseline Demand and Add In Any O2 Leftover From Previous Timestep
-deriv(oxygen_availability) <- 0#oxygen_supply - baseline_oxygen_demand + leftover
+oxygen_availability <- if (oxygen_supply - baseline_oxygen_demand > 0) oxygen_supply - baseline_oxygen_demand else 0
 
 # Working Out Proportion of Oxygen Going to Hospital Beds vs ICU Beds, and Splitting ICU Oxygen Into Amounts for Each Disease Severity Category
 prop_ox_hosp_beds <- if (total_GetHosp == 0 && total_GetICU == 0) 0 else (total_GetHosp/(total_GetHosp + total_GetICU * severe_critical_case_oxygen_consumption_multiplier))
@@ -571,7 +568,6 @@ MV_capacity <- user() # number of mechanical ventilators available
 
 ## DEFINING INITIAL STATES
 ##------------------------------------------------------------------------------
-initial(oxygen_availability) <- oxygen_availability_0
 initial(S[]) <- S_0[i]
 initial(E1[]) <- E1_0[i]
 initial(E2[]) <- E2_0[i]
@@ -638,7 +634,6 @@ initial(ICrit_NoICU_NoOx_NoMV_Die2[]) <- ICrit_NoICU_NoOx_NoMV_Die2_0[i]
 ##Initial vectors
 rel_inf_asymp <- user()
 rel_inf_mild <- user()
-oxygen_availability_0 <- user()
 S_0[] <- user()
 E1_0[] <- user()
 E2_0[] <- user()
