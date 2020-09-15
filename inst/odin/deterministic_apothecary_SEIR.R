@@ -248,6 +248,29 @@ n_ICase2_Hosp[] <- gamma_ICase * ICase2[i]
 n_IRec1_IRec2[] <- gamma_rec * IRec1[i]
 n_IRec2_R[] <- gamma_rec * IRec2[i]
 
+##-----------------------------------------------------------------------------------------------------------
+##
+##  This section is non-trivial and so a brief description of everything that occurs below
+##  is provided:
+##    1) The number of ICU beds available is calculated, compared to the number of individuals
+##       newly requiring ICU beds, and these individuals are assigned to receive/not get an ICU
+##       bed as appropriate.
+##    2) The number of hospital beds available is calculated, compared to the number of individuals
+##       newly requiring hospital beds, and these individuals are assigned to receive/not get a hospital
+##       bed as appropriate.
+##    3) The amount of oxygen available is calculated and split amongst hospital bed and ICU bed patients
+##       in a manner proportional to the numbers in each group and their comparative oxygen requirements.
+##       The amount of people in hospital beds/ICU beds receiving or not receiving oxygen is then calculated.
+##    4) For those in ICU beds receiving oxygen, the number of those who are severe (no MV required) and
+##       those who are critical (MV required) is calculated and the number of available mechanical ventilators
+##       distributed amongst the critical cases in a manner dependent on whether these critical cases
+##       received oxygen or not.
+##  Note ISev and ICrit patients (i.e. those requiring an ICU bed) consume oxygen at a higher rate than
+##  IMod patients (i.e. those requiring a hospital bed). This is reflected using the parameter value
+##  severe_critical_case_oxygen_consumption_multiplier.
+##
+##-----------------------------------------------------------------------------------------------------------
+
 ## WORKING OUT NUMBER OF ICU BEDS AVAILABILE AND HOW MANY INDIVIDUALS RECEIVE THEM
 ##--------------------------------------------------------------------------------
 number_req_ICU_initial[] <- (n_ICase2_Hosp[i] + n_ICase2_Drug_5_Hosp[i]) * prob_severe[i]
