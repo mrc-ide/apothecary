@@ -336,8 +336,12 @@ current_free_hosp_bed_no_ox <- (current_hosp_bed_capacity - round(current_prop_o
                                sum(n_IRec2_R) -
                                sum(n_ISev_GetICU_GetOx_Surv2_Rec) - sum(n_ISev_GetICU_NoOx_Surv2_Rec) -
                                sum(n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec) - sum(n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec) - sum(n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec) - hosp_bed_no_ox_occ
+output(current_prop_ox_hosp_beds) <- TRUE
+output(current_hosp_bed_capacity) <- TRUE
 output(current_free_hosp_bed_ox) <- TRUE
 output(current_free_hosp_bed_no_ox) <- TRUE
+output(n_IMod_GetHosp_GetOx_Surv2_R) <- TRUE
+output(n_IMod_GetHosp_GetOx_Die2_D_Hospital) <- TRUE
 
 # Calculating Individuals Getting A Hospital Bed With Oxygen
 total_IMod_GetHosp_GetOx <- if (current_free_hosp_bed_ox <= 0) 0 else (if(current_free_hosp_bed_ox - total_req_Hosp >= 0) total_req_Hosp else(current_free_hosp_bed_ox)) # Working out the number of new hospital bed requiring infections that get a bed
@@ -399,7 +403,7 @@ number_ICrit_GetICU_GetOx_GetMV[] <-  rmhyper(total_ICrit_GetICU_GetOx_GetMV, nu
 number_ICrit_GetICU_GetOx_NoMV[] <- number_ICrit_GetICU_GetOx[i] - number_ICrit_GetICU_GetOx_GetMV[i]
 
 # Individuals Getting ICU Beds Without Oxygen And Their Associated Disease Severities
-total_GetICU_NoOx <- if(current_free_ICU_bed_no_ox <= 0) 0 else(if(current_free_ICU_bed_no_ox - (total_req_ICU - total_GetICU_GetOx)) total_req_ICU - total_GetICU_GetOx else (current_free_ICU_bed_no_ox))
+total_GetICU_NoOx <- if(current_free_ICU_bed_no_ox <= 0) 0 else(if(current_free_ICU_bed_no_ox - (total_req_ICU - total_GetICU_GetOx) >= 0) total_req_ICU - total_GetICU_GetOx else (current_free_ICU_bed_no_ox))
 number_GetICU_NoOx[] <- rmhyper(total_GetICU_NoOx, number_req_ICU_remaining)
 
 number_ICrit_GetICU_NoOx_NoMV_initial[] <- rbinom(number_GetICU_NoOx[i], prob_critical[i]) # Initial number of new ICU Bed admissions that are going to have Critical Disease (i.e. require oxygen AND MV)

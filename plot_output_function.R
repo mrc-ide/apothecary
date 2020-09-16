@@ -9,8 +9,8 @@ base_check <- c("S", "E1", "E2", "IMild", "IAsymp", "ICase1", "ICase2", "R", "D_
                 "ICrit_GetICU_GetOx_NoMV_Surv1", "ICrit_GetICU_GetOx_NoMV_Surv2", "ICrit_GetICU_GetOx_NoMV_Die1", "ICrit_GetICU_GetOx_NoMV_Die2",
                 "ICrit_GetICU_NoOx_NoMV_Surv1", "ICrit_GetICU_NoOx_NoMV_Surv2", "ICrit_GetICU_NoOx_NoMV_Die1", "ICrit_GetICU_NoOx_NoMV_Die2",
                 "ICrit_NoICU_NoOx_NoMV_Surv1", "ICrit_NoICU_NoOx_NoMV_Surv2", "ICrit_NoICU_NoOx_NoMV_Die1", "ICrit_NoICU_NoOx_NoMV_Die2",
-                "overall_ICU_occ", "ICU_bed_ox_occ", "current_free_ICU_bed_ox", "ICU_bed_no_ox_occ", "ICU_bed_no_ox_occ", "MV_occ", "current_free_MV",
-                "overall_hosp_occ", "hosp_bed_ox_occ", "current_free_hosp_bed_ox", "hosp_bed_no_ox_occ", "current_free_hosp_bed_no_ox", "hosp_bed_no_ox_occ_without_IRec")
+                "overall_ICU_occ", "ICU_bed_ox_occ", "ICU_bed_no_ox_occ", "MV_occ", "current_free_MV",
+                "overall_hosp_occ", "hosp_bed_ox_occ", "hosp_bed_no_ox_occ", "hosp_bed_no_ox_occ_without_IRec")
 
 
 plot_output <- function(stoch, det, variables) {
@@ -29,12 +29,18 @@ plot_output <- function(stoch, det, variables) {
       title_size <- 1.25
     }
 
-    if (length(x_indices) == 1) {
-        ymax <- max(c(max(stoch$output[, x_indices, 1]), max(det$output[, det_indices])))
+    if (length(stoch_indices) == 1) {
+      if (var == "current_free_hosp_bed_no_ox") {
+        plot(stoch$output[, stoch_index$time, 1], stoch$output[, stoch_indices, 1], main = var,
+             col = "black", type = "l", ylab = "", xlab = "", cex.main = title_size)
+        lines(det$output[, det_indices], col = "red", type = "l")
+      } else {
+        ymax <- max(c(max(stoch$output[, stoch_indices, 1]), max(det$output[, det_indices])))
         plot(stoch$output[, stoch_index$time, 1], stoch$output[, stoch_indices, 1], main = var,
              col = "black", type = "l", ylab = "", xlab = "", cex.main = title_size,
              ylim = c(0, ymax))
         lines(det$output[, det_indices], col = "red", type = "l")
+      }
     } else {
       ymax <- max(c(max(apply(stoch$output[, stoch_indices, 1], 1, sum)), max(apply(det$output[, det_indices], 1, sum))))
       plot(stoch$output[, stoch_index$time, 1], apply(stoch$output[, stoch_indices, 1], 1, sum), main = var,
