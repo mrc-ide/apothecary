@@ -12,13 +12,13 @@ source("plot_output_function.R")
 
 # Comparison with squire
 set.seed(10)
-x <- run_apothecary(country = "France", hosp_bed_capacity = 0, ICU_bed_capacity = 0,
+x <- run_apothecary(country = "France", hosp_bed_capacity = 10000, ICU_bed_capacity = 1000,
                     day_return = TRUE, model = "stochastic", dt = 0.1,
                     prop_ox_hosp_beds = 1, prop_ox_ICU_beds = 1, MV_capacity = 1000000)
 x_index <- apothecary:::odin_index(x$model)
 
 set.seed(10)
-y <- run_explicit_SEEIR_model(country = "France", hosp_bed_capacity = 0, ICU_bed_capacity = 0,
+y <- run_explicit_SEEIR_model(country = "France", hosp_bed_capacity = 10000, ICU_bed_capacity = 1000,
                               day_return = TRUE, dt = 0.1)
 y_index <- apothecary:::odin_index(y$model)
 
