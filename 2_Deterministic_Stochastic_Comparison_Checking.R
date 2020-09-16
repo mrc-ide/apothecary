@@ -162,4 +162,14 @@ for (i in 1:length(base_check)) {
   }
 }
 
+tictoc::tic()
+for (i in 1:100) {
+  y <- run_apothecary(country = "France", hosp_bed_capacity = 10000000, ICU_bed_capacity = 10000000,
+                      day_return = TRUE, model = "deterministic", dt = 1,
+                      prop_ox_hosp_beds = 1, prop_ox_ICU_beds = 1, MV_capacity = 1000000,
+                      drug_11_indic_IMod_GetHosp_GetOx = 1, drug_11_prop_treat = 1, drug_11_GetOx_effect_size = 0.5,
+                      drug_12_indic_ISev_GetICU_GetOx = 1, drug_12_prop_treat = 1, drug_12_GetOx_effect_size = 0.5,
+                      drug_13_indic_ICrit_GetICU_GetOx_GetMV = 1, drug_13_prop_treat = 1, drug_13_GetOx_GetMV_effect_size = 0.5)
+}
+tictoc::toc()
 

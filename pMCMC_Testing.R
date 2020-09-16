@@ -123,10 +123,10 @@ logprior <- function(pars){
 }
 
 # Extracting Relevant Mobility Data and Creating R0_change & date_R0_change Objects
-suppressWarnings(future::plan(future::multiprocess()))
+#suppressWarnings(future::plan(future::multiprocess()))
 
 tic()
-n_mcmc <- 1000
+n_mcmc <- 10000
 pmcmc_res <- squire::pmcmc(data = data,
                            n_mcmc = n_mcmc,
                            log_prior = logprior,
@@ -160,6 +160,10 @@ pmcmc_res <- squire::pmcmc(data = data,
                            baseline_ICU_bed_capacity = 10000000000)
 toc()
 
+dim(pmcmc_res$output)
+
+
+
 out <- pmcmc_res$output
 index <- apothecary:::odin_index(pmcmc_res$model)
 cum_deaths <- out[, index$D, ]
@@ -177,7 +181,6 @@ daily_death_summary <- daily_deaths %>%
             lower_deaths = quantile(value, 0.05, na.rm = TRUE),
             upper_deaths = quantile(value, 0.95, na.rm = TRUE))
 
-
 ggplot() +
   geom_line(data = daily_deaths, aes(x = as.Date(date), y = value, group = replicate), alpha = 0.2, col = "grey") +
   geom_line(data = daily_death_summary, aes(x = as.Date(date), y = median_deaths), col = "black") +
@@ -185,6 +188,48 @@ ggplot() +
   geom_line(data = daily_death_summary, aes(x = as.Date(date), y = upper_deaths), col = "black") +
   theme(legend.position = "none") +
   geom_point(data = data, aes(x = date, y = deaths, col = "red"))
+
+
+pars <- list(Meff = pmcmc_res$replicate_parameters$Meff[1],
+             Meff_pl = pmcmc_res$replicate_parameters$Meff_pl[1],
+             Rt_shift = pmcmc_res$replicate_parameters$Rt_shift[1],
+             Rt_rw_1 = pmcmc_res$replicate_parameters$Rt_rw_1[1],
+             Rt_rw_2 = pmcmc_res$replicate_parameters$Rt_rw_2[1],
+             Rt_rw_3 = pmcmc_res$replicate_parameters$Rt_rw_3[1],
+             Rt_rw_4 = pmcmc_res$replicate_parameters$Rt_rw_4[1],
+             Rt_rw_5 = pmcmc_res$replicate_parameters$Rt_rw_5[1],
+             Rt_rw_6 = pmcmc_res$replicate_parameters$Rt_rw_6[1],
+             Rt_rw_7 = pmcmc_res$replicate_parameters$Rt_rw_7[1],
+             Rt_rw_8 = pmcmc_res$replicate_parameters$Rt_rw_8[1],
+             Rt_shift_scale = NULL)
+x <- squire:::evaluate_Rt_pmcmc(R0_change = R0_change,
+                           R0 = pmcmc_res$replicate_parameters$R0[1],
+                           date_R0_change = date_R0_change,
+                           pars = pars,
+                           Rt_args = pmcmc_res$pmcmc_results$inputs$Rt_args)
+
+plot(x, type = "l", ylim = c(0, 5))
+
+
+start_date <- pmcmc_res$replicate_parameters$start_date
+R0 <- pmcmc_res$replicate_parameters$R0
+Meff <- pmcmc_res$replicate_parameters$Meff
+Meff_pl <- pmcmc_res$replicate_parameters$Meff_pl
+Rt_shift <- pmcmc_res$replicate_parameters$Rt_shift
+Rt_rw_1 <- pmcmc_res$replicate_parameters$Rt_rw_1
+Rt_rw_2 <- pmcmc_res$replicate_parameters$Rt_rw_2
+Rt_rw_3 <- pmcmc_res$replicate_parameters$Rt_rw_3
+Rt_rw_4 <- pmcmc_res$replicate_parameters$Rt_rw_4
+Rt_rw_5 <- pmcmc_res$replicate_parameters$Rt_rw_5
+Rt_rw_6 <- pmcmc_res$replicate_parameters$Rt_rw_6
+Rt_rw_7 <- pmcmc_res$replicate_parameters$Rt_rw_7
+Rt_rw_8 <- pmcmc_res$replicate_parameters$Rt_rw_8
+
+
+
+
+
+
 
 
 out <- pmcmc_res
