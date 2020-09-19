@@ -2,13 +2,13 @@
 library(lubridate); library(squire); library(tictoc); library(dplyr); library(tidyverse)
 
 # Loading In Example Initial Parameters and Defining Country and Date Fitting Being Applied To
-pars_init <- readRDS("C:/Users/cw1716/Downloads/pars_init.rds")
+pars_init <- readRDS("pars_init.rds")
 can_parms <- pars_init$CAN
 iso3c <- "CAN"
 date <- "2020-08-31"
 
-# Loading in ECDC Deaths Data, Reoving Deaths Followed by 21 Days of No Deaths, Rmoving Dates Up to First Death After This
-ecdc <- readRDS("C:/Users/cw1716/Downloads/ecdc_all.rds")
+# Loading in ECDC Deaths Data, Removing Deaths Followed by 21 Days of No Deaths, Removing Dates Up to First Death After This
+ecdc <- readRDS("ecdc_all.rds")
 country <- squire::population$country[match(iso3c, squire::population$iso3c)[1]]
 df <- ecdc[which(ecdc$countryterritoryCode == iso3c),]
 if(sum(df$deaths>0)>1) {
@@ -49,7 +49,7 @@ pars_discrete_rw <- as.list(rep(FALSE, rw_needed))
 names(pars_init_rw) <- names(pars_min_rw) <- names(pars_max_rw) <- names(pars_discrete_rw) <- paste0("Rt_rw_", seq_len(rw_needed))
 
 # Loading in BRT Mobility Data and Processing
-interventions <- readRDS("C:/Users/cw1716/Downloads/google_brt.rds")
+interventions <- readRDS("google_brt.rds")
 R0_change <- interventions[[iso3c]]$C
 date_R0_change <- interventions[[iso3c]]$date
 R0_change <- R0_change[as.Date(date_R0_change) <= date]
@@ -117,7 +117,7 @@ logprior <- function(pars){
 }
 
 # Extracting Relevant Mobility Data and Creating R0_change & date_R0_change Objects
-#suppressWarnings(future::plan(future::multiprocess()))
+suppressWarnings(future::plan(future::multiprocess()))
 
 tic()
 n_mcmc <- 10000
