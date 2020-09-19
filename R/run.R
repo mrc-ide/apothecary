@@ -36,7 +36,7 @@ run_apothecary <- function(
   tt_matrix = 0,
 
   # miscellaneous parameters
-  dt = 0.1,
+  dt = NULL,
   N_age = 17,
   time_period = 365,
   init = NULL,
@@ -173,6 +173,12 @@ run_apothecary <- function(
 
 ) {
 
+  if (model == "deterministic") {
+    dt <- 1
+  } else if (model == "stochastic") {
+    dt <- 0.1
+  }
+
   # create parameter list
   pars <- apothecary_parameters(country = country,
                                 population = population,
@@ -299,9 +305,9 @@ run_apothecary <- function(
   # Running the Model
   if (model == "deterministic") {
     mod <- deterministic_apothecary_SEIR(user = pars, unused_user_action = "ignore")
-    t <- seq(from = 1, to = time_period, by = dt)
+    t <- seq(from = 0, to = time_period)
     if (day_return) {
-      t <- seq(from = 1, to = time_period, by = 1)
+      t <- seq(from = 0, to = time_period, by = 1)
     }
     results <- mod$run(t, replicate = 1)
   } else if (model == "stochastic") {

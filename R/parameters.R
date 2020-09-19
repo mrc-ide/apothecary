@@ -356,6 +356,7 @@ apothecary_parameters <- function(
 
   # Collate Parameters Into List
   overall <- c(mod_init,
+               seeding_cases = sum(mod_init$E1_0),
                list(tt_hosp_beds = tt_hosp_beds/dt,
                     hosp_bed_capacity = hosp_bed_capacity,
                     tt_ICU_beds = tt_ICU_beds/dt,

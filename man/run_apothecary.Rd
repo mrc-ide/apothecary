@@ -25,7 +25,7 @@ run_apothecary(
   rel_inf_asymp = 1,
   rel_inf_mild = 1,
   tt_matrix = 0,
-  dt = 0.1,
+  dt = NULL,
   N_age = 17,
   time_period = 365,
   init = NULL,
