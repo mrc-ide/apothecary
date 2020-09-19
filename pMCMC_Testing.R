@@ -119,6 +119,7 @@ logprior <- function(pars){
 # Extracting Relevant Mobility Data and Creating R0_change & date_R0_change Objects
 suppressWarnings(future::plan(future::multiprocess()))
 
+# chck
 tic()
 n_mcmc <- 10000
 pmcmc_res <- squire::pmcmc(data = data,
