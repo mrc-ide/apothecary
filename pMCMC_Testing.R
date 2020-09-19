@@ -1,6 +1,9 @@
 # Loading Required Libraries
 library(lubridate); library(squire); library(tictoc); library(dplyr); library(tidyverse)
 
+# Load apothecary
+devtools::load_all()
+
 # Loading In Example Initial Parameters and Defining Country and Date Fitting Being Applied To
 pars_init <- readRDS("pars_init.rds")
 can_parms <- pars_init$CAN
@@ -106,7 +109,7 @@ logprior <- function(pars){
     dnorm(x = pars[["Rt_shift"]], mean = 0, sd = 1, log = TRUE) +
     dunif(x = pars[["Rt_shift_scale"]], min = 0.1, max = 10, log = TRUE)
 
-  # get rw spline parametersv
+  # get rw spline parameters
   if(any(grepl("Rt_rw", names(pars)))) {
     Rt_rws <- pars[grepl("Rt_rw", names(pars))]
     for (i in seq_along(Rt_rws)) {
@@ -119,9 +122,8 @@ logprior <- function(pars){
 # Extracting Relevant Mobility Data and Creating R0_change & date_R0_change Objects
 suppressWarnings(future::plan(future::multiprocess()))
 
-# chck
 tic()
-n_mcmc <- 10000
+n_mcmc <- 5000
 pmcmc_res <- squire::pmcmc(data = data,
                            n_mcmc = n_mcmc,
                            log_prior = logprior,
@@ -148,7 +150,7 @@ pmcmc_res <- squire::pmcmc(data = data,
                              Rt_rw_duration = Rt_rw_duration),
                            burnin = n_mcmc/2,
                            seeding_cases = 5,
-                           replicates = 100,
+                           replicates = 500,
                            required_acceptance_ratio = 0.20,
                            start_adaptation = 500,
                            baseline_hosp_bed_capacity = 10000000000,
@@ -167,7 +169,7 @@ cum_deaths <- as.data.frame(cum_deaths)
 cum_deaths$date <- row.names(cum_deaths)
 
 daily_deaths <- cum_deaths %>%
-  pivot_longer(cols = V1:V100, names_to = "replicate")
+  pivot_longer(cols = V1:V500, names_to = "replicate")
 
 daily_death_summary <- daily_deaths %>%
   group_by(date) %>%
@@ -185,7 +187,7 @@ ggplot() +
 
 data <- pmcmc_res$pmcmc_results$inputs$data
 plot(data$date, data$deaths, col = "black", pch = 20)
-for (i in 1:100) {
+for (i in 1:500) {
   tt <- squire:::intervention_dates_for_odin(dates = pmcmc_res$interventions$date_R0_change,
                                              change = pmcmc_res$interventions$R0_change,
                                              start_date = pmcmc_res$replicate_parameters$start_date[i],
@@ -218,301 +220,3 @@ for (i in 1:100) {
   lines(as.Date(single_daily_deaths$date), single_daily_deaths$value, col = "blue")
 
 }
-
-x <- run_explicit_SEEIR_model(country = "Canada",
-                    hosp_bed_capacity = 10000000000,
-                    ICU_bed_capacity = 10000000000,
-                    R0 = Rt,
-                    tt_R0 = tt$tt * pmcmc_res$parameters$dt,
-                    time_period = as.numeric(range(tt$dates)[2]-range(tt$dates)[1]),
-                    day_return = TRUE,
-                    seeding_cases = sum(out$pmcmc_results$inputs$model_params$E1_0))
-
-x <- run_deterministic_SEIR_model(country = "Canada",
-                              hosp_bed_capacity = 10000000000,
-                              ICU_bed_capacity = 10000000000,
-                              R0 = Rt,
-                              tt_R0 = tt$tt * pmcmc_res$parameters$dt,
-                              time_period = as.numeric(range(tt$dates)[2]-range(tt$dates)[1]),
-                              day_return = TRUE,
-                              seeding_cases = sum(out$pmcmc_results$inputs$model_params$E1_0))
-dim(x$output)
-y <- run_apothecary(country = "Canada", model = "deterministic",
-                    hosp_bed_capacity = 10000000000,
-                    ICU_bed_capacity = 10000000000,
-                    R0 = Rt,
-                    tt_R0 = tt$tt * pmcmc_res$parameters$dt,
-                    time_period = as.numeric(range(tt$dates)[2]-range(tt$dates)[1]),
-                    day_return = TRUE,
-                    seeding_cases = sum(out$pmcmc_results$inputs$model_params$E1_0))
-dim(y$output)
-
-sum(deaths)
-plot(c(rep(0, 22), data$deaths))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-plot(data$deaths)
-
-
-tt <- squire:::intervention_dates_for_odin(dates = pmcmc_res$interventions$date_R0_change,
-                                           change = pmcmc_res$interventions$R0_change,
-                                           start_date = pmcmc_res$replicate_parameters$start_date[1],
-                                           steps_per_day = 1/pmcmc_res$parameters$dt)
-Rt <- squire:::evaluate_Rt_pmcmc(R0_change = tt$change,
-                                 date_R0_change = tt$dates,
-                                 R0 = pmcmc_res$replicate_parameters$R0[1],
-                                 pars = as.list(out$replicate_parameters[1,]),
-                                 Rt_args = pmcmc_res$pmcmc_results$inputs$Rt_args)
-y <- run_explicit_SEEIR_model(country = "Canada",
-                              hosp_bed_capacity = 10000000000,
-                              ICU_bed_capacity = 10000000000,
-                              R0 = Rt,
-                              tt_R0 = tt$tt * pmcmc_res$parameters$dt,
-                              time_period = as.numeric(range(tt$dates)[2]-range(tt$dates)[1]),
-                              day_return = TRUE,
-                              seeding_cases = sum(out$pmcmc_results$inputs$model_params$E1_0))
-index <- squire:::odin_index(y$model)
-plot(data$date, data$deaths)
-cum_deaths <- y$output[, index$D, 1]
-cum_deaths <- apply(cum_deaths, 1, sum)
-deaths <- diff(cum_deaths)
-sum(deaths)
-lines(deaths)
-
-
-x <- run_explicit_SEEIR_model(country = "Canada",
-                              hosp_bed_capacity = 10000000000,
-                              ICU_bed_capacity = 10000000000,
-                              R0 = Rt,
-                              tt_R0 = tt$tt * pmcmc_res$parameters$dt,
-                              time_period = as.numeric(range(tt$dates)[2]-range(tt$dates)[1]),
-                              day_return = TRUE,
-                              seeding_cases = sum(out$pmcmc_results$inputs$model_params$E1_0))
-x_index <- squire:::odin_index(x$model)
-y <- run_apothecary(country = "Canada", model = "deterministic",
-                    hosp_bed_capacity = 10000000000,
-                    ICU_bed_capacity = 10000000000,
-                    R0 = Rt,
-                    tt_R0 = tt$tt * pmcmc_res$parameters$dt,
-                    time_period = as.numeric(range(tt$dates)[2]-range(tt$dates)[1]),
-                    day_return = TRUE,
-                    seeding_cases = sum(out$pmcmc_results$inputs$model_params$E1_0))
-y_index <- squire:::odin_index(y$model)
-
-plot(apply(y$output[, y_index$D], 1, sum))
-lines(apply(x$output[, x_index$D, 1], 1, sum))
-
-
-x <- run_explicit_SEEIR_model(country = "Canada",
-                              hosp_bed_capacity = 10000000000,
-                              ICU_bed_capacity = 10000000000,
-                              R0 = c(3, 1.8),
-                              tt_R0 = c(0, 25),
-                              time_period = as.numeric(range(tt$dates)[2]-range(tt$dates)[1]),
-                              day_return = TRUE,
-                              seeding_cases = sum(out$pmcmc_results$inputs$model_params$E1_0))
-x_index <- squire:::odin_index(x$model)
-y <- run_apothecary(country = "Canada", model = "deterministic",
-                    hosp_bed_capacity = 10000000000,
-                    ICU_bed_capacity = 10000000000,
-                    R0 = c(3, 1.8),
-                    tt_R0 = c(0, 25),
-                    time_period = as.numeric(range(tt$dates)[2]-range(tt$dates)[1]),
-                    day_return = TRUE,
-                    seeding_cases = sum(out$pmcmc_results$inputs$model_params$E1_0))
-y_index <- squire:::odin_index(y$model)
-
-plot(apply(y$output[, y_index$S], 1, sum))
-lines(x$output[, x_index$time, 1], apply(x$output[, x_index$S, 1], 1, sum))
-
-
-
-
-
-
-
-
-index <- squire:::odin_index(y$model)
-data <- out$pmcmc_results$inputs$data
-plot(data$date, data$deaths)
-deaths <- c(0,diff(rowSums(y$output[, index$D, 1])))
-lines(tt$dates, deaths)
-
-
-
-plot(x)
-y <- run_apothecary(country = "Canada", hosp_bed_capacity = 10000000000, ICU_bed_capacity = 10000000000,
-                    R0 = x,
-                    tt_R0 = seq(0, length(x) - 1, 1),
-                    time_period = length(x),
-                    day_return = TRUE, model = "deterministic", dt = 1,
-                    prop_ox_hosp_beds = 1, prop_ox_ICU_beds = 1, MV_capacity = 10000000000,
-                    seeding_cases = 5)
-index <- apothecary:::odin_index(y$model)
-plot(data$date, data$deaths)
-cum_deaths <- y$output[, index$D]
-cum_deaths <- apply(cum_deaths, 1, sum)
-deaths <- diff(cum_deaths)
-plot(deaths)
-
-y <- run_explicit_SEEIR_model(country = "Canada", hosp_bed_capacity = 10000000000, ICU_bed_capacity = 10000000000,
-                              R0 = x,
-                              tt_R0 = seq(0, length(x) - 1, 1),
-                              time_period = length(x),
-                              day_return = TRUE, seeding_cases = 5)
-index <- apothecary:::odin_index(y$model)
-plot(data$date, data$deaths)
-cum_deaths <- y$output[, index$D, 1]
-cum_deaths <- apply(cum_deaths, 1, sum)
-deaths <- diff(cum_deaths)
-plot(deaths)
-
-
-
-
-pop <- squire:::get_population("Canada")
-pop <- pop$n
-mat <- apothecary:::process_contact_matrix_scaled_age(y$raw_parameters$contact_matrix_set[[1]], pop)
-
-squire:::beta_est_explicit(dur_IMild = 1/y$raw_parameters$gamma_IMild,
-                           dur_ICase = 1/y$raw_parameters$gamma_ICase,
-                           prob_hosp = y$raw_parameters$prob_hosp,
-                           R0 = x[1],
-                           mixing_matrix = mat)
-
-apothecary:::beta_est_apothecary(dur_IAsymp = 1/y$raw_parameters$gamma_IAsymp,
-                                 dur_IMild = 1/y$raw_parameters$gamma_IMild,
-                                 dur_ICase = 2/y$raw_parameters$gamma_ICase,
-                                 rel_inf_asymp = y$raw_parameters$rel_inf_asymp,
-                                 rel_inf_mild = y$raw_parameters$rel_inf_mild,
-                                 prob_asymp = y$raw_parameters$prob_asymp,
-                                 prob_hosp = y$raw_parameters$prob_hosp,
-                                 mixing_matrix = mat,
-                                 R0 = x[1])
-
-
-
-
-
-cum_deaths <- as.data.frame(cum_deaths)
-cum_deaths$date <- row.names(cum_deaths)
-
-
-y <- run_apothecary(country = "France", hosp_bed_capacity = 10000000, ICU_bed_capacity = 10000000,
-                    R0 = x,
-                    tt_R0 = seq(0, length(x) - 1, 1),
-                    time_period = length(x),
-                    day_return = TRUE, model = "deterministic", dt = 1,
-                    prop_ox_hosp_beds = 1, prop_ox_ICU_beds = 1, MV_capacity = 1000000,
-                    drug_11_indic_IMod_GetHosp_GetOx = 1, drug_11_prop_treat = 1, drug_11_GetOx_effect_size = 0.5,
-                    drug_12_indic_ISev_GetICU_GetOx = 1, drug_12_prop_treat = 1, drug_12_GetOx_effect_size = 0.5,
-                    drug_13_indic_ICrit_GetICU_GetOx_GetMV = 1, drug_13_prop_treat = 1, drug_13_GetOx_GetMV_effect_size = 0.5)
-
-
-plot(x, type = "l", ylim = c(0, 5))
-
-
-start_date <- pmcmc_res$replicate_parameters$start_date
-R0 <- pmcmc_res$replicate_parameters$R0
-Meff <- pmcmc_res$replicate_parameters$Meff
-Meff_pl <- pmcmc_res$replicate_parameters$Meff_pl
-Rt_shift <- pmcmc_res$replicate_parameters$Rt_shift
-Rt_rw_1 <- pmcmc_res$replicate_parameters$Rt_rw_1
-Rt_rw_2 <- pmcmc_res$replicate_parameters$Rt_rw_2
-Rt_rw_3 <- pmcmc_res$replicate_parameters$Rt_rw_3
-Rt_rw_4 <- pmcmc_res$replicate_parameters$Rt_rw_4
-Rt_rw_5 <- pmcmc_res$replicate_parameters$Rt_rw_5
-Rt_rw_6 <- pmcmc_res$replicate_parameters$Rt_rw_6
-Rt_rw_7 <- pmcmc_res$replicate_parameters$Rt_rw_7
-Rt_rw_8 <- pmcmc_res$replicate_parameters$Rt_rw_8
-
-
-
-
-
-
-
-
-out <- pmcmc_res
-out$pmcmc_results$inputs$squire_model <- apothecary_explicit_model()
-out$pmcmc_results$inputs$model_params$dt <- 0.05
-pmcmc <- out$pmcmc_results
-out <- generate_draws_pmcmc(pmcmc = pmcmc,
-                            burnin = ceiling(n_mcmc/10),
-                            n_chains = 3,
-                            squire_model = out$pmcmc_results$inputs$squire_model,
-                            replicates = 100,
-                            n_particles = 50,
-                            forecast = 0,
-                            country = country,
-                            population = squire::get_population(iso3c = iso3c)$n,
-                            interventions = out$interventions,
-                            data = out$pmcmc_results$inputs$data)
-out$pmcmc_results$inputs$prior <- as.function(c(formals(logprior),
-                                                body(logprior)),
-                                              envir = new.env(parent = environment(stats::acf)))
-
-all_chains <- do.call(rbind,lapply(pmcmc_res$pmcmc_results$chains, "[[", "results"))
-
-plot(all_chains$start_date, type = "l")
-plot(all_chains$R0, type = "l")
-plot(all_chains$log_posterior, type = "l")
-
-
-hist(pmcmc_res$pmcmc_results$results$start_date[1000:4000])
-hist(pmcmc_res$pmcmc_results$results$R0[1000:4000])
-hist(pmcmc_res$pmcmc_results$results$Meff[1000:4000])
-
-pars_init
-
-plot(pmcmc_res$pmcmc_results$results$start_date, type = "l")
-plot(pmcmc_res$pmcmc_results$results$R0, type = "l")
-plot(pmcmc_res$pmcmc_results$results$log_posterior, type = "l")
-
-
-
-
-
-index <- grep("D\\[", colnames(pmcmc_res$output[, , 1]))
-plot(apply(pmcmc_res$output[, index, 1], 1, sum))
-
-
-
-
-plot(pmcmc_res$pmcmc_results$results$start_date, type = "l")
-plot(pmcmc_res$pmcmc_results$results$Rt_rw_2, type = "l")
-
-index <- squire:::odin_index(pmcmc_res$output)
-
-plot(df$dateRep, df$deaths, pch = 20)
-lines()
-
-sum(pmcmc_res$output[, "D_Community[17]", 1])
-plot(pmcmc_res$output[, "D_Hospital[15]", 1])
-
-
-dim(pmcmc_res$output)
