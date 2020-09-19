@@ -106,7 +106,7 @@ logprior <- function(pars){
     dnorm(x = pars[["Rt_shift"]], mean = 0, sd = 1, log = TRUE) +
     dunif(x = pars[["Rt_shift_scale"]], min = 0.1, max = 10, log = TRUE)
 
-  # get rw spline parameters
+  # get rw spline parametersv
   if(any(grepl("Rt_rw", names(pars)))) {
     Rt_rws <- pars[grepl("Rt_rw", names(pars))]
     for (i in seq_along(Rt_rws)) {
