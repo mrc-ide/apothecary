@@ -1,9 +1,3 @@
-# Questions for OJ:
-#   Q1: how does setting Rt_shift to 0 here mean that Lines 1085 through 1092 on pmcmc.R and the
-#       associated defining of Rt_shift don't get called?
-#   Q2: remind me what Rt_shift_scale does again?
-#   Q3:
-
 # Loading Required Libraries
 library(lubridate); library(squire); library(tictoc); library(dplyr); library(tidyverse)
 
