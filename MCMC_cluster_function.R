@@ -1,11 +1,14 @@
-run_apothecary_MCMC <- function(pars_init, ecdc, interventions, n_mcmc, run_identifier) {
+run_apothecary_MCMC <- function(country, pars_init, ecdc, interventions, n_mcmc, run_identifier) {
 
   # Loading In Example Initial Parameters and Defining Country and Date Fitting Being Applied To
-  can_parms <- pars_init$CAN
-  iso3c <- "CAN"
-  date <- "2020-08-31"
+  parms <- pars_init[[country]]
+  iso3c <- country
+  date <- "2020-08-31" # needs to be changed I think
 
   # Loading in ECDC Deaths Data, Removing Deaths Followed by 21 Days of No Deaths, Removing Dates Up to First Death After This
+  if (!(country %in% unique(squire::population$iso3c))) {
+    stop("incorrect ISO specified")
+  }
   country <- squire::population$country[match(iso3c, squire::population$iso3c)[1]]
   df <- ecdc[which(ecdc$countryterritoryCode == iso3c),]
   if(sum(df$deaths>0)>1) {
@@ -27,14 +30,17 @@ run_apothecary_MCMC <- function(pars_init, ecdc, interventions, n_mcmc, run_iden
       data <- data[-to_remove,]
     }
   }
+  min_death_date <- data$date[which(data$deaths > 0)][1]
+  last_start_date <- as.Date(min_death_date) - 10
+  first_start_date <- as.Date(min_death_date) - 75
 
   # Setting Up the Fortnightly Splines
   date_0 <- date
   Rt_rw_duration <- 14
-  last_shift_date <- as.Date(can_parms$date_Meff_change) + 7
+  last_shift_date <- as.Date(parms$date_Meff_change) + 7
   remaining_days <- as.Date(date_0) - last_shift_date - 21
   rw_needed <- as.numeric(round(remaining_days/Rt_rw_duration))
-  pars_init_rw <- as.list(can_parms[grep("Rt_rw_\\d",names(can_parms))])
+  pars_init_rw <- as.list(parms[grep("Rt_rw_\\d",names(parms))])
   if(length(pars_init_rw) < rw_needed) {
     pars_init_rw[[rw_needed]] <- 0
   }
@@ -51,12 +57,12 @@ run_apothecary_MCMC <- function(pars_init, ecdc, interventions, n_mcmc, run_iden
   date_R0_change <- date_R0_change[as.Date(date_R0_change) <= date]
 
   # PMCMC Prior Bounds, Initial Parameters and Observation Model Parameters
-  pars_init <- list('start_date' = can_parms$start_date, 'R0' = can_parms$R0, 'Meff' = can_parms$Meff,
-                    'Meff_pl' = can_parms$Meff_pl, "Rt_shift" = 0, "Rt_shift_scale" = can_parms$Rt_shift_scale)
+  pars_init <- list('start_date' = parms$start_date, 'R0' = parms$R0, 'Meff' = parms$Meff,
+                    'Meff_pl' = parms$Meff_pl, "Rt_shift" = 0, "Rt_shift_scale" = parms$Rt_shift_scale)
   pars_init <- append(pars_init, pars_init_rw)
-  pars_min <- list('start_date' = "2020-01-15", 'R0' = 1.6, 'Meff' = 0.5, 'Meff_pl' = 0, "Rt_shift" = 0, "Rt_shift_scale" = 0.1)
+  pars_min <- list('start_date' = first_start_date, 'R0' = 1.6, 'Meff' = 0.5, 'Meff_pl' = 0, "Rt_shift" = 0, "Rt_shift_scale" = 0.1)
   pars_min <- append(pars_min, pars_min_rw)
-  pars_max <- list('start_date' = "2020-02-29", 'R0' = 5.6, 'Meff' = 10, 'Meff_pl' = 1, "Rt_shift" = 0.001, "Rt_shift_scale" = 10)
+  pars_max <- list('start_date' = last_start_date, 'R0' = 5.6, 'Meff' = 10, 'Meff_pl' = 1, "Rt_shift" = 0.001, "Rt_shift_scale" = 10)
   pars_max <- append(pars_max, pars_max_rw)
   pars_discrete <- list('start_date' = TRUE, 'R0' = FALSE, 'Meff' = FALSE, 'Meff_pl' = FALSE, "Rt_shift" = FALSE, "Rt_shift_scale" = FALSE)
   pars_discrete <- append(pars_discrete, pars_discrete_rw)
@@ -67,10 +73,9 @@ run_apothecary_MCMC <- function(pars_init, ecdc, interventions, n_mcmc, run_iden
   rownames(proposal_kernel) <- colnames(proposal_kernel) <- names(pars_init)
   proposal_kernel["start_date", "start_date"] <- 1.5
 
-  # MCMC Functions - Prior and Likelihood Calculation
+  # MCMC Functions - Prior and Likelihood Calculation (removed uniform start date prior as uniform)
   logprior <- function(pars){
-    ret <- dunif(x = pars[["start_date"]], min = -55, max = -10, log = TRUE) +
-      dnorm(x = pars[["R0"]], mean = 3, sd = 1, log = TRUE) +
+    ret <- dnorm(x = pars[["R0"]], mean = 3, sd = 1, log = TRUE) +
       dnorm(x = pars[["Meff"]], mean = 3, sd = 3, log = TRUE) +
       dunif(x = pars[["Meff_pl"]], min = 0, max = 1, log = TRUE) +
       dnorm(x = pars[["Rt_shift"]], mean = 0, sd = 1, log = TRUE) +
@@ -106,23 +111,31 @@ run_apothecary_MCMC <- function(pars_init, ecdc, interventions, n_mcmc, run_iden
                              date_R0_change = date_R0_change,
                              Rt_args = squire:::Rt_args_list(
                                plateau_duration = 7,
-                               date_Meff_change = can_parms$date_Meff_change,
+                               date_Meff_change = parms$date_Meff_change,
                                scale_Meff_pl = TRUE,
                                Rt_shift_duration = 7,
                                Rt_rw_duration = Rt_rw_duration),
                              burnin = n_mcmc/2,
                              seeding_cases = 5,
-                             replicates = 100,
+                             replicates = ifelse(n_mcmc < 200, n_mcmc, 200),
                              required_acceptance_ratio = 0.20,
                              start_adaptation = 500,
                              baseline_hosp_bed_capacity = 10000000000,
                              baseline_ICU_bed_capacity = 10000000000)
 
-  run_name <- paste0("M:/Charlie/apothecary_run_results/", iso3c, "_Run", run_identifier, "_", Sys.Date(), "_", n_mcmc, "_iterations.rds")
+  run_name <- paste0("N:/Charlie/apothecary_run_results/", iso3c, "_Run", run_identifier, "_", Sys.Date(), "_", n_mcmc, "_iterations.rds")
 
   saveRDS(pmcmc_res, run_name)
 
   return(pmcmc_res)
 
 }
+
+# pars_init <- readRDS("pars_init.rds")
+# ecdc <- readRDS("ecdc_all.rds")
+# interventions <- readRDS("google_brt.rds")
+# x <- run_apothecary_MCMC(country = "CAN", pars_init = pars_init, ecdc = ecdc,
+#                          interventions = interventions, n_mcmc = 250, run_identifier = 1)
+#
+
 
