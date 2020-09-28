@@ -123,7 +123,7 @@ run_apothecary_MCMC <- function(country, pars_init, ecdc, interventions, n_mcmc,
                              baseline_hosp_bed_capacity = 10000000000,
                              baseline_ICU_bed_capacity = 10000000000)
 
-  run_name <- paste0("M:/Charlie/apothecary_run_results/", iso3c, "_Run", run_identifier, "_", Sys.Date(), "_", n_mcmc, "_iterations.rds")
+  run_name <- paste0("N:/Charlie/apothecary_run_results/", iso3c, "_Run", run_identifier, "_", Sys.Date(), "_", n_mcmc, "_iterations.rds")
 
   saveRDS(pmcmc_res, run_name)
 

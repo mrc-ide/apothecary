@@ -36,6 +36,10 @@ run$task_list()
 run$task_times()
 
 # Testing the Running Locally
+missing_ISOs <- countries[!(countries %in% names(pars_init))]
+missing_countries <- squire::population$country[match(missing_ISOs, squire::population$iso3c)]
+included_countries <- countries[countries %in% names(pars_init)]
+
 pars_init <- readRDS("pars_init.rds")
 ecdc <- readRDS("ecdc_all.rds")
 interventions <- readRDS("google_brt.rds")
@@ -88,6 +92,27 @@ x <- run$task_times()
 non_cluster_included_countries <- included_countries[which(is.na(x$started))]
 non_cluster_ids <- x$task_id[which(is.na(x$started))]
 run$task_status(non_cluster_ids)
+for (i in 1:length(included_countries)) {
+  test <- run_apothecary_MCMC(country = included_countries[i], pars_init = pars_init, ecdc = ecdc,
+                              interventions = interventions, n_mcmc = 4, run_identifier = 1)
+  print(i)
+}
+
+# Running the Fitting for Every Country
+for (i in 1:length(included_countries)) {
+  test <- run$enqueue(run_apothecary_MCMC(country = included_countries[i], pars_init = pars_init, ecdc = ecdc,
+                                          interventions = interventions, n_mcmc = 50000, run_identifier = 2))
+  print(i)
+}
+
+
+
+
+
+non_cluster_included_countries <- included_countries[which(is.na(x$started))]
+non_cluster_ids <- x$task_id[which(is.na(x$started))]
+run$task_status(non_cluster_ids)
+table(unname(run$task_status()), useNA = "ifany")
 
 which(unname(run$task_status() == "ERROR"))
 included_countries[78]
