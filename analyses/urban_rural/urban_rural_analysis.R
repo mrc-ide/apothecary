@@ -1,3 +1,5 @@
+options(scipen = 999999)
+
 library(data.table)
 library(ggplot2)
 library(tidyverse)
@@ -32,11 +34,11 @@ all_apothecary_runs <- do.call(rbind, sapply(1:nrow(scenario_df), function(x){
 
   scenario_go <- run_apothecary(country = "Nigeria",
                  R0 = scenario_df$R0[x],
-                 # hosp_bed_capacity = 10000000000,
-                 # ICU_bed_capacity = 10000000000,
+                 hosp_bed_capacity = 10000000000,
+                 ICU_bed_capacity = 10000000000,
                  prop_ox_hosp_beds = scenario_df$prop_ox_hosp_beds[x],
                  prop_ox_ICU_beds = scenario_df$prop_ox_ICU_beds[x],
-                 # MV_capacity = 10000000000,
+                 MV_capacity = 10000000000,
                  model = "deterministic",
                  time_period = 365,
                  day_return = TRUE)
@@ -54,10 +56,10 @@ all_apothecary_runs$scenario <- factor(all_apothecary_runs$scenario, levels = ox
 
 
 line_deaths <- ggplot(data = all_apothecary_runs) + geom_line(aes(x = time, y = inc_deaths, color = scenario)) +
-  theme_minimal() + labs(x = "Time", y = "Deaths", color = "Scenario")
+  theme_minimal() + labs(x = "Time", y = "Deaths", color = "Scenario") + coord_cartesian(xlim = c(0, 175))
 
 
-bar_deaths <- ggplot(data = all_apothecary_runs) + geom_bar(aes(x = scenario, y = total_deaths, fill = scenario),
+bar_deaths <- ggplot(data = subset(all_apothecary_runs, time == 0)) + geom_bar(aes(x = scenario, y = total_deaths, fill = scenario),
                                               stat = "identity") +
   theme_minimal() + labs(x = "Scenario", y = "Total deaths", fill = "Scenario")
 
