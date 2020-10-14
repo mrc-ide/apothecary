@@ -28,7 +28,7 @@ oxygen_scenario <- c("No O2",
                      "Unlimited oxygen")
 
 scenario_df <- data.frame(scenario = oxygen_scenario,
-                          R0 = 2.5,#c(2.5, 2, 2.5, 3, 2.5),
+                          R0 = c(2.5, 2, 2.5, 3, 2.5),
                           healthcare_modifier = c(1,
                                                   subset(urban_rural_healthcare_facilities, setting_subcategory == "Rural")$proportion_healthcare_facilities,
                                                   1,
@@ -38,8 +38,8 @@ scenario_df <- data.frame(scenario = oxygen_scenario,
                           prop_ox_ICU_beds = c(0, median_oxy$oxygen_availability/100, 1))
 
 #Get healthcare capacity
-NGA_hospital <- get_healthcare_capacity("Nigeria")$hosp_beds * (sum(get_population("Nigeria")$n) / 100000)
-NGA_ICU <- get_healthcare_capacity("Nigeria")$ICU_beds * (sum(get_population("Nigeria")$n) / 100000)
+NGA_hospital <- get_healthcare_capacity("Nigeria")$hosp_beds * (sum(get_population("Nigeria")$n) / 1000)
+NGA_ICU <- get_healthcare_capacity("Nigeria")$ICU_beds * (sum(get_population("Nigeria")$n) / 1000)
 
 
 all_apothecary_runs <- do.call(rbind, sapply(1:nrow(scenario_df), function(x){
@@ -48,11 +48,11 @@ all_apothecary_runs <- do.call(rbind, sapply(1:nrow(scenario_df), function(x){
 
   scenario_go <- run_apothecary(country = "Nigeria",
                  R0 = scenario_df$R0[x],
-                 hosp_bed_capacity = 10000000000 * scenario_df$healthcare_modifier[x],
-                 ICU_bed_capacity = 10000000000 * scenario_df$healthcare_modifier[x],
+                 hosp_bed_capacity = NGA_hospital * scenario_df$healthcare_modifier[x],
+                 ICU_bed_capacity = NGA_ICU * scenario_df$healthcare_modifier[x],
                  prop_ox_hosp_beds = scenario_df$prop_ox_hosp_beds[x],
                  prop_ox_ICU_beds = scenario_df$prop_ox_ICU_beds[x],
-                 MV_capacity = 10000000000,
+                 MV_capacity = NGA_ICU * scenario_df$healthcare_modifier[x],
                  model = "deterministic",
                  time_period = 365,
                  day_return = TRUE)
