@@ -15,6 +15,11 @@ urban_rural_oxy_data <- urban_rural_oxy_data[order(urban_rural_oxy_data$setting_
 
 median_oxy <- subset(urban_rural_oxy_data, q == 0.5)
 
+urban_rural_healthcare_facilities <- read.csv("data-raw/urban_rural_oxygen_facility_availability.csv", stringsAsFactors = T)
+urban_rural_healthcare_facilities$setting_subcategory <- factor(urban_rural_healthcare_facilities$setting_subcategory,
+                                                                levels = c("Rural", "All", "Urban"))
+urban_rural_healthcare_facilities <- urban_rural_healthcare_facilities[order(urban_rural_healthcare_facilities$setting_subcategory), ]
+
 #Set up scenarios
 oxygen_scenario <- c("No O2",
                      "Rural O2",
@@ -24,8 +29,17 @@ oxygen_scenario <- c("No O2",
 
 scenario_df <- data.frame(scenario = oxygen_scenario,
                           R0 = 2.5,#c(2.5, 2, 2.5, 3, 2.5),
+                          healthcare_modifier = c(1,
+                                                  subset(urban_rural_healthcare_facilities, setting_subcategory == "Rural")$proportion_healthcare_facilities,
+                                                  1,
+                                                  subset(urban_rural_healthcare_facilities, setting_subcategory == "Urban")$proportion_healthcare_facilities,
+                                                  1),
                           prop_ox_hosp_beds = c(0, median_oxy$oxygen_availability/100, 1),
                           prop_ox_ICU_beds = c(0, median_oxy$oxygen_availability/100, 1))
+
+#Get healthcare capacity
+NGA_hospital <- get_healthcare_capacity("Nigeria")$hosp_beds * (sum(get_population("Nigeria")$n) / 100000)
+NGA_ICU <- get_healthcare_capacity("Nigeria")$ICU_beds * (sum(get_population("Nigeria")$n) / 100000)
 
 
 all_apothecary_runs <- do.call(rbind, sapply(1:nrow(scenario_df), function(x){
@@ -34,8 +48,8 @@ all_apothecary_runs <- do.call(rbind, sapply(1:nrow(scenario_df), function(x){
 
   scenario_go <- run_apothecary(country = "Nigeria",
                  R0 = scenario_df$R0[x],
-                 hosp_bed_capacity = 10000000000,
-                 ICU_bed_capacity = 10000000000,
+                 hosp_bed_capacity = 10000000000 * scenario_df$healthcare_modifier[x],
+                 ICU_bed_capacity = 10000000000 * scenario_df$healthcare_modifier[x],
                  prop_ox_hosp_beds = scenario_df$prop_ox_hosp_beds[x],
                  prop_ox_ICU_beds = scenario_df$prop_ox_ICU_beds[x],
                  MV_capacity = 10000000000,
