@@ -308,19 +308,29 @@ number_IMod_GetHosp_NoOx[] <- if (sum(number_req_hosp_remaining) == 0) 0 else nu
 number_IMod_NoHosp_NoOx[] <- number_req_Hosp[i] - number_IMod_GetHosp_GetOx[i] - number_IMod_GetHosp_NoOx[i] # Number of individuals who require hospital bed and oxygen who do not receive a hospital bed (and hence also do no receive oxygen)
 
 # Outputting the number of individuals requiring
-output(n_ICase2_Hosp_tot) <- TRUE
+number_req_hosp_bed <- sum(number_req_Hosp)
+number_get_hosp_full_treat <- sum(number_IMod_GetHosp_GetOx)
+number_get_hosp_any_treat <- sum(number_IMod_GetHosp_GetOx) + sum(number_IMod_GetHosp_NoOx)
 
-output(number_req_Hosp) <- TRUE
-number_get_hosp[] <- number_IMod_GetHosp_GetOx[i] + number_IMod_GetHosp_NoOx[i]
-output(number_get_hosp) <- TRUE
+output(number_req_hosp_bed) <- TRUE
+output(number_get_hosp_full_treat) <- TRUE
+output(number_get_hosp_any_treat) <- TRUE
+
+number_req_ICU_bed <- sum(number_req_ICU)
+number_get_ICU_full_treat <- sum(number_ISev_GetICU_GetOx) + sum(number_ICrit_GetICU_GetOx_GetMV)
+number_get_ICU_any_treat <- sum(number_ISev_GetICU_GetOx) + sum(number_ISev_GetICU_NoOx) +
+                            sum(number_ICrit_GetICU_GetOx_GetMV) + sum(number_ICrit_GetICU_GetOx_NoMV) + sum(number_ICrit_GetICU_NoOx_NoMV)
+
+output(number_req_ICU_bed) <- TRUE
+output(number_get_ICU_full_treat) <- TRUE
+output(number_get_ICU_any_treat) <- TRUE
+
+output(n_ICase2_Hosp_tot) <- TRUE
 output(number_IMod_GetHosp_GetOx) <- TRUE
 output(number_IMod_GetHosp_NoOx) <- TRUE
 output(number_IMod_NoHosp_NoOx) <- TRUE
 
 output(number_req_ICU) <- TRUE
-number_get_ICU[] <- number_ISev_GetICU_GetOx[i] + number_ISev_GetICU_NoOx[i] + number_ICrit_GetICU_GetOx_GetMV[i] +
-                    number_ICrit_GetICU_GetOx_NoMV[i] + number_ICrit_GetICU_NoOx_NoMV[i]
-output(number_get_ICU) <- TRUE
 output(number_ISev_GetICU_GetOx) <- TRUE
 output(number_ISev_GetICU_NoOx) <- TRUE
 output(number_ISev_NoICU_NoOx) <- TRUE
@@ -1131,5 +1141,3 @@ dim(n_IMild_Drug_5_R) <- N_age
 dim(n_ICase1_Drug_5_ICase2_Drug_5) <- N_age
 dim(n_ICase2_Drug_5_Hosp) <- N_age
 dim(n_ICase2_Hosp_tot) <- N_age
-dim(number_get_hosp) <- N_age
-dim(number_get_ICU) <- N_age

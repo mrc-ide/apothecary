@@ -50,8 +50,8 @@ demog_pars_low_R0 <- list(R0 = 1.25, country = country, population = standard_po
                           matrix = standard_matrix, time_period = 500, seeding_cases = 100)
 
 # Defining the Healthcare Capacity Parameters Used In Each Scenario
-actual_hosp_beds <- squire::get_healthcare_capacity(country)$hosp_beds * sum(standard_population)/1000
-actual_ICU_beds <- squire::get_healthcare_capacity(country)$ICU_beds * sum(standard_population)/1000
+actual_hosp_beds <- round(squire::get_healthcare_capacity(country)$hosp_beds * sum(standard_population)/1000)
+actual_ICU_beds <- round(squire::get_healthcare_capacity(country)$ICU_beds * sum(standard_population)/1000)
 actual_prop_ox_hosp_beds <- 0.6
 actual_prop_ox_ICU_beds <- 0.8
 actual_MV_capacity <- actual_ICU_beds * 0.4
