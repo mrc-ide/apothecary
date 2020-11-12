@@ -260,6 +260,8 @@ n_ICase2_Hosp[] <- gamma_ICase * ICase2[i]
 n_IRec1_IRec2[] <- gamma_rec * IRec1[i]
 n_IRec2_R[] <- gamma_rec * IRec2[i]
 
+n_ICase2_Hosp_tot[] <- (n_ICase2_Hosp[i] + n_ICase2_Drug_5_Hosp[i])
+
 ## WORKING OUT NUMBER OF HOSPITAL BEDS AVAILABILE AND HOW MANY INDIVIDUALS RECEIVE THEM
 ##-------------------------------------------------------------------------------------
 # Calculating Number of Individuals Requiring An ICU Bed
@@ -305,6 +307,28 @@ number_IMod_GetHosp_NoOx[] <- if (sum(number_req_hosp_remaining) == 0) 0 else nu
 # Calculating Individuals Not Receiving A Hospital Bed
 number_IMod_NoHosp_NoOx[] <- number_req_Hosp[i] - number_IMod_GetHosp_GetOx[i] - number_IMod_GetHosp_NoOx[i] # Number of individuals who require hospital bed and oxygen who do not receive a hospital bed (and hence also do no receive oxygen)
 
+# Outputting the number of individuals requiring
+output(n_ICase2_Hosp_tot) <- TRUE
+
+output(number_req_Hosp) <- TRUE
+number_get_hosp[] <- number_IMod_GetHosp_GetOx[i] + number_IMod_GetHosp_NoOx[i]
+output(number_get_hosp) <- TRUE
+output(number_IMod_GetHosp_GetOx) <- TRUE
+output(number_IMod_GetHosp_NoOx) <- TRUE
+output(number_IMod_NoHosp_NoOx) <- TRUE
+
+output(number_req_ICU) <- TRUE
+number_get_ICU[] <- number_ISev_GetICU_GetOx[i] + number_ISev_GetICU_NoOx[i] + number_ICrit_GetICU_GetOx_GetMV[i] +
+                    number_ICrit_GetICU_GetOx_NoMV[i] + number_ICrit_GetICU_NoOx_NoMV[i]
+output(number_get_ICU) <- TRUE
+output(number_ISev_GetICU_GetOx) <- TRUE
+output(number_ISev_GetICU_NoOx) <- TRUE
+output(number_ISev_NoICU_NoOx) <- TRUE
+output(number_ICrit_GetICU_GetOx_GetMV) <- TRUE
+output(number_ICrit_GetICU_GetOx_NoMV) <- TRUE
+output(number_ICrit_GetICU_NoOx_NoMV) <- TRUE
+output(number_ICrit_NoICU_NoOx_NoMV) <- TRUE
+
 
 ## WORKING OUT NUMBER OF ICU BEDS AVAILABILE HOW MANY INDIVIDUALS RECEIVE THEM, OXYGEN AND MECHANCAL VENTILATION
 ##--------------------------------------------------------------------------------------------------------------
@@ -342,7 +366,7 @@ number_req_ICU_remaining[] <- number_req_ICU[i] - number_GetICU_GetOx[i]
 
 number_ICrit_GetICU_GetOx_initial[] <- number_GetICU_GetOx[i] * prob_critical[i] # Initial number of new ICU Bed admissions that are going to have Critical Disease (i.e. require oxygen AND MV)
 number_ICrit_GetICU_GetOx[] <- if (drug_7_indic == 1) number_ICrit_GetICU_GetOx_initial[i] * (1 - (drug_7_prop_treat * drug_7_effect_size)) else number_ICrit_GetICU_GetOx_initial[i] # Number of new ICU Bed admissions that are going to have Critical Disease (i.e. require oxygen AND MV) after taking Drug 7 effects into account
-number_ISev_GetICU_Bed_GetOx[] <- number_GetICU_GetOx[i] - number_ICrit_GetICU_GetOx[i] # Number of new ICU admissions that going to require oxygen only
+number_ISev_GetICU_GetOx[] <- number_GetICU_GetOx[i] - number_ICrit_GetICU_GetOx[i] # Number of new ICU admissions that going to require oxygen only
 
 # Calculating Whether the Critical Cases In ICU Beds With Oxygen Get A Mechanical Ventilator Or Not
 MV_occ <- sum(ICrit_GetICU_GetOx_GetMV_Surv1) + sum(ICrit_GetICU_GetOx_GetMV_Surv2) + sum(ICrit_GetICU_GetOx_GetMV_Die1) + sum(ICrit_GetICU_GetOx_GetMV_Die2) # Current Mechanical Ventilator Usage
@@ -392,10 +416,10 @@ n_IMod_NoHosp_NoOx_Surv1_IMod_NoHosp_NoOx_Surv2[] <- IMod_NoHosp_NoOx_Surv1[i] *
 n_IMod_NoHosp_NoOx_Surv2_R[] <- IMod_NoHosp_NoOx_Surv2[i] * gamma_IMod_NoHosp_NoOx_Surv
 
 # Numbers changing between ICU bed/non-mechanical ventilation related compartments
-n_ISev_GetICU_GetOx_Die1[] <- number_ISev_GetICU_Bed_GetOx[i] * prob_severe_death_get_ICU_get_ox[i]
+n_ISev_GetICU_GetOx_Die1[] <- number_ISev_GetICU_GetOx[i] * prob_severe_death_get_ICU_get_ox[i]
 n_ISev_GetICU_GetOx_Die1_ISev_GetICU_GetOx_Die2[] <- ISev_GetICU_GetOx_Die1[i] * gamma_ISev_GetICU_GetOx_Die
 n_ISev_GetICU_GetOx_Die2_D_Hospital[] <- ISev_GetICU_GetOx_Die2[i] * gamma_ISev_GetICU_GetOx_Die
-n_ISev_GetICU_GetOx_Surv1[] <- number_ISev_GetICU_Bed_GetOx[i] - n_ISev_GetICU_GetOx_Die1[i]
+n_ISev_GetICU_GetOx_Surv1[] <- number_ISev_GetICU_GetOx[i] - n_ISev_GetICU_GetOx_Die1[i]
 n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2[] <-if (drug_9_indic_ISev_GetICU_GetOx == 1) ISev_GetICU_GetOx_Surv1[i] * gamma_ISev_GetICU_GetOx_Surv_Drug_9 else ISev_GetICU_GetOx_Surv1[i] * gamma_ISev_GetICU_GetOx_Surv
 n_ISev_GetICU_GetOx_Surv2_Rec[] <- if (drug_9_indic_ISev_GetICU_GetOx == 1) ISev_GetICU_GetOx_Surv2[i] * gamma_ISev_GetICU_GetOx_Surv_Drug_9 else ISev_GetICU_GetOx_Surv2[i] * gamma_ISev_GetICU_GetOx_Surv
 
@@ -616,13 +640,13 @@ output(n_PE2_ICase1_No_Drug_5) <- TRUE
 
 # Variables to Check for Drug 6
 output(number_req_ICU_initial) <- TRUE
-output(number_req_ICU) <- TRUE
+#output(number_req_ICU) <- TRUE
 
 # Variables to Check for Drug 7
 output(number_ICrit_GetICU_GetOx) <- TRUE
-output(number_ISev_GetICU_Bed_GetOx) <- TRUE
-output(number_ICrit_GetICU_NoOx_NoMV) <- TRUE
-output(number_ISev_GetICU_NoOx) <- TRUE
+#output(number_ISev_GetICU_GetOx) <- TRUE
+#output(number_ICrit_GetICU_NoOx_NoMV) <- TRUE
+#output(number_ISev_GetICU_NoOx) <- TRUE
 
 # Variables to Check for Drug 8
 output(gamma_IMod_GetHosp_GetOx_Surv) <- TRUE
@@ -1026,7 +1050,7 @@ dim(number_GetICU_GetOx) <- N_age
 dim(number_req_ICU_remaining) <- N_age
 dim(number_ICrit_GetICU_GetOx_initial) <- N_age
 dim(number_ICrit_GetICU_GetOx) <- N_age
-dim(number_ISev_GetICU_Bed_GetOx) <- N_age
+dim(number_ISev_GetICU_GetOx) <- N_age
 dim(number_ICrit_GetICU_GetOx_GetMV) <- N_age
 dim(number_ICrit_GetICU_GetOx_NoMV) <- N_age
 dim(number_GetICU_NoOx) <- N_age
@@ -1106,3 +1130,6 @@ dim(n_E2_IMild_Drug_5) <- N_age
 dim(n_IMild_Drug_5_R) <- N_age
 dim(n_ICase1_Drug_5_ICase2_Drug_5) <- N_age
 dim(n_ICase2_Drug_5_Hosp) <- N_age
+dim(n_ICase2_Hosp_tot) <- N_age
+dim(number_get_hosp) <- N_age
+dim(number_get_ICU) <- N_age

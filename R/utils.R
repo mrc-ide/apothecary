@@ -65,11 +65,11 @@ parse_country_population_mixing_matrix <- function(country = NULL,
   # If a country was provided then grab the population and matrices if needed
   if (is.null(population)) {
     population <- get_population(country)
-
-    if (is.null(contact_matrix_set)) {
-      contact_matrix_set <- get_mixing_matrix(country)
-    }
     population <- population$n
+  }
+
+  if (is.null(contact_matrix_set)) {
+    contact_matrix_set <- get_mixing_matrix(country)
   }
 
   ret <- list(population = population,
