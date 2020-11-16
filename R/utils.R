@@ -201,3 +201,263 @@ get_population <-  function(country = NULL, iso3c = NULL, simple_SEIR = FALSE){
   return(pc)
 }
 
+#' Parse country severity parameters
+#' @inheritParams parameters_explicit_SEEIR
+#'
+parse_country_severity <- function(country = NULL,
+                                   prob_asymp = NULL,
+                                   prob_hosp = NULL,
+                                   prob_severe = NULL,
+                                   prob_critical = NULL,
+                                   prob_moderate_death_get_hosp_get_ox_baseline = NULL,
+                                   prob_moderate_death_get_hosp_no_ox_baseline = NULL,
+                                   prob_moderate_death_no_hosp_no_ox = NULL,
+                                   prob_severe_death_get_ICU_get_ox_baseline = NULL,
+                                   prob_severe_death_get_ICU_no_ox_baseline = NULL,
+                                   prob_severe_death_no_ICU_no_ox = NULL,
+                                   prob_critical_death_get_ICU_get_ox_get_MV_baseline = NULL,
+                                   prob_critical_death_get_ICU_get_ox_no_MV_baseline = NULL,
+                                   prob_critical_death_get_ICU_no_ox_no_MV_baseline = NULL,
+                                   prob_critical_death_no_ICU_no_ox_no_MV = NULL,
+                                   walker_params = FALSE) {
+
+  # If walker_params == TRUE, use the original squire parameters described in Walker et al.
+  squire:::assert_logical(walker_params)
+  if (walker_params) {
+    if (is.null(prob_asymp)) {
+      prob_asymp <- rep(0.2, 17)
+    }
+    if (is.null(prob_hosp)) {
+      prob_hosp <- c(
+        0.000744192, 0.000634166, 0.001171109, 0.002394593, 0.005346437 ,
+        0.010289885, 0.016234604, 0.023349169, 0.028944623, 0.038607042 ,
+        0.057734879, 0.072422135, 0.101602458, 0.116979814, 0.146099064,
+        0.176634654 ,0.180000000)
+    }
+    if (is.null(prob_severe)) {
+      prob_severe <- c(
+        0.05022296,	0.05022296,	0.05022296,	0.05022296,	0.05022296,
+        0.05022296,	0.05022296,	0.053214942, 0.05974426,	0.074602879,
+        0.103612417, 0.149427991, 0.223777304,	0.306985918,
+        0.385779555, 0.461217861, 0.709444444)
+    }
+    if (is.null(prob_critical)) {
+      prob_critical <- rep(0.8, 17)
+    }
+
+    # Moderate Disease
+    if (is.null(prob_moderate_death_get_hosp_get_ox_baseline)) {
+      prob_moderate_death_get_hosp_get_ox_baseline <- c(
+        0.0125702, 0.0125702,	0.0125702, 0.0125702,
+        0.0125702, 0.0125702,	0.0125702, 0.013361147,
+        0.015104687, 0.019164124,	0.027477519, 0.041762108,
+        0.068531658, 0.105302319,	0.149305732, 0.20349534, 0.5804312)
+    }
+    if (is.null(prob_moderate_death_get_hosp_no_ox_baseline)) {
+      prob_moderate_death_get_hosp_no_ox_baseline <- rep(0.6, length(prob_hosp))
+    }
+    if (is.null(prob_moderate_death_no_hosp_no_ox)) {
+      prob_moderate_death_no_hosp_no_ox <- rep(0.6, length(prob_hosp))
+    }
+
+    # Severe Disease
+    if (is.null(prob_severe_death_get_ICU_get_ox_baseline)) {
+      prob_severe_death_get_ICU_get_ox_baseline <- rep(0.5, length(prob_hosp))
+    }
+    if (is.null(prob_severe_death_get_ICU_no_ox_baseline)) {
+      prob_severe_death_get_ICU_no_ox_baseline <- rep(0.95, length(prob_hosp))
+    }
+    if (is.null(prob_severe_death_no_ICU_no_ox)) {
+      prob_severe_death_no_ICU_no_ox <- rep(0.95, length(prob_hosp))
+    }
+
+    # Critical Disease
+    if (is.null(prob_critical_death_get_ICU_get_ox_get_MV_baseline)) {
+      prob_critical_death_get_ICU_get_ox_get_MV_baseline <- rep(0.5, length(prob_hosp))
+    }
+    if (is.null(prob_critical_death_get_ICU_get_ox_no_MV_baseline)) {
+      prob_critical_death_get_ICU_get_ox_no_MV_baseline <- rep(0.95, length(prob_hosp))
+    }
+    if (is.null(prob_critical_death_get_ICU_no_ox_no_MV_baseline)) {
+      prob_critical_death_get_ICU_no_ox_no_MV_baseline <- rep(0.95, length(prob_hosp))
+    }
+    if (is.null(prob_critical_death_no_ICU_no_ox_no_MV)) {
+      prob_critical_death_no_ICU_no_ox_no_MV <- rep(0.95, length(prob_hosp))
+    }
+
+    ret <- list(country = country,
+                prob_asymp = prob_asymp,
+                prob_hosp = prob_hosp,
+                prob_severe = prob_severe,
+                prob_critical = prob_critical,
+                prob_moderate_death_get_hosp_get_ox_baseline = prob_moderate_death_get_hosp_get_ox_baseline,
+                prob_moderate_death_get_hosp_no_ox_baseline = prob_moderate_death_get_hosp_no_ox_baseline,
+                prob_moderate_death_no_hosp_no_ox = prob_moderate_death_no_hosp_no_ox,
+                prob_severe_death_get_ICU_get_ox_baseline = prob_severe_death_get_ICU_get_ox_baseline,
+                prob_severe_death_get_ICU_no_ox_baseline = prob_severe_death_get_ICU_no_ox_baseline,
+                prob_severe_death_no_ICU_no_ox = prob_severe_death_no_ICU_no_ox,
+                prob_critical_death_get_ICU_get_ox_get_MV_baseline = prob_critical_death_get_ICU_get_ox_get_MV_baseline,
+                prob_critical_death_get_ICU_get_ox_no_MV_baseline = prob_critical_death_get_ICU_get_ox_no_MV_baseline,
+                prob_critical_death_get_ICU_no_ox_no_MV_baseline = prob_critical_death_get_ICU_no_ox_no_MV_baseline,
+                prob_critical_death_no_ICU_no_ox_no_MV = prob_critical_death_no_ICU_no_ox_no_MV)
+  }
+
+  # Filling in any missing parameters
+  if (is.null(prob_asymp)) {
+    prob_asymp <- probs$prob_asymp
+  }
+  if (is.null(prob_hosp)) {
+    prob_hosp <- probs$prob_hosp
+  }
+  if (is.null(prob_severe)) {
+    prob_severe <- probs$prob_severe
+  }
+  if (is.null(prob_critical)) {
+    prob_critical <- probs$prob_critical
+  }
+
+  # If no country specified, fill in remaining missing probs with defaults, make no adjustment
+  if (is.null(country)) {
+
+    # Moderate Disease
+    if (is.null(prob_moderate_death_get_hosp_get_ox_baseline)) {
+      prob_moderate_death_get_hosp_get_ox_baseline <- probs$prob_moderate_death_get_hosp_get_ox_baseline
+    }
+    if (is.null(prob_moderate_death_get_hosp_no_ox_baseline)) {
+      prob_moderate_death_get_hosp_no_ox_baseline <- probs$prob_moderate_death_get_hosp_no_ox_baseline
+    }
+    if (is.null(prob_moderate_death_no_hosp_no_ox)) {
+      prob_moderate_death_no_hosp_no_ox <- probs$prob_moderate_death_no_hosp_no_ox
+    }
+
+    # Severe Disease
+    if (is.null(prob_severe_death_get_ICU_get_ox_baseline)) {
+      prob_severe_death_get_ICU_get_ox_baseline <- probs$prob_severe_death_get_ICU_get_ox_baseline
+    }
+    if (is.null(prob_severe_death_get_ICU_no_ox_baseline)) {
+      prob_severe_death_get_ICU_no_ox_baseline <- probs$prob_severe_death_get_ICU_no_ox_baseline
+    }
+    if (is.null(prob_severe_death_no_ICU_no_ox)) {
+      prob_severe_death_no_ICU_no_ox <- probs$prob_severe_death_no_ICU_no_ox
+    }
+
+    # Critical Disease
+    if (is.null(prob_critical_death_get_ICU_get_ox_get_MV_baseline)) {
+      prob_critical_death_get_ICU_get_ox_get_MV_baseline <- probs$prob_critical_death_get_ICU_get_ox_get_MV_baseline
+    }
+    if (is.null(prob_critical_death_get_ICU_get_ox_no_MV_baseline)) {
+      prob_critical_death_get_ICU_get_ox_no_MV_baseline <- probs$prob_critical_death_get_ICU_get_ox_no_MV_baseline
+    }
+    if (is.null(prob_critical_death_get_ICU_no_ox_no_MV_baseline)) {
+      prob_critical_death_get_ICU_no_ox_no_MV_baseline <- probs$prob_critical_death_get_ICU_no_ox_no_MV_baseline
+    }
+    if (is.null(prob_critical_death_no_ICU_no_ox_no_MV)) {
+      prob_critical_death_no_ICU_no_ox_no_MV <- probs$prob_critical_death_no_ICU_no_ox_no_MV
+    }
+    ret <- list(country = country,
+                prob_asymp = prob_asymp,
+                prob_hosp = prob_hosp,
+                prob_severe = prob_severe,
+                prob_critical = prob_critical,
+                prob_moderate_death_get_hosp_get_ox_baseline = prob_moderate_death_get_hosp_get_ox_baseline,
+                prob_moderate_death_get_hosp_no_ox_baseline = prob_moderate_death_get_hosp_no_ox_baseline,
+                prob_moderate_death_no_hosp_no_ox = prob_moderate_death_no_hosp_no_ox,
+                prob_severe_death_get_ICU_get_ox_baseline = prob_severe_death_get_ICU_get_ox_baseline,
+                prob_severe_death_get_ICU_no_ox_baseline = prob_severe_death_get_ICU_no_ox_baseline,
+                prob_severe_death_no_ICU_no_ox = prob_severe_death_no_ICU_no_ox,
+                prob_critical_death_get_ICU_get_ox_get_MV_baseline = prob_critical_death_get_ICU_get_ox_get_MV_baseline,
+                prob_critical_death_get_ICU_get_ox_no_MV_baseline = prob_critical_death_get_ICU_get_ox_no_MV_baseline,
+                prob_critical_death_get_ICU_no_ox_no_MV_baseline = prob_critical_death_get_ICU_no_ox_no_MV_baseline,
+                prob_critical_death_no_ICU_no_ox_no_MV = prob_critical_death_no_ICU_no_ox_no_MV)
+  }
+
+  # If country is specified, check valid and then adjust default probs based on demography
+  if (!is.null(country)) {
+
+    # Check country valid and then grab relevant elderly population
+    if(!country %in% unique(squire::population$country)){
+      stop("Country not found")
+    }
+    population <- squire:::get_population(country)
+    population <- population$n
+    elderly_pop <- squire:::get_elderly_population(country)
+    elderly_pop <- elderly_pop$n
+
+    # Adjusting death probability for country-specific 80+ demographic compositions
+    index <- length(prob_severe)
+    prop_deaths_ICU_80plus <- 0.10 # based off CHESS data
+    prop_deaths_ICU_vent_80plus <- 0.8030396 # based off CHESS data
+    elderly_IFR <- c(0.05659,	0.08862, 0.17370) # from Brazeau et al, for 80-84, 85-89 and 90+
+    IFR_80plus <- sum(elderly_pop/sum(elderly_pop) * elderly_IFR)
+    CFR_hosp_overall_80plus <- IFR_80plus/prob_hosp[index]
+    CFR_ICU_80plus <- CFR_hosp_overall_80plus * prop_deaths_ICU_80plus/prob_severe[index]
+    CFR_mod_80plus <- (CFR_hosp_overall_80plus - (CFR_ICU_80plus * prob_severe[index]))/(1 - prob_severe[index])
+    CFR_crit_80_plus <- CFR_ICU_80plus * prop_deaths_ICU_vent_80plus/prob_critical[index]
+    CFR_sev_80_plus <- (CFR_ICU_80plus - CFR_crit_80_plus * prob_critical[index])/(1 - prob_critical[index])
+
+    # Moderate Disease
+    if (is.null(prob_moderate_death_get_hosp_get_ox_baseline)) {
+      prob_moderate_death_get_hosp_get_ox_baseline <- probs$prob_moderate_death_get_hosp_get_ox_baseline
+      prob_moderate_death_get_hosp_get_ox_baseline[index] <- min(1, CFR_mod_80plus)
+    }
+    if (is.null(prob_moderate_death_get_hosp_no_ox_baseline)) {
+      prob_moderate_death_get_hosp_no_ox_baseline <- probs$prob_moderate_death_get_hosp_no_ox_baseline
+      prob_moderate_death_get_hosp_no_ox_baseline[index] <- min(1, prob_moderate_death_get_hosp_get_ox_baseline * probs$mod_RR * probs$bed_RR)
+    }
+    if (is.null(prob_moderate_death_no_hosp_no_ox)) {
+      prob_moderate_death_no_hosp_no_ox <- probs$prob_moderate_death_no_hosp_no_ox
+      prob_moderate_death_no_hosp_no_ox[index] <- min(1, prob_moderate_death_get_hosp_get_ox_baseline * probs$mod_RR)
+    }
+
+    # Severe Disease
+    if (is.null(prob_severe_death_get_ICU_get_ox_baseline)) {
+      prob_severe_death_get_ICU_get_ox_baseline <- probs$prob_severe_death_get_ICU_get_ox_baseline
+      prob_severe_death_get_ICU_get_ox_baseline[index] <- min(1, CFR_sev_80_plus)
+    }
+    if (is.null(prob_severe_death_get_ICU_no_ox_baseline)) {
+      prob_severe_death_get_ICU_no_ox_baseline <- probs$prob_severe_death_get_ICU_no_ox_baseline
+      prob_severe_death_get_ICU_no_ox_baseline[index] <- min(1, prob_severe_death_get_ICU_get_ox_baseline * probs$sev_RR * probs$bed_RR)
+    }
+    if (is.null(prob_severe_death_no_ICU_no_ox)) {
+      prob_severe_death_no_ICU_no_ox <- probs$prob_severe_death_no_ICU_no_ox
+      prob_severe_death_no_ICU_no_ox[index] <- min(1, prob_severe_death_get_ICU_get_ox_baseline * probs$sev_RR)
+    }
+
+    # Critical Disease
+    if (is.null(prob_critical_death_get_ICU_get_ox_get_MV_baseline)) {
+      prob_critical_death_get_ICU_get_ox_get_MV_baseline <- probs$prob_critical_death_get_ICU_get_ox_get_MV_baseline
+      prob_critical_death_get_ICU_get_ox_get_MV_baseline[index] <- min(1, CFR_crit_80_plus)
+    }
+    if (is.null(prob_critical_death_get_ICU_get_ox_no_MV_baseline)) {
+      prob_critical_death_get_ICU_get_ox_no_MV_baseline <- probs$prob_critical_death_get_ICU_get_ox_no_MV_baseline
+      prob_critical_death_get_ICU_get_ox_no_MV_baseline[index] <- min(1, max(0.95, prob_severe_death_no_ICU_no_ox))
+    }
+    if (is.null(prob_critical_death_get_ICU_no_ox_no_MV_baseline)) {
+      prob_critical_death_get_ICU_no_ox_no_MV_baseline <- probs$prob_critical_death_get_ICU_no_ox_no_MV_baseline
+      prob_critical_death_get_ICU_no_ox_no_MV_baseline[index] <- min(1, max(0.95, prob_severe_death_no_ICU_no_ox))
+    }
+    if (is.null(prob_critical_death_no_ICU_no_ox_no_MV)) {
+      prob_critical_death_no_ICU_no_ox_no_MV <- probs$prob_critical_death_no_ICU_no_ox_no_MV
+      prob_critical_death_no_ICU_no_ox_no_MV[index] <- min(1, max(0.95, prob_severe_death_no_ICU_no_ox))
+    }
+
+    ret <- list(country = country,
+                prob_asymp = prob_asymp,
+                prob_hosp = prob_hosp,
+                prob_severe = prob_severe,
+                prob_critical = prob_critical,
+                prob_moderate_death_get_hosp_get_ox_baseline = prob_moderate_death_get_hosp_get_ox_baseline,
+                prob_moderate_death_get_hosp_no_ox_baseline = prob_moderate_death_get_hosp_no_ox_baseline,
+                prob_moderate_death_no_hosp_no_ox = prob_moderate_death_no_hosp_no_ox,
+                prob_severe_death_get_ICU_get_ox_baseline = prob_severe_death_get_ICU_get_ox_baseline,
+                prob_severe_death_get_ICU_no_ox_baseline = prob_severe_death_get_ICU_no_ox_baseline,
+                prob_severe_death_no_ICU_no_ox = prob_severe_death_no_ICU_no_ox,
+                prob_critical_death_get_ICU_get_ox_get_MV_baseline = prob_critical_death_get_ICU_get_ox_get_MV_baseline,
+                prob_critical_death_get_ICU_get_ox_no_MV_baseline = prob_critical_death_get_ICU_get_ox_no_MV_baseline,
+                prob_critical_death_get_ICU_no_ox_no_MV_baseline = prob_critical_death_get_ICU_no_ox_no_MV_baseline,
+                prob_critical_death_no_ICU_no_ox_no_MV = prob_critical_death_no_ICU_no_ox_no_MV)
+  }
+
+  return(ret)
+
+}

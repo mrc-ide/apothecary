@@ -131,59 +131,50 @@ apothecary_parameters <- function(
   seeding_cases = NULL,
 
   # probabilities
-  prob_asymp = rep(0.5, 17),
-  prob_hosp = c(0.000744192, 0.000634166,0.001171109, 0.002394593, 0.005346437 ,
-                0.010289885, 0.016234604, 0.023349169, 0.028944623, 0.038607042 ,
-                0.057734879, 0.072422135, 0.101602458, 0.116979814, 0.146099064,
-                0.176634654 ,0.180000000),
-  prob_severe = c(0.05022296,	0.05022296,	0.05022296,	0.05022296,	0.05022296,
-                  0.05022296,	0.05022296,	0.053214942, 0.05974426,	0.074602879,
-                  0.103612417, 0.149427991, 0.223777304,	0.306985918,
-                  0.385779555, 0.461217861, 0.709444444),
-  prob_critical = rep(0.8, 17),
-  prob_moderate_death_get_hosp_get_ox_baseline = c(0.0125702,	0.0125702,	0.0125702,	0.0125702, 0.0125702,
-                                                   0.0125702,	0.0125702,	0.013361147, 0.015104687,	0.019164124,
-                                                   0.027477519,	0.041762108, 0.068531658,	0.105302319, 0.149305732,
-                                                   0.20349534,	0.5804312),
-  prob_moderate_death_get_hosp_no_ox_baseline = rep(0.6, 17),
-  prob_moderate_death_no_hosp_no_ox = rep(0.6, 17),
-  prob_severe_death_get_ICU_get_ox_baseline = rep(0.5, 17),
-  prob_severe_death_get_ICU_no_ox_baseline = rep(0.95, 17),
-  prob_severe_death_no_ICU_no_ox = rep(0.95, 17),
-  prob_critical_death_get_ICU_get_ox_get_MV_baseline = rep(0.5, 17),
-  prob_critical_death_get_ICU_get_ox_no_MV_baseline = rep(0.95, 17),
-  prob_critical_death_get_ICU_no_ox_no_MV_baseline = rep(0.95, 17),
-  prob_critical_death_no_ICU_no_ox_no_MV = rep(0.95, 17),
+  prob_asymp = NULL,
+  prob_hosp = NULL,
+  prob_severe = NULL,
+  prob_critical = NULL,
+  prob_moderate_death_get_hosp_get_ox_baseline = NULL,
+  prob_moderate_death_get_hosp_no_ox_baseline = NULL,
+  prob_moderate_death_no_hosp_no_ox = NULL,
+  prob_severe_death_get_ICU_get_ox_baseline = NULL,
+  prob_severe_death_get_ICU_no_ox_baseline = NULL,
+  prob_severe_death_no_ICU_no_ox = NULL,
+  prob_critical_death_get_ICU_get_ox_get_MV_baseline = NULL,
+  prob_critical_death_get_ICU_get_ox_no_MV_baseline = NULL,
+  prob_critical_death_get_ICU_no_ox_no_MV_baseline = NULL,
+  prob_critical_death_no_ICU_no_ox_no_MV = NULL,
 
   # durations
-  dur_E  = 4.6,
-  dur_IAsymp = 2.1,
-  dur_IMild = 2.1,
-  dur_ICase = 4.5,
-  dur_rec = 3.4,
+  dur_E  = NULL,
+  dur_IAsymp = NULL,
+  dur_IMild = NULL,
+  dur_ICase = NULL,
+  dur_rec = NULL,
 
-  dur_IMod_GetHosp_GetOx_Surv = 9.5,
-  dur_IMod_GetHosp_GetOx_Die = 7.6,
-  dur_IMod_GetHosp_NoOx_Surv = 9.5/2,
-  dur_IMod_GetHosp_NoOx_Die = 7.6/2,
-  dur_IMod_NoHosp_NoOx_Surv = 9.6/2,
-  dur_IMod_NoHosp_NoOx_Die = 7.6/2,
+  dur_IMod_GetHosp_GetOx_Surv = NULL,
+  dur_IMod_GetHosp_GetOx_Die = NULL,
+  dur_IMod_GetHosp_NoOx_Surv = NULL,
+  dur_IMod_GetHosp_NoOx_Die = NULL,
+  dur_IMod_NoHosp_NoOx_Surv = NULL,
+  dur_IMod_NoHosp_NoOx_Die = NULL,
 
-  dur_ISev_GetICU_GetOx_Surv = 11.3,
-  dur_ISev_GetICU_GetOx_Die = 10.1,
-  dur_ISev_GetICU_NoOx_Surv = 11.3/2,
-  dur_ISev_GetICU_NoOx_Die = 1,
-  dur_ISev_NoICU_NoOx_Surv = 11.3/2,
-  dur_ISev_NoICU_NoOx_Die = 1,
+  dur_ISev_GetICU_GetOx_Surv = NULL,
+  dur_ISev_GetICU_GetOx_Die = NULL,
+  dur_ISev_GetICU_NoOx_Surv = NULL,
+  dur_ISev_GetICU_NoOx_Die = NULL,
+  dur_ISev_NoICU_NoOx_Surv = NULL,
+  dur_ISev_NoICU_NoOx_Die = NULL,
 
-  dur_ICrit_GetICU_GetOx_GetMV_Surv = 11.3,
-  dur_ICrit_GetICU_GetOx_GetMV_Die = 10.1,
-  dur_ICrit_GetICU_GetOx_NoMV_Surv = 11.3/2,
-  dur_ICrit_GetICU_GetOx_NoMV_Die = 1,
-  dur_ICrit_GetICU_NoOx_NoMV_Surv = 11.3/2,
-  dur_ICrit_GetICU_NoOx_NoMV_Die = 1,
-  dur_ICrit_NoICU_NoOx_NoMV_Surv = 11.3/2,
-  dur_ICrit_NoICU_NoOx_NoMV_Die = 1,
+  dur_ICrit_GetICU_GetOx_GetMV_Surv = NULL,
+  dur_ICrit_GetICU_GetOx_GetMV_Die = NULL,
+  dur_ICrit_GetICU_GetOx_NoMV_Surv = NULL,
+  dur_ICrit_GetICU_GetOx_NoMV_Die = NULL,
+  dur_ICrit_GetICU_NoOx_NoMV_Surv = NULL,
+  dur_ICrit_GetICU_NoOx_NoMV_Die = NULL,
+  dur_ICrit_NoICU_NoOx_NoMV_Surv = NULL,
+  dur_ICrit_NoICU_NoOx_NoMV_Die = NULL,
 
   # drug related parameters
   prophylactic_drug_timing_1 = 100000,
@@ -243,7 +234,9 @@ apothecary_parameters <- function(
   drug_13_prop_treat = 0,
   drug_13_GetOx_GetMV_effect_size = 0,
   drug_13_GetOx_NoMV_effect_size = 0,
-  drug_13_NoOx_NoMV_effect_size = 0
+  drug_13_NoOx_NoMV_effect_size = 0,
+
+  walker_params = FALSE
 
 ) {
 
@@ -254,6 +247,93 @@ apothecary_parameters <- function(
   country <- cpm$country
   population <- cpm$population
   contact_matrix_set <- cpm$contact_matrix_set
+
+  # Handle severity parameters and possible 80+ demographic adjustment
+  severity_params <- parse_country_severity(country = country,
+                                            prob_asymp = prob_asymp,
+                                            prob_hosp = prob_hosp,
+                                            prob_severe = prob_severe,
+                                            prob_critical = prob_critical,
+                                            prob_moderate_death_get_hosp_get_ox_baseline = prob_moderate_death_get_hosp_get_ox_baseline,
+                                            prob_moderate_death_get_hosp_no_ox_baseline = prob_moderate_death_get_hosp_no_ox_baseline,
+                                            prob_moderate_death_no_hosp_no_ox = prob_moderate_death_no_hosp_no_ox,
+                                            prob_severe_death_get_ICU_get_ox_baseline = prob_severe_death_get_ICU_get_ox_baseline,
+                                            prob_severe_death_get_ICU_no_ox_baseline = prob_severe_death_get_ICU_no_ox_baseline,
+                                            prob_severe_death_no_ICU_no_ox = prob_severe_death_no_ICU_no_ox,
+                                            prob_critical_death_get_ICU_get_ox_get_MV_baseline = prob_critical_death_get_ICU_get_ox_get_MV_baseline,
+                                            prob_critical_death_get_ICU_get_ox_no_MV_baseline = prob_critical_death_get_ICU_get_ox_no_MV_baseline,
+                                            prob_critical_death_get_ICU_no_ox_no_MV_baseline = prob_critical_death_get_ICU_no_ox_no_MV_baseline,
+                                            prob_critical_death_no_ICU_no_ox_no_MV = prob_critical_death_no_ICU_no_ox_no_MV,
+                                            walker_params = walker_params)
+
+  prob_asymp <- severity_params$prob_asymp
+  prob_hosp <- severity_params$prob_hosp
+  prob_severe <- severity_params$prob_severe
+  prob_critical <- severity_params$prob_critical
+  prob_moderate_death_get_hosp_get_ox_baseline <- severity_params$prob_moderate_death_get_hosp_get_ox_baseline
+  prob_moderate_death_get_hosp_no_ox_baseline <- severity_params$prob_moderate_death_get_hosp_no_ox_baseline
+  prob_moderate_death_no_hosp_no_ox <- severity_params$prob_moderate_death_no_hosp_no_ox
+  prob_severe_death_get_ICU_get_ox_baseline <- severity_params$prob_severe_death_get_ICU_get_ox_baseline
+  prob_severe_death_get_ICU_no_ox_baseline <- severity_params$prob_severe_death_get_ICU_no_ox_baseline
+  prob_severe_death_no_ICU_no_ox <- severity_params$prob_severe_death_no_ICU_no_ox
+  prob_critical_death_get_ICU_get_ox_get_MV_baseline <- severity_params$prob_critical_death_get_ICU_get_ox_get_MV_baseline
+  prob_critical_death_get_ICU_get_ox_no_MV_baseline <- severity_params$prob_critical_death_get_ICU_get_ox_no_MV_baseline
+  prob_critical_death_get_ICU_no_ox_no_MV_baseline <- severity_params$prob_critical_death_get_ICU_no_ox_no_MV_baseline
+  prob_critical_death_no_ICU_no_ox_no_MV <- severity_params$prob_critical_death_no_ICU_no_ox_no_MV
+
+  # Handle duration parameters
+  duration_params <- parse_durations(dur_E = dur_E,
+                                     dur_IAsymp = dur_IAsymp,
+                                     dur_IMild = dur_IMild,
+                                     dur_ICase = dur_ICase,
+                                     dur_IMod_GetHosp_GetOx_Surv = dur_IMod_GetHosp_GetOx_Surv,
+                                     dur_IMod_GetHosp_GetOx_Die = dur_IMod_GetHosp_GetOx_Die,
+                                     dur_IMod_GetHosp_NoOx_Surv = dur_IMod_GetHosp_NoOx_Surv,
+                                     dur_IMod_GetHosp_NoOx_Die = dur_IMod_GetHosp_NoOx_Die,
+                                     dur_IMod_NoHosp_NoOx_Surv = dur_IMod_NoHosp_NoOx_Surv,
+                                     dur_IMod_NoHosp_NoOx_Die = dur_IMod_NoHosp_NoOx_Die,
+                                     dur_ISev_GetICU_GetOx_Surv = dur_ISev_GetICU_GetOx_Surv,
+                                     dur_ISev_GetICU_GetOx_Die = dur_ISev_GetICU_GetOx_Die,
+                                     dur_ISev_GetICU_NoOx_Surv = dur_ISev_GetICU_NoOx_Surv,
+                                     dur_ISev_GetICU_NoOx_Die = dur_ISev_GetICU_NoOx_Die,
+                                     dur_ISev_NoICU_NoOx_Surv = dur_ISev_NoICU_NoOx_Surv,
+                                     dur_ISev_NoICU_NoOx_Die = dur_ISev_NoICU_NoOx_Die,
+                                     dur_ICrit_GetICU_GetOx_GetMV_Surv = dur_ICrit_GetICU_GetOx_GetMV_Surv,
+                                     dur_ICrit_GetICU_GetOx_GetMV_Die = dur_ICrit_GetICU_GetOx_GetMV_Die,
+                                     dur_ICrit_GetICU_GetOx_NoMV_Surv = dur_ICrit_GetICU_GetOx_NoMV_Surv,
+                                     dur_ICrit_GetICU_GetOx_NoMV_Die = dur_ICrit_GetICU_GetOx_NoMV_Die,
+                                     dur_ICrit_GetICU_NoOx_NoMV_Surv = dur_ICrit_GetICU_NoOx_NoMV_Surv,
+                                     dur_ICrit_GetICU_NoOx_NoMV_Die = dur_ICrit_GetICU_NoOx_NoMV_Die,
+                                     dur_ICrit_NoICU_NoOx_NoMV_Surv = dur_ICrit_NoICU_NoOx_NoMV_Surv,
+                                     dur_ICrit_NoICU_NoOx_NoMV_Die = dur_ICrit_NoICU_NoOx_NoMV_Die,
+                                     dur_rec = dur_rec,
+                                     walker_params = walker_params)
+
+  dur_E <- duration_params$dur_E
+  dur_IAsymp <- duration_params$dur_IAsymp
+  dur_IMild <- duration_params$dur_IMild
+  dur_ICase <- duration_params$dur_ICase
+  dur_IMod_GetHosp_GetOx_Surv <- duration_params$dur_IMod_GetHosp_GetOx_Surv
+  dur_IMod_GetHosp_GetOx_Die <- duration_params$dur_IMod_GetHosp_GetOx_Die
+  dur_IMod_GetHosp_NoOx_Surv <- duration_params$dur_IMod_GetHosp_NoOx_Surv
+  dur_IMod_GetHosp_NoOx_Die <- duration_params$dur_IMod_GetHosp_NoOx_Die
+  dur_IMod_NoHosp_NoOx_Surv <- duration_params$dur_IMod_NoHosp_NoOx_Surv
+  dur_IMod_NoHosp_NoOx_Die <- duration_params$dur_IMod_NoHosp_NoOx_Die
+  dur_ISev_GetICU_GetOx_Surv <- duration_params$dur_ISev_GetICU_GetOx_Surv
+  dur_ISev_GetICU_GetOx_Die <- duration_params$dur_ISev_GetICU_GetOx_Die
+  dur_ISev_GetICU_NoOx_Surv <- duration_params$dur_ISev_GetICU_NoOx_Surv
+  dur_ISev_GetICU_NoOx_Die <- duration_params$dur_ISev_GetICU_NoOx_Die
+  dur_ISev_NoICU_NoOx_Surv <- duration_params$dur_ISev_NoICU_NoOx_Surv
+  dur_ISev_NoICU_NoOx_Die <- duration_params$dur_ISev_NoICU_NoOx_Die
+  dur_ICrit_GetICU_GetOx_GetMV_Surv <- duration_params$dur_ICrit_GetICU_GetOx_GetMV_Surv
+  dur_ICrit_GetICU_GetOx_GetMV_Die <- duration_params$dur_ICrit_GetICU_GetOx_GetMV_Die
+  dur_ICrit_GetICU_GetOx_NoMV_Surv <- duration_params$dur_ICrit_GetICU_GetOx_NoMV_Surv
+  dur_ICrit_GetICU_GetOx_NoMV_Die <- duration_params$dur_ICrit_GetICU_GetOx_NoMV_Die
+  dur_ICrit_GetICU_NoOx_NoMV_Surv <- duration_params$dur_ICrit_GetICU_NoOx_NoMV_Surv
+  dur_ICrit_GetICU_NoOx_NoMV_Die <- duration_params$dur_ICrit_GetICU_NoOx_NoMV_Die
+  dur_ICrit_NoICU_NoOx_NoMV_Surv <- duration_params$dur_ICrit_NoICU_NoOx_NoMV_Surv
+  dur_ICrit_NoICU_NoOx_NoMV_Die <- duration_params$dur_ICrit_NoICU_NoOx_NoMV_Die
+  dur_rec <- duration_params$dur_rec
 
   # Standardise contact matrix set
   if(is.matrix(contact_matrix_set)){
