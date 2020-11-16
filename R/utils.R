@@ -202,8 +202,7 @@ get_population <-  function(country = NULL, iso3c = NULL, simple_SEIR = FALSE){
 }
 
 #' Parse country severity parameters
-#' @inheritParams parameters_explicit_SEEIR
-#'
+#' @noRd
 parse_country_severity <- function(country = NULL,
                                    prob_asymp = NULL,
                                    prob_hosp = NULL,
@@ -458,6 +457,220 @@ parse_country_severity <- function(country = NULL,
                 prob_critical_death_no_ICU_no_ox_no_MV = prob_critical_death_no_ICU_no_ox_no_MV)
   }
 
+  return(ret)
+
+}
+
+#' @noRd
+parse_durations <- function(dur_E = NULL,
+                            dur_IAsymp = NULL,
+                            dur_IMild = NULL,
+                            dur_ICase = NULL,
+                            dur_IMod_GetHosp_GetOx_Surv = NULL,
+                            dur_IMod_GetHosp_GetOx_Die = NULL,
+                            dur_IMod_GetHosp_NoOx_Surv = NULL,
+                            dur_IMod_GetHosp_NoOx_Die = NULL,
+                            dur_IMod_NoHosp_NoOx_Surv = NULL,
+                            dur_IMod_NoHosp_NoOx_Die = NULL,
+                            dur_ISev_GetICU_GetOx_Surv = NULL,
+                            dur_ISev_GetICU_GetOx_Die = NULL,
+                            dur_ISev_GetICU_NoOx_Surv = NULL,
+                            dur_ISev_GetICU_NoOx_Die = NULL,
+                            dur_ISev_NoICU_NoOx_Surv = NULL,
+                            dur_ISev_NoICU_NoOx_Die = NULL,
+                            dur_ICrit_GetICU_GetOx_GetMV_Surv = NULL,
+                            dur_ICrit_GetICU_GetOx_GetMV_Die = NULL,
+                            dur_ICrit_GetICU_GetOx_NoMV_Surv = NULL,
+                            dur_ICrit_GetICU_GetOx_NoMV_Die = NULL,
+                            dur_ICrit_GetICU_NoOx_NoMV_Surv = NULL,
+                            dur_ICrit_GetICU_NoOx_NoMV_Die = NULL,
+                            dur_ICrit_NoICU_NoOx_NoMV_Surv = NULL,
+                            dur_ICrit_NoICU_NoOx_NoMV_Die = NULL,
+                            dur_rec = NULL,
+                            walker_params = FALSE) {
+
+  # If walker_params == TRUE, use the original squire parameters described in Walker et al.
+  squire:::assert_logical(walker_params)
+  if (walker_params) {
+    if (is.null(dur_E)) {
+      dur_E <- 4.6
+    }
+    if (is.null(dur_IAsymp)) {
+      dur_IAsymp <- 2.1
+    }
+    if (is.null(dur_IMild)) {
+      dur_IMild <- 2.1
+    }
+    if (is.null(dur_ICase)) {
+      dur_ICase <- 4.5
+    }
+    if (is.null(dur_IMod_GetHosp_GetOx_Surv)) {
+      dur_IMod_GetHosp_GetOx_Surv <- 9.5
+    }
+    if (is.null(dur_IMod_GetHosp_GetOx_Die)) {
+      dur_IMod_GetHosp_GetOx_Die <- 7.6
+    }
+    if (is.null(dur_IMod_GetHosp_NoOx_Surv)) {
+      dur_IMod_GetHosp_NoOx_Surv <- 9.5 * 0.5
+    }
+    if (is.null(dur_IMod_GetHosp_NoOx_Die)) {
+      dur_IMod_GetHosp_NoOx_Die <- 7.6 * 0.5
+    }
+    if (is.null(dur_IMod_NoHosp_NoOx_Surv)) {
+      dur_IMod_NoHosp_NoOx_Die <- 9.5 * 0.5
+    }
+    if (is.null(dur_IMod_NoHosp_NoOx_Die)) {
+      dur_IMod_NoHosp_NoOx_Die <- 7.6 * 0.5
+    }
+    if (is.null(dur_ISev_GetICU_GetOx_Surv)) {
+      dur_ISev_GetICU_GetOx_Surv  <- 11.3
+    }
+    if (is.null(dur_ISev_GetICU_GetOx_Die)) {
+      dur_ISev_GetICU_GetOx_Die  <- 10.1
+    }
+    if (is.null(dur_ISev_GetICU_NoOx_Surv)) {
+      dur_ISev_GetICU_NoOx_Surv  <- 11.3 * 0.5
+    }
+    if (is.null(dur_ISev_GetICU_NoOx_Die)) {
+      dur_ISev_GetICU_NoOx_Die  <- 1
+    }
+    if (is.null(dur_ISev_NoICU_NoOx_Surv)) {
+      dur_ISev_NoICU_NoOx_Surv  <- 11.3 * 0.5
+    }
+    if (is.null(dur_ISev_NoICU_NoOx_Die)) {
+      dur_ISev_NoICU_NoOx_Die <- 1
+    }
+    if (is.null(dur_ICrit_GetICU_GetOx_GetMV_Surv )) {
+      dur_ICrit_GetICU_GetOx_GetMV_Surv <- 11.3
+    }
+    if (is.null(dur_ICrit_GetICU_GetOx_GetMV_Die)) {
+      dur_ICrit_GetICU_GetOx_GetMV_Die  <- 10.1
+    }
+    if (is.null(dur_ICrit_GetICU_GetOx_NoMV_Surv)) {
+      dur_ICrit_GetICU_GetOx_NoMV_Surv  <- 11.3 * 0.5
+    }
+    if (is.null(dur_ICrit_GetICU_GetOx_NoMV_Die)) {
+      dur_ICrit_GetICU_GetOx_NoMV_Die <- 1
+    }
+    if (is.null(dur_ICrit_GetICU_NoOx_NoMV_Surv)) {
+      dur_ICrit_GetICU_NoOx_NoMV_Surv <- 11.3 * 0.5
+    }
+    if (is.null(dur_ICrit_GetICU_NoOx_NoMV_Die)) {
+      dur_ICrit_GetICU_NoOx_NoMV_Die <- 1
+    }
+    if (is.null(dur_ICrit_NoICU_NoOx_NoMV_Surv)) {
+      dur_ICrit_NoICU_NoOx_NoMV_Surv <- 11.3 * 0.5
+    }
+    if (is.null(dur_ICrit_NoICU_NoOx_NoMV_Die)) {
+      dur_ICrit_NoICU_NoOx_NoMV_Die <- 1
+    }
+    if (is.null(dur_rec)) {
+      dur_rec <- 3.4
+    }
+
+  } else {
+    if (is.null(dur_E)) {
+      dur_E <- durations$dur_E
+    }
+    if (is.null(dur_IAsymp)) {
+      dur_IAsymp <- durations$dur_IAsymp
+    }
+    if (is.null(dur_IMild)) {
+      dur_IMild <- durations$dur_IMild
+    }
+    if (is.null(dur_ICase)) {
+      dur_ICase <- durations$dur_ICase
+    }
+    if (is.null(dur_IMod_GetHosp_GetOx_Surv)) {
+      dur_IMod_GetHosp_GetOx_Surv <- durations$dur_IMod_GetHosp_GetOx_Surv
+    }
+    if (is.null(dur_IMod_GetHosp_GetOx_Die)) {
+      dur_IMod_GetHosp_GetOx_Die <- durations$dur_IMod_GetHosp_GetOx_Die
+    }
+    if (is.null(dur_IMod_GetHosp_NoOx_Surv)) {
+      dur_IMod_GetHosp_NoOx_Surv <- durations$dur_IMod_GetHosp_NoOx_Surv
+    }
+    if (is.null(dur_IMod_GetHosp_NoOx_Die)) {
+      dur_IMod_GetHosp_NoOx_Die <- durations$dur_IMod_GetHosp_NoOx_Die
+    }
+    if (is.null(dur_IMod_NoHosp_NoOx_Surv)) {
+      dur_IMod_NoHosp_NoOx_Surv <- durations$dur_IMod_NoHosp_NoOx_Surv
+    }
+    if (is.null(dur_IMod_NoHosp_NoOx_Die)) {
+      dur_IMod_NoHosp_NoOx_Die <- durations$dur_IMod_NoHosp_NoOx_Die
+    }
+    if (is.null(dur_ISev_GetICU_GetOx_Surv)) {
+      dur_ISev_GetICU_GetOx_Surv  <- durations$dur_ISev_GetICU_GetOx_Surv
+    }
+    if (is.null(dur_ISev_GetICU_GetOx_Die)) {
+      dur_ISev_GetICU_GetOx_Die  <- durations$dur_ISev_GetICU_GetOx_Die
+    }
+    if (is.null(dur_ISev_GetICU_NoOx_Surv)) {
+      dur_ISev_GetICU_NoOx_Surv  <- durations$dur_ISev_GetICU_NoOx_Surv
+    }
+    if (is.null(dur_ISev_GetICU_NoOx_Die)) {
+      dur_ISev_GetICU_NoOx_Die  <- durations$dur_ISev_GetICU_NoOx_Die
+    }
+    if (is.null(dur_ISev_NoICU_NoOx_Surv)) {
+      dur_ISev_NoICU_NoOx_Surv  <- durations$dur_ISev_NoICU_NoOx_Surv
+    }
+    if (is.null(dur_ISev_NoICU_NoOx_Die)) {
+      dur_ISev_NoICU_NoOx_Die <- durations$dur_ISev_NoICU_NoOx_Die
+    }
+    if (is.null(dur_ICrit_GetICU_GetOx_GetMV_Surv )) {
+      dur_ICrit_GetICU_GetOx_GetMV_Surv <- durations$dur_ICrit_GetICU_GetOx_GetMV_Surv
+    }
+    if (is.null(dur_ICrit_GetICU_GetOx_GetMV_Die)) {
+      dur_ICrit_GetICU_GetOx_GetMV_Die  <- durations$dur_ICrit_GetICU_GetOx_GetMV_Die
+    }
+    if (is.null(dur_ICrit_GetICU_GetOx_NoMV_Surv)) {
+      dur_ICrit_GetICU_GetOx_NoMV_Surv  <- durations$dur_ICrit_GetICU_GetOx_NoMV_Surv
+    }
+    if (is.null(dur_ICrit_GetICU_GetOx_NoMV_Die)) {
+      dur_ICrit_GetICU_GetOx_NoMV_Die <- durations$dur_ICrit_GetICU_GetOx_NoMV_Die
+    }
+    if (is.null(dur_ICrit_GetICU_NoOx_NoMV_Surv)) {
+      dur_ICrit_GetICU_NoOx_NoMV_Surv <- durations$dur_ICrit_GetICU_NoOx_NoMV_Surv
+    }
+    if (is.null(dur_ICrit_GetICU_NoOx_NoMV_Die)) {
+      dur_ICrit_GetICU_NoOx_NoMV_Die <- durations$dur_ICrit_GetICU_NoOx_NoMV_Die
+    }
+    if (is.null(dur_ICrit_NoICU_NoOx_NoMV_Surv)) {
+      dur_ICrit_NoICU_NoOx_NoMV_Surv <- durations$dur_ICrit_NoICU_NoOx_NoMV_Surv
+    }
+    if (is.null(dur_ICrit_NoICU_NoOx_NoMV_Die)) {
+      dur_ICrit_NoICU_NoOx_NoMV_Die <- durations$dur_ICrit_NoICU_NoOx_NoMV_Die
+    }
+    if (is.null(dur_rec)) {
+      dur_rec <- durations$dur_rec
+    }
+  }
+
+  ret <- list(dur_E = dur_E,
+              dur_IAsymp = dur_IAsymp,
+              dur_IMild = dur_IMild,
+              dur_ICase = dur_ICase,
+              dur_IMod_GetHosp_GetOx_Surv = dur_IMod_GetHosp_GetOx_Surv,
+              dur_IMod_GetHosp_GetOx_Die = dur_IMod_GetHosp_GetOx_Die,
+              dur_IMod_GetHosp_NoOx_Surv = dur_IMod_GetHosp_NoOx_Surv,
+              dur_IMod_GetHosp_NoOx_Die = dur_IMod_GetHosp_NoOx_Die,
+              dur_IMod_NoHosp_NoOx_Surv = dur_IMod_NoHosp_NoOx_Surv,
+              dur_IMod_NoHosp_NoOx_Die = dur_IMod_NoHosp_NoOx_Die,
+              dur_ISev_GetICU_GetOx_Surv = dur_ISev_GetICU_GetOx_Surv,
+              dur_ISev_GetICU_GetOx_Die = dur_ISev_GetICU_GetOx_Die,
+              dur_ISev_GetICU_NoOx_Surv = dur_ISev_GetICU_NoOx_Surv,
+              dur_ISev_GetICU_NoOx_Die = dur_ISev_GetICU_NoOx_Die,
+              dur_ISev_NoICU_NoOx_Surv = dur_ISev_NoICU_NoOx_Surv,
+              dur_ISev_NoICU_NoOx_Die = dur_ISev_NoICU_NoOx_Die,
+              dur_ICrit_GetICU_GetOx_GetMV_Surv = dur_ICrit_GetICU_GetOx_GetMV_Surv,
+              dur_ICrit_GetICU_GetOx_GetMV_Die = dur_ICrit_GetICU_GetOx_GetMV_Die,
+              dur_ICrit_GetICU_GetOx_NoMV_Surv = dur_ICrit_GetICU_GetOx_NoMV_Surv,
+              dur_ICrit_GetICU_GetOx_NoMV_Die = dur_ICrit_GetICU_GetOx_NoMV_Die,
+              dur_ICrit_GetICU_NoOx_NoMV_Surv = dur_ICrit_GetICU_NoOx_NoMV_Surv,
+              dur_ICrit_GetICU_NoOx_NoMV_Die = dur_ICrit_GetICU_NoOx_NoMV_Die,
+              dur_ICrit_NoICU_NoOx_NoMV_Surv = dur_ICrit_NoICU_NoOx_NoMV_Surv,
+              dur_ICrit_NoICU_NoOx_NoMV_Die = dur_ICrit_NoICU_NoOx_NoMV_Die,
+              dur_rec = dur_rec)
   return(ret)
 
 }
