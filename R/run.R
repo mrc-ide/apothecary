@@ -75,7 +75,7 @@ default_durations <- function() {
     dur_E  = 4.6,
     dur_IAsymp = 2.1,
     dur_IMild = 2.1,
-    dur_ICase = 4,
+    dur_ICase = 4.5,
     dur_rec = 4,
 
     dur_IMod_GetHosp_GetOx_Surv = 7.25,

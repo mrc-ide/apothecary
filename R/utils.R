@@ -517,7 +517,7 @@ parse_durations <- function(dur_E = NULL,
       dur_IMod_GetHosp_NoOx_Die <- 7.6 * 0.5
     }
     if (is.null(dur_IMod_NoHosp_NoOx_Surv)) {
-      dur_IMod_NoHosp_NoOx_Die <- 9.5 * 0.5
+      dur_IMod_NoHosp_NoOx_Surv <- 9.5 * 0.5
     }
     if (is.null(dur_IMod_NoHosp_NoOx_Die)) {
       dur_IMod_NoHosp_NoOx_Die <- 7.6 * 0.5
