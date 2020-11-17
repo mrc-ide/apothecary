@@ -5,13 +5,21 @@ library(lubridate); library(squire); library(tictoc); library(dplyr); library(ti
 devtools::load_all()
 
 # Loading In Example Initial Parameters and Defining Country and Date Fitting Being Applied To
-pars_init <- readRDS("pars_init.rds")
+pars_init <- readRDS("cluster_running/Inputs/pars_init.rds")
 can_parms <- pars_init$CAN
 iso3c <- "CAN"
-date <- "2020-08-31"
+date <- "2020-11-17"
 
-# Loading in ECDC Deaths Data, Removing Deaths Followed by 21 Days of No Deaths, Removing Dates Up to First Death After This
-ecdc <- readRDS("ecdc_all.rds")
+# Loading in ECDC/Worldometer Deaths Data
+if (iso3c %in% c("BOL", "ITA", "FRA", "ECU", "CHL", "COD", "ESP", "IRN",
+                 "JPN", "GUF","KGZ", "PER", "MEX", "HKG", "MAC", "TWN",
+                 "SDN")) {
+  ecdc <- readRDS("cluster_running/Inputs/worldometers_all.rds")
+} else {
+  ecdc <- readRDS("cluster_running/Inputs/ecdc_all.rds")
+}
+
+# Removing Deaths Followed by 21 Days of No Deaths
 country <- squire::population$country[match(iso3c, squire::population$iso3c)[1]]
 df <- ecdc[which(ecdc$countryterritoryCode == iso3c),]
 if(sum(df$deaths>0)>1) {
@@ -25,6 +33,7 @@ names(data)[1] <- "date"
 data <- data[order(data$date),]
 data$date <- as.Date(data$date)
 
+# Removing Dates Up to First Death After This
 first_report <- which(data$deaths>0)[1]
 missing <- which(data$deaths == 0 | is.na(data$deaths))
 to_remove <- missing[missing<first_report]
@@ -36,27 +45,39 @@ if(length(to_remove) > 0) {
   }
 }
 
+# Loading in BRT Mobility Data and Processing
+interventions <- readRDS("cluster_running/Inputs/google_brt.rds")
+R0_change <- interventions[[iso3c]]$C
+date_R0_change <- interventions[[iso3c]]$date
+R0_change <- R0_change[as.Date(date_R0_change) <= date]
+date_R0_change <- date_R0_change[as.Date(date_R0_change) <= date]
+
 # Setting Up the Fortnightly Splines
 date_0 <- date
-Rt_rw_duration <- 14
+Rt_rw_duration <- 14 # change to pars_init
 last_shift_date <- as.Date(can_parms$date_Meff_change) + 7
 remaining_days <- as.Date(date_0) - last_shift_date - 21
 rw_needed <- as.numeric(round(remaining_days/Rt_rw_duration))
 pars_init_rw <- as.list(can_parms[grep("Rt_rw_\\d",names(can_parms))])
-if(length(pars_init_rw) < rw_needed) {
-  pars_init_rw[[rw_needed]] <- 0
+if (is.null(can_parms)) {
+  pars_init_rw <- as.list(rep(0, rw_needed))
+} else {
+  pars_init_rw <- as.list(can_parms[grep("Rt_rw_\\d",names(can_parms))])
+  if(length(pars_init_rw) < rw_needed) {
+    pars_init_rw[[rw_needed]] <- 0
+  }
+  pars_init_rw <- lapply(pars_init_rw, function(x) {
+    if(is.null(x)){
+      return(0)
+    } else {
+      return(x)
+    }})
 }
 pars_min_rw <- as.list(rep(-5, rw_needed))
 pars_max_rw <- as.list(rep(5, rw_needed))
 pars_discrete_rw <- as.list(rep(FALSE, rw_needed))
 names(pars_init_rw) <- names(pars_min_rw) <- names(pars_max_rw) <- names(pars_discrete_rw) <- paste0("Rt_rw_", seq_len(rw_needed))
 
-# Loading in BRT Mobility Data and Processing
-interventions <- readRDS("google_brt.rds")
-R0_change <- interventions[[iso3c]]$C
-date_R0_change <- interventions[[iso3c]]$date
-R0_change <- R0_change[as.Date(date_R0_change) <= date]
-date_R0_change <- date_R0_change[as.Date(date_R0_change) <= date]
 
 # PMCMC Prior Bounds, Initial Parameters and Observation Model Parameters
 pars_init <- list('start_date' = can_parms$start_date,
@@ -98,7 +119,7 @@ pars_discrete <- append(pars_discrete, pars_discrete_rw)
 # Proposal Covariance Matrix
 proposal_kernel <- diag(length(names(pars_init))) * 0.3
 rownames(proposal_kernel) <- colnames(proposal_kernel) <- names(pars_init)
-proposal_kernel["start_date", "start_date"] <- 1.5
+proposal_kernel["start_date", "start_date"] <- 1.5 # consider changing
 
 # MCMC Functions - Prior and Likelihood Calculation
 logprior <- function(pars){
@@ -123,7 +144,7 @@ logprior <- function(pars){
 suppressWarnings(future::plan(future::multiprocess()))
 
 tic()
-n_mcmc <- 5000
+n_mcmc <- 20
 pmcmc_res <- squire::pmcmc(data = data,
                            n_mcmc = n_mcmc,
                            log_prior = logprior,
@@ -143,12 +164,12 @@ pmcmc_res <- squire::pmcmc(data = data,
                            R0_change = R0_change,
                            date_R0_change = date_R0_change,
                            Rt_args = squire:::Rt_args_list(
-                             plateau_duration = 7,
+                             plateau_duration = 7, # not present in OJ's new code - double check this with him
                              date_Meff_change = can_parms$date_Meff_change,
                              scale_Meff_pl = TRUE,
                              Rt_shift_duration = 7,
                              Rt_rw_duration = Rt_rw_duration),
-                           burnin = n_mcmc/2,
+                           burnin = ceiling(n_mcmc/2),
                            seeding_cases = 5,
                            replicates = 500,
                            required_acceptance_ratio = 0.20,
