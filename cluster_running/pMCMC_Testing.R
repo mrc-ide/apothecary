@@ -1,7 +1,7 @@
 # Loading Required Libraries
-library(lubridate); library(squire); library(tictoc); library(dplyr); library(tidyverse)
+library(lubridate); library(squire); library(tictoc); library(dplyr); library(tidyverse);
 
-# Load apothecary
+# Load apothecary stuff
 devtools::load_all()
 
 # Loading In Example Initial Parameters and Defining Country and Date Fitting Being Applied To
@@ -144,14 +144,15 @@ logprior <- function(pars){
 suppressWarnings(future::plan(future::multiprocess()))
 
 tic()
-n_mcmc <- 20
+n_mcmc <- 10000
+replicates <- 1000
 pmcmc_res <- squire::pmcmc(data = data,
                            n_mcmc = n_mcmc,
                            log_prior = logprior,
                            n_particles = 1,
                            steps_per_day = 1,
                            log_likelihood = NULL,
-                           squire_model = apothecary:::apothecary_deterministic_model(),
+                           squire_model = apothecary_deterministic_model(),
                            output_proposals = FALSE,
                            n_chains = 1,
                            pars_obs = pars_obs,
@@ -164,14 +165,14 @@ pmcmc_res <- squire::pmcmc(data = data,
                            R0_change = R0_change,
                            date_R0_change = date_R0_change,
                            Rt_args = squire:::Rt_args_list(
-                             plateau_duration = 7, # not present in OJ's new code - double check this with him
+                             plateau_duration = 7,
                              date_Meff_change = can_parms$date_Meff_change,
                              scale_Meff_pl = TRUE,
                              Rt_shift_duration = 7,
                              Rt_rw_duration = Rt_rw_duration),
                            burnin = ceiling(n_mcmc/2),
                            seeding_cases = 5,
-                           replicates = 500,
+                           replicates = replicates,
                            required_acceptance_ratio = 0.20,
                            start_adaptation = 500,
                            baseline_hosp_bed_capacity = 10000000000,
@@ -190,7 +191,7 @@ cum_deaths <- as.data.frame(cum_deaths)
 cum_deaths$date <- row.names(cum_deaths)
 
 daily_deaths <- cum_deaths %>%
-  pivot_longer(cols = V1:V500, names_to = "replicate")
+  pivot_longer(cols = V1:V1000, names_to = "replicate")
 
 daily_death_summary <- daily_deaths %>%
   group_by(date) %>%
@@ -208,7 +209,7 @@ ggplot() +
 
 data <- pmcmc_res$pmcmc_results$inputs$data
 plot(data$date, data$deaths, col = "black", pch = 20)
-for (i in 1:500) {
+for (i in 1:50) {
   tt <- squire:::intervention_dates_for_odin(dates = pmcmc_res$interventions$date_R0_change,
                                              change = pmcmc_res$interventions$R0_change,
                                              start_date = pmcmc_res$replicate_parameters$start_date[i],
@@ -216,7 +217,7 @@ for (i in 1:500) {
   Rt <- squire:::evaluate_Rt_pmcmc(R0_change = tt$change,
                                    date_R0_change = tt$dates,
                                    R0 = pmcmc_res$replicate_parameters$R0[i],
-                                   pars = as.list(pmcmc_res$replicate_parameters[i,]),
+                                   pars = as.list(pmcmc_res$replicate_parameters[i, ]),
                                    Rt_args = pmcmc_res$pmcmc_results$inputs$Rt_args)
   y <- run_apothecary(country = "Canada", model = "deterministic",
                       hosp_bed_capacity = 10000000000,
@@ -230,7 +231,19 @@ for (i in 1:500) {
                       drug_12_indic_ISev_GetICU_GetOx = 1, drug_12_prop_treat = 1, drug_12_GetOx_effect_size = 0.5,
                       drug_13_indic_ICrit_GetICU_GetOx_GetMV = 1, drug_13_prop_treat = 1, drug_13_GetOx_GetMV_effect_size = 0.5)
   index <- squire:::odin_index(y$model)
-  cum_deaths <- y$output[, index$D]
+  mod_output <- pmcmc_res$output[, index$E1, i]
+  first_day <- min(which(!is.na(mod_output[, 1])))
+  initial_infections <- mod_output[first_day, ]
+
+  initials <- seq_along(y$model$initial()) + 1L
+  pos <- which(y$output[,"time"] == max(y$output[,"time"]))
+  initial_values <- pmcmc_res$output[first_day, initials, i, drop = TRUE]
+
+  get <- y$model$run(0:as.numeric(range(tt$dates)[2]-range(tt$dates)[1]),
+                     y = initial_values,
+                     use_names = TRUE,
+                     replicate = 1)
+  cum_deaths <- get[, index$D]
   deaths <- c(0, diff(rowSums(cum_deaths)))
 
   single_daily_deaths <- daily_deaths %>%
@@ -241,3 +254,125 @@ for (i in 1:500) {
   lines(as.Date(single_daily_deaths$date), single_daily_deaths$value, col = "blue")
 
 }
+
+# Changing any parameters in the model
+# y$model$set_user(user = model_user_args) more generic example where model_user_args is a list of named elements
+
+y <- run_apothecary(country = "Canada", model = "deterministic",
+                    hosp_bed_capacity = 10000000000,
+                    ICU_bed_capacity = 10000000000,
+                    R0 = Rt,
+                    tt_R0 = tt$tt * pmcmc_res$parameters$dt,
+                    time_period = as.numeric(range(tt$dates)[2]-range(tt$dates)[1]),
+                    day_return = TRUE,
+                    seeding_cases = sum(pmcmc_res$pmcmc_results$inputs$model_params$E1_0),
+                    drug_11_indic_IMod_GetHosp_GetOx = 1, drug_11_prop_treat = 1, drug_11_GetOx_effect_size = 0.5,
+                    drug_12_indic_ISev_GetICU_GetOx = 1, drug_12_prop_treat = 1, drug_12_GetOx_effect_size = 0.5,
+                    drug_13_indic_ICrit_GetICU_GetOx_GetMV = 1, drug_13_prop_treat = 1, drug_13_GetOx_GetMV_effect_size = 0.5)
+index <- squire:::odin_index(y$model)
+mod_output <- pmcmc_res$output[, index$E1, i]
+first_day <- min(which(!is.na(mod_output[, 1])))
+initial_infections <- mod_output[first_day, ]
+
+initials <- seq_along(y$model$initial()) + 1L
+pos <- which(y$output[,"time"] == max(y$output[,"time"]))
+initial_values <- pmcmc_res$output[first_day, initials, i, drop = TRUE]
+
+get <- y$model$run(0:as.numeric(range(tt$dates)[2]-range(tt$dates)[1]),
+                   y = initial_values,
+                   use_names = TRUE,
+                   replicate = 1)
+cum_deaths <- get[, index$D]
+deaths <- c(0, diff(rowSums(cum_deaths)))
+plot(deaths, col = "red", type = "l", xlim = c(0, 379))
+
+# Extracting final run values to sub in as initials moving forward
+pos <- which(get[,"time"] == max(get[,"time"]))
+initial_values <- get[pos, initials, drop = TRUE]
+
+get <- y$model$run(0:100,
+                   y = initial_values,
+                   use_names = TRUE,
+                   replicate = 1)
+
+new_cum_deaths <- get[, index$D]
+new_deaths <- c(0, diff(rowSums(new_cum_deaths)))
+new_time <- get[, "t"] + pos
+
+lines(new_time[-1], new_deaths[-1], col = "blue")
+
+beta <- y$model$contents()$beta_set
+tt_beta <- y$model$contents()$tt_beta
+y$model$set_user(beta_set  = rep(0.05500576/2, 101),
+                 tt_beta  = 0:100) #example
+
+get <- y$model$run(0:100,
+                   y = initial_values,
+                   use_names = TRUE,
+                   replicate = 1)
+
+new_cum_deaths <- get[, index$D]
+new_deaths <- c(0, diff(rowSums(new_cum_deaths)))
+new_time <- get[, "t"] + pos
+dim(get)
+
+lines(new_time[-1], new_deaths[-1], col = "green")
+
+y$model$contents()$beta_set
+y$model$set_user(beta_set  = c(beta, 0.1)) #example
+y$model$contents()$beta_set
+
+get <- y$model$run(0:100,
+                   y = initial_values,
+                   use_names = TRUE,
+                   replicate = 1)
+
+new_cum_deaths <- get[, index$D]
+new_deaths <- c(0, diff(rowSums(new_cum_deaths)))
+new_time <- get[, "t"] + pos
+dim(get)
+
+lines(new_time[-1], new_deaths[-1], col = "yellow")
+
+
+
+
+x <- y$model$contents()
+x$beta_set <- 0.04964971/2
+
+
+
+
+
+r$model$set_user(tt_beta = round(tt_R0/dt_step))
+r$model$set_user(beta_set = beta)
+r$model$set_user(tt_matrix = round(tt_contact_matrix/dt_step))
+r$model$set_user(mix_mat_set = matrices_set)
+r$model$set_user(tt_hosp_beds = round(tt_hosp_beds/dt_step))
+r$model$set_user(hosp_beds = hosp_bed_capacity)
+r$model$set_user(tt_ICU_beds = round(tt_ICU_beds/dt_step))
+r$model$set_user(ICU_beds = ICU_bed_capacity)
+
+# make sure these time varying parameters are also updated
+r$model$set_user(tt_dur_get_mv_die = 0)
+r$model$set_user(tt_dur_get_ox_die = 0)
+r$model$set_user(tt_dur_get_mv_survive = 0)
+r$model$set_user(tt_dur_get_ox_survive = 0)
+r$model$set_user(gamma_get_mv_die = finals[[x]]$gamma_get_mv_die)
+r$model$set_user(gamma_get_ox_die = finals[[x]]$gamma_get_ox_die)
+r$model$set_user(gamma_get_mv_survive = finals[[x]]$gamma_get_mv_survive)
+r$model$set_user(gamma_get_ox_survive = finals[[x]]$gamma_get_ox_survive)
+
+# and update any custom model user args
+if (!is.null(model_user_args)) {
+  r$model$set_user(user = model_user_args[[x]])
+}
+
+# run the model
+get <- r$model$run(step,
+                   y = as.numeric(r$output[state_pos[x], initials, x, drop=TRUE]),
+                   use_names = TRUE,
+                   replicate = 1)
+
+y$model$run(user = pars())
+
