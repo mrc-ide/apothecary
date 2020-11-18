@@ -41,7 +41,7 @@ run_apothecary_MCMC <- function(country, date, pars_init, mortality_data, interv
   } else {
     deaths_removed <- 0
   }
-  data <- df[,c("dateRep", "deaths", "cases")]
+  data <- df[, c("dateRep", "deaths", "cases")]
   names(data)[1] <- "date"
   data <- data[order(data$date),]
   data$date <- as.Date(data$date)

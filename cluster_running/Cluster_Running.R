@@ -10,7 +10,7 @@
 loc <- didehpc::path_mapping("location", "N:", "//fi--didenas5/malaria", "N:")
 config <- didehpc::didehpc_config(shares = loc, use_rrq = FALSE, cluster = "fi--didemrchnb",
                                   parallel = FALSE, rtools = TRUE)
-packages <- c("lubridate", "dplyr", "plyr", "tidyr", "odin", "squire", "apothecary", "dde")
+packages <- c("lubridate", "dplyr", "tidyr", "odin", "squire", "apothecary", "dde")
 
 
 # Creating a Context
@@ -40,34 +40,40 @@ ecdc <- readRDS("cluster_running/Inputs/ecdc_all.rds")
 worldometer <- readRDS("cluster_running/Inputs/worldometers_all.rds")
 mortality_data <- list(ecdc = ecdc, worldometer = worldometer)
 interventions <- readRDS("cluster_running/Inputs/google_brt.rds")
-countries <- unique(squire::population$iso3c)
 
-# Checking Missing Countries
-# 18th November: Missing Channel Islands, Guadeloupe, Martinique, Mayotte, Puerto Rico, South Korea, Reunion, US Virgin Islands and Western Sahara
-missing_ISOs <- countries[!(countries %in% names(pars_init))]
-missing_countries <- squire::population$country[match(missing_ISOs, squire::population$iso3c)]
-included_countries <- countries[countries %in% names(pars_init)]
+# Establishing Which Countries to Run (and Track Missing Ones)
+countries <- names(unlist(lapply(interventions, length))[unlist(lapply(interventions, length)) != 0]) # countries for which we have mobility data
+inits_countries <- names(pars_init)
+countries <- countries[countries %in% inits_countries]
+yes_death_countries <- ecdc %>%
+  dplyr::group_by(Region, countryterritoryCode) %>%
+  summarise(total_deaths = sum(deaths)) %>%
+  filter(total_deaths != 0)
+countries <- countries[countries %in% yes_death_countries$countryterritoryCode]
 
-for (i in 1:length(included_countries)) {
-  test <- run_apothecary_MCMC(country = included_countries[i], date = "2020-11-16", pars_init = pars_init,
+# Running Countries Locally to Check They Work
+for (i in 1:length(countries)) {
+  test <- run_apothecary_MCMC(country = countries[i], date = "2020-11-16", pars_init = pars_init,
                               mortality_data = mortality_data, interventions = interventions,
                               n_mcmc = 2, replicates = 2, healthcare = "unlimited")
   print(i)
 }
 
 # Running the Fitting for Every Country
-for (i in 1:length(included_countries)) {
-  test <- run$enqueue(run_apothecary_MCMC(country = included_countries[i], pars_init = pars_init, ecdc = ecdc,
-                                          interventions = interventions, n_mcmc = 50000, run_identifier = 1))
+for (i in 1:length(countries)) {
+  test <- run$enqueue(run_apothecary_MCMC(country = countries[i], date = "2020-11-16", pars_init = pars_init,
+                                          mortality_data = mortality_data, interventions = interventions,
+                                          n_mcmc =50000, replicates = 500, healthcare = "unlimited"))
   print(i)
 }
 table(unname(run$task_status()), useNA = "ifany")
 
 # Rerunning the initial failures
-initial_failures <- which(unname(run$task_status() == "PENDING"))
-for (i in initial_failures) {
-  test <- run$enqueue(run_apothecary_MCMC(country = included_countries[i], pars_init = pars_init, ecdc = ecdc,
-                                          interventions = interventions, n_mcmc = 50000, run_identifier = 2))
+reruns <- which(unname(run$task_status() == "PENDING"))
+for (i in reruns) {
+  test <- run$enqueue(run_apothecary_MCMC(country = countries[i], date = "2020-11-16", pars_init = pars_init,
+                                          mortality_data = mortality_data, interventions = interventions,
+                                          n_mcmc =50000, replicates = 500, healthcare = "unlimited"))
   print(i)
 }
 table(unname(run$task_status()), useNA = "ifany")
