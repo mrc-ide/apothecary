@@ -14,18 +14,17 @@ packages <- c("lubridate", "dplyr", "plyr", "tidyr", "odin", "squire", "apotheca
 
 
 # Creating a Context
-sources <- c("MCMC_cluster_function.R")
+sources <- c("N:/Charlie/apothecary_fitting/apothecary/cluster_running/MCMC_cluster_function.R")
 additional_identifier <- ""
 context_name <- paste0("N:/Charlie/apothecary_runs_", Sys.Date(), additional_identifier)
 ctx <- context::context_save(path = context_name,
                              sources = sources,
                              packages = packages,
                              package_sources = provisionr::package_sources(local =
-                                                                             c("N:/Charlie/apothecary_0.1.0.zip",
-                                                                               "N:/Charlie/dde_1.0.2.zip",
-                                                                               "N:/Charlie/odin_1.0.6.zip",
-                                                                               "N:/Charlie/odin.js_0.1.8.zip",
-                                                                               "N:/Charlie/squire_0.4.35.zip")))
+                                                                             c("N:/Charlie/apothecary_fitting/apothecary_0.1.0.zip",
+                                                                               "N:/Charlie/apothecary_fitting/dde_1.0.2.zip",
+                                                                               "N:/Charlie/apothecary_fitting/odin_1.0.6.zip",
+                                                                               "N:/Charlie/apothecary_fitting/squire_0.5.3.zip")))
 
 # Configure the Queue
 run <- didehpc::queue_didehpc(ctx, config = config)
@@ -36,22 +35,23 @@ run$task_list()
 run$task_times()
 
 # Testing the Running Locally
-missing_ISOs <- countries[!(countries %in% names(pars_init))]
-missing_countries <- squire::population$country[match(missing_ISOs, squire::population$iso3c)]
-included_countries <- countries[countries %in% names(pars_init)]
-
-pars_init <- readRDS("pars_init.rds")
-ecdc <- readRDS("ecdc_all.rds")
-interventions <- readRDS("google_brt.rds")
+pars_init <- readRDS("cluster_running/Inputs/pars_init.rds")
+ecdc <- readRDS("cluster_running/Inputs/ecdc_all.rds")
+worldometer <- readRDS("cluster_running/Inputs/worldometers_all.rds")
+mortality_data <- list(ecdc = ecdc, worldometer = worldometer)
+interventions <- readRDS("cluster_running/Inputs/google_brt.rds")
 countries <- unique(squire::population$iso3c)
 
+# Checking Missing Countries
+# 18th November: Missing Channel Islands, Guadeloupe, Martinique, Mayotte, Puerto Rico, South Korea, Reunion, US Virgin Islands and Western Sahara
 missing_ISOs <- countries[!(countries %in% names(pars_init))]
 missing_countries <- squire::population$country[match(missing_ISOs, squire::population$iso3c)]
 included_countries <- countries[countries %in% names(pars_init)]
 
 for (i in 1:length(included_countries)) {
-  test <- run_apothecary_MCMC(country = included_countries[i], pars_init = pars_init, ecdc = ecdc,
-                              interventions = interventions, n_mcmc = 2, run_identifier = 1)
+  test <- run_apothecary_MCMC(country = included_countries[i], date = "2020-11-16", pars_init = pars_init,
+                              mortality_data = mortality_data, interventions = interventions,
+                              n_mcmc = 2, replicates = 2, healthcare = "unlimited")
   print(i)
 }
 
