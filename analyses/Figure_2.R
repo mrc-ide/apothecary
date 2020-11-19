@@ -8,7 +8,7 @@ devtools::load_all()
 set.seed(1000)
 
 # Generating Draws from Dexamethasone Mortality Uncertainty
-num_draws <- 10
+num_draws <- 300
 mean_dexy_mod_mort <- 0.82 # source = RECOVERY Trial
 sd_dexy_mod_mort <- max(mean_dexy_mod_mort - 0.72, 0.94 - mean_dexy_mod_mort) / 1.95996
 mean_dexy_ICU_mort <- 0.64 # source = JAMA Meta-Analysis, Dexamethasone Specific Estimate
@@ -47,9 +47,9 @@ standard_population <- round(rep(50000000/17, 17))
 standard_matrix <- matrix(1, 16, 16)
 standard_matrix[,16] <- 2
 demog_pars_high_R0 <- list(R0 = 2, country = country, population = standard_population,
-                           matrix = standard_matrix, time_period = 150, seeding_cases = 100)
+                           matrix = standard_matrix, time_period = 150, seeding_cases = 1000)
 demog_pars_low_R0 <- list(R0 = 1.3, country = country, population = standard_population,
-                          matrix = standard_matrix, time_period = 365, seeding_cases = 100)
+                          matrix = standard_matrix, time_period = 300, seeding_cases = 1000)
 
 # Defining the Healthcare Capacity Parameters Used In Each Scenario
 actual_hosp_beds <- round(squire::get_healthcare_capacity(country)$hosp_beds * sum(standard_population)/1000)
@@ -157,16 +157,12 @@ eff_allhosp_benfull <- list(rem_mod_getox_dur = rem_mod_dur, rem_mod_noox_dur = 
 tic()
 # Only Fully Treated Individuals Get the Full Benefit
 highR0_unlimHC_notreat_notreat <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_unlimited, drug_ind_pars = ind_notreat_notreat, drug_eff_pars = eff_notreat_notreat, scenario = "highR0_unlimHC_notreat_notreat")
-highR0_limbeds_notreat_notreat <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_limited_beds, drug_ind_pars = ind_notreat_notreat, drug_eff_pars = eff_notreat_notreat, scenario = "highR0_limbeds_notreat_notreat")
-highR0_limbedsox_notreat_notreat <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_limited_beds_ox, drug_ind_pars = ind_notreat_notreat, drug_eff_pars = eff_notreat_notreat, scenario = "highR0_limbedsox_notreat_notreat")
 highR0_limMV_notreat_notreat <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_limited_MV, drug_ind_pars = ind_notreat_notreat, drug_eff_pars = eff_notreat_notreat, scenario = "highR0_limMV_notreat_notreat")
 highR0_limMVox_notreat_notreat <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_limited_MV_ox, drug_ind_pars = ind_notreat_notreat, drug_eff_pars = eff_notreat_notreat, scenario = "highR0_limMVox_notreat_notreat")
 highR0_limMVoxbeds_notreat_notreat <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_limited_MV_ox_beds, drug_ind_pars = ind_notreat_notreat, drug_eff_pars = eff_notreat_notreat, scenario = "highR0_limMVoxbeds_notreat_notreat")
 highR0_noHC_notreat_notreat <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_nothing, drug_ind_pars = ind_notreat_notreat, drug_eff_pars = eff_notreat_notreat, scenario = "highR0_noHC_notreat_notreat")
 
 lowR0_unlimHC_notreat_notreat <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_unlimited, drug_ind_pars = ind_notreat_notreat, drug_eff_pars = eff_notreat_notreat, scenario = "lowR0_unlimHC_notreat_notreat")
-lowR0_limbeds_notreat_notreat <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_limited_beds, drug_ind_pars = ind_notreat_notreat, drug_eff_pars = eff_notreat_notreat, scenario = "lowR0_limbeds_notreat_notreat")
-lowR0_limbedsox_notreat_notreat <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_limited_beds_ox, drug_ind_pars = ind_notreat_notreat, drug_eff_pars = eff_notreat_notreat, scenario = "lowR0_limbedsox_notreat_notreat")
 lowR0_limMV_notreat_notreat <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_limited_MV, drug_ind_pars = ind_notreat_notreat, drug_eff_pars = eff_notreat_notreat, scenario = "lowR0_limMV_notreat_notreat")
 lowR0_limMVox_notreat_notreat <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_limited_MV_ox, drug_ind_pars = ind_notreat_notreat, drug_eff_pars = eff_notreat_notreat, scenario = "lowR0_limMVox_notreat_notreat")
 lowR0_limMVoxbeds_notreat_notreat <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_limited_MV_ox_beds, drug_ind_pars = ind_notreat_notreat, drug_eff_pars = eff_notreat_notreat, scenario = "lowR0_limMVoxbeds_notreat_notreat")
@@ -174,16 +170,12 @@ lowR0_noHC_notreat_notreat <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0,
 
 # Only Fully Treated Individuals Get the Full Benefit
 highR0_unlimHC_treatonly_benfull <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_unlimited, drug_ind_pars = ind_treatonly_benfull, drug_eff_pars = eff_treatonly_benfull, scenario = "highR0_unlimHC_treatonly_benfull")
-highR0_limbeds_treatonly_benfull <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_limited_beds, drug_ind_pars = ind_treatonly_benfull, drug_eff_pars = eff_treatonly_benfull, scenario = "highR0_limbeds_treatonly_benfull")
-highR0_limbedsox_treatonly_benfull <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_limited_beds_ox, drug_ind_pars = ind_treatonly_benfull, drug_eff_pars = eff_treatonly_benfull, scenario = "highR0_limbedsox_treatonly_benfull")
 highR0_limMV_treatonly_benfull <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_limited_MV, drug_ind_pars = ind_treatonly_benfull, drug_eff_pars = eff_treatonly_benfull, scenario = "highR0_limMV_treatonly_benfull")
 highR0_limMVox_treatonly_benfull <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_limited_MV_ox, drug_ind_pars = ind_treatonly_benfull, drug_eff_pars = eff_treatonly_benfull, scenario = "highR0_limMVox_treatonly_benfull")
 highR0_limMVoxbeds_treatonly_benfull <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_limited_MV_ox_beds, drug_ind_pars = ind_treatonly_benfull, drug_eff_pars = eff_treatonly_benfull, scenario = "highR0_limMVoxbeds_treatonly_benfull")
 highR0_noHC_treatonly_benfull <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_nothing, drug_ind_pars = ind_treatonly_benfull, drug_eff_pars = eff_treatonly_benfull, scenario = "highR0_noHC_treatonly_benfull")
 
 lowR0_unlimHC_treatonly_benfull <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_unlimited, drug_ind_pars = ind_treatonly_benfull, drug_eff_pars = eff_treatonly_benfull, scenario = "lowR0_unlimHC_treatonly_benfull")
-lowR0_limbeds_treatonly_benfull <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_limited_beds, drug_ind_pars = ind_treatonly_benfull, drug_eff_pars = eff_treatonly_benfull, scenario = "lowR0_limbeds_treatonly_benfull")
-lowR0_limbedsox_treatonly_benfull <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_limited_beds_ox, drug_ind_pars = ind_treatonly_benfull, drug_eff_pars = eff_treatonly_benfull, scenario = "lowR0_limbedsox_treatonly_benfull")
 lowR0_limMV_treatonly_benfull <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_limited_MV, drug_ind_pars = ind_treatonly_benfull, drug_eff_pars = eff_treatonly_benfull, scenario = "lowR0_limMV_treatonly_benfull")
 lowR0_limMVox_treatonly_benfull <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_limited_MV_ox, drug_ind_pars = ind_treatonly_benfull, drug_eff_pars = eff_treatonly_benfull, scenario = "lowR0_limMVox_treatonly_benfull")
 lowR0_limMVoxbeds_treatonly_benfull <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_limited_MV_ox_beds, drug_ind_pars = ind_treatonly_benfull, drug_eff_pars = eff_treatonly_benfull, scenario = "lowR0_limMVoxbeds_treatonly_benfull")
@@ -191,16 +183,12 @@ lowR0_noHC_treatonly_benfull <- run_drugs_hc_combo(demog_pars = demog_pars_low_R
 
 # All Hospitalised Individuals Get Benefit - Non-Fully Treated Individuals Derive Minimal Benefit (Conservative Scenario)
 highR0_unlimHC_allhosp_gradbencons <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_unlimited, drug_ind_pars = ind_allhosp_gradbencons, drug_eff_pars = eff_allhosp_gradbencons, scenario = "highR0_unlimHC_allhosp_gradbencons")
-highR0_limbeds_allhosp_gradbencons <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_limited_beds, drug_ind_pars = ind_allhosp_gradbencons, drug_eff_pars = eff_allhosp_gradbencons, scenario = "highR0_limbeds_allhosp_gradbencons")
-highR0_limbedsox_allhosp_gradbencons <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_limited_beds_ox, drug_ind_pars = ind_allhosp_gradbencons, drug_eff_pars = eff_allhosp_gradbencons, scenario = "highR0_limbedsox_allhosp_gradbencons")
 highR0_limMV_allhosp_gradbencons <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_limited_MV, drug_ind_pars = ind_allhosp_gradbencons, drug_eff_pars = eff_allhosp_gradbencons, scenario = "highR0_limMV_allhosp_gradbencons")
 highR0_limMVox_allhosp_gradbencons <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_limited_MV_ox, drug_ind_pars = ind_allhosp_gradbencons, drug_eff_pars = eff_allhosp_gradbencons, scenario = "highR0_limMVox_allhosp_gradbencons")
 highR0_limMVoxbeds_allhosp_gradbencons <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_limited_MV_ox_beds, drug_ind_pars = ind_allhosp_gradbencons, drug_eff_pars = eff_allhosp_gradbencons, scenario = "highR0_limMVoxbeds_allhosp_gradbencons")
 highR0_noHC_allhosp_gradbencons <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_nothing, drug_ind_pars = ind_allhosp_gradbencons, drug_eff_pars = eff_allhosp_gradbencons, scenario = "highR0_noHC_allhosp_gradbencons")
 
 lowR0_unlimHC_allhosp_gradbencons <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_unlimited, drug_ind_pars = ind_allhosp_gradbencons, drug_eff_pars = eff_allhosp_gradbencons, scenario = "lowR0_unlimHC_allhosp_gradbencons")
-lowR0_limbeds_allhosp_gradbencons <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_limited_beds, drug_ind_pars = ind_allhosp_gradbencons, drug_eff_pars = eff_allhosp_gradbencons, scenario = "lowR0_limbeds_allhosp_gradbencons")
-lowR0_limbedsox_allhosp_gradbencons <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_limited_beds_ox, drug_ind_pars = ind_allhosp_gradbencons, drug_eff_pars = eff_allhosp_gradbencons, scenario = "lowR0_limbedsox_allhosp_gradbencons")
 lowR0_limMV_allhosp_gradbencons <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_limited_MV, drug_ind_pars = ind_allhosp_gradbencons, drug_eff_pars = eff_allhosp_gradbencons, scenario = "lowR0_limMV_allhosp_gradbencons")
 lowR0_limMVox_allhosp_gradbencons <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_limited_MV_ox, drug_ind_pars = ind_allhosp_gradbencons, drug_eff_pars = eff_allhosp_gradbencons, scenario = "lowR0_limMVox_allhosp_gradbencons")
 lowR0_limMVoxbeds_allhosp_gradbencons <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_limited_MV_ox_beds, drug_ind_pars = ind_allhosp_gradbencons, drug_eff_pars = eff_allhosp_gradbencons, scenario = "lowR0_limMVoxbeds_allhosp_gradbencons")
@@ -208,16 +196,12 @@ lowR0_noHC_allhosp_gradbencons <- run_drugs_hc_combo(demog_pars = demog_pars_low
 
 # All Hospitalised Individuals Get Benefit - Non-Fully Treated Individuals Derive Minimal Benefit (Optimistic Scenario)
 highR0_unlimHC_allhosp_gradbenopti <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_unlimited, drug_ind_pars = ind_allhosp_gradbenopti, drug_eff_pars = eff_allhosp_gradbenopti, scenario = "highR0_unlimHC_allhosp_gradbenopti")
-highR0_limbeds_allhosp_gradbenopti <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_limited_beds, drug_ind_pars = ind_allhosp_gradbenopti, drug_eff_pars = eff_allhosp_gradbenopti, scenario = "highR0_limbeds_allhosp_gradbenopti")
-highR0_limbedsox_allhosp_gradbenopti <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_limited_beds_ox, drug_ind_pars = ind_allhosp_gradbenopti, drug_eff_pars = eff_allhosp_gradbenopti, scenario = "highR0_limbedsox_allhosp_gradbenopti")
 highR0_limMV_allhosp_gradbenopti <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_limited_MV, drug_ind_pars = ind_allhosp_gradbenopti, drug_eff_pars = eff_allhosp_gradbenopti, scenario = "highR0_limMV_allhosp_gradbenopti")
 highR0_limMVox_allhosp_gradbenopti <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_limited_MV_ox, drug_ind_pars = ind_allhosp_gradbenopti, drug_eff_pars = eff_allhosp_gradbenopti, scenario = "highR0_limMVox_allhosp_gradbenopti")
 highR0_limMVoxbeds_allhosp_gradbenopti <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_limited_MV_ox_beds, drug_ind_pars = ind_allhosp_gradbenopti, drug_eff_pars = eff_allhosp_gradbenopti, scenario = "highR0_limMVoxbeds_allhosp_gradbenopti")
 highR0_noHC_allhosp_gradbenopti <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_nothing, drug_ind_pars = ind_allhosp_gradbenopti, drug_eff_pars = eff_allhosp_gradbenopti, scenario = "highR0_noHC_allhosp_gradbenopti")
 
 lowR0_unlimHC_allhosp_gradbenopti <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_unlimited, drug_ind_pars = ind_allhosp_gradbenopti, drug_eff_pars = eff_allhosp_gradbenopti, scenario = "lowR0_unlimHC_allhosp_gradbenopti")
-lowR0_limbeds_allhosp_gradbenopti <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_limited_beds, drug_ind_pars = ind_allhosp_gradbenopti, drug_eff_pars = eff_allhosp_gradbenopti, scenario = "lowR0_limbeds_allhosp_gradbenopti")
-lowR0_limbedsox_allhosp_gradbenopti <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_limited_beds_ox, drug_ind_pars = ind_allhosp_gradbenopti, drug_eff_pars = eff_allhosp_gradbenopti, scenario = "lowR0_limbedsox_allhosp_gradbenopti")
 lowR0_limMV_allhosp_gradbenopti <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_limited_MV, drug_ind_pars = ind_allhosp_gradbenopti, drug_eff_pars = eff_allhosp_gradbenopti, scenario = "lowR0_limMV_allhosp_gradbenopti")
 lowR0_limMVox_allhosp_gradbenopti <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_limited_MV_ox, drug_ind_pars = ind_allhosp_gradbenopti, drug_eff_pars = eff_allhosp_gradbenopti, scenario = "lowR0_limMVox_allhosp_gradbenopti")
 lowR0_limMVoxbeds_allhosp_gradbenopti <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_limited_MV_ox_beds, drug_ind_pars = ind_allhosp_gradbenopti, drug_eff_pars = eff_allhosp_gradbenopti, scenario = "lowR0_limMVoxbeds_allhosp_gradbenopti")
@@ -225,16 +209,16 @@ lowR0_noHC_allhosp_gradbenopti <- run_drugs_hc_combo(demog_pars = demog_pars_low
 
 # All Hospitalised Individuals Get Benefit - Non-Fully Treated Individuals Derive Minimal Benefit (Optimistic Scenario)
 highR0_unlimHC_allhosp_benfull <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_unlimited, drug_ind_pars = ind_allhosp_benfull, drug_eff_pars = eff_allhosp_benfull, scenario = "highR0_unlimHC_allhosp_benfull")
-highR0_limbeds_allhosp_benfull <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_limited_beds, drug_ind_pars = ind_allhosp_benfull, drug_eff_pars = eff_allhosp_benfull, scenario = "highR0_limbeds_allhosp_benfull")
-highR0_limbedsox_allhosp_benfull <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_limited_beds_ox, drug_ind_pars = ind_allhosp_benfull, drug_eff_pars = eff_allhosp_benfull, scenario = "highR0_limbedsox_allhosp_benfull")
+# highR0_limbeds_allhosp_benfull <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_limited_beds, drug_ind_pars = ind_allhosp_benfull, drug_eff_pars = eff_allhosp_benfull, scenario = "highR0_limbeds_allhosp_benfull")
+# highR0_limbedsox_allhosp_benfull <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_limited_beds_ox, drug_ind_pars = ind_allhosp_benfull, drug_eff_pars = eff_allhosp_benfull, scenario = "highR0_limbedsox_allhosp_benfull")
 highR0_limMV_allhosp_benfull <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_limited_MV, drug_ind_pars = ind_allhosp_benfull, drug_eff_pars = eff_allhosp_benfull, scenario = "highR0_limMV_allhosp_benfull")
 highR0_limMVox_allhosp_benfull <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_limited_MV_ox, drug_ind_pars = ind_allhosp_benfull, drug_eff_pars = eff_allhosp_benfull, scenario = "highR0_limMVox_allhosp_benfull")
 highR0_limMVoxbeds_allhosp_benfull <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_limited_MV_ox_beds, drug_ind_pars = ind_allhosp_benfull, drug_eff_pars = eff_allhosp_benfull, scenario = "highR0_limMVoxbeds_allhosp_benfull")
 highR0_noHC_allhosp_benfull <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_nothing, drug_ind_pars = ind_allhosp_benfull, drug_eff_pars = eff_allhosp_benfull, scenario = "highR0_noHC_allhosp_benfull")
 
 lowR0_unlimHC_allhosp_benfull <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_unlimited, drug_ind_pars = ind_allhosp_benfull, drug_eff_pars = eff_allhosp_benfull, scenario = "lowR0_unlimHC_allhosp_benfull")
-lowR0_limbeds_allhosp_benfull <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_limited_beds, drug_ind_pars = ind_allhosp_benfull, drug_eff_pars = eff_allhosp_benfull, scenario = "lowR0_limbeds_allhosp_benfull")
-lowR0_limbedsox_allhosp_benfull <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_limited_beds_ox, drug_ind_pars = ind_allhosp_benfull, drug_eff_pars = eff_allhosp_benfull, scenario = "lowR0_limbedsox_allhosp_benfull")
+# lowR0_limbeds_allhosp_benfull <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_limited_beds, drug_ind_pars = ind_allhosp_benfull, drug_eff_pars = eff_allhosp_benfull, scenario = "lowR0_limbeds_allhosp_benfull")
+# lowR0_limbedsox_allhosp_benfull <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_limited_beds_ox, drug_ind_pars = ind_allhosp_benfull, drug_eff_pars = eff_allhosp_benfull, scenario = "lowR0_limbedsox_allhosp_benfull")
 lowR0_limMV_allhosp_benfull <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_limited_MV, drug_ind_pars = ind_allhosp_benfull, drug_eff_pars = eff_allhosp_benfull, scenario = "lowR0_limMV_allhosp_benfull")
 lowR0_limMVox_allhosp_benfull <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_limited_MV_ox, drug_ind_pars = ind_allhosp_benfull, drug_eff_pars = eff_allhosp_benfull, scenario = "lowR0_limMVox_allhosp_benfull")
 lowR0_limMVoxbeds_allhosp_benfull <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_limited_MV_ox_beds, drug_ind_pars = ind_allhosp_benfull, drug_eff_pars = eff_allhosp_benfull, scenario = "lowR0_limMVoxbeds_allhosp_benfull")
@@ -242,36 +226,55 @@ lowR0_noHC_allhosp_benfull <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0,
 
 toc()
 
-overall <- rbind(highR0_unlimHC_notreat_notreat, highR0_limbeds_notreat_notreat, highR0_limbedsox_notreat_notreat, highR0_limMV_notreat_notreat,
-                 highR0_limMVox_notreat_notreat, highR0_limMVoxbeds_notreat_notreat, highR0_noHC_notreat_notreat,
-                 lowR0_unlimHC_notreat_notreat, lowR0_limbeds_notreat_notreat, lowR0_limbedsox_notreat_notreat, lowR0_limMV_notreat_notreat,
-                 lowR0_limMVox_notreat_notreat, lowR0_limMVoxbeds_notreat_notreat, lowR0_noHC_notreat_notreat,
-                 highR0_unlimHC_treatonly_benfull, highR0_limbeds_treatonly_benfull, highR0_limbedsox_treatonly_benfull, highR0_limMV_treatonly_benfull,
+overall <- rbind(highR0_unlimHC_treatonly_benfull, highR0_limMV_treatonly_benfull,
                  highR0_limMVox_treatonly_benfull, highR0_limMVoxbeds_treatonly_benfull, highR0_noHC_treatonly_benfull,
-                 lowR0_unlimHC_treatonly_benfull, lowR0_limbeds_treatonly_benfull, lowR0_limbedsox_treatonly_benfull, lowR0_limMV_treatonly_benfull,
+                 lowR0_unlimHC_treatonly_benfull, lowR0_limMV_treatonly_benfull,
                  lowR0_limMVox_treatonly_benfull, lowR0_limMVoxbeds_treatonly_benfull, lowR0_noHC_treatonly_benfull,
-                 highR0_unlimHC_allhosp_gradbencons, highR0_limbeds_allhosp_gradbencons, highR0_limbedsox_allhosp_gradbencons, highR0_limMV_allhosp_gradbencons,
+                 highR0_unlimHC_allhosp_gradbencons, highR0_limMV_allhosp_gradbencons,
                  highR0_limMVox_allhosp_gradbencons, highR0_limMVoxbeds_allhosp_gradbencons, highR0_noHC_allhosp_gradbencons,
-                 lowR0_unlimHC_allhosp_gradbencons, lowR0_limbeds_allhosp_gradbencons, lowR0_limbedsox_allhosp_gradbencons,lowR0_limMV_allhosp_gradbencons,
+                 lowR0_unlimHC_allhosp_gradbencons, lowR0_limMV_allhosp_gradbencons,
                  lowR0_limMVox_allhosp_gradbencons, lowR0_limMVoxbeds_allhosp_gradbencons, lowR0_noHC_allhosp_gradbencons,
-                 highR0_unlimHC_allhosp_gradbenopti, highR0_limbeds_allhosp_gradbenopti, highR0_limbedsox_allhosp_gradbenopti, highR0_limMV_allhosp_gradbenopti,
+                 highR0_unlimHC_allhosp_gradbenopti, highR0_limMV_allhosp_gradbenopti,
                  highR0_limMVox_allhosp_gradbenopti, highR0_limMVoxbeds_allhosp_gradbenopti, highR0_noHC_allhosp_gradbenopti,
-                 lowR0_unlimHC_allhosp_gradbenopti, lowR0_limbeds_allhosp_gradbenopti, lowR0_limbedsox_allhosp_gradbenopti, lowR0_limMV_allhosp_gradbenopti,
+                 lowR0_unlimHC_allhosp_gradbenopti, lowR0_limMV_allhosp_gradbenopti,
                  lowR0_limMVox_allhosp_gradbenopti, lowR0_limMVoxbeds_allhosp_gradbenopti, lowR0_noHC_allhosp_gradbenopti,
-                 highR0_unlimHC_allhosp_benfull, highR0_limbeds_allhosp_benfull, highR0_limbedsox_allhosp_benfull, highR0_limMV_allhosp_benfull,
+                 highR0_unlimHC_allhosp_benfull, highR0_limMV_allhosp_benfull,
                  highR0_limMVox_allhosp_benfull, highR0_limMVoxbeds_allhosp_benfull, highR0_noHC_allhosp_benfull,
-                 lowR0_unlimHC_allhosp_benfull, lowR0_limbeds_allhosp_benfull, lowR0_limbedsox_allhosp_benfull, lowR0_limMV_allhosp_benfull,
+                 lowR0_unlimHC_allhosp_benfull, lowR0_limMV_allhosp_benfull,
                  lowR0_limMVox_allhosp_benfull, lowR0_limMVoxbeds_allhosp_benfull, lowR0_noHC_allhosp_benfull) %>%
   separate(scenario, c("R0", "healthcare", "drug_benefit", "drug_benefit2")) %>%
   unite("drug_benefit", drug_benefit:drug_benefit2, remove = TRUE)
 overall$healthcare <- factor(overall$healthcare, levels = c("unlimHC", "limbeds", "limbedsox", "limMV", "limMVox", "limMVoxbeds", "noHC"))
 overall$drug_benefit <- factor(overall$drug_benefit, levels = c("notreat_notreat", "treatonly_benfull", "allhosp_gradbencons", "allhosp_gradbenopti", "allhosp_benfull"))
 overall <- overall %>%
+  filter(drug_benefit != "notreat_notreat") %>%
   filter(healthcare != "limbeds" & healthcare != "limbedsox")
 
-ggplot(overall, aes(x = healthcare, y = IFR, fill = healthcare)) +
-  geom_boxplot() +
+no_drugs <- rbind(highR0_unlimHC_notreat_notreat, highR0_limMV_notreat_notreat,
+                  highR0_limMVox_notreat_notreat, highR0_limMVoxbeds_notreat_notreat, highR0_noHC_notreat_notreat,
+                  lowR0_unlimHC_notreat_notreat, lowR0_limMV_notreat_notreat,
+                  lowR0_limMVox_notreat_notreat, lowR0_limMVoxbeds_notreat_notreat, lowR0_noHC_notreat_notreat) %>%
+  separate(scenario, c("R0", "healthcare", "drug_benefit", "drug_benefit2")) %>%
+  select(IFR, R0, healthcare) %>%
+  group_by(R0, healthcare) %>%
+  summarise(no_drugs_IFR = mean(IFR))
+
+y <- overall %>%
+  left_join(no_drugs, by = c("R0", "healthcare")) %>%
+  mutate(IFR_diff = no_drugs_IFR - IFR) %>%
+  mutate(prop_IFR_red = IFR_diff/no_drugs_IFR)
+y$healthcare <- factor(overall$healthcare, levels = c("unlimHC", "limbeds", "limbedsox", "limMV", "limMVox", "limMVoxbeds", "noHC"))
+y$drug_benefit <- factor(overall$drug_benefit, levels = c("treatonly_benfull", "allhosp_gradbencons", "allhosp_gradbenopti", "allhosp_benfull"))
+
+ggplot(y) +
+  geom_boxplot(aes(x = healthcare, y = IFR, fill = healthcare), outlier.shape = NA) +
+  geom_point(aes(x = healthcare, y = no_drugs_IFR, col = healthcare), shape = 8) +
   facet_wrap(R0 ~ drug_benefit, nrow = 2)
+
+ggplot(y) +
+  geom_boxplot(aes(x = healthcare, y = prop_IFR_red, fill = healthcare), outlier.shape = NA) +
+  facet_wrap(R0 ~ drug_benefit, nrow = 2)
+
 
 test <- overall %>%
   filter(R0 == "highR0") %>%
@@ -295,5 +298,23 @@ ggplot(overall, aes(x = healthcare, y = ICU_full_treat, fill = healthcare)) +
 ggplot(overall, aes(x = healthcare, y = ICU_any_treat, fill = healthcare)) +
   geom_boxplot() +
   facet_wrap(R0 ~ drug_benefit, nrow = 2)
+
+
+# highR0_limbeds_notreat_notreat <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_limited_beds, drug_ind_pars = ind_notreat_notreat, drug_eff_pars = eff_notreat_notreat, scenario = "highR0_limbeds_notreat_notreat")
+# highR0_limbedsox_notreat_notreat <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_limited_beds_ox, drug_ind_pars = ind_notreat_notreat, drug_eff_pars = eff_notreat_notreat, scenario = "highR0_limbedsox_notreat_notreat")
+# lowR0_limbeds_notreat_notreat <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_limited_beds, drug_ind_pars = ind_notreat_notreat, drug_eff_pars = eff_notreat_notreat, scenario = "lowR0_limbeds_notreat_notreat")
+# lowR0_limbedsox_notreat_notreat <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_limited_beds_ox, drug_ind_pars = ind_notreat_notreat, drug_eff_pars = eff_notreat_notreat, scenario = "lowR0_limbedsox_notreat_notreat")
+# highR0_limbeds_treatonly_benfull <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_limited_beds, drug_ind_pars = ind_treatonly_benfull, drug_eff_pars = eff_treatonly_benfull, scenario = "highR0_limbeds_treatonly_benfull")
+# highR0_limbedsox_treatonly_benfull <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_limited_beds_ox, drug_ind_pars = ind_treatonly_benfull, drug_eff_pars = eff_treatonly_benfull, scenario = "highR0_limbedsox_treatonly_benfull")
+# lowR0_limbeds_treatonly_benfull <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_limited_beds, drug_ind_pars = ind_treatonly_benfull, drug_eff_pars = eff_treatonly_benfull, scenario = "lowR0_limbeds_treatonly_benfull")
+# lowR0_limbedsox_treatonly_benfull <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_limited_beds_ox, drug_ind_pars = ind_treatonly_benfull, drug_eff_pars = eff_treatonly_benfull, scenario = "lowR0_limbedsox_treatonly_benfull")
+# highR0_limbeds_allhosp_gradbencons <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_limited_beds, drug_ind_pars = ind_allhosp_gradbencons, drug_eff_pars = eff_allhosp_gradbencons, scenario = "highR0_limbeds_allhosp_gradbencons")
+# highR0_limbedsox_allhosp_gradbencons <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_limited_beds_ox, drug_ind_pars = ind_allhosp_gradbencons, drug_eff_pars = eff_allhosp_gradbencons, scenario = "highR0_limbedsox_allhosp_gradbencons")
+# lowR0_limbeds_allhosp_gradbencons <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_limited_beds, drug_ind_pars = ind_allhosp_gradbencons, drug_eff_pars = eff_allhosp_gradbencons, scenario = "lowR0_limbeds_allhosp_gradbencons")
+# lowR0_limbedsox_allhosp_gradbencons <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_limited_beds_ox, drug_ind_pars = ind_allhosp_gradbencons, drug_eff_pars = eff_allhosp_gradbencons, scenario = "lowR0_limbedsox_allhosp_gradbencons")
+# highR0_limbeds_allhosp_gradbenopti <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_limited_beds, drug_ind_pars = ind_allhosp_gradbenopti, drug_eff_pars = eff_allhosp_gradbenopti, scenario = "highR0_limbeds_allhosp_gradbenopti")
+# highR0_limbedsox_allhosp_gradbenopti <- run_drugs_hc_combo(demog_pars = demog_pars_high_R0, hc_pars = hc_pars_limited_beds_ox, drug_ind_pars = ind_allhosp_gradbenopti, drug_eff_pars = eff_allhosp_gradbenopti, scenario = "highR0_limbedsox_allhosp_gradbenopti")
+# lowR0_limbeds_allhosp_gradbenopti <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_limited_beds, drug_ind_pars = ind_allhosp_gradbenopti, drug_eff_pars = eff_allhosp_gradbenopti, scenario = "lowR0_limbeds_allhosp_gradbenopti")
+# lowR0_limbedsox_allhosp_gradbenopti <- run_drugs_hc_combo(demog_pars = demog_pars_low_R0, hc_pars = hc_pars_limited_beds_ox, drug_ind_pars = ind_allhosp_gradbenopti, drug_eff_pars = eff_allhosp_gradbenopti, scenario = "lowR0_limbedsox_allhosp_gradbenopti")
 
 
