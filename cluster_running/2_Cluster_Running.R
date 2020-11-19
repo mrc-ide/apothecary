@@ -55,7 +55,7 @@ countries <- countries[countries %in% yes_death_countries$countryterritoryCode]
 for (i in 1:length(countries)) {
   test <- run_apothecary_MCMC(country = countries[i], date = "2020-11-16", pars_init = pars_init,
                               mortality_data = mortality_data, interventions = interventions,
-                              n_mcmc = 2, replicates = 2, healthcare = "unlimited")
+                              n_mcmc = 2, replicates = 2, healthcare = "unlimited", n_chains = 1)
   print(i)
 }
 
@@ -63,7 +63,7 @@ for (i in 1:length(countries)) {
 for (i in 1:length(countries)) {
   test <- run$enqueue(run_apothecary_MCMC(country = countries[i], date = "2020-11-16", pars_init = pars_init,
                                           mortality_data = mortality_data, interventions = interventions,
-                                          n_mcmc =50000, replicates = 500, healthcare = "unlimited"))
+                                          n_mcmc = 50000, replicates = 500, healthcare = "unlimited", n_chains = 1))
   print(i)
 }
 table(unname(run$task_status()), useNA = "ifany")
@@ -73,7 +73,15 @@ reruns <- which(unname(run$task_status() == "PENDING"))
 for (i in reruns) {
   test <- run$enqueue(run_apothecary_MCMC(country = countries[i], date = "2020-11-16", pars_init = pars_init,
                                           mortality_data = mortality_data, interventions = interventions,
-                                          n_mcmc =50000, replicates = 500, healthcare = "unlimited"))
+                                          n_mcmc = 50000, replicates = 500, healthcare = "unlimited", n_chains = 1))
+  print(i)
+}
+
+reruns <- c("ATG", "CHE", "COD", "IND", "ITA", "JAM", "JPN", "PAN", "TTO")
+for (i in seq_along(reruns)) {
+  test <- run$enqueue(run_apothecary_MCMC(country = reruns[i], date = "2020-11-16", pars_init = pars_init,
+                                          mortality_data = mortality_data, interventions = interventions,
+                                          n_mcmc = 50000, replicates = 500, healthcare = "unlimited", n_chains = 1))
   print(i)
 }
 table(unname(run$task_status()), useNA = "ifany")

@@ -1,4 +1,5 @@
-run_apothecary_MCMC <- function(country, date, pars_init, mortality_data, interventions, n_mcmc, replicates, healthcare) {
+run_apothecary_MCMC <- function(country, date, pars_init, mortality_data, interventions,
+                                n_mcmc, replicates, healthcare, n_chains) {
 
   # Checking Correct ISO Specification
   if (!(country %in% unique(squire::population$iso3c))) {
@@ -165,7 +166,7 @@ run_apothecary_MCMC <- function(country, date, pars_init, mortality_data, interv
                              log_likelihood = NULL,
                              squire_model = apothecary:::apothecary_deterministic_model(),
                              output_proposals = FALSE,
-                             n_chains = 1,
+                             n_chains = n_chains,
                              pars_obs = pars_obs,
                              pars_init = pars_init,
                              pars_min = pars_min,
@@ -196,6 +197,4 @@ run_apothecary_MCMC <- function(country, date, pars_init, mortality_data, interv
   return(pmcmc_res)
 
 }
-
-
 
