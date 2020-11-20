@@ -5,6 +5,10 @@ library(apothecary)
 # Load apothecary stuff
 devtools::load_all()
 
+ecdc <- readRDS("N:/Charlie/apothecary_fitting/apothecary/cluster_running/Inputs/ecdc_all.rds")
+interventions <- readRDS("N:/Charlie/apothecary_fitting/apothecary/cluster_running/Inputs/google_brt.rds")
+pars_init <- readRDS("N:/Charlie/apothecary_fitting/apothecary/cluster_running/Inputs/pars_init.rds")
+
 # Loading In Example Initial Parameters and Defining Country and Date Fitting Being Applied To
 pars_init <- readRDS("cluster_running/Inputs/pars_init.rds")
 can_parms <- pars_init$CAN
@@ -148,8 +152,8 @@ logprior <- function(pars){
 suppressWarnings(future::plan(future::multiprocess()))
 
 tic()
-n_mcmc <- 10
-replicates <- 10
+n_mcmc <- 100
+replicates <- 50
 pmcmc_res <- squire::pmcmc(data = data,
                            n_mcmc = n_mcmc,
                            log_prior = logprior,
@@ -186,6 +190,10 @@ toc()
 saveRDS(pmcmc_res, "bloop.rds")
 pmcmc_res <- readRDS("bloop.rds")
 
+mcmc_chain <- pmcmc_res$pmcmc_results$results[1000:3000, ]
+plot(mcmc_chain[, 1], type = "l")
+plot(mcmc_chain[, 2], type = "l")
+
 out <- pmcmc_res$output
 index <- apothecary:::odin_index(pmcmc_res$model)
 cum_deaths <- out[, index$D, ]
@@ -195,7 +203,7 @@ cum_deaths <- as.data.frame(cum_deaths)
 cum_deaths$date <- row.names(cum_deaths)
 
 daily_deaths <- cum_deaths %>%
-  pivot_longer(cols = V1:V1000, names_to = "replicate")
+  pivot_longer(cols = V1:V500, names_to = "replicate")
 
 daily_death_summary <- daily_deaths %>%
   group_by(date) %>%
