@@ -150,6 +150,7 @@ run_drugs_hc_combo <- function(demog_pars, hc_pars, drug_ind_pars, drug_eff_pars
 # cluster wrapper
 run_hc_drugs_R0 <- function(demog_pars, hc_pars, drug_ind_pars, drug_eff_pars, scenario) {
 
+  date <- Sys.Date()
   x <- run_drugs_hc_combo(demog_pars, hc_pars, drug_ind_pars, drug_eff_pars, scenario)
   run_name <- paste0("N:/Charlie/apothecary_fitting/apothecary/analysis_Figure2/Outputs/", scenario, "_", date, ".rds")
   saveRDS(x, run_name)

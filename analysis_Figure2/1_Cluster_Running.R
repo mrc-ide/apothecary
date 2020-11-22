@@ -6,9 +6,9 @@ packages <- c("lubridate", "dplyr", "tidyr", "odin", "squire", "apothecary", "dd
 
 
 # Creating a Context
-sources <- c("N:/Charlie/apothecary_fitting/apothecary/analysis_Figure2/Figure_2_Functions")
+sources <- c("N:/Charlie/apothecary_fitting/apothecary/analysis_Figure2/Functions/Figure_2_Functions.R")
 additional_identifier <- ""
-context_name <- paste0("N:/Charlie/apothecary_runs_", Sys.Date(), additional_identifier)
+context_name <- paste0("N:/Charlie/apothecary_figure2_runs_", Sys.Date(), additional_identifier)
 ctx <- context::context_save(path = context_name,
                              sources = sources,
                              packages = packages,
@@ -128,16 +128,16 @@ eff_allhosp_benfull <- list(rem_mod_getox_dur = rem_mod_dur, rem_mod_noox_dur = 
 
 # Running on the cluster
 # Only Fully Treated Individuals Get the Full Benefit
-highR0_unlimHC_notreat_notreat <-  run$enqueue(run_hc_drugs_R0(demog_pars_high_R0, hc_pars_unlimited, ind_notreat_notreat, eff_notreat_notreat, "highR0_unlimHC_notreat_notreat"))
-highR0_limMV_notreat_notreat <- run$enqueue(run$enqueue(run_hc_drugs_R0(demog_pars_high_R0, hc_pars_limited_MV, ind_notreat_notreat, eff_notreat_notreat, "highR0_limMV_notreat_notreat")))
-highR0_limMVox_notreat_notreat <- run$enqueue(run$enqueue(run_hc_drugs_R0(demog_pars_high_R0, hc_pars_limited_MV_ox, ind_notreat_notreat, eff_notreat_notreat, "highR0_limMVox_notreat_notreat")))
-highR0_limMVoxbeds_notreat_notreat <- run$enqueue(run_hc_drugs_R0(demog_pars_high_R0, hc_pars_limited_MV_ox_beds, ind_notreat_notreat, eff_notreat_notreat, "highR0_limMVoxbeds_notreat_notreat")))
-highR0_noHC_notreat_notreat <- run$enqueue(run_hc_drugs_R0(demog_pars_high_R0, hc_pars_nothing, ind_notreat_notreat, eff_notreat_notreat, "highR0_noHC_notreat_notreat"))
-lowR0_unlimHC_notreat_notreat <- run$enqueue(run_hc_drugs_R0(demog_pars_low_R0, hc_pars_unlimited, ind_notreat_notreat, eff_notreat_notreat, "lowR0_unlimHC_notreat_notreat"))
-lowR0_limMV_notreat_notreat <- run$enqueue(run_hc_drugs_R0(demog_pars_low_R0, hc_pars_limited_MV, ind_notreat_notreat, eff_notreat_notreat, "lowR0_limMV_notreat_notreat"))
-lowR0_limMVox_notreat_notreat <- run$enqueue(run_hc_drugs_R0(demog_pars_low_R0, hc_pars_limited_MV_ox, ind_notreat_notreat, eff_notreat_notreat, "lowR0_limMVox_notreat_notreat"))
-lowR0_limMVoxbeds_notreat_notreat <- run$enqueue(run_hc_drugs_R0(demog_pars_low_R0, hc_pars_limited_MV_ox_beds, ind_notreat_notreat, eff_notreat_notreat, "lowR0_limMVoxbeds_notreat_notreat"))
-lowR0_noHC_notreat_notreat <- run$enqueue(run_hc_drugs_R0(demog_pars_low_R0, hc_pars_nothing, ind_notreat_notreat, eff_notreat_notreat, "lowR0_noHC_notreat_notreat"))
+highR0_unlimHC_notreat_notreat <-  run$enqueue(run_hc_drugs_R0(demog_pars_high_R0, hc_pars_unlimited, ind_no_drugs, eff_no_drugs, "highR0_unlimHC_notreat_notreat"))
+highR0_limMV_notreat_notreat <- run$enqueue(run_hc_drugs_R0(demog_pars_high_R0, hc_pars_limited_MV, ind_no_drugs, eff_no_drugs, "highR0_limMV_notreat_notreat"))
+highR0_limMVox_notreat_notreat <- run$enqueue(run_hc_drugs_R0(demog_pars_high_R0, hc_pars_limited_MV_ox, ind_no_drugs, eff_no_drugs, "highR0_limMVox_notreat_notreat"))
+highR0_limMVoxbeds_notreat_notreat <- run$enqueue(run_hc_drugs_R0(demog_pars_high_R0, hc_pars_limited_MV_ox_beds, ind_no_drugs, eff_no_drugs, "highR0_limMVoxbeds_notreat_notreat"))
+highR0_noHC_notreat_notreat <- run$enqueue(run_hc_drugs_R0(demog_pars_high_R0, hc_pars_nothing, ind_no_drugs, eff_no_drugs, "highR0_noHC_notreat_notreat"))
+lowR0_unlimHC_notreat_notreat <- run$enqueue(run_hc_drugs_R0(demog_pars_low_R0, hc_pars_unlimited, ind_no_drugs, eff_no_drugs, "lowR0_unlimHC_notreat_notreat"))
+lowR0_limMV_notreat_notreat <- run$enqueue(run_hc_drugs_R0(demog_pars_low_R0, hc_pars_limited_MV, ind_no_drugs, eff_no_drugs, "lowR0_limMV_notreat_notreat"))
+lowR0_limMVox_notreat_notreat <- run$enqueue(run_hc_drugs_R0(demog_pars_low_R0, hc_pars_limited_MV_ox, ind_no_drugs, eff_no_drugs, "lowR0_limMVox_notreat_notreat"))
+lowR0_limMVoxbeds_notreat_notreat <- run$enqueue(run_hc_drugs_R0(demog_pars_low_R0, hc_pars_limited_MV_ox_beds, ind_no_drugs, eff_no_drugs, "lowR0_limMVoxbeds_notreat_notreat"))
+lowR0_noHC_notreat_notreat <- run$enqueue(run_hc_drugs_R0(demog_pars_low_R0, hc_pars_nothing, ind_no_drugs, eff_no_drugs, "lowR0_noHC_notreat_notreat"))
 
 # Only Fully Treated Individuals Get the Full Benefit
 highR0_unlimHC_treatonly_benfull <- run$enqueue(run_hc_drugs_R0(demog_pars_high_R0, hc_pars_unlimited, ind_treatonly_benfull, eff_treatonly_benfull, "highR0_unlimHC_treatonly_benfull"))
@@ -187,12 +187,5 @@ lowR0_limMVox_allhosp_benfull <- run$enqueue(run_hc_drugs_R0(demog_pars_low_R0, 
 lowR0_limMVoxbeds_allhosp_benfull <- run$enqueue(run_hc_drugs_R0(demog_pars_low_R0, hc_pars_limited_MV_ox_beds, ind_allhosp_benfull, eff_allhosp_benfull, "lowR0_limMVoxbeds_allhosp_benfull"))
 lowR0_noHC_allhosp_benfull <- run$enqueue(run_hc_drugs_R0(demog_pars_low_R0, hc_pars_nothing, ind_allhosp_benfull, eff_allhosp_benfull, "lowR0_noHC_allhosp_benfull"))
 
-table(unname(run$task_status()), useNA = "ifany")
-
-
-
-
-
-
-
+table(run$task_status(), useNA = "ifany")
 
