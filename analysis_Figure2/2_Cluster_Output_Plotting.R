@@ -45,6 +45,11 @@ ggplot(overall) +
   geom_point(aes(x = healthcare, y = no_drugs_IFR, col = healthcare), shape = 8) +
   facet_wrap(R0 ~ drug_benefit, nrow = 2)
 
+summary <- overall %>%
+  group_by(R0, healthcare, drug_benefit) %>%
+  summarise(med_IFR = median(IFR),
+            mean_IFR = mean(IFR))
+
 ggplot(y) +
   geom_boxplot(aes(x = healthcare, y = prop_IFR_red, fill = healthcare), outlier.shape = NA) +
   facet_wrap(R0 ~ drug_benefit, nrow = 2)
