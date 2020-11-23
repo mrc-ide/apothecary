@@ -1,6 +1,6 @@
 # Setting Up Cluster
 loc <- didehpc::path_mapping("location", "N:", "//fi--didenas5/malaria", "N:")
-config <- didehpc::didehpc_config(shares = loc, use_rrq = FALSE, cluster = "fi--didemrchnb",
+config <- didehpc::didehpc_config(shares = loc, use_rrq = FALSE, cluster = "fi--dideclusthn", #"fi--didemrchnb",
                                   parallel = FALSE, rtools = TRUE)
 packages <- c("lubridate", "dplyr", "tidyr", "odin", "squire", "apothecary", "dde")
 
@@ -56,7 +56,7 @@ hc_pars_limited_MV_ox_beds <- list(hosp_bed_capacity = actual_hosp_beds, ICU_bed
 
 
 # Defining the Drug Parameters Used In Each Scenario
-num_draws <- 30
+num_draws <- 500
 drug_effs <- generate_drug_effect_draws(num_draws = num_draws)
 dexy_mod_mort <- drug_effs$dexy_mod_mort
 dexy_ICU_mort <- drug_effs$dexy_ICU_mort
@@ -139,6 +139,8 @@ lowR0_limMVox_notreat_notreat <- run$enqueue(run_hc_drugs_R0(demog_pars_low_R0, 
 lowR0_limMVoxbeds_notreat_notreat <- run$enqueue(run_hc_drugs_R0(demog_pars_low_R0, hc_pars_limited_MV_ox_beds, ind_no_drugs, eff_no_drugs, "lowR0_limMVoxbeds_notreat_notreat"))
 lowR0_noHC_notreat_notreat <- run$enqueue(run_hc_drugs_R0(demog_pars_low_R0, hc_pars_nothing, ind_no_drugs, eff_no_drugs, "lowR0_noHC_notreat_notreat"))
 
+table(run$task_status(), useNA = "ifany")
+
 # Only Fully Treated Individuals Get the Full Benefit
 highR0_unlimHC_treatonly_benfull <- run$enqueue(run_hc_drugs_R0(demog_pars_high_R0, hc_pars_unlimited, ind_treatonly_benfull, eff_treatonly_benfull, "highR0_unlimHC_treatonly_benfull"))
 highR0_limMV_treatonly_benfull <- run$enqueue(run_hc_drugs_R0(demog_pars_high_R0, hc_pars_limited_MV, ind_treatonly_benfull, eff_treatonly_benfull, "highR0_limMV_treatonly_benfull"))
@@ -150,6 +152,8 @@ lowR0_limMV_treatonly_benfull <- run$enqueue(run_hc_drugs_R0(demog_pars_low_R0, 
 lowR0_limMVox_treatonly_benfull <- run$enqueue(run_hc_drugs_R0(demog_pars_low_R0, hc_pars_limited_MV_ox, ind_treatonly_benfull, eff_treatonly_benfull, "lowR0_limMVox_treatonly_benfull"))
 lowR0_limMVoxbeds_treatonly_benfull <- run$enqueue(run_hc_drugs_R0(demog_pars_low_R0, hc_pars_limited_MV_ox_beds, ind_treatonly_benfull, eff_treatonly_benfull, "lowR0_limMVoxbeds_treatonly_benfull"))
 lowR0_noHC_treatonly_benfull <- run$enqueue(run_hc_drugs_R0(demog_pars_low_R0, hc_pars_nothing, ind_treatonly_benfull, eff_treatonly_benfull, "lowR0_noHC_treatonly_benfull"))
+
+table(run$task_status(), useNA = "ifany")
 
 # All Hospitalised Individuals Get Benefit - Non-Fully Treated Individuals Derive Minimal Benefit (Conservative Scenario)
 highR0_unlimHC_allhosp_gradbencons <- run$enqueue(run_hc_drugs_R0(demog_pars_high_R0, hc_pars_unlimited, ind_allhosp_gradbencons, eff_allhosp_gradbencons, "highR0_unlimHC_allhosp_gradbencons"))
@@ -163,6 +167,8 @@ lowR0_limMVox_allhosp_gradbencons <- run$enqueue(run_hc_drugs_R0(demog_pars_low_
 lowR0_limMVoxbeds_allhosp_gradbencons <- run$enqueue(run_hc_drugs_R0(demog_pars_low_R0, hc_pars_limited_MV_ox_beds, ind_allhosp_gradbencons, eff_allhosp_gradbencons, "lowR0_limMVoxbeds_allhosp_gradbencons"))
 lowR0_noHC_allhosp_gradbencons <- run$enqueue(run_hc_drugs_R0(demog_pars_low_R0, hc_pars_nothing, ind_allhosp_gradbencons, eff_allhosp_gradbencons, "lowR0_noHC_allhosp_gradbencons"))
 
+table(run$task_status(), useNA = "ifany")
+
 # All Hospitalised Individuals Get Benefit - Non-Fully Treated Individuals Derive Minimal Benefit (Optimistic Scenario)
 highR0_unlimHC_allhosp_gradbenopti <- run$enqueue(run_hc_drugs_R0(demog_pars_high_R0, hc_pars_unlimited, ind_allhosp_gradbenopti, eff_allhosp_gradbenopti, "highR0_unlimHC_allhosp_gradbenopti"))
 highR0_limMV_allhosp_gradbenopti <- run$enqueue(run_hc_drugs_R0(demog_pars_high_R0, hc_pars_limited_MV, ind_allhosp_gradbenopti, eff_allhosp_gradbenopti, "highR0_limMV_allhosp_gradbenopti"))
@@ -174,6 +180,8 @@ lowR0_limMV_allhosp_gradbenopti <- run$enqueue(run_hc_drugs_R0(demog_pars_low_R0
 lowR0_limMVox_allhosp_gradbenopti <- run$enqueue(run_hc_drugs_R0(demog_pars_low_R0, hc_pars_limited_MV_ox, ind_allhosp_gradbenopti, eff_allhosp_gradbenopti, "lowR0_limMVox_allhosp_gradbenopti"))
 lowR0_limMVoxbeds_allhosp_gradbenopti <- run$enqueue(run_hc_drugs_R0(demog_pars_low_R0, hc_pars_limited_MV_ox_beds, ind_allhosp_gradbenopti, eff_allhosp_gradbenopti, "lowR0_limMVoxbeds_allhosp_gradbenopti"))
 lowR0_noHC_allhosp_gradbenopti <- run$enqueue(run_hc_drugs_R0(demog_pars_low_R0, hc_pars_nothing, ind_allhosp_gradbenopti, eff_allhosp_gradbenopti, "lowR0_noHC_allhosp_gradbenopti"))
+
+table(run$task_status(), useNA = "ifany")
 
 # All Hospitalised Individuals Get Benefit - Non-Fully Treated Individuals Derive Minimal Benefit (Optimistic Scenario)
 highR0_unlimHC_allhosp_benfull <- run$enqueue(run_hc_drugs_R0(demog_pars_high_R0, hc_pars_unlimited, ind_allhosp_benfull, eff_allhosp_benfull, "highR0_unlimHC_allhosp_benfull"))
@@ -189,3 +197,6 @@ lowR0_noHC_allhosp_benfull <- run$enqueue(run_hc_drugs_R0(demog_pars_low_R0, hc_
 
 table(run$task_status(), useNA = "ifany")
 
+indices <- unname(which(run$task_status() == "PENDING"))
+x <- names(which(run$task_status() == "PENDING"))
+run$unsubmit(x)
