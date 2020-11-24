@@ -63,6 +63,32 @@ dexy_ICU_mort <- drug_effs$dexy_ICU_mort
 rem_mod_mort <- drug_effs$rem_mod_mort
 rem_mod_dur <- drug_effs$rem_mod_dur
 
+rem_drug_eff <- c(rep("rem_mod_getox_dur", num_draws), rep("rem_mod_noox_dur", num_draws),
+                  rep("rem_mod_getox_mort", num_draws), rep("rem_mod_noox_mort", num_draws))
+dexy_drug_eff <- c(rep("dexy_mod_getox_mort", num_draws), rep("dexy_mod_noox_mort", num_draws),
+                   rep("dexy_sev_getox_mort", num_draws), rep("dexy_sev_noox_mort", num_draws),
+                   rep("dexy_crit_getox_getmv_mort", num_draws), rep("dexy_crit_getox_nomv_mort", num_draws), rep("dexy_crit_noox_nomv_mort", num_draws))
+
+x <- data.frame(drug = c(rep("Remdesivir", 4 * length(rem_drug_eff)), rep("Dexamethasone", 4 * length(dexy_drug_eff))),
+           eff = c(rep(rem_drug_eff, 4), rep(dexy_drug_eff, 4)),
+           eff_2 = c(rep(rep(c("dur", "dur", "mort", "mort"), each = num_draws), 4), rep("mort", 4 * length(dexy_drug_eff))),
+           scen = c(rep(c("t_bf", "ah_bc", "ah_bo", "ah_bf"), each = length(rem_drug_eff)),
+                    rep(c("t_bf", "ah_bc", "ah_bo", "ah_bf"), each = length(dexy_drug_eff))),
+           RR = c(
+             c(rem_mod_dur, rep(1, num_draws), rem_mod_mort, rep(1, num_draws)),
+             c(rem_mod_dur, 1 + 0.3333 * (rem_mod_dur - 1), rem_mod_mort, rem_mod_mort + 0.6666 * (1 - rem_mod_mort)),
+             c(rem_mod_dur, 1 + 0.6666 * (rem_mod_dur - 1), rem_mod_mort, rem_mod_mort + 0.3333 * (1 - rem_mod_mort)),
+             c(rem_mod_dur, rem_mod_dur, rem_mod_mort, rem_mod_mort),
+             c(dexy_mod_mort, rep(1, num_draws), dexy_ICU_mort, rep(1, num_draws), dexy_ICU_mort, rep(1, num_draws), rep(1, num_draws)),
+             c(dexy_mod_mort, dexy_mod_mort + 0.5 * (1 - dexy_mod_mort), dexy_ICU_mort, dexy_ICU_mort + 0.5 * (1 - dexy_ICU_mort),
+               dexy_ICU_mort, rep(1, num_draws), rep(1, num_draws)),
+             c(dexy_mod_mort, dexy_mod_mort + 0.25 * (1 - dexy_mod_mort), dexy_ICU_mort, dexy_ICU_mort + 0.25 * (1 - dexy_ICU_mort),
+               dexy_ICU_mort, dexy_ICU_mort + 0.5 * (1 - dexy_ICU_mort), dexy_ICU_mort + 0.5 * (1 - dexy_ICU_mort)),
+             c(dexy_mod_mort, dexy_mod_mort, dexy_ICU_mort, dexy_ICU_mort,
+               dexy_ICU_mort, dexy_ICU_mort, dexy_ICU_mort)))
+
+
+
 ## No Drug Effects
 ind_no_drugs <- list(drug_8_indic_IMod_GetHosp_GetOx = 0, drug_8_indic_IMod_GetHosp_NoOx = 0, drug_8_prop_treat = 0,
                      drug_11_indic_IMod_GetHosp_GetOx = 0, drug_11_indic_IMod_GetHosp_NoOx = 0, drug_11_prop_treat = 0,
