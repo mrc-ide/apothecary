@@ -190,6 +190,16 @@ run_apothecary_MCMC <- function(country, date, pars_init, mortality_data, interv
                              baseline_hosp_bed_capacity = baseline_hosp_bed_capacity,
                              baseline_ICU_bed_capacity = baseline_ICU_bed_capacity)
 
+  if (n_chains > 1) {
+    for(i in seq_along(out$pmcmc_results$chains)) {
+      out$pmcmc_results$chains[[i]]$states <- NULL
+      out$pmcmc_results$chains[[i]]$covariance_matrix <- tail(out$pmcmc_results$chains$chain1$covariance_matrix,1)
+    }
+  } else {
+    out$pmcmc_results$states <- NULL
+    out$pmcmc_results$covariance_matrix <- tail(out$pmcmc_results$covariance_matrix, 1)
+  }
+
   run_name <- paste0("N:/Charlie/apothecary_fitting/apothecary_run_results/", iso3c, "_", date, "_", n_mcmc, "_iterations.rds")
 
   saveRDS(pmcmc_res, run_name)

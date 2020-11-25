@@ -419,7 +419,9 @@ run_apothecary <- function(
     stop("Error: specify model as deterministic or stochastic")
   }
 
-  out <- list(output = results, raw_parameters = pars, model = mod)
+  pars$day_return <- day_return
+  pars$replicates <- replicates
+  out <- list(output = results, parameters = pars, model = mod)
   out <- structure(out, class = "squire_simulation")
   return(out)
 }

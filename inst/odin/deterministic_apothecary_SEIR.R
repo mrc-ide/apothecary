@@ -559,6 +559,11 @@ deriv(R[]) <- n_IAsymp_R[i] + n_IMild_R[i] + n_IMild_Drug_5_R[i] + n_IRec2_R[i] 
               n_ISev_NoICU_NoOx_Surv2_R[i] +
               n_ICrit_NoICU_NoOx_NoMV_Surv2_R[i]
 
+new_deaths <- sum(n_IMod_NoHosp_NoOx_Die2_D_Community) + sum(n_ISev_NoICU_NoOx_Die2_D_Community) + sum(n_ICrit_NoICU_NoOx_NoMV_Die2_D_Community) +
+              sum(n_IMod_GetHosp_GetOx_Die2_D_Hospital) + sum(n_IMod_GetHosp_NoOx_Die2_D_Hospital) + sum(n_ISev_GetICU_GetOx_Die2_D_Hospital) +
+              sum(n_ISev_GetICU_NoOx_Die2_D_Hospital) + sum(n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital) + sum(n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital) +
+              sum(n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital)
+
 ## COMPUTING THE FORCE OF INFECTION AND INTERPOLATION FOR MIXING MATRIX AND BETA
 ##------------------------------------------------------------------------------
 # Interpolation for Mixing Matrix

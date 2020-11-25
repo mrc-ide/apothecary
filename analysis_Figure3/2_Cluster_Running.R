@@ -8,13 +8,13 @@
 
 # Setting Up Cluster
 loc <- didehpc::path_mapping("location", "N:", "//fi--didenas5/malaria", "N:")
-config <- didehpc::didehpc_config(shares = loc, use_rrq = FALSE, cluster = "fi--didemrchnb",
+config <- didehpc::didehpc_config(shares = loc, use_rrq = FALSE, cluster =  "fi--dideclusthn",#"fi--didemrchnb",
                                   parallel = FALSE, rtools = TRUE)
 packages <- c("lubridate", "dplyr", "tidyr", "odin", "squire", "apothecary", "dde")
 
 
 # Creating a Context
-sources <- c("N:/Charlie/apothecary_fitting/apothecary/cluster_running/MCMC_cluster_function.R")
+sources <- c("N:/Charlie/apothecary_fitting/apothecary/analysis_Figure3/Functions/MCMC_cluster_function.R")
 additional_identifier <- ""
 context_name <- paste0("N:/Charlie/apothecary_runs_", Sys.Date(), additional_identifier)
 ctx <- context::context_save(path = context_name,
@@ -35,11 +35,11 @@ run$task_list()
 run$task_times()
 
 # Testing the Running Locally
-pars_init <- readRDS("cluster_running/Inputs/pars_init.rds")
-ecdc <- readRDS("cluster_running/Inputs/ecdc_all.rds")
-worldometer <- readRDS("cluster_running/Inputs/worldometers_all.rds")
+pars_init <- readRDS("analysis_Figure3/Inputs/pars_init.rds")
+ecdc <- readRDS("analysis_Figure3/Inputs/ecdc_all.rds")
+worldometer <- readRDS("analysis_Figure3/Inputs/worldometers_all.rds")
 mortality_data <- list(ecdc = ecdc, worldometer = worldometer)
-interventions <- readRDS("cluster_running/Inputs/google_brt.rds")
+interventions <- readRDS("analysis_Figure3/Inputs/google_brt.rds")
 
 # Establishing Which Countries to Run (and Track Missing Ones)
 countries <- names(unlist(lapply(interventions, length))[unlist(lapply(interventions, length)) != 0]) # countries for which we have mobility data
@@ -63,7 +63,7 @@ for (i in 1:length(countries)) {
 for (i in 1:length(countries)) {
   test <- run$enqueue(run_apothecary_MCMC(country = countries[i], date = "2020-11-16", pars_init = pars_init,
                                           mortality_data = mortality_data, interventions = interventions,
-                                          n_mcmc = 50000, replicates = 500, healthcare = "unlimited", n_chains = 1))
+                                          n_mcmc = 2000, replicates = 500, healthcare = "unlimited", n_chains = 3))
   print(i)
 }
 table(unname(run$task_status()), useNA = "ifany")

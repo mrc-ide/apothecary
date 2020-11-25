@@ -1592,14 +1592,28 @@ rt_plot_immunity <- function(out) {
   return(res)
 }
 
+simple_pmcmc_plot <- function(out, burnin = 0) {
 
-
-simple_pmcmc_plot <- function(out) {
-
-  master <- squire:::create_master_chain(out$pmcmc_results, 0)
-  master$chain <-  unlist(lapply(strsplit(rownames(master),".", fixed=TRUE), "[[", 1))
-  master$iteration <-  as.numeric(unlist(lapply(strsplit(rownames(master),".", fixed=TRUE), "[[", 2)))
-
+  if("chains" %in% names(out$pmcmc_results)) {
+    master <- lapply(out$pmcmc_results$chains, function(z, burnin){
+      if (burnin > 0) {
+        z$results[-seq_len(burnin), ]
+      } else {
+        z$results
+      }
+    }, burnin = burnin)
+    master  <- do.call(what = rbind, args = master)
+    master$chain <-  unlist(lapply(strsplit(rownames(master),".", fixed=TRUE), "[[", 1))
+    master$iteration <-  as.numeric(unlist(lapply(strsplit(rownames(master),".", fixed=TRUE), "[[", 2)))
+  } else {
+    if (burnin > 0) {
+      master <- out$pmcmc_results$results[-seq_len(burnin), ]
+    } else {
+      master <- out$pmcmc_results$results
+    }
+    master$chain <- 1
+    master$iteration <- as.numeric(rownames(master))
+  }
   par_pos <- seq_len(which(names(master) == "log_prior")-1)
   pars <- names(master)[par_pos]
 
@@ -1608,21 +1622,37 @@ simple_pmcmc_plot <- function(out) {
     quants <- round(quantile(master[[pars[[i]]]][order(master$log_posterior, decreasing = TRUE)][1:1000], c(0.025, 0.5, 0.975), na.rm = TRUE),2)[c(2,1,3)]
     title <- paste0(pars[i],":\n ", quants[1], " (", quants[2], ", ", quants[3], ")")
 
-    ggplot(master, mapping = aes_string(x = pars[i], color = "chain")) +
+    gg <- ggplot(master, mapping = aes_string(x = pars[i], color = "chain")) +
       geom_freqpoly(stat = "density") + theme_bw() + theme(legend.position = "none") +
       theme(panel.border = element_blank(), axis.line = element_line()) +
-      ggtitle(title) + scale_color_brewer(type = "qual") +
+      ggtitle(title) +
       theme(axis.title = element_blank(),
             title = element_text(size = 8))
+
+    if("chains" %in% names(out$pmcmc_results)) {
+      gg <- gg + scale_color_brewer(type = "qual")
+    } else {
+      gg
+    }
+
+    gg
 
   })
 
   chains <- lapply(par_pos, function(i) {
 
-    ggplot(master[seq(1,nrow(master),100),], mapping = aes_string(y = pars[i], x = "iteration", color = "chain")) +
+    gg <- ggplot(master[seq(1,nrow(master),100),], mapping = aes_string(y = pars[i], x = "iteration", color = "chain")) +
       geom_line() + theme_bw() +
       theme(panel.border = element_blank(), axis.line = element_line()) +
-      theme(legend.position = "none") + scale_color_brewer(type = "qual")
+      theme(legend.position = "none")
+
+    if("chains" %in% names(out$pmcmc_results)) {
+      gg <- gg + scale_color_brewer(type = "qual")
+    } else {
+      gg
+    }
+
+    gg
 
   })
 
