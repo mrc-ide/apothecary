@@ -592,11 +592,26 @@ deaths_plot_single <- function(out, data, date_0, date = Sys.Date(),
     wh <- "scan_results"
   }
 
-  date <- as.Date(date)
-  gg <- plot(out, "deaths", date_0 = date_0, x_var = "date", summary_f = median)
-  ymax <- max(out[[wh]]$inputs$data$deaths, gg$layers[[1]]$data$ymax[gg$layers[[1]]$data$x<=(as.Date(date)+forecast)])
 
-  gg <- gg +
+  date <- as.Date(date)
+  index <- squire:::odin_index(out$model)
+  index <- index$D
+  particles <- lapply(seq_len(dim(out$output)[3]), function(y) {
+    temp <- c(0, diff(rowSums(out$output[, index, y], na.rm = TRUE)))
+    names(temp)[1] <- rownames(out$output)[1]
+    return(temp)
+  })
+  deaths <- do.call(cbind, particles)
+  mean <- apply(deaths, 1, mean)
+  quants <- as.data.frame(t(apply(deaths, 1, quantile, c(0.025, 0.975))))
+  quants$date <- as.Date(rownames(quants))
+  quants$mean <- mean
+  names(quants)[1:4] <- c("ymin","ymax", "date", "mean")
+
+  ymax <- max(quants$ymax, out[[wh]]$inputs$data$deaths)
+  gg <- ggplot(quants, aes(x = date, y = mean)) +
+    geom_ribbon(aes(ymin = ymin, ymax = ymax), fill = "red", alpha = 0.25) +
+    geom_path() +
     geom_point(data = out[[wh]]$inputs$data, mapping = aes(x=date, y=deaths,shape="Reported")) +
     ggplot2::geom_vline(xintercept = date, linetype = "dashed") +
     ggplot2::theme_bw()  +
@@ -616,26 +631,12 @@ deaths_plot_single <- function(out, data, date_0, date = Sys.Date(),
                    panel.grid.minor.x = ggplot2::element_blank(),
                    panel.border = ggplot2::element_blank(),
                    panel.background = ggplot2::element_blank(),
-                   axis.line = ggplot2::element_line(colour = "black"))
-
-  rg <- gg + ylab("Daily Deaths") +
-    ylim(c(0, max(gg$layers[[1]]$data[gg$layers[[1]]$data$x < date+1,]$ymax,out[[wh]]$inputs$data$deaths+1))) +
-    xlim(c(start_date, date)) +
+                   axis.line = ggplot2::element_line(colour = "black")) +
+    ylab("Daily Deaths") +
     theme(legend.position = "none") +
     ggtitle("Model Fit up to Current Day")
 
-  if(single) {
-    return(rg)
-  } else {
-
-    gg <- gg + theme(legend.position = "none") + ylab("") + ggtitle("Model Fit & 28 Day Projection")
-
-    leg <- cowplot::get_legend(gg)
-    return(cowplot::plot_grid(leg,
-                              cowplot::plot_grid(rg, gg+theme(legend.position = "none"),rel_widths=c(0.66,1)),
-                              ncol = 1, rel_heights = c(0.1,1)))
-  }
-
+  return(gg)
 
 }
 
@@ -1627,6 +1628,7 @@ simple_pmcmc_plot <- function(out, burnin = 0) {
       theme(panel.border = element_blank(), axis.line = element_line()) +
       ggtitle(title) +
       theme(axis.title = element_blank(),
+            axis.text.x = element_text(size = 6),
             title = element_text(size = 8))
 
     if("chains" %in% names(out$pmcmc_results)) {
@@ -1643,8 +1645,10 @@ simple_pmcmc_plot <- function(out, burnin = 0) {
 
     gg <- ggplot(master[seq(1,nrow(master),100),], mapping = aes_string(y = pars[i], x = "iteration", color = "chain")) +
       geom_line() + theme_bw() +
+      scale_x_continuous(breaks = c(0, round(out$pmcmc_results$inputs$n_mcmc/2), out$pmcmc_results$inputs$n_mcmc)) +
       theme(panel.border = element_blank(), axis.line = element_line()) +
-      theme(legend.position = "none")
+      theme(legend.position = "none", axis.title.x = element_blank(),
+            axis.text.x = element_text(size = 8))
 
     if("chains" %in% names(out$pmcmc_results)) {
       gg <- gg + scale_color_brewer(type = "qual")
@@ -1667,3 +1671,54 @@ simple_pmcmc_plot <- function(out, burnin = 0) {
 
 
 }
+
+overall_plot <- function(out) {
+
+  g1 <- simple_pmcmc_plot(out) +
+    theme(text = element_text(size = 2))
+  title <- cowplot::ggdraw() +
+    cowplot::draw_label(paste0(country, ",", iso3c), fontface = 'bold', x = 0.5)
+  line <- ggplot() +
+    cowplot::draw_line(x = 0:10, y=1) +
+    theme(panel.background = element_blank(), axis.title = element_blank(),
+          axis.text = element_blank(), axis.ticks = element_blank())
+  line_v <- ggplot() +
+    cowplot::draw_line(y = 0:10, x=1) +
+    theme(panel.background = element_blank(), axis.title = element_blank(),
+          axis.text = element_blank(), axis.ticks = element_blank())
+  header <- cowplot::plot_grid(title, line, ncol = 1)
+  index <- squire:::odin_index(out$model)
+  forecast <- 0
+  date_0 <- date
+  suppressMessages(suppressWarnings(
+    d <- deaths_plot_single(
+      out = out, data = data, date = date,
+      date_0 = date_0, forecast = forecast,
+      single = TRUE, full = TRUE) +
+      theme(legend.position = "none")))
+  intervention <- intervention_plot_google(
+    interventions[[iso3c]], date, data,
+    forecast,
+    start_date = min(as.Date(out$replicate_parameters$start_date))) +
+    geom_vline(xintercept = as.Date(date_Meff_change) + seq(Rt_rw_duration, Rt_rw_duration*rw_needed, by = Rt_rw_duration),
+               linetype = "dashed") + xlab("") + theme(axis.text.x = element_text(angle=45, vjust = 0.5))
+
+  rtp <- rt_plot(out)$plot
+
+  date_range <- as.Date(c(min(as.Date(out$replicate_parameters$start_date)),date_0))
+  suppressMessages(suppressWarnings(
+    bottom <- cowplot::plot_grid(
+      intervention + scale_x_date(date_breaks = "1 month", date_labels = "%b" ,limits = date_range),
+      d + scale_x_date(date_breaks = "1 month", date_labels = "%b" ,limits = date_range),
+      rtp + scale_x_date(date_breaks = "1 month", date_labels = "%b" ,limits = date_range),
+      ncol=1,
+      rel_heights = c(0.4,0.6,0.6, 0.4))
+  ))
+
+  combined <- cowplot::plot_grid(header,
+                                 cowplot::plot_grid(g1, line_v, bottom, ncol = 3, rel_widths = c(3,0.1,1)),
+                                 ncol=1, rel_heights = c(1,15))
+  combined
+  return(combined)
+}
+
