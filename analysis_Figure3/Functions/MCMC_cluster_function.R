@@ -1,5 +1,5 @@
 run_apothecary_MCMC <- function(country, date, pars_init, mortality_data, interventions,
-                                n_mcmc, replicates, healthcare, n_chains) {
+                                n_mcmc, replicates, healthcare, n_chains, gibbs) {
 
   # Checking Correct ISO Specification
   if (!(country %in% unique(squire::population$iso3c))) {
@@ -101,13 +101,42 @@ run_apothecary_MCMC <- function(country, date, pars_init, mortality_data, interv
   names(pars_init_rw) <- names(pars_min_rw) <- names(pars_max_rw) <- names(pars_discrete_rw) <- paste0("Rt_rw_", seq_len(rw_needed))
 
   # PMCMC Prior Bounds, Initial Parameters and Observation Model Parameters
-  pars_init <- list('start_date' = parms$start_date,
-                    'R0' = parms$R0,
-                    'Meff' = parms$Meff,
-                    'Meff_pl' = parms$Meff_pl,
-                    "Rt_shift" = 0,
-                    "Rt_shift_scale" = parms$Rt_shift_scale)
-  pars_init <- append(pars_init, pars_init_rw)
+  if (n_chains == 1) {
+    pars_init <- list('start_date' = parms$start_date,
+                      'R0' = parms$R0,
+                      'Meff' = parms$Meff,
+                      'Meff_pl' = parms$Meff_pl,
+                      "Rt_shift" = 0,
+                      "Rt_shift_scale" = parms$Rt_shift_scale)
+    pars_init <- append(pars_init, pars_init_rw)
+  } else {
+    pars_init <- list(
+      list('start_date' = parms$start_date,
+           'R0' = parms$R0,
+           'Meff' = parms$Meff,
+           'Meff_pl' = parms$Meff_pl,
+           "Rt_shift" = 0,
+           "Rt_shift_scale" = parms$Rt_shift_scale),
+      list('start_date' = parms$start_date,
+           'R0' = parms$R0,
+           'Meff' = parms$Meff,
+           'Meff_pl' = parms$Meff_pl,
+           "Rt_shift" = 0,
+           "Rt_shift_scale" = parms$Rt_shift_scale),
+      list('start_date' = parms$start_date,
+           'R0' = parms$R0,
+           'Meff' = parms$Meff,
+           'Meff_pl' = parms$Meff_pl,
+           "Rt_shift" = 0,
+           "Rt_shift_scale" = parms$Rt_shift_scale),
+      list('start_date' = parms$start_date,
+           'R0' = parms$R0,
+           'Meff' = parms$Meff,
+           'Meff_pl' = parms$Meff_pl,
+           "Rt_shift" = 0,
+           "Rt_shift_scale" = parms$Rt_shift_scale))
+    pars_init <- lapply(pars_init, append, pars_init_rw)
+  }
 
   pars_min <- list('start_date' = first_start_date,
                    'R0' = 1.6,
@@ -136,9 +165,26 @@ run_apothecary_MCMC <- function(country, date, pars_init, mortality_data, interv
   pars_obs <- list(phi_cases = 1, k_cases = 2, phi_death = 1, k_death = 2, exp_noise = 1e6)
 
   # Proposal Covariance Matrix NEED CHANGING
-  proposal_kernel <- diag(length(names(pars_init))) * 0.3
-  rownames(proposal_kernel) <- colnames(proposal_kernel) <- names(pars_init)
-  proposal_kernel["start_date", "start_date"] <- 1.5
+  if (gibbs) {
+    if (n_chains == 1) {
+      proposal_kernel <- diag(length(names(pars_init)) - 1) * 0.3
+      rownames(proposal_kernel) <- colnames(proposal_kernel) <- names(pars_init)[-1]
+    } else {
+      proposal_kernel <- diag(length(names(pars_init[[1]])) - 1) * 0.3
+      rownames(proposal_kernel) <- colnames(proposal_kernel) <- names(pars_init[[1]])[-1]
+    }
+  } else {
+    if (n_chains == 1) {
+      proposal_kernel <- diag(length(names(pars_init))) * 0.3
+      rownames(proposal_kernel) <- colnames(proposal_kernel) <- names(pars_init)
+      proposal_kernel["start_date", "start_date"] <- 1.5
+
+    } else {
+      proposal_kernel <- diag(length(names(pars_init))) * 0.3
+      rownames(proposal_kernel) <- colnames(proposal_kernel) <- names(pars_init[[1]])
+      proposal_kernel["start_date", "start_date"] <- 1.5
+    }
+  }
 
   # MCMC Functions - Prior and Likelihood Calculation (removed uniform start date prior as uniform)
   logprior <- function(pars){
@@ -158,46 +204,83 @@ run_apothecary_MCMC <- function(country, date, pars_init, mortality_data, interv
     return(ret)
   }
 
-  pmcmc_res <- squire::pmcmc(data = data,
-                             n_mcmc = n_mcmc,
-                             log_prior = logprior,
-                             n_particles = 1,
-                             steps_per_day = 1,
-                             log_likelihood = NULL,
-                             squire_model = apothecary:::apothecary_deterministic_model(),
-                             output_proposals = FALSE,
-                             n_chains = n_chains,
-                             pars_obs = pars_obs,
-                             pars_init = pars_init,
-                             pars_min = pars_min,
-                             pars_max = pars_max,
-                             pars_discrete = pars_discrete,
-                             proposal_kernel = proposal_kernel,
-                             country = country,
-                             R0_change = R0_change,
-                             date_R0_change = date_R0_change,
-                             Rt_args = squire:::Rt_args_list(
-                               plateau_duration = 7,
-                               date_Meff_change = parms$date_Meff_change,
-                               scale_Meff_pl = TRUE,
-                               Rt_shift_duration = 7,
-                               Rt_rw_duration = Rt_rw_duration),
-                             burnin = n_mcmc/2,
-                             seeding_cases = 5,
-                             replicates = ifelse(n_mcmc < replicates, n_mcmc, replicates),
-                             required_acceptance_ratio = 0.20,
-                             start_adaptation = 500,
-                             baseline_hosp_bed_capacity = baseline_hosp_bed_capacity,
-                             baseline_ICU_bed_capacity = baseline_ICU_bed_capacity)
+  Sys.setenv("SQUIRE_PARALLEL_DEBUG" = "TRUE")
+  if (gibbs) {
+    pmcmc_res <- squire::pmcmc(data = data,
+                               n_mcmc = n_mcmc,
+                               log_prior = logprior,
+                               n_particles = 1,
+                               steps_per_day = 1,
+                               log_likelihood = NULL,
+                               squire_model = apothecary:::apothecary_deterministic_model(),
+                               output_proposals = FALSE,
+                               n_chains = n_chains,
+                               pars_obs = pars_obs,
+                               pars_init = pars_init,
+                               pars_min = pars_min,
+                               pars_max = pars_max,
+                               pars_discrete = pars_discrete,
+                               proposal_kernel = proposal_kernel,
+                               country = country,
+                               R0_change = R0_change,
+                               date_R0_change = date_R0_change,
+                               Rt_args = squire:::Rt_args_list(
+                                 plateau_duration = 7,
+                                 date_Meff_change = parms$date_Meff_change,
+                                 scale_Meff_pl = TRUE,
+                                 Rt_shift_duration = 7,
+                                 Rt_rw_duration = Rt_rw_duration),
+                               burnin = n_mcmc/2,
+                               seeding_cases = 5,
+                               replicates = ifelse(n_mcmc < replicates, n_mcmc, replicates),
+                               required_acceptance_ratio = 0.20,
+                               start_adaptation = 500,
+                               baseline_hosp_bed_capacity = baseline_hosp_bed_capacity,
+                               baseline_ICU_bed_capacity = baseline_ICU_bed_capacity,
+                               gibbs_sampling = TRUE,
+                               gibbs_days = 5)
+  } else {
+    pmcmc_res <- squire::pmcmc(data = data,
+                               n_mcmc = n_mcmc,
+                               log_prior = logprior,
+                               n_particles = 1,
+                               steps_per_day = 1,
+                               log_likelihood = NULL,
+                               squire_model = apothecary:::apothecary_deterministic_model(),
+                               output_proposals = FALSE,
+                               n_chains = n_chains,
+                               pars_obs = pars_obs,
+                               pars_init = pars_init,
+                               pars_min = pars_min,
+                               pars_max = pars_max,
+                               pars_discrete = pars_discrete,
+                               proposal_kernel = proposal_kernel,
+                               country = country,
+                               R0_change = R0_change,
+                               date_R0_change = date_R0_change,
+                               Rt_args = squire:::Rt_args_list(
+                                 plateau_duration = 7,
+                                 date_Meff_change = parms$date_Meff_change,
+                                 scale_Meff_pl = TRUE,
+                                 Rt_shift_duration = 7,
+                                 Rt_rw_duration = Rt_rw_duration),
+                               burnin = n_mcmc/2,
+                               seeding_cases = 5,
+                               replicates = ifelse(n_mcmc < replicates, n_mcmc, replicates),
+                               required_acceptance_ratio = 0.20,
+                               start_adaptation = 500,
+                               baseline_hosp_bed_capacity = baseline_hosp_bed_capacity,
+                               baseline_ICU_bed_capacity = baseline_ICU_bed_capacity)
+  }
 
   if (n_chains > 1) {
-    for(i in seq_along(out$pmcmc_results$chains)) {
-      out$pmcmc_results$chains[[i]]$states <- NULL
-      out$pmcmc_results$chains[[i]]$covariance_matrix <- tail(out$pmcmc_results$chains$chain1$covariance_matrix,1)
+    for(i in seq_along(pmcmc_res$pmcmc_results$chains)) {
+      pmcmc_res$pmcmc_results$chains[[i]]$states <- NULL
+      pmcmc_res$pmcmc_results$chains[[i]]$covariance_matrix <- tail(pmcmc_res$pmcmc_results$chains$chain1$covariance_matrix,1)
     }
   } else {
-    out$pmcmc_results$states <- NULL
-    out$pmcmc_results$covariance_matrix <- tail(out$pmcmc_results$covariance_matrix, 1)
+    pmcmc_res$pmcmc_results$states <- NULL
+    pmcmc_res$pmcmc_results$covariance_matrix <- tail(pmcmc_res$pmcmc_results$covariance_matrix, 1)
   }
 
   run_name <- paste0("N:/Charlie/apothecary_fitting/apothecary_run_results/", iso3c, "_", date, "_", n_mcmc, "_iterations.rds")
