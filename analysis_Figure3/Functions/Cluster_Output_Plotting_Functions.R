@@ -1674,6 +1674,9 @@ simple_pmcmc_plot <- function(out, burnin = 0) {
 
 overall_plot <- function(out) {
 
+  date_Meff_change <- out$pmcmc_results$inputs$Rt_args$date_Meff_change
+  Rt_rw_duration <- out$pmcmc_results$inputs$Rt_args$Rt_rw_duration
+  rw_needed <- length(grep("Rt_rw", colnames(out$pmcmc_results$results)))
   g1 <- simple_pmcmc_plot(out) +
     theme(text = element_text(size = 2))
   title <- cowplot::ggdraw() +
