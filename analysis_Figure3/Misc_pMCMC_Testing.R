@@ -6,7 +6,7 @@ library(apothecary)
 devtools::load_all()
 
 # Loading In Example Initial Parameters and Defining Country and Date Fitting Being Applied To
-pars_init <- readRDS("cluster_running/Inputs/pars_init.rds")
+pars_init <- readRDS("analysis_Figure3/Inputs/pars_init.rds")
 can_parms <- pars_init$CAN
 iso3c <- "CAN"
 date <- "2020-11-17"
@@ -15,9 +15,9 @@ date <- "2020-11-17"
 if (iso3c %in% c("BOL", "ITA", "FRA", "ECU", "CHL", "COD", "ESP", "IRN",
                  "JPN", "GUF","KGZ", "PER", "MEX", "HKG", "MAC", "TWN",
                  "SDN")) {
-  ecdc <- readRDS("cluster_running/Inputs/worldometers_all.rds")
+  ecdc <- readRDS("analysis_Figure3/Inputs/worldometers_all.rds")
 } else {
-  ecdc <- readRDS("cluster_running/Inputs/ecdc_all.rds")
+  ecdc <- readRDS("analysis_Figure3/Inputs/ecdc_all.rds")
 }
 
 # Removing Deaths Followed by 21 Days of No Deaths
@@ -47,7 +47,7 @@ if(length(to_remove) > 0) {
 }
 
 # Loading in BRT Mobility Data and Processing
-interventions <- readRDS("cluster_running/Inputs/google_brt.rds")
+interventions <- readRDS("analysis_Figure3/Inputs/google_brt.rds")
 R0_change <- interventions[[iso3c]]$C
 date_R0_change <- interventions[[iso3c]]$date
 R0_change <- R0_change[as.Date(date_R0_change) <= date]
@@ -78,7 +78,6 @@ pars_min_rw <- as.list(rep(-5, rw_needed))
 pars_max_rw <- as.list(rep(5, rw_needed))
 pars_discrete_rw <- as.list(rep(FALSE, rw_needed))
 names(pars_init_rw) <- names(pars_min_rw) <- names(pars_max_rw) <- names(pars_discrete_rw) <- paste0("Rt_rw_", seq_len(rw_needed))
-
 
 # PMCMC Prior Bounds, Initial Parameters and Observation Model Parameters
 pars_init <- list('start_date' = can_parms$start_date,
@@ -122,8 +121,8 @@ proposal_kernel <- diag(length(names(pars_init))) * 0.3
 rownames(proposal_kernel) <- colnames(proposal_kernel) <- names(pars_init)
 proposal_kernel["start_date", "start_date"] <- 1.5 # consider changing
 
-proposal_kernel <- diag(length(names(pars_init)) - 1) * 0.3
-rownames(proposal_kernel) <- colnames(proposal_kernel) <- names(pars_init)[-1]
+# proposal_kernel <- diag(length(names(pars_init)) - 1) * 0.3
+# rownames(proposal_kernel) <- colnames(proposal_kernel) <- names(pars_init)[-1]
 
 # MCMC Functions - Prior and Likelihood Calculation
 logprior <- function(pars){
@@ -145,11 +144,12 @@ logprior <- function(pars){
 }
 
 # Extracting Relevant Mobility Data and Creating R0_change & date_R0_change Objects
-suppressWarnings(future::plan(future::multiprocess()))
+# suppressWarnings(future::plan(future::multiprocess()))
+Sys.setenv("SQUIRE_PARALLEL_DEBUG" = "TRUE")
 
 tic()
-n_mcmc <- 10
-replicates <- 10
+n_mcmc <- 2000
+replicates <- 1
 pmcmc_res <- squire::pmcmc(data = data,
                            n_mcmc = n_mcmc,
                            log_prior = logprior,
@@ -186,8 +186,16 @@ toc()
 saveRDS(pmcmc_res, "bloop.rds")
 pmcmc_res <- readRDS("bloop.rds")
 
-out <- pmcmc_res$output
 index <- apothecary:::odin_index(pmcmc_res$model)
+index <- index$D
+deaths <- lapply(seq_len(dim(pmcmc_res$output)[3]), function(y) {
+  temp <- c(0, diff(rowSums(pmcmc_res$output[, index, y], na.rm = TRUE)))
+  names(temp)[1] <- rownames(pmcmc_res$output)[1]
+  return(temp)
+})
+deaths <- do.call(cbind, particles)
+
+out <- pmcmc_res$output
 cum_deaths <- out[, index$D, ]
 cum_deaths <- apply(cum_deaths, c(1, 3), sum)
 cum_deaths <- apply(cum_deaths, 2, diff)
