@@ -108,6 +108,11 @@ h <- highR0_drugs_limited %>% filter(date > end_date) %>% group_by(replicate) %>
 f/e
 h/g
 
+c(a[[1]], b[[1]], c[[1]], d[[1]], e[[1]], f[[1]], g[[1]], h[[1]])
+x <- cluster_projections(pmcmc_res, "FRA")
+x <- readRDS("N:/Charlie/apothecary_fitting/apothecary/analysis_Figure3/Outputs/Projections/FRA_proj.rds")
+
+
 
 # scrapola
 # out <- pmcmc_res$output
