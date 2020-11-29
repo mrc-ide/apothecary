@@ -6,6 +6,7 @@ devtools::load_all()
 
 # Sourcing required functions
 source("analysis_Figure3/Functions/Cluster_Output_Plotting_Functions.R")
+source("analysis_Figure3/Functions/Cluster_Output_Projectiong_Functions.R")
 
 # Loading in Ethiopia dataframe
 country <- "Ethiopia"
@@ -13,90 +14,33 @@ iso3c <- "ETH"
 filenames <- list.files("N:/Charlie/apothecary_fitting/apothecary_run_results/")
 filename <- filenames[grep(iso3c, filenames)]
 pmcmc_res <- readRDS(paste0("N:/Charlie/apothecary_fitting/apothecary_run_results/", filename))
+data <- pmcmc_res$pmcmc_results$inputs$data
 
 # Plotting Model Output & Data
-out <- pmcmc_res$output
-data <- pmcmc_res$pmcmc_results$inputs$data
-index <- apothecary:::odin_index(pmcmc_res$model)
-index <- index$D
-deaths <- lapply(seq_len(dim(pmcmc_res$output)[3]), function(y) {
-  temp <- c(0, diff(rowSums(pmcmc_res$output[, index, y], na.rm = TRUE)))
-  names(temp)[1] <- rownames(pmcmc_res$output)[1]
-  return(temp)
-})
-deaths <- as.data.frame(do.call(cbind, deaths))
-dates <- rownames(deaths)
-deaths$date <- rownames(deaths)
-deaths <- deaths %>%
-  mutate(date = rownames(deaths)) %>%
-  pivot_longer(cols = V1:V500, names_to = "replicate")
-
+deaths <- deaths_extraction(pmcmc_res)
 daily_death_summary <- deaths %>%
   group_by(date) %>%
-  summarise(median_deaths = median(value, na.rm = TRUE),
-            lower_deaths = quantile(value, 0.05, na.rm = TRUE),
-            upper_deaths = quantile(value, 0.95, na.rm = TRUE))
+  summarise(median_deaths = median(deaths, na.rm = TRUE),
+            lower_deaths = quantile(deaths, 0.05, na.rm = TRUE),
+            upper_deaths = quantile(deaths, 0.95, na.rm = TRUE))
 ggplot() +
-  geom_line(data = deaths, aes(x = as.Date(date), y = value, group = replicate), alpha = 0.2, col = "grey") +
+  geom_line(data = deaths, aes(x = as.Date(date), y = deaths, group = replicate), alpha = 0.2, col = "grey") +
   geom_line(data = daily_death_summary, aes(x = as.Date(date), y = median_deaths), col = "black") +
   geom_line(data = daily_death_summary, aes(x = as.Date(date), y = lower_deaths), col = "black") +
   geom_line(data = daily_death_summary, aes(x = as.Date(date), y = upper_deaths), col = "black") +
   theme(legend.position = "none") +
   geom_point(data = data, aes(x = date, y = deaths, col = "red"))
 
-# Simulating As If Dexamethasone Had Been Available Since the Beginning
-past <- lapply(seq_len(dim(pmcmc_res$output)[3]), function(i) {
-
-  # Prepping Inputs & Running the Model
-  tt <- squire:::intervention_dates_for_odin(dates = pmcmc_res$interventions$date_R0_change,
-                                             change = pmcmc_res$interventions$R0_change,
-                                             start_date = pmcmc_res$replicate_parameters$start_date[i],
-                                             steps_per_day = 1/pmcmc_res$parameters$dt)
-  Rt <- squire:::evaluate_Rt_pmcmc(R0_change = tt$change,
-                                   date_R0_change = tt$dates,
-                                   R0 = pmcmc_res$replicate_parameters$R0[i],
-                                   pars = as.list(pmcmc_res$replicate_parameters[i, ]),
-                                   Rt_args = pmcmc_res$pmcmc_results$inputs$Rt_args)
-  y <- run_apothecary(country = country, model = "deterministic", hosp_bed_capacity = 10000000000,
-                      ICU_bed_capacity = 10000000000, day_return = TRUE, seeding_cases = sum(pmcmc_res$pmcmc_results$inputs$model_params$E1_0),
-                      R0 = Rt,
-                      tt_R0 = tt$tt * pmcmc_res$parameters$dt,
-                      time_period = as.numeric(range(tt$dates)[2] - range(tt$dates)[1]) + 2,
-                      drug_11_indic_IMod_GetHosp_GetOx = 1, drug_11_prop_treat = 1, drug_11_GetOx_effect_size = 0.82,
-                      drug_12_indic_ISev_GetICU_GetOx = 1, drug_12_prop_treat = 1, drug_12_GetOx_effect_size = 0.64,
-                      drug_13_indic_ICrit_GetICU_GetOx_GetMV = 1, drug_13_prop_treat = 1, drug_13_GetOx_GetMV_effect_size = 0.64)
-
-  # Extracting Output and Rerunning Model As If Drug Had Been Available
-  index <- squire:::odin_index(y$model)
-  mod_output <- pmcmc_res$output[, index$E1, i]
-  first_day <- min(which(!is.na(mod_output[, 1])))
-  initial_infections <- mod_output[first_day, ]
-  initials <- seq_along(y$model$initial()) + 1L
-  pos <- which(y$output[, "time"] == max(y$output[, "time"]))
-  initial_values <- pmcmc_res$output[first_day, initials, i, drop = TRUE]
-  get <- y$model$run(0:(as.numeric(range(tt$dates)[2] - range(tt$dates)[1]) + 1), y = initial_values, use_names = TRUE, replicate = 1)
-  cum_deaths <- get[, index$D]
-  single_deaths <- c(0, diff(rowSums(cum_deaths)))
-  temp <- data.frame(drug_deaths = single_deaths, date = c(as.Date(tt$dates), range(tt$dates)[2] + 1), replicate = paste0("V", i))
-  if (i %% 100 == 0) {
-    print(i)
-  }
-  return(temp)
-})
-drug_deaths <- as.data.frame(do.call(rbind, past))
-drug_deaths$date <- as.Date(drug_deaths$date)
-deaths$date <- as.Date(deaths$date)
-all_deaths <- deaths %>%
-  left_join(drug_deaths, by = c("date", "replicate")) %>%
-  mutate(drug_deaths = ifelse(is.na(drug_deaths), 0, drug_deaths)) %>%
-  pivot_longer(value:drug_deaths, names_to = "scenario")
-
+# Comparing Counterfactual Drug Availability at Outset
+all_deaths <- past_assess(pmcmc_res,
+                          drug_11_indic_IMod_GetHosp_GetOx = 1, drug_11_prop_treat = 1, drug_11_GetOx_effect_size = 0.82,
+                          drug_12_indic_ISev_GetICU_GetOx = 1, drug_12_prop_treat = 1, drug_12_GetOx_effect_size = 0.64,
+                          drug_13_indic_ICrit_GetICU_GetOx_GetMV = 1, drug_13_prop_treat = 1, drug_13_GetOx_GetMV_effect_size = 0.64)
 death_summary <- all_deaths %>%
   group_by(date, scenario) %>%
   summarise(median = median(value),
             lower = quantile(value, 0.05),
             upper = quantile(value, 0.95))
-
 ggplot() +
   geom_line(data = all_deaths, aes(x = as.Date(date), y = value, col = scenario, group = interaction(replicate, scenario)), alpha = 0.2) +
   geom_line(data = death_summary, aes(x = as.Date(date), y = median, group = scenario), col = "black") +
@@ -108,7 +52,12 @@ ggplot() +
 # Looking Forwards
 future <- lapply(seq_len(dim(pmcmc_res$output)[3]), function(i) {
 
+  # need to refit all the country results with healthcare capacity in already
+
   # Prepping Inputs & Running the Model
+  hosp_beds <- 100000000# get_hosp_bed_capacity("Ethiopia")
+  ICU_beds <- 100000000# get_ICU_bed_capacity("Ethiopia")
+
   tt <- squire:::intervention_dates_for_odin(dates = pmcmc_res$interventions$date_R0_change,
                                              change = pmcmc_res$interventions$R0_change,
                                              start_date = pmcmc_res$replicate_parameters$start_date[i],
@@ -118,8 +67,9 @@ future <- lapply(seq_len(dim(pmcmc_res$output)[3]), function(i) {
                                    R0 = pmcmc_res$replicate_parameters$R0[i],
                                    pars = as.list(pmcmc_res$replicate_parameters[i, ]),
                                    Rt_args = pmcmc_res$pmcmc_results$inputs$Rt_args)
-  y <- run_apothecary(country = country, model = "deterministic", hosp_bed_capacity = 10000000000,
-                      ICU_bed_capacity = 10000000000, day_return = TRUE, seeding_cases = sum(pmcmc_res$pmcmc_results$inputs$model_params$E1_0),
+  y <- run_apothecary(country = country, model = "deterministic",
+                      hosp_bed_capacity = hosp_beds, ICU_bed_capacity = ICU_beds,
+                      day_return = TRUE, seeding_cases = sum(pmcmc_res$pmcmc_results$inputs$model_params$E1_0),
                       R0 = Rt,
                       tt_R0 = tt$tt * pmcmc_res$parameters$dt,
                       time_period = as.numeric(range(tt$dates)[2] - range(tt$dates)[1]) + 2)
@@ -140,71 +90,35 @@ future <- lapply(seq_len(dim(pmcmc_res$output)[3]), function(i) {
   plot(deaths, col = "red", type = "l", xlim = c(0, 378))
 
   # Simulating Forward Off This Output
-
-  # Low R0, No Drugs
-  baseline_matrix <- process_contact_matrix_scaled_age(y$parameters$contact_matrix_set[[1]], y$parameters$population)
-  new_beta <- apothecary:::beta_est_apothecary(dur_IAsymp = 1/y$parameters$gamma_IAsymp,
-                                               dur_IMild = 1/y$parameters$gamma_IMild,
-                                               dur_ICase = 2/y$parameters$gamma_ICase,
-                                               mixing_matrix = baseline_matrix,
-                                               prob_asymp = y$parameters$prob_asymp,
-                                               prob_hosp = y$parameters$prob_hosp,
-                                               rel_inf_asymp = 1,
-                                               rel_inf_mild = 1,
-                                               R0 = 1.35)
-
+  project <- 365
   pos <- which(y$output[, "time"] == max(y$output[, "time"]))
   initial_values <- get[pos - 1, initials, drop = TRUE]
-  y$model$set_user(beta_set  = rep(new_beta, 101), tt_beta  = 0:100)
-  new_get <- y$model$run(0:100, y = initial_values, use_names = TRUE, replicate = 1)
+  baseline_matrix <- process_contact_matrix_scaled_age(y$parameters$contact_matrix_set[[1]], y$parameters$population)
+  new_beta <- apothecary:::beta_est_apothecary(dur_IAsymp = 1/y$parameters$gamma_IAsymp, dur_IMild = 1/y$parameters$gamma_IMild,
+                                               dur_ICase = 2/y$parameters$gamma_ICase, mixing_matrix = baseline_matrix,
+                                               prob_asymp = y$parameters$prob_asymp, prob_hosp = y$parameters$prob_hosp,
+                                               rel_inf_asymp = 1, rel_inf_mild = 1, R0 = 2)
+  # Low R0, No Drugs
+  y$model$set_user(beta_set  = rep(new_beta, project), tt_beta  = 0:(project - 1))
+  no_drugs <- y$model$run(0:(project - 1), y = initial_values, use_names = TRUE, replicate = 1)
 
-  new_cum_deaths <- new_get[, index$D]
-  new_deaths <- c(0, diff(rowSums(new_cum_deaths)))
-  new_time <- new_get[, "t"] + pos
-  plot(new_time[-1], new_deaths[-1], col = "blue")
+  no_drugs_deaths <- no_drugs[, index$D]
+  no_drugs_deaths <- c(0, diff(rowSums(no_drugs_deaths)))
+  no_drugs_time <- no_drugs[, "t"] + pos
+  plot(no_drugs_time[-1], no_drugs_deaths[-1], col = "blue", type = "l")
 
   # Low R0, Drugs
   y$model$set_user(drug_11_indic_IMod_GetHosp_GetOx = 1, drug_11_prop_treat = 1, drug_11_GetOx_effect_size = 0.82,
                    drug_12_indic_ISev_GetICU_GetOx = 1, drug_12_prop_treat = 1, drug_12_GetOx_effect_size = 0.64,
                    drug_13_indic_ICrit_GetICU_GetOx_GetMV = 1, drug_13_prop_treat = 1, drug_13_GetOx_GetMV_effect_size = 0.64)
-  new_get_2 <- y$model$run(0:100, y = initial_values, use_names = TRUE, replicate = 1)
+  drugs <- y$model$run(0:(project - 1), y = initial_values, use_names = TRUE, replicate = 1)
 
-  new_cum_deaths <- new_get_2[, index$D]
-  new_deaths <- c(0, diff(rowSums(new_cum_deaths)))
-  new_time <- new_get_2[, "t"] + pos
-  lines(new_time[-1], new_deaths[-1], col = "green")
+  drugs_deaths <- drugs[, index$D]
+  drugs_deaths <- c(0, diff(rowSums(drugs_deaths)))
+  drugs_time <- drugs[, "t"] + pos
+  lines(drugs_time[-1], drugs_deaths[-1], col = "green")
 
-
-  plot(new_time[-1], new_deaths[-1], col = "blue")
-  plot(new_time[-1], new_deaths[-1], col = "blue")
-
-
-  pos <- which(y$output[, "time"] == max(y$output[, "time"]))
-  initial_values <- get[pos-1, initials, drop = TRUE]
-  new_get <- y$model$run(0:100, y = initial_values, use_names = TRUE, replicate = 1)
-
-  new_cum_deaths <- new_get[, index$D]
-  new_deaths <- c(0, diff(rowSums(new_cum_deaths)))
-  new_time <- new_get[, "t"] + pos
-  lines(new_time[-1], new_deaths[-1], col = "blue")
-
-  x <- c(deaths, new_deaths[-1])
-
-  pos <- which(y$output[, "time"] == max(y$output[, "time"]))
-  initial_values <- get[pos-1, initials, drop = TRUE]
-  beta <- y$model$contents()$beta_set
-  tt_beta <- y$model$contents()$tt_beta
-  y$model$set_user(beta_set  = rep(0.05500576/2, 101), tt_beta  = 0:100)
-  new_get_2 <- y$model$run(0:100, y = initial_values, use_names = TRUE, replicate = 1)
-
-  new_cum_deaths <- new_get_2[, index$D]
-  new_deaths <- c(0, diff(rowSums(new_cum_deaths)))
-  new_time <- new_get_2[, "t"] + pos
-
-  lines(new_time[-1], new_deaths[-1], col = "green")
-
-  y <- c(deaths, new_deaths[-1])
-
+  sum(drugs_deaths)/sum(no_drugs_deaths)
 
 
 })
@@ -212,6 +126,22 @@ future <- lapply(seq_len(dim(pmcmc_res$output)[3]), function(i) {
 
 
 # scrapola
+# out <- pmcmc_res$output
+# data <- pmcmc_res$pmcmc_results$inputs$data
+# index <- apothecary:::odin_index(pmcmc_res$model)
+# index <- index$D
+# deaths <- lapply(seq_len(dim(pmcmc_res$output)[3]), function(y) {
+#   temp <- c(0, diff(rowSums(pmcmc_res$output[, index, y], na.rm = TRUE)))
+#   names(temp)[1] <- rownames(pmcmc_res$output)[1]
+#   return(temp)
+# })
+# deaths <- as.data.frame(do.call(cbind, deaths))
+# dates <- rownames(deaths)
+# deaths$date <- rownames(deaths)
+# deaths <- deaths %>%
+#   mutate(date = rownames(deaths)) %>%
+#   pivot_longer(cols = V1:V500, names_to = "replicate")
+
 # past <- lapply(seq_len(dim(pmcmc_res$output)[3]), function(i) {
 #
 #   # Prepping Inputs & Running the Model
@@ -273,3 +203,49 @@ future <- lapply(seq_len(dim(pmcmc_res$output)[3]), function(i) {
 #
 # })
 
+# Simulating As If Dexamethasone Had Been Available Since the Beginning
+# past <- lapply(seq_len(dim(pmcmc_res$output)[3]), function(i) {
+#
+#   # Prepping Inputs & Running the Model
+#   tt <- squire:::intervention_dates_for_odin(dates = pmcmc_res$interventions$date_R0_change,
+#                                              change = pmcmc_res$interventions$R0_change,
+#                                              start_date = pmcmc_res$replicate_parameters$start_date[i],
+#                                              steps_per_day = 1/pmcmc_res$parameters$dt)
+#   Rt <- squire:::evaluate_Rt_pmcmc(R0_change = tt$change,
+#                                    date_R0_change = tt$dates,
+#                                    R0 = pmcmc_res$replicate_parameters$R0[i],
+#                                    pars = as.list(pmcmc_res$replicate_parameters[i, ]),
+#                                    Rt_args = pmcmc_res$pmcmc_results$inputs$Rt_args)
+#   y <- run_apothecary(country = country, model = "deterministic", hosp_bed_capacity = 10000000000,
+#                       ICU_bed_capacity = 10000000000, day_return = TRUE, seeding_cases = sum(pmcmc_res$pmcmc_results$inputs$model_params$E1_0),
+#                       R0 = Rt,
+#                       tt_R0 = tt$tt * pmcmc_res$parameters$dt,
+#                       time_period = as.numeric(range(tt$dates)[2] - range(tt$dates)[1]) + 2,
+#                       drug_11_indic_IMod_GetHosp_GetOx = 1, drug_11_prop_treat = 1, drug_11_GetOx_effect_size = 0.82,
+#                       drug_12_indic_ISev_GetICU_GetOx = 1, drug_12_prop_treat = 1, drug_12_GetOx_effect_size = 0.64,
+#                       drug_13_indic_ICrit_GetICU_GetOx_GetMV = 1, drug_13_prop_treat = 1, drug_13_GetOx_GetMV_effect_size = 0.64)
+#
+#   # Extracting Output and Rerunning Model As If Drug Had Been Available
+#   index <- squire:::odin_index(y$model)
+#   mod_output <- pmcmc_res$output[, index$E1, i]
+#   first_day <- min(which(!is.na(mod_output[, 1])))
+#   initial_infections <- mod_output[first_day, ]
+#   initials <- seq_along(y$model$initial()) + 1L
+#   pos <- which(y$output[, "time"] == max(y$output[, "time"]))
+#   initial_values <- pmcmc_res$output[first_day, initials, i, drop = TRUE]
+#   get <- y$model$run(0:(as.numeric(range(tt$dates)[2] - range(tt$dates)[1]) + 1), y = initial_values, use_names = TRUE, replicate = 1)
+#   cum_deaths <- get[, index$D]
+#   single_deaths <- c(0, diff(rowSums(cum_deaths)))
+#   temp <- data.frame(drug_deaths = single_deaths, date = c(as.Date(tt$dates), range(tt$dates)[2] + 1), replicate = paste0("V", i))
+#   if (i %% 100 == 0) {
+#     print(i)
+#   }
+#   return(temp)
+# })
+# drug_deaths <- as.data.frame(do.call(rbind, past))
+# drug_deaths$date <- as.Date(drug_deaths$date)
+# deaths$date <- as.Date(deaths$date)
+# all_deaths <- deaths %>%
+#   left_join(drug_deaths, by = c("date", "replicate")) %>%
+#   mutate(drug_deaths = ifelse(is.na(drug_deaths), 0, drug_deaths)) %>%
+#   pivot_longer(value:drug_deaths, names_to = "scenario")
