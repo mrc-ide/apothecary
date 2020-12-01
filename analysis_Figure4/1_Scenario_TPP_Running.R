@@ -20,8 +20,7 @@ actual_hosp_beds <- round(squire::get_healthcare_capacity(country)$hosp_beds * s
 actual_ICU_beds <- round(squire::get_healthcare_capacity(country)$ICU_beds * sum(standard_population)/1000)
 actual_prop_ox_hosp_beds <- 0.6
 actual_prop_ox_ICU_beds <- 0.8
-actual_MV_capacity <- actual_ICU_beds * 0.6
-unlim <- 100000000
+actual_MV_capacity <- round(actual_ICU_beds * 0.5)
 
 none <- run_apothecary(country = "Bhutan", R0 = 2, population = standard_population, contact_matrix_set = standard_matrix,
                        time_period = 600, seeding_cases = 20, day_return = TRUE,
@@ -70,6 +69,19 @@ lines(D_inf, type = "l", col = "#B91372", lwd = 2)
 legend(350, 3300, legend = c("No Drugs", "Red. Hosp. 50%", "Red Dur Mild Inf 50%", "Red Infectivity 50%"),
        col = c("#011627", "#83BCA9", "#D36135", "#B91372"), lty = 1, cex = 0.7, lwd = 5)
 
+
+output(hosp_bed_full_treat_occ) <- TRUE
+output(hosp_bed_incomplete_treat_occ) <- TRUE
+output(hosp_bed_no_treat_occ) <- TRUE
+output(overall_hosp_occ) <- TRUE
+output(overall_hosp_demand) <- TRUE
+
+plot(none$output[, c(index$overall_hosp_occ)], type = "l")
+plot(none$output[, c(index$hosp_bed_no_treat_occ)], type = "l")
+
+plot(none$output[, c(index$overall_ICU_occ)], type = "l")
+plot(none$output[, c(index$ICU_bed_no_treat_occ)], type = "l")
+
 # overall_hosp_occ
 hosp_none <- apply(none$output[, c(index$overall_hosp_occ, index$overall_ICU_occ)], 1, sum)
 hosp_sev <- apply(red_sev$output[, c(index$overall_hosp_occ, index$overall_ICU_occ)], 1, sum)
@@ -83,6 +95,74 @@ lines(hosp_inf, type = "l", col = "#B91372", lwd = 2)
 legend(350, 140000, legend = c("No Drugs", "Red. Hosp. 50%", "Red Dur Mild Inf 50%", "Red Infectivity 50%"),
        col = c("#011627", "#83BCA9", "#D36135", "#B91372"), lty = 1, cex = 0.7, lwd = 5)
 title(ylab = "Hospital Occupancy", line = 4, cex.lab = 1.2)
+
+# ICU occupancy
+par(mfrow = c(1, 1))
+ICU_none <- none$output[, index$overall_ICU_occ]
+ICU_sev <- red_sev$output[, index$overall_ICU_occ]
+ICU_dur <- red_dur$output[, index$overall_ICU_occ]
+ICU_inf <- red_inf$output[, index$overall_ICU_occ]
+
+plot(ICU_none, type = "l", col = "#011627", lwd = 2, ylab = "", las = 1, xlab = "Days Since Seeding")
+lines(ICU_sev, type = "l", col = "#83BCA9", lwd = 2)
+lines(ICU_dur, type = "l", col = "#D36135", lwd = 2)
+lines(ICU_inf, type = "l", col = "#B91372", lwd = 2)
+legend(350, 140000, legend = c("No Drugs", "Red. Hosp. 50%", "Red Dur Mild Inf 50%", "Red Infectivity 50%"),
+       col = c("#011627", "#83BCA9", "#D36135", "#B91372"), lty = 1, cex = 0.7, lwd = 5)
+title(ylab = "ICU Occupancy", line = 4, cex.lab = 1.2)
+
+ICU_none <- none$output[, index$ICU_bed_full_treat_occ]
+ICU_sev <- red_sev$output[, index$ICU_bed_full_treat_occ]
+ICU_dur <- red_dur$output[, index$ICU_bed_full_treat_occ]
+ICU_inf <- red_inf$output[, index$ICU_bed_full_treat_occ]
+
+plot(ICU_none, type = "l", col = "#011627", lwd = 2, ylab = "", las = 1, xlab = "Days Since Seeding")
+lines(ICU_sev, type = "l", col = "#83BCA9", lwd = 2)
+lines(ICU_dur, type = "l", col = "#D36135", lwd = 2)
+lines(ICU_inf, type = "l", col = "#B91372", lwd = 2)
+legend(350, 140000, legend = c("No Drugs", "Red. Hosp. 50%", "Red Dur Mild Inf 50%", "Red Infectivity 50%"),
+       col = c("#011627", "#83BCA9", "#D36135", "#B91372"), lty = 1, cex = 0.7, lwd = 5)
+title(ylab = "ICU Occupancy", line = 4, cex.lab = 1.2)
+
+ICU_none <- none$output[, index$ICU_bed_incomplete_treat_occ]
+ICU_sev <- red_sev$output[, index$ICU_bed_incomplete_treat_occ]
+ICU_dur <- red_dur$output[, index$ICU_bed_incomplete_treat_occ]
+ICU_inf <- red_inf$output[, index$ICU_bed_incomplete_treat_occ]
+
+plot(ICU_none, type = "l", col = "#011627", lwd = 2, ylab = "", las = 1, xlab = "Days Since Seeding")
+lines(ICU_sev, type = "l", col = "#83BCA9", lwd = 2)
+lines(ICU_dur, type = "l", col = "#D36135", lwd = 2)
+lines(ICU_inf, type = "l", col = "#B91372", lwd = 2)
+legend(350, 140000, legend = c("No Drugs", "Red. Hosp. 50%", "Red Dur Mild Inf 50%", "Red Infectivity 50%"),
+       col = c("#011627", "#83BCA9", "#D36135", "#B91372"), lty = 1, cex = 0.7, lwd = 5)
+title(ylab = "ICU Occupancy", line = 4, cex.lab = 1.2)
+
+ICU_none <- none$output[, index$ICU_bed_no_treat_occ]
+ICU_sev <- red_sev$output[, index$ICU_bed_no_treat_occ]
+ICU_dur <- red_dur$output[, index$ICU_bed_no_treat_occ]
+ICU_inf <- red_inf$output[, index$ICU_bed_no_treat_occ]
+
+plot(ICU_none, type = "l", col = "#011627", lwd = 2, ylab = "", las = 1, xlab = "Days Since Seeding")
+lines(ICU_sev, type = "l", col = "#83BCA9", lwd = 2)
+lines(ICU_dur, type = "l", col = "#D36135", lwd = 2)
+lines(ICU_inf, type = "l", col = "#B91372", lwd = 2)
+legend(350, 140000, legend = c("No Drugs", "Red. Hosp. 50%", "Red Dur Mild Inf 50%", "Red Infectivity 50%"),
+       col = c("#011627", "#83BCA9", "#D36135", "#B91372"), lty = 1, cex = 0.7, lwd = 5)
+title(ylab = "ICU Occupancy", line = 4, cex.lab = 1.2)
+
+
+ICU_none <- none$output[, index$ICU_bed_no_treat_occ]
+ICU_sev <- red_sev$output[, index$ICU_bed_no_treat_occ]
+ICU_dur <- red_dur$output[, index$ICU_bed_no_treat_occ]
+ICU_inf <- red_inf$output[, index$ICU_bed_no_treat_occ]
+
+plot(ICU_none, type = "l", col = "#011627", lwd = 2, ylab = "", las = 1, xlab = "Days Since Seeding")
+lines(ICU_sev, type = "l", col = "#83BCA9", lwd = 2)
+lines(ICU_dur, type = "l", col = "#D36135", lwd = 2)
+lines(ICU_inf, type = "l", col = "#B91372", lwd = 2)
+legend(350, 140000, legend = c("No Drugs", "Red. Hosp. 50%", "Red Dur Mild Inf 50%", "Red Infectivity 50%"),
+       col = c("#011627", "#83BCA9", "#D36135", "#B91372"), lty = 1, cex = 0.7, lwd = 5)
+title(ylab = "ICU Occupancy", line = 4, cex.lab = 1.2)
 
 
 sum(D_none)
