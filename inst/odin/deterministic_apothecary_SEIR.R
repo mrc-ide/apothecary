@@ -269,17 +269,22 @@ number_req_Hosp[] <- (n_ICase2_Hosp[i] + n_ICase2_Drug_5_Hosp[i]) - number_req_I
 total_req_Hosp <- sum(number_req_Hosp) # Totalling number newly requiring a hospital bed and oxygen (i.e. IMod) over age groups
 
 # Current Hospital Bed Occupancy (Includes Stepdown Hospital Beds for Patient Leaving ICU)
+hosp_bed_full_treat_occ <- sum(IMod_GetHosp_GetOx_Surv1) + sum(IMod_GetHosp_GetOx_Surv2) + sum(IMod_GetHosp_GetOx_Die1) + sum(IMod_GetHosp_GetOx_Die2) +
+                           sum(IRec1) + sum(IRec2)
+hosp_bed_incomplete_treat_occ <- sum(IMod_GetHosp_NoOx_Surv1) + sum(IMod_GetHosp_NoOx_Surv2) + sum(IMod_GetHosp_NoOx_Die1) + sum(IMod_GetHosp_NoOx_Die2)
+hosp_bed_no_treat_occ <- sum(IMod_NoHosp_NoOx_Surv1) + sum(IMod_NoHosp_NoOx_Surv2) + sum(IMod_NoHosp_NoOx_Die1) + sum(IMod_NoHosp_NoOx_Die2)
+overall_hosp_occ <- hosp_bed_full_treat_occ + hosp_bed_incomplete_treat_occ
+overall_hosp_demand <- overall_hosp_occ + hosp_bed_no_treat_occ
+output(hosp_bed_full_treat_occ) <- TRUE
+output(hosp_bed_incomplete_treat_occ) <- TRUE
+output(hosp_bed_no_treat_occ) <- TRUE
+output(overall_hosp_occ) <- TRUE
+output(overall_hosp_demand) <- TRUE
+
+# Totting Hospital Bed Occupancy Up After Taking Account of Individuals Leaving Hospital Beds to Recovery and Entering from ICU
 hosp_bed_ox_occ <- sum(IMod_GetHosp_GetOx_Surv1) + sum(IMod_GetHosp_GetOx_Surv2) + sum(IMod_GetHosp_GetOx_Die1) + sum(IMod_GetHosp_GetOx_Die2)
 hosp_bed_no_ox_occ <- sum(IMod_GetHosp_NoOx_Surv1) + sum(IMod_GetHosp_NoOx_Surv2) + sum(IMod_GetHosp_NoOx_Die1) + sum(IMod_GetHosp_NoOx_Die2) +
                       sum(IRec1) + sum(IRec2)
-hosp_bed_no_ox_occ_without_IRec <- sum(IMod_GetHosp_NoOx_Surv1) + sum(IMod_GetHosp_NoOx_Surv2) + sum(IMod_GetHosp_NoOx_Die1) + sum(IMod_GetHosp_NoOx_Die2)
-overall_hosp_occ <- hosp_bed_ox_occ + hosp_bed_no_ox_occ
-output(hosp_bed_ox_occ) <- TRUE
-output(hosp_bed_no_ox_occ) <- TRUE
-output(hosp_bed_no_ox_occ_without_IRec) <- TRUE
-output(overall_hosp_occ) <- TRUE
-
-# Totting Hospital Bed Occupancy Up After Taking Account of Individuals Leaving Hospital Beds to Recovery and Entering from ICU
 current_free_hosp_bed_ox <- round(current_prop_ox_hosp_beds * current_hosp_bed_capacity) +
                             sum(n_IMod_GetHosp_GetOx_Surv2_R) + sum(n_IMod_GetHosp_GetOx_Die2_D_Hospital) - hosp_bed_ox_occ
 current_free_hosp_bed_no_ox <- (current_hosp_bed_capacity - round(current_prop_ox_hosp_beds * current_hosp_bed_capacity))  +
@@ -348,17 +353,29 @@ number_req_ICU[] <- if (drug_6_indic == 1) number_req_ICU_initial[i] * (1 - (dru
 total_req_ICU <- sum(number_req_ICU) # Totalling number newly requiring an ICU bed over age groups
 
 # Calculating Current ICU Occupancy - Total, But Also Specifically for Beds With and Without Oxygen
-ICU_bed_ox_occ <- sum(ISev_GetICU_GetOx_Surv1) + sum(ISev_GetICU_GetOx_Surv2) + sum(ISev_GetICU_GetOx_Die1) + sum(ISev_GetICU_GetOx_Die2) +
-  sum(ICrit_GetICU_GetOx_GetMV_Surv1) + sum(ICrit_GetICU_GetOx_GetMV_Surv2) + sum(ICrit_GetICU_GetOx_GetMV_Die1) + sum(ICrit_GetICU_GetOx_GetMV_Die2) +
-  sum(ICrit_GetICU_GetOx_NoMV_Surv1) + sum(ICrit_GetICU_GetOx_NoMV_Surv2) + sum(ICrit_GetICU_GetOx_NoMV_Die1) + sum(ICrit_GetICU_GetOx_NoMV_Die2)
-ICU_bed_no_ox_occ <- sum(ISev_GetICU_NoOx_Surv1) + sum(ISev_GetICU_NoOx_Surv2) + sum(ISev_GetICU_NoOx_Die1) + sum(ISev_GetICU_NoOx_Die2) +
-  sum(ICrit_GetICU_NoOx_NoMV_Surv1) + sum(ICrit_GetICU_NoOx_NoMV_Surv2) + sum(ICrit_GetICU_NoOx_NoMV_Die1) + sum(ICrit_GetICU_NoOx_NoMV_Die2)
-overall_ICU_occ <- ICU_bed_ox_occ + ICU_bed_no_ox_occ
-output(ICU_bed_ox_occ) <- TRUE
-output(ICU_bed_no_ox_occ) <- TRUE
+ICU_bed_full_treat_occ <- sum(ISev_GetICU_GetOx_Surv1) + sum(ISev_GetICU_GetOx_Surv2) + sum(ISev_GetICU_GetOx_Die1) + sum(ISev_GetICU_GetOx_Die2) +
+                          sum(ICrit_GetICU_GetOx_GetMV_Surv1) + sum(ICrit_GetICU_GetOx_GetMV_Surv2) + sum(ICrit_GetICU_GetOx_GetMV_Die1) + sum(ICrit_GetICU_GetOx_GetMV_Die2)
+ICU_bed_incomplete_treat_occ <- sum(ISev_GetICU_NoOx_Surv1) + sum(ISev_GetICU_NoOx_Surv2) + sum(ISev_GetICU_NoOx_Die1) + sum(ISev_GetICU_NoOx_Die2) +
+                                sum(ICrit_GetICU_NoOx_NoMV_Surv1) + sum(ICrit_GetICU_NoOx_NoMV_Surv2) + sum(ICrit_GetICU_NoOx_NoMV_Die1) + sum(ICrit_GetICU_NoOx_NoMV_Die2) +
+                                sum(ICrit_GetICU_GetOx_NoMV_Surv1) + sum(ICrit_GetICU_GetOx_NoMV_Surv2) + sum(ICrit_GetICU_GetOx_NoMV_Die1) + sum(ICrit_GetICU_GetOx_NoMV_Die2)
+ICU_bed_no_treat_occ <- sum(ISev_NoICU_NoOx_Surv1) + sum(ISev_NoICU_NoOx_Surv2) + sum(ISev_NoICU_NoOx_Die1) + sum(ISev_NoICU_NoOx_Die2) +
+                        sum(ICrit_NoICU_NoOx_NoMV_Surv1) + sum(ICrit_NoICU_NoOx_NoMV_Surv2) + sum(ICrit_NoICU_NoOx_NoMV_Die1) + sum(ICrit_NoICU_NoOx_NoMV_Die2)
+
+overall_ICU_occ <- ICU_bed_full_treat_occ + ICU_bed_incomplete_treat_occ
+overall_ICU_demand <- overall_ICU_occ + ICU_bed_no_treat_occ
+output(ICU_bed_full_treat_occ) <- TRUE
+output(ICU_bed_incomplete_treat_occ) <- TRUE
+output(ICU_bed_no_treat_occ) <- TRUE
 output(overall_ICU_occ) <- TRUE
+output(overall_ICU_demand) <- TRUE
 
 # Calculating New Occupancy After Taking Into Account Individuals Leaving ICU Beds This Timestep
+ICU_bed_ox_occ <- sum(ISev_GetICU_GetOx_Surv1) + sum(ISev_GetICU_GetOx_Surv2) + sum(ISev_GetICU_GetOx_Die1) + sum(ISev_GetICU_GetOx_Die2) +
+                  sum(ICrit_GetICU_GetOx_GetMV_Surv1) + sum(ICrit_GetICU_GetOx_GetMV_Surv2) + sum(ICrit_GetICU_GetOx_GetMV_Die1) + sum(ICrit_GetICU_GetOx_GetMV_Die2) +
+                  sum(ICrit_GetICU_GetOx_NoMV_Surv1) + sum(ICrit_GetICU_GetOx_NoMV_Surv2) + sum(ICrit_GetICU_GetOx_NoMV_Die1) + sum(ICrit_GetICU_GetOx_NoMV_Die2)
+ICU_bed_no_ox_occ <- sum(ISev_GetICU_NoOx_Surv1) + sum(ISev_GetICU_NoOx_Surv2) + sum(ISev_GetICU_NoOx_Die1) + sum(ISev_GetICU_NoOx_Die2) +
+                     sum(ICrit_GetICU_NoOx_NoMV_Surv1) + sum(ICrit_GetICU_NoOx_NoMV_Surv2) + sum(ICrit_GetICU_NoOx_NoMV_Die1) + sum(ICrit_GetICU_NoOx_NoMV_Die2)
+
 current_free_ICU_bed_ox <- round(current_prop_ox_ICU_beds * current_ICU_bed_capacity) +
   sum(n_ISev_GetICU_GetOx_Surv2_Rec) + sum(n_ISev_GetICU_GetOx_Die2_D_Hospital) +
   sum(n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec) + sum(n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital) +
@@ -563,6 +580,7 @@ new_deaths <- sum(n_IMod_NoHosp_NoOx_Die2_D_Community) + sum(n_ISev_NoICU_NoOx_D
               sum(n_IMod_GetHosp_GetOx_Die2_D_Hospital) + sum(n_IMod_GetHosp_NoOx_Die2_D_Hospital) + sum(n_ISev_GetICU_GetOx_Die2_D_Hospital) +
               sum(n_ISev_GetICU_NoOx_Die2_D_Hospital) + sum(n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital) + sum(n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital) +
               sum(n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital)
+output(new_deaths) <- TRUE
 
 ## COMPUTING THE FORCE OF INFECTION AND INTERPOLATION FOR MIXING MATRIX AND BETA
 ##------------------------------------------------------------------------------
