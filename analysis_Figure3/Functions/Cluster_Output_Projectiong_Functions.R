@@ -20,7 +20,7 @@ deaths_extraction <- function(pmcmc_res) {
 
 }
 
-model_replicate_rerun <- function(pmcmc_res, ...) {
+model_replicate_rerun <- function(pmcmc_res, country, ...) {
 
   number_replicates <- dim(pmcmc_res$output)[3]
   temp <- lapply(seq_len(number_replicates), function(i) {
@@ -81,9 +81,20 @@ past_assess <- function(pmcmc_res, ...) {
 
 }
 
-future_projection <- function(pmcmc_res, projection_period, R0 = NULL, ...) {
+# mod_output <- pmcmc_res$output[, index$E1, i]
+# first_day <- min(which(!is.na(mod_output[, 1]))) # need to change if changing object passed in
+# rerun <- pmcmc_res$output[, , i]
+# cum_deaths <- rerun[, index$D]
+# past_t <- rerun[, "t"]
+# past_deaths <- c(0, diff(rowSums(cum_deaths)))
+# initial_values <- rerun[pos + first_day - 1, initials, drop = TRUE]
+# pos <- which(y$output[, "time"] == max(y$output[, "time"]))
 
-  number_replicates <- dim(pmcmc_res$output)[3]
+future_projection <- function(pmcmc_res, country, projection_period, R0 = NULL,
+                              number_replicates, timepoints, cumulative_deaths_data,
+                              ...) {
+
+  # number_replicates <- dim(pmcmc_res$output)[3] # need to change if changing object passed in
   temp <- lapply(seq_len(number_replicates), function(i) {
 
     # Prepping Inputs & Running Dummy Model Run to Get ... Into Parameters
@@ -106,22 +117,25 @@ future_projection <- function(pmcmc_res, projection_period, R0 = NULL, ...) {
     index <- squire:::odin_index(pmcmc_res$model)
 
     # Extracting Output and Projecting Model Forwards
-    mod_output <- pmcmc_res$output[, index$E1, i]
-    first_day <- min(which(!is.na(mod_output[, 1])))
-    initial_infections <- mod_output[first_day, ]
+    # mod_output <- pmcmc_res$output[, index$E1, i]
+    # first_day <- min(which(!is.na(mod_output[, 1]))) # need to change if changing object passed in
 
     # Recreating the Model Run Using MCMC Parameters, Up to Current Date
     initials <- seq_along(pmcmc_res$model$initial()) + 1L
-    initial_values <- pmcmc_res$output[first_day, initials, i, drop = TRUE]
-    rerun <- pmcmc_res$output[, , i]
-    cum_deaths <- rerun[, index$D]
-    past_t <- rerun[, "t"]
-    past_deaths <- c(0, diff(rowSums(cum_deaths)))
-    #plot(past_t, past_deaths, type = "l", xlim = c(0, length(past_deaths) + projection_period))
+    # rerun <- pmcmc_res$output[, , i]
+    # cum_deaths <- rerun[, index$D]
+    # past_t <- rerun[, "t"]
+    # past_deaths <- c(0, diff(rowSums(cum_deaths)))
+    past_t <- as.Date(names(timepoints[, i]))
+    past_deaths <- c(0, diff(cumulative_deaths_data[, i]))
+    past_deaths[is.na(past_deaths)] <- 0
+    # plot(past_t, past_deaths, type = "l", xlim = c(min(past_t), max(past_t) + projection_period))
 
     # Simulating Forward Off This Output
-    pos <- which(y$output[, "time"] == max(y$output[, "time"]))
-    initial_values <- rerun[pos + first_day - 1, initials, drop = TRUE]
+    # pos <- which(y$output[, "time"] == max(y$output[, "time"]))
+    # initial_values <- rerun[pos + first_day - 1, initials, drop = TRUE]
+    final <- dim(pmcmc_res$output)[1]
+    initial_values <- pmcmc_res$output[final, initials, i]
     if (!is.null(R0)) {
       baseline_matrix <- process_contact_matrix_scaled_age(y$parameters$contact_matrix_set[[1]], y$parameters$population)
       new_beta <- apothecary:::beta_est_apothecary(dur_IAsymp = 1/y$parameters$gamma_IAsymp,
@@ -138,13 +152,11 @@ future_projection <- function(pmcmc_res, projection_period, R0 = NULL, ...) {
     projection <- y$model$run(0:projection_period, y = initial_values, use_names = TRUE, replicate = 1)
     projection_deaths <- projection[, index$D]
     projection_deaths <- diff(rowSums(projection_deaths))
-    projection_time <- projection[-1, "t"] + pos
-    #lines(projection_time, projection_deaths, col = "blue")
-
-    past_dates <- as.Date(names(past_t))
-    projection_dates <- past_dates[length(past_dates)] + seq(1:projection_period)
+    projection_time <- projection[-1, "t"] + final
+    projection_time <- projection[-1, "t"] + max(past_t)
+    # lines(projection_time, projection_deaths, col = "blue")
     temp <- data.frame(projection_deaths = unname(c(past_deaths, projection_deaths)),
-                       date = c(past_dates, projection_dates), replicate = paste0("V", i))
+                       date = c(past_t, projection_time), replicate = paste0("V", i))
 
   })
 
@@ -153,22 +165,40 @@ future_projection <- function(pmcmc_res, projection_period, R0 = NULL, ...) {
   return(temp)
 }
 
-cluster_projections <- function(pmcmc_res, iso) {
+cluster_projections <- function(pmcmc_res, iso, country, projection_period,
+                                number_replicates, timepoints, cumulative_deaths_data,
+                                ...) {
+
+  actual_hosp <- squire:::get_hosp_bed_capacity(country)
+  actual_ICU <- squire:::get_ICU_bed_capacity(country)
+  end_date <-  max(as.Date(names(timepoints[, 1])))
 
   # Low R0 Scenarios
-  lowR0_no_drugs_unlimited <- future_projection(pmcmc_res, 300, R0 = 1.35, hosp_bed_capacity = 100000000, ICU_bed_capacity = 100000000) %>%
+  lowR0_no_drugs_unlimited <- future_projection(pmcmc_res = pmcmc_res, country = country, projection_period = 300,
+                                                R0 = 1.35, number_replicates = number_replicates,
+                                                timepoints = timepoints, cumulative_deaths_data = cumulative_deaths_data,
+                                                hosp_bed_capacity = 100000000, ICU_bed_capacity = 100000000) %>%
     mutate(projection_deaths = ifelse(is.na(projection_deaths), 0, projection_deaths))
 
-  lowR0_drugs_unlimited <- future_projection(pmcmc_res, 300, R0 = 1.35, hosp_bed_capacity = 100000000, ICU_bed_capacity = 100000000,
+  lowR0_drugs_unlimited <- future_projection(pmcmc_res = pmcmc_res, country = country, projection_period = 300,
+                                             R0 = 1.35, number_replicates = number_replicates,
+                                             timepoints = timepoints, cumulative_deaths_data = cumulative_deaths_data,
+                                             hosp_bed_capacity = 100000000, ICU_bed_capacity = 100000000,
                                              drug_11_indic_IMod_GetHosp_GetOx = 1, drug_11_prop_treat = 1, drug_11_GetOx_effect_size = 0.82,
                                              drug_12_indic_ISev_GetICU_GetOx = 1, drug_12_prop_treat = 1, drug_12_GetOx_effect_size = 0.64,
                                              drug_13_indic_ICrit_GetICU_GetOx_GetMV = 1, drug_13_prop_treat = 1, drug_13_GetOx_GetMV_effect_size = 0.64) %>%
     mutate(projection_deaths = ifelse(is.na(projection_deaths), 0, projection_deaths))
 
-  lowR0_no_drugs_limited <- future_projection(pmcmc_res, 300, R0 = 1.35, hosp_bed_capacity = actual_hosp, ICU_bed_capacity = actual_ICU) %>%
+  lowR0_no_drugs_limited <- future_projection(pmcmc_res = pmcmc_res, country = country, projection_period = 300,
+                                              R0 = 1.35, number_replicates = number_replicates,
+                                              timepoints = timepoints, cumulative_deaths_data = cumulative_deaths_data,
+                                              hosp_bed_capacity = actual_hosp, ICU_bed_capacity = actual_ICU) %>%
     mutate(projection_deaths = ifelse(is.na(projection_deaths), 0, projection_deaths))
 
-  lowR0_drugs_limited <- future_projection(pmcmc_res, 300, R0 = 1.35, hosp_bed_capacity = actual_hosp, ICU_bed_capacity = actual_ICU,
+  lowR0_drugs_limited <- future_projection(pmcmc_res = pmcmc_res, country = country, projection_period = 300,
+                                           R0 = 1.35, number_replicates = number_replicates,
+                                           timepoints = timepoints, cumulative_deaths_data = cumulative_deaths_data,
+                                           hosp_bed_capacity = actual_hosp, ICU_bed_capacity = actual_ICU,
                                            drug_11_indic_IMod_GetHosp_GetOx = 1, drug_11_prop_treat = 1, drug_11_GetOx_effect_size = 0.82,
                                            drug_12_indic_ISev_GetICU_GetOx = 1, drug_12_prop_treat = 1, drug_12_GetOx_effect_size = 0.64,
                                            drug_13_indic_ICrit_GetICU_GetOx_GetMV = 1, drug_13_prop_treat = 1, drug_13_GetOx_GetMV_effect_size = 0.64) %>%
@@ -180,19 +210,31 @@ cluster_projections <- function(pmcmc_res, iso) {
   d <- lowR0_drugs_limited %>% filter(date > end_date) %>% group_by(replicate) %>% summarise(total = sum(projection_deaths)) %>% ungroup() %>% summarise(mean = mean(total))
 
   # High R0 Scenarios
-  highR0_no_drugs_unlimited <- future_projection(pmcmc_res, 200, R0 = 2, hosp_bed_capacity = 100000000, ICU_bed_capacity = 100000000) %>%
+  highR0_no_drugs_unlimited <- future_projection(pmcmc_res = pmcmc_res, country = country, projection_period = 200,
+                                                 R0 = 2, number_replicates = number_replicates,
+                                                 timepoints = timepoints, cumulative_deaths_data = cumulative_deaths_data,
+                                                 hosp_bed_capacity = 100000000, ICU_bed_capacity = 100000000) %>%
     mutate(projection_deaths = ifelse(is.na(projection_deaths), 0, projection_deaths))
 
-  highR0_drugs_unlimited <- future_projection(pmcmc_res, 200, R0 = 2, hosp_bed_capacity = 100000000, ICU_bed_capacity = 100000000,
+  highR0_drugs_unlimited <- future_projection(pmcmc_res = pmcmc_res, country = country, projection_period = 200,
+                                              R0 = 2, number_replicates = number_replicates,
+                                              timepoints = timepoints, cumulative_deaths_data = cumulative_deaths_data,
+                                              hosp_bed_capacity = 100000000, ICU_bed_capacity = 100000000,
                                               drug_11_indic_IMod_GetHosp_GetOx = 1, drug_11_prop_treat = 1, drug_11_GetOx_effect_size = 0.82,
                                               drug_12_indic_ISev_GetICU_GetOx = 1, drug_12_prop_treat = 1, drug_12_GetOx_effect_size = 0.64,
                                               drug_13_indic_ICrit_GetICU_GetOx_GetMV = 1, drug_13_prop_treat = 1, drug_13_GetOx_GetMV_effect_size = 0.64) %>%
     mutate(projection_deaths = ifelse(is.na(projection_deaths), 0, projection_deaths))
 
-  highR0_no_drugs_limited <- future_projection(pmcmc_res, 200, R0 = 2, hosp_bed_capacity = actual_hosp, ICU_bed_capacity = actual_ICU) %>%
+  highR0_no_drugs_limited <- future_projection(pmcmc_res = pmcmc_res, country = country, projection_period = 200,
+                                               R0 = 2, number_replicates = number_replicates,
+                                               timepoints = timepoints, cumulative_deaths_data = cumulative_deaths_data,
+                                               hosp_bed_capacity = actual_hosp, ICU_bed_capacity = actual_ICU)  %>%
     mutate(projection_deaths = ifelse(is.na(projection_deaths), 0, projection_deaths))
 
-  highR0_drugs_limited <- future_projection(pmcmc_res, 200, R0 = 2, hosp_bed_capacity = actual_hosp, ICU_bed_capacity = actual_ICU,
+  highR0_drugs_limited <- future_projection(pmcmc_res = pmcmc_res, country = country, projection_period = 200,
+                                            R0 = 2, number_replicates = number_replicates,
+                                            timepoints = timepoints, cumulative_deaths_data = cumulative_deaths_data,
+                                            hosp_bed_capacity = actual_hosp, ICU_bed_capacity = actual_ICU,
                                             drug_11_indic_IMod_GetHosp_GetOx = 1, drug_11_prop_treat = 1, drug_11_GetOx_effect_size = 0.82,
                                             drug_12_indic_ISev_GetICU_GetOx = 1, drug_12_prop_treat = 1, drug_12_GetOx_effect_size = 0.64,
                                             drug_13_indic_ICrit_GetICU_GetOx_GetMV = 1, drug_13_prop_treat = 1, drug_13_GetOx_GetMV_effect_size = 0.64) %>%
@@ -203,10 +245,9 @@ cluster_projections <- function(pmcmc_res, iso) {
   g <- highR0_no_drugs_limited %>% filter(date > end_date) %>% group_by(replicate) %>% summarise(total = sum(projection_deaths)) %>% ungroup() %>% summarise(mean = mean(total))
   h <- highR0_drugs_limited %>% filter(date > end_date) %>% group_by(replicate) %>% summarise(total = sum(projection_deaths)) %>% ungroup() %>% summarise(mean = mean(total))
 
-
   final <- data.frame(country = iso,
-                      low_nodrugs_unlimited = a, low_drugs_unlimited = b, low_nodrugs_limited = c, low_drugs_limited = d,
-                      high_nodrugs_unlimited = e, high_drugs_unlimited = f, high_nodrugs_limited = g, high_drugs_limited = h)
+                      low_nodrugs_unlimited = a[[1]], low_drugs_unlimited = b[[1]], low_nodrugs_limited = c[[1]], low_drugs_limited = d[[1]],
+                      high_nodrugs_unlimited = e[[1]], high_drugs_unlimited = f[[1]], high_nodrugs_limited = g[[1]], high_drugs_limited = h[[1]])
 
   saveRDS(final, paste0("N:/Charlie/apothecary_fitting/apothecary/analysis_Figure3/Outputs/Projections/", iso, "_proj.rds"))
   return(final)

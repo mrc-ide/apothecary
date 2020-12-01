@@ -9,12 +9,22 @@ source("analysis_Figure3/Functions/Cluster_Output_Plotting_Functions.R")
 source("analysis_Figure3/Functions/Cluster_Output_Projectiong_Functions.R")
 
 # Loading in country dataframe
-country <- "France"
-iso3c <- "FRA"
+country <- "Antigua and Barbuda"
+iso3c <- "ATG"
 filenames <- list.files("N:/Charlie/apothecary_fitting/apothecary_run_results/")
 filename <- filenames[grep(iso3c, filenames)]
 pmcmc_res <- readRDS(paste0("N:/Charlie/apothecary_fitting/apothecary_run_results/", filename))
 data <- pmcmc_res$pmcmc_results$inputs$data
+
+index <- squire:::odin_index(pmcmc_res$model)
+past_t <- pmcmc_res$output[, "t", ]
+past_deaths <- apply(pmcmc_res$output[, index$D, ], c(1, 3), sum)
+
+dims <- dim(pmcmc_res$output)[1]
+pmcmc_res$output <- pmcmc_res$output[(dims-2):dims, , ]
+x <- cluster_projections(pmcmc_res = pmcmc_res, iso = iso3c, country = country,
+                         number_replicates = 5, timepoints = past_t,  cumulative_deaths_data = past_deaths)
+
 
 # Plotting Model Output & Data
 deaths <- deaths_extraction(pmcmc_res)
@@ -32,7 +42,7 @@ ggplot() +
   geom_point(data = data, aes(x = date, y = deaths, col = "red"))
 
 # Comparing Counterfactual Drug Availability at Outset
-all_deaths <- past_assess(pmcmc_res,
+all_deaths <- past_assess(pmcmc_res = pmcmc_res, country = country,
                           drug_11_indic_IMod_GetHosp_GetOx = 1, drug_11_prop_treat = 1, drug_11_GetOx_effect_size = 0.82,
                           drug_12_indic_ISev_GetICU_GetOx = 1, drug_12_prop_treat = 1, drug_12_GetOx_effect_size = 0.64,
                           drug_13_indic_ICrit_GetICU_GetOx_GetMV = 1, drug_13_prop_treat = 1, drug_13_GetOx_GetMV_effect_size = 0.64)
@@ -54,23 +64,62 @@ actual_hosp <- get_hosp_bed_capacity(country)
 actual_ICU <- get_ICU_bed_capacity(country)
 end_date <- names(pmcmc_res$output[, 1, 1])[length(names(pmcmc_res$output[, 1, 1]))]
 
+index <- squire:::odin_index(pmcmc_res$model)
+past_t <- pmcmc_res$output[, "t", ]
+past_deaths <- apply(pmcmc_res$output[, index$D, ], c(1, 3), sum)
+pmcmc_res$output <- pmcmc_res$output[287:292, , ]
+
+object.size(pmcmc_r)
 # Low R0 Scenarios
-lowR0_no_drugs_unlimited <- future_projection(pmcmc_res, 300, R0 = 1.35, hosp_bed_capacity = 100000000, ICU_bed_capacity = 100000000) %>%
+lowR0_no_drugs_unlimited <- future_projection(pmcmc_res = pmcmc_res, country = country, projection_period = 300,
+                                              R0 = 1.35, number_replicates = 500,
+                                              timepoints = past_t, cumulative_deaths_data = past_deaths,
+                                              hosp_bed_capacity = 100000000, ICU_bed_capacity = 100000000) %>%
   mutate(projection_deaths = ifelse(is.na(projection_deaths), 0, projection_deaths))
 
-lowR0_drugs_unlimited <- future_projection(pmcmc_res, 300, R0 = 1.35, hosp_bed_capacity = 100000000, ICU_bed_capacity = 100000000,
+# test_death_summary <- lowR0_no_drugs_unlimited %>%
+#   group_by(date) %>%
+#   summarise(median = median(projection_deaths),
+#             lower = quantile(projection_deaths, 0.05),
+#             upper = quantile(projection_deaths, 0.95))
+#
+# for_comp <- death_summary %>%
+#   filter(scenario == "deaths")
+#
+# ggplot() +
+#   geom_line(data = lowR0_no_drugs_unlimited, aes(x = as.Date(date), y = projection_deaths, group = replicate), col = "black", alpha = 0.05) +
+#   geom_line(data = test_death_summary, aes(x = as.Date(date), y = median), col = "blue") +
+#   geom_line(data = test_death_summary, aes(x = as.Date(date), y = lower), col = "blue") +
+#   geom_line(data = test_death_summary, aes(x = as.Date(date), y = upper), col = "blue") +
+#   geom_line(data = for_comp, aes(x = as.Date(date), y = median), col = "red") +
+#   geom_line(data = for_comp, aes(x = as.Date(date), y = lower), col = "red") +
+#   geom_line(data = for_comp, aes(x = as.Date(date), y = upper), col = "red") +
+#   ylim(c(0, 1500)) +
+#   theme(legend.position = "none") +
+#   geom_point(data = data, aes(x = date, y = deaths), col = "black")
+
+lowR0_drugs_unlimited <- future_projection(pmcmc_res = pmcmc_res, country = country, projection_period = 300,
+                                           R0 = 1.35, number_replicates = 500,
+                                           timepoints = past_t, cumulative_deaths_data = past_deaths,
+                                           hosp_bed_capacity = 100000000, ICU_bed_capacity = 100000000,
                                            drug_11_indic_IMod_GetHosp_GetOx = 1, drug_11_prop_treat = 1, drug_11_GetOx_effect_size = 0.82,
                                            drug_12_indic_ISev_GetICU_GetOx = 1, drug_12_prop_treat = 1, drug_12_GetOx_effect_size = 0.64,
                                            drug_13_indic_ICrit_GetICU_GetOx_GetMV = 1, drug_13_prop_treat = 1, drug_13_GetOx_GetMV_effect_size = 0.64) %>%
   mutate(projection_deaths = ifelse(is.na(projection_deaths), 0, projection_deaths))
 
-lowR0_no_drugs_limited <- future_projection(pmcmc_res, 300, R0 = 1.35, hosp_bed_capacity = actual_hosp, ICU_bed_capacity = actual_ICU) %>%
+lowR0_no_drugs_limited <- future_projection(pmcmc_res = pmcmc_res, country = country, projection_period = 300,
+                                            R0 = 1.35, number_replicates = 500,
+                                            timepoints = past_t, cumulative_deaths_data = past_deaths,
+                                            hosp_bed_capacity = actual_hosp, ICU_bed_capacity = actual_ICU) %>%
   mutate(projection_deaths = ifelse(is.na(projection_deaths), 0, projection_deaths))
 
-lowR0_drugs_limited <- future_projection(pmcmc_res, 300, R0 = 1.35, hosp_bed_capacity = actual_hosp, ICU_bed_capacity = actual_ICU,
-                                           drug_11_indic_IMod_GetHosp_GetOx = 1, drug_11_prop_treat = 1, drug_11_GetOx_effect_size = 0.82,
-                                           drug_12_indic_ISev_GetICU_GetOx = 1, drug_12_prop_treat = 1, drug_12_GetOx_effect_size = 0.64,
-                                           drug_13_indic_ICrit_GetICU_GetOx_GetMV = 1, drug_13_prop_treat = 1, drug_13_GetOx_GetMV_effect_size = 0.64) %>%
+lowR0_drugs_limited <- future_projection(pmcmc_res = pmcmc_res, country = country, projection_period = 300,
+                                         R0 = 1.35, number_replicates = 500,
+                                         timepoints = past_t, cumulative_deaths_data = past_deaths,
+                                         hosp_bed_capacity = actual_hosp, ICU_bed_capacity = actual_ICU,
+                                         drug_11_indic_IMod_GetHosp_GetOx = 1, drug_11_prop_treat = 1, drug_11_GetOx_effect_size = 0.82,
+                                         drug_12_indic_ISev_GetICU_GetOx = 1, drug_12_prop_treat = 1, drug_12_GetOx_effect_size = 0.64,
+                                         drug_13_indic_ICrit_GetICU_GetOx_GetMV = 1, drug_13_prop_treat = 1, drug_13_GetOx_GetMV_effect_size = 0.64) %>%
   mutate(projection_deaths = ifelse(is.na(projection_deaths), 0, projection_deaths))
 
 a <- lowR0_no_drugs_unlimited %>% filter(date > end_date) %>% group_by(replicate) %>% summarise(total = sum(projection_deaths)) %>% ungroup() %>% summarise(mean = mean(total))
@@ -82,22 +131,34 @@ b/a
 d/c
 
 # High R0 Scenarios
-highR0_no_drugs_unlimited <- future_projection(pmcmc_res, 200, R0 = 2, hosp_bed_capacity = 100000000, ICU_bed_capacity = 100000000) %>%
+highR0_no_drugs_unlimited <- future_projection(pmcmc_res = pmcmc_res, country = country, projection_period = 200,
+                                               R0 = 2, number_replicates = 500,
+                                               timepoints = past_t, cumulative_deaths_data = past_deaths,
+                                               hosp_bed_capacity = 100000000, ICU_bed_capacity = 100000000) %>%
   mutate(projection_deaths = ifelse(is.na(projection_deaths), 0, projection_deaths))
 
-highR0_drugs_unlimited <- future_projection(pmcmc_res, 200, R0 = 2, hosp_bed_capacity = 100000000, ICU_bed_capacity = 100000000,
-                                           drug_11_indic_IMod_GetHosp_GetOx = 1, drug_11_prop_treat = 1, drug_11_GetOx_effect_size = 0.82,
-                                           drug_12_indic_ISev_GetICU_GetOx = 1, drug_12_prop_treat = 1, drug_12_GetOx_effect_size = 0.64,
-                                           drug_13_indic_ICrit_GetICU_GetOx_GetMV = 1, drug_13_prop_treat = 1, drug_13_GetOx_GetMV_effect_size = 0.64) %>%
+highR0_drugs_unlimited <- future_projection(pmcmc_res = pmcmc_res, country = country, projection_period = 200,
+                                            R0 = 2, number_replicates = 500,
+                                            timepoints = past_t, cumulative_deaths_data = past_deaths,
+                                            hosp_bed_capacity = 100000000, ICU_bed_capacity = 100000000,
+                                            drug_11_indic_IMod_GetHosp_GetOx = 1, drug_11_prop_treat = 1, drug_11_GetOx_effect_size = 0.82,
+                                            drug_12_indic_ISev_GetICU_GetOx = 1, drug_12_prop_treat = 1, drug_12_GetOx_effect_size = 0.64,
+                                            drug_13_indic_ICrit_GetICU_GetOx_GetMV = 1, drug_13_prop_treat = 1, drug_13_GetOx_GetMV_effect_size = 0.64) %>%
   mutate(projection_deaths = ifelse(is.na(projection_deaths), 0, projection_deaths))
 
-highR0_no_drugs_limited <- future_projection(pmcmc_res, 200, R0 = 2, hosp_bed_capacity = actual_hosp, ICU_bed_capacity = actual_ICU) %>%
+highR0_no_drugs_limited <- future_projection(pmcmc_res = pmcmc_res, country = country, projection_period = 200,
+                                             R0 = 2, number_replicates = 500,
+                                             timepoints = past_t, cumulative_deaths_data = past_deaths,
+                                             hosp_bed_capacity = actual_hosp, ICU_bed_capacity = actual_ICU) %>%
   mutate(projection_deaths = ifelse(is.na(projection_deaths), 0, projection_deaths))
 
-highR0_drugs_limited <- future_projection(pmcmc_res, 200, R0 = 2, hosp_bed_capacity = actual_hosp, ICU_bed_capacity = actual_ICU,
-                                         drug_11_indic_IMod_GetHosp_GetOx = 1, drug_11_prop_treat = 1, drug_11_GetOx_effect_size = 0.82,
-                                         drug_12_indic_ISev_GetICU_GetOx = 1, drug_12_prop_treat = 1, drug_12_GetOx_effect_size = 0.64,
-                                         drug_13_indic_ICrit_GetICU_GetOx_GetMV = 1, drug_13_prop_treat = 1, drug_13_GetOx_GetMV_effect_size = 0.64) %>%
+highR0_drugs_limited <- future_projection(pmcmc_res = pmcmc_res, country = country, projection_period = 200,
+                                          R0 = 2, number_replicates = 500,
+                                          timepoints = past_t, cumulative_deaths_data = past_deaths,
+                                          hosp_bed_capacity = actual_hosp, ICU_bed_capacity = actual_ICU,
+                                          drug_11_indic_IMod_GetHosp_GetOx = 1, drug_11_prop_treat = 1, drug_11_GetOx_effect_size = 0.82,
+                                          drug_12_indic_ISev_GetICU_GetOx = 1, drug_12_prop_treat = 1, drug_12_GetOx_effect_size = 0.64,
+                                          drug_13_indic_ICrit_GetICU_GetOx_GetMV = 1, drug_13_prop_treat = 1, drug_13_GetOx_GetMV_effect_size = 0.64) %>%
   mutate(projection_deaths = ifelse(is.na(projection_deaths), 0, projection_deaths))
 
 e <- highR0_no_drugs_unlimited %>% filter(date > end_date) %>% group_by(replicate) %>% summarise(total = sum(projection_deaths)) %>% ungroup() %>% summarise(mean = mean(total))
@@ -109,7 +170,11 @@ f/e
 h/g
 
 c(a[[1]], b[[1]], c[[1]], d[[1]], e[[1]], f[[1]], g[[1]], h[[1]])
-x <- cluster_projections(pmcmc_res, "FRA")
+
+x <- cluster_projections(pmcmc_res = pmcmc_res, iso = "FRA", country = "France",
+                         number_replicates = 500, timepoints = past_t, cumulative_deaths_data = past_deaths)
+
+
 x <- readRDS("N:/Charlie/apothecary_fitting/apothecary/analysis_Figure3/Outputs/Projections/FRA_proj.rds")
 
 

@@ -1,5 +1,6 @@
 # Loading required libraries
-library(tidyverse); library(qpdf)
+library(tidyverse); library(qpdf); library(stringi); library(rnaturalearth); library(ggplot2); library(dplyr);
+library(rgdal); library(rgeos); library(sf); library(rnaturalearthdata)
 
 # Setting Up Cluster
 loc <- didehpc::path_mapping("location", "N:", "//fi--didenas5/malaria", "N:")
@@ -7,12 +8,11 @@ config <- didehpc::didehpc_config(shares = loc, use_rrq = FALSE, cluster =  "fi-
                                   parallel = FALSE, rtools = TRUE)
 packages <- c("lubridate", "dplyr", "tidyr", "odin", "squire", "apothecary", "dde")
 
-
 # Creating a Context
 sources <- c("N:/Charlie/apothecary_fitting/apothecary/analysis_Figure3/Functions/MCMC_cluster_function.R",
              "N:/Charlie/apothecary_fitting/apothecary/analysis_Figure3/Functions/Cluster_Output_Projectiong_Functions.R")
 
-additional_identifier <- ""
+additional_identifier <- "new"
 context_name <- paste0("N:/Charlie/apothecary_runs_", Sys.Date(), additional_identifier)
 ctx <- context::context_save(path = context_name,
                              sources = sources,
@@ -22,7 +22,6 @@ ctx <- context::context_save(path = context_name,
                                                                                "N:/Charlie/apothecary_fitting/dde_1.0.2.zip",
                                                                                "N:/Charlie/apothecary_fitting/odin_1.0.6.zip",
                                                                                "N:/Charlie/apothecary_fitting/squire_0.5.6.zip")))
-
 # Configure the Queue
 run <- didehpc::queue_didehpc(ctx, config = config)
 
@@ -31,112 +30,63 @@ run$cluster_load(nodes = FALSE)
 run$task_list()
 run$task_times()
 
-
-
-# Loading apothecary
-devtools::load_all()
-
-# Sourcing required functions
-source("analysis_Figure3/Functions/Cluster_Output_Plotting_Functions.R")
-source("analysis_Figure3/Functions/Cluster_Output_Projectiong_Functions.R")
-
-# Loading in country dataframe
-country <- "France"
-iso3c <- "FRA"
+# Loading Up Tasks
 filenames <- list.files("N:/Charlie/apothecary_fitting/apothecary_run_results/")
-filename <- filenames[grep(iso3c, filenames)]
-pmcmc_res <- readRDS(paste0("N:/Charlie/apothecary_fitting/apothecary_run_results/", filename))
-data <- pmcmc_res$pmcmc_results$inputs$data
+iso <- str_split(filenames, "_")
+iso <- unlist(lapply(iso, `[[`, 1))
+countries <- countrycode::countrycode(iso, origin = "iso3c", destination = "country.name")
+countries <- str_replace(countries, "&", "and")
+misspell <- c("Côte d’Ivoire", "Congo - Brazzaville", "Cape Verde", "Kyrgyzstan", "Myanmar (Burma)", "Palestinian Territories", "São Tomé and Príncipe")
+indices <- which(countries %in% misspell)
+countries[indices] <- c("Cote d'Ivoire", "Republic of the Congo", "Cabo Verde", "Kyrgyz Republic", "Myanmar", "State of Palestine", "Sao Tome and Principe")
 
-# Plotting Model Output & Data
-deaths <- deaths_extraction(pmcmc_res)
-daily_death_summary <- deaths %>%
-  group_by(date) %>%
-  summarise(median_deaths = median(deaths, na.rm = TRUE),
-            lower_deaths = quantile(deaths, 0.05, na.rm = TRUE),
-            upper_deaths = quantile(deaths, 0.95, na.rm = TRUE))
-ggplot() +
-  geom_line(data = deaths, aes(x = as.Date(date), y = deaths, group = replicate), alpha = 0.2, col = "grey") +
-  geom_line(data = daily_death_summary, aes(x = as.Date(date), y = median_deaths), col = "black") +
-  geom_line(data = daily_death_summary, aes(x = as.Date(date), y = lower_deaths), col = "black") +
-  geom_line(data = daily_death_summary, aes(x = as.Date(date), y = upper_deaths), col = "black") +
-  theme(legend.position = "none") +
-  geom_point(data = data, aes(x = date, y = deaths, col = "red"))
+for (i in 1:length(iso)) {
+  temp <- filenames[grep(iso[i], filenames)]
+  pmcmc_res <- readRDS(paste0("N:/Charlie/apothecary_fitting/apothecary_run_results/", temp))
+  index <- squire:::odin_index(pmcmc_res$model)
+  past_t <- pmcmc_res$output[, "t", ]
+  past_deaths <- apply(pmcmc_res$output[, index$D, ], c(1, 3), sum)
+  dims <- dim(pmcmc_res$output)[1]
+  pmcmc_res$output <- pmcmc_res$output[(dims-2):dims, , ]
+  test <- run$enqueue(cluster_projections(pmcmc_res = pmcmc_res, iso = iso[i], country = countries[i],
+                                          number_replicates = 500, timepoints = past_t, cumulative_deaths_data = past_deaths))
+  print(i)
+}
 
-# Comparing Counterfactual Drug Availability at Outset
-all_deaths <- past_assess(pmcmc_res,
-                          drug_11_indic_IMod_GetHosp_GetOx = 1, drug_11_prop_treat = 1, drug_11_GetOx_effect_size = 0.82,
-                          drug_12_indic_ISev_GetICU_GetOx = 1, drug_12_prop_treat = 1, drug_12_GetOx_effect_size = 0.64,
-                          drug_13_indic_ICrit_GetICU_GetOx_GetMV = 1, drug_13_prop_treat = 1, drug_13_GetOx_GetMV_effect_size = 0.64)
-death_summary <- all_deaths %>%
-  group_by(date, scenario) %>%
-  summarise(median = median(value),
-            lower = quantile(value, 0.05),
-            upper = quantile(value, 0.95))
-ggplot() +
-  geom_line(data = all_deaths, aes(x = as.Date(date), y = value, col = scenario, group = interaction(replicate, scenario)), alpha = 0.2) +
-  geom_line(data = death_summary, aes(x = as.Date(date), y = median, group = scenario), col = "black") +
-  geom_line(data = death_summary, aes(x = as.Date(date), y = lower, group = scenario), col = "black") +
-  geom_line(data = death_summary, aes(x = as.Date(date), y = upper, group = scenario), col = "black") +
-  theme(legend.position = "none") +
-  geom_point(data = data, aes(x = date, y = deaths), col = "black")
+# Creating Overall Dataframe
+output <- list.files("analysis_Figure3/Outputs/Projections/")
+for (i in 1:length(output)) {
+  temp <- readRDS(paste0("analysis_Figure3/Outputs/Projections/", output[i]))
+  if (i == 1) {
+    overall <- temp
+  } else {
+    overall <- rbind(overall, temp)
+  }
+}
+wb <- read.csv("analysis_Figure3/Inputs/World_Bank_Country_Metadata.csv") %>%
+  select(ï..country_code, region, income_group) %>%
+  rename(iso = ï..country_code)
+overall <- overall %>%
+  left_join(wb, by = c("country" = "iso")) %>%
+  mutate(income_group = factor(income_group, levels = c("Low income", "Lower middle income", "Upper middle income", "High income"))) %>%
+  mutate(low = (1 - (low_drugs_limited/low_nodrugs_limited))/(1 - (low_drugs_unlimited/low_nodrugs_unlimited)),
+         high = (1 - (high_drugs_limited/high_nodrugs_limited))/(1 - (high_drugs_unlimited/high_nodrugs_unlimited)))
 
-# Projecting Forwards Under Various Scenarios
-actual_hosp <- get_hosp_bed_capacity(country)
-actual_ICU <- get_ICU_bed_capacity(country)
-end_date <- names(pmcmc_res$output[, 1, 1])[length(names(pmcmc_res$output[, 1, 1]))]
+summary <- overall %>%
+  group_by(income_group) %>%
+  summarise(mean_low = mean(low),
+            mean_high = mean(high),
+            n = n())
 
-# Low R0 Scenarios
-lowR0_no_drugs_unlimited <- future_projection(pmcmc_res, 300, R0 = 1.35, hosp_bed_capacity = 100000000, ICU_bed_capacity = 100000000) %>%
-  mutate(projection_deaths = ifelse(is.na(projection_deaths), 0, projection_deaths))
+red <- overall %>%
+  dplyr::select(country, low, high)
 
-lowR0_drugs_unlimited <- future_projection(pmcmc_res, 300, R0 = 1.35, hosp_bed_capacity = 100000000, ICU_bed_capacity = 100000000,
-                                           drug_11_indic_IMod_GetHosp_GetOx = 1, drug_11_prop_treat = 1, drug_11_GetOx_effect_size = 0.82,
-                                           drug_12_indic_ISev_GetICU_GetOx = 1, drug_12_prop_treat = 1, drug_12_GetOx_effect_size = 0.64,
-                                           drug_13_indic_ICrit_GetICU_GetOx_GetMV = 1, drug_13_prop_treat = 1, drug_13_GetOx_GetMV_effect_size = 0.64) %>%
-  mutate(projection_deaths = ifelse(is.na(projection_deaths), 0, projection_deaths))
-
-lowR0_no_drugs_limited <- future_projection(pmcmc_res, 300, R0 = 1.35, hosp_bed_capacity = actual_hosp, ICU_bed_capacity = actual_ICU) %>%
-  mutate(projection_deaths = ifelse(is.na(projection_deaths), 0, projection_deaths))
-
-lowR0_drugs_limited <- future_projection(pmcmc_res, 300, R0 = 1.35, hosp_bed_capacity = actual_hosp, ICU_bed_capacity = actual_ICU,
-                                           drug_11_indic_IMod_GetHosp_GetOx = 1, drug_11_prop_treat = 1, drug_11_GetOx_effect_size = 0.82,
-                                           drug_12_indic_ISev_GetICU_GetOx = 1, drug_12_prop_treat = 1, drug_12_GetOx_effect_size = 0.64,
-                                           drug_13_indic_ICrit_GetICU_GetOx_GetMV = 1, drug_13_prop_treat = 1, drug_13_GetOx_GetMV_effect_size = 0.64) %>%
-  mutate(projection_deaths = ifelse(is.na(projection_deaths), 0, projection_deaths))
-
-a <- lowR0_no_drugs_unlimited %>% filter(date > end_date) %>% group_by(replicate) %>% summarise(total = sum(projection_deaths)) %>% ungroup() %>% summarise(mean = mean(total))
-b <- lowR0_drugs_unlimited %>% filter(date > end_date) %>% group_by(replicate) %>% summarise(total = sum(projection_deaths)) %>% ungroup() %>% summarise(mean = mean(total))
-c <- lowR0_no_drugs_limited %>% filter(date > end_date) %>% group_by(replicate) %>% summarise(total = sum(projection_deaths)) %>% ungroup() %>% summarise(mean = mean(total))
-d <- lowR0_drugs_limited %>% filter(date > end_date) %>% group_by(replicate) %>% summarise(total = sum(projection_deaths)) %>% ungroup() %>% summarise(mean = mean(total))
-
-b/a
-d/c
-
-# High R0 Scenarios
-highR0_no_drugs_unlimited <- future_projection(pmcmc_res, 200, R0 = 2, hosp_bed_capacity = 100000000, ICU_bed_capacity = 100000000) %>%
-  mutate(projection_deaths = ifelse(is.na(projection_deaths), 0, projection_deaths))
-
-highR0_drugs_unlimited <- future_projection(pmcmc_res, 200, R0 = 2, hosp_bed_capacity = 100000000, ICU_bed_capacity = 100000000,
-                                           drug_11_indic_IMod_GetHosp_GetOx = 1, drug_11_prop_treat = 1, drug_11_GetOx_effect_size = 0.82,
-                                           drug_12_indic_ISev_GetICU_GetOx = 1, drug_12_prop_treat = 1, drug_12_GetOx_effect_size = 0.64,
-                                           drug_13_indic_ICrit_GetICU_GetOx_GetMV = 1, drug_13_prop_treat = 1, drug_13_GetOx_GetMV_effect_size = 0.64) %>%
-  mutate(projection_deaths = ifelse(is.na(projection_deaths), 0, projection_deaths))
-
-highR0_no_drugs_limited <- future_projection(pmcmc_res, 200, R0 = 2, hosp_bed_capacity = actual_hosp, ICU_bed_capacity = actual_ICU) %>%
-  mutate(projection_deaths = ifelse(is.na(projection_deaths), 0, projection_deaths))
-
-highR0_drugs_limited <- future_projection(pmcmc_res, 200, R0 = 2, hosp_bed_capacity = actual_hosp, ICU_bed_capacity = actual_ICU,
-                                         drug_11_indic_IMod_GetHosp_GetOx = 1, drug_11_prop_treat = 1, drug_11_GetOx_effect_size = 0.82,
-                                         drug_12_indic_ISev_GetICU_GetOx = 1, drug_12_prop_treat = 1, drug_12_GetOx_effect_size = 0.64,
-                                         drug_13_indic_ICrit_GetICU_GetOx_GetMV = 1, drug_13_prop_treat = 1, drug_13_GetOx_GetMV_effect_size = 0.64) %>%
-  mutate(projection_deaths = ifelse(is.na(projection_deaths), 0, projection_deaths))
-
-e <- highR0_no_drugs_unlimited %>% filter(date > end_date) %>% group_by(replicate) %>% summarise(total = sum(projection_deaths)) %>% ungroup() %>% summarise(mean = mean(total))
-f <- highR0_drugs_unlimited %>% filter(date > end_date) %>% group_by(replicate) %>% summarise(total = sum(projection_deaths)) %>% ungroup() %>% summarise(mean = mean(total))
-g <- highR0_no_drugs_limited %>% filter(date > end_date) %>% group_by(replicate) %>% summarise(total = sum(projection_deaths)) %>% ungroup() %>% summarise(mean = mean(total))
-h <- highR0_drugs_limited %>% filter(date > end_date) %>% group_by(replicate) %>% summarise(total = sum(projection_deaths)) %>% ungroup() %>% summarise(mean = mean(total))
-
-f/e
-h/g
-
+world <- ne_countries(scale = "medium", returnclass = "sf")
+world <- world %>%
+  left_join(red, by = c("iso_a3" = "country"))
+ggplot(data = world) +
+  geom_sf(aes(fill = low)) +
+  scale_fill_viridis_c(option = "magma", breaks = c(0, 1), limits = c(0, 1), direction = -1)
+ggplot(data = world) +
+  geom_sf(aes(fill = high)) +
+  scale_fill_viridis_c(option = "magma", breaks = c(0, 1), limits = c(0, 1), direction = -1)

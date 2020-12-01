@@ -1,14 +1,7 @@
 # Initial Setup (Run Once)
-# drat:::add("mrc-ide")
-# source("https://mrc-ide.github.io/didehpc/install")
-# install.packages("didehpc")
-# remotes::install_github("mrc-ide/provisionr@dev", upgrade = FALSE)
-# devtools::install_github("mrc-ide/buildr", upgrade=FALSE)
-# countries <- c("AFG", "ARG", "CAN", "DOM", "ETH", "GTM", "HND", "IDN",  "PAK", "ROU", "RUS", "UKR")
-
 # Setting Up Cluster
 loc <- didehpc::path_mapping("location", "N:", "//fi--didenas5/malaria", "N:")
-config <- didehpc::didehpc_config(shares = loc, use_rrq = FALSE, cluster =  "fi--dideclusthn",#"fi--didemrchnb",
+config <- didehpc::didehpc_config(shares = loc, use_rrq = FALSE, cluster =  "fi--didemrchnb", #"fi--dideclusthn"
                                   parallel = FALSE, rtools = TRUE)
 packages <- c("lubridate", "dplyr", "tidyr", "odin", "squire", "apothecary", "dde")
 
@@ -50,18 +43,21 @@ yes_death_countries <- ecdc %>%
   summarise(total_deaths = sum(deaths)) %>%
   filter(total_deaths != 0)
 countries <- countries[countries %in% yes_death_countries$countryterritoryCode]
+previous_runs <- str_split(list.files("N:/Charlie/apothecary_fitting/apothecary_run_results"), "_")
+previous_runs <- unlist(lapply(previous_runs, `[[`, 1))
+missing <- countries[!(countries %in% previous_runs)]
 
 # Running Countries Locally to Check They Work
-for (i in 1:length(countries)) {
-  test <- run_apothecary_MCMC(country = countries[i], date = "2020-11-16", pars_init = pars_init,
+for (i in 1:length(missing)) {
+  test <- run_apothecary_MCMC(country = missing[i], date = "2020-11-16", pars_init = pars_init,
                               mortality_data = mortality_data, interventions = interventions,
                               n_mcmc = 2, replicates = 2, healthcare = "unlimited", n_chains = 1, gibbs = TRUE)
   print(i)
 }
 
 # Running the Fitting for Every Country
-for (i in 1:length(countries)) {
-  test <- run$enqueue(run_apothecary_MCMC(country = countries[i], date = "2020-11-16", pars_init = pars_init,
+for (i in 1:length(missing)) {
+  test <- run$enqueue(run_apothecary_MCMC(country = missing[i], date = "2020-11-16", pars_init = pars_init,
                                           mortality_data = mortality_data, interventions = interventions,
                                           n_mcmc = 20000, replicates = 500, healthcare = "unlimited", n_chains = 1, gibbs = TRUE))
   print(i)
