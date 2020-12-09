@@ -17,7 +17,7 @@ for (i in 1:length(drug_filenames)) {
   }
 }
 drugs <- drug_temp %>%
-  separate(scenario, c("R0", "healthcare", "drug_benefit", "drug_benefit2")) %>%
+  separate(scenario, c("number", "drug","R0", "healthcare", "drug_benefit", "drug_benefit2")) %>%
   unite("drug_benefit", drug_benefit:drug_benefit2, remove = TRUE) %>%
   mutate(healthcare = factor(healthcare, levels = c("unlimHC", "limMV", "limMVox", "limMVoxbeds", "noHC"))) %>%
   mutate(drug_benefit = factor(drug_benefit, levels = c("treatonly_benfull", "allhosp_gradbencons", "allhosp_gradbenopti", "allhosp_benfull")))
@@ -31,18 +31,35 @@ for (i in 1:length(no_drug_filenames)) {
   }
 }
 no_drugs <- no_drug_temp %>%
-  separate(scenario, c("R0", "healthcare", "drug_benefit", "drug_benefit2")) %>%
+  separate(scenario, c("number", "drug","R0", "healthcare", "drug_benefit", "drug_benefit2")) %>%
   select(IFR, R0, healthcare) %>%
   group_by(R0, healthcare) %>%
   summarise(no_drugs_IFR = mean(IFR))
 
+no_hc_filenames <- filenames[grepl("noHC", filenames)]
+for (i in 1:length(no_drug_filenames)) {
+  if (i == 1) {
+    no_hc_temp <- readRDS(paste0("analysis_Figure2/Outputs/", no_hc_filenames[i]))
+  } else {
+    no_hc_temp <- rbind(no_hc_temp, readRDS(paste0("analysis_Figure2/Outputs/", no_hc_filenames[i])))
+  }
+}
+no_hc <- no_hc_temp %>%
+  separate(scenario, c("number", "drug","R0", "healthcare", "drug_benefit", "drug_benefit2")) %>%
+  select(IFR, R0, healthcare) %>%
+  group_by(R0, healthcare) %>%
+  summarise(no_hc_IFR = mean(IFR)) %>%
+  select(R0, no_hc_IFR)
+
 # Merging Drug and No Drug Dataframes Together and Plotting the IFR
 overall <- drugs %>%
   left_join(no_drugs, by = c("R0", "healthcare")) %>%
+  left_join(no_hc, by = c("R0")) %>%
   mutate(IFR_diff = no_drugs_IFR - IFR) %>%
   mutate(prop_IFR_red = IFR_diff/no_drugs_IFR) %>%
   mutate(healthcare = factor(healthcare, levels = c("unlimHC", "limMV", "limMVox", "limMVoxbeds", "noHC"))) %>%
-  mutate(drug_benefit = factor(drug_benefit, levels = c("treatonly_benfull", "allhosp_gradbencons", "allhosp_gradbenopti", "allhosp_benfull")))
+  mutate(drug_benefit = factor(drug_benefit, levels = c("treatonly_benfull", "allhosp_gradbencons", "allhosp_gradbenopti", "allhosp_benfull"))) %>%
+  filter(healthcare != "noHC")
 
 # New facet labels for R0 variables
 R0.labs <- c("High R0", "Low R0")
@@ -58,6 +75,7 @@ names(healthcare.labs) <- c("treatonly_benfull", "allhosp_gradbencons", "allhosp
 ggplot(overall) +
   geom_boxplot(aes(x = healthcare, y = IFR, fill = interaction(R0, healthcare)), outlier.shape = NA) +
   geom_point(aes(x = healthcare, y = no_drugs_IFR, col = interaction(R0, healthcare)), shape = 19) +
+  geom_hline(aes(yintercept = no_hc_IFR), no_hc, linetype = "dashed") +
   facet_grid(R0 ~ drug_benefit,
              labeller = labeller(R0 = R0.labs, drug_benefit = healthcare.labs)) +
   scale_fill_manual(values = c("white", "white", "#B7C0EE", "#DBF0CE", "#7067CF",
@@ -71,9 +89,10 @@ ggplot(overall) +
   scale_colour_manual(values = rep("black", 10)) +
   theme(legend.position = "none", axis.text.x = element_text(size = 8),
         axis.text.y = element_text(size = 10),
-        axis.title.y = element_text(vjust = +2.5)) +
+        axis.title.y = element_text(vjust = +2.5),
+        strip.text.x = element_text(size = 8)) +
   labs(x = "", y = "Infection Fatality Ratio (%)") +
-  lims(y = c(0, 2.6))
+  lims(y = c(0, 0.8))
 
 ggplot(overall) +
   geom_boxplot(aes(x = healthcare, y = IFR, fill = interaction(R0, healthcare)), outlier.shape = NA) +

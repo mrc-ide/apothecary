@@ -176,7 +176,9 @@ prob_critical[] <- user() # probability of critical disease (requiring ICU bed A
 # Probabilities of Death Related to Requiring Hospital Bed and Oxygen, Incorporating Effects of Drug 11 If Relevant
 prob_moderate_death_get_hosp_get_ox_baseline[] <- user() # probability of dying from moderate disease (i.e. requiring hospital bed and oxygen) by age given you receive a hospital bed AND oxygen)
 prob_moderate_death_get_hosp_get_ox_Drug_11[] <- ((1 - drug_11_prop_treat) * prob_moderate_death_get_hosp_get_ox_baseline[i]) + (drug_11_prop_treat * drug_11_GetOx_effect_size * prob_moderate_death_get_hosp_get_ox_baseline[i]) # weighted sum of death probabilities for treated/untreated depending on Drug 11 properties
+#output(prob_moderate_death_get_hosp_get_ox_Drug_11) <- TRUE
 prob_moderate_death_get_hosp_get_ox[] <- if (drug_11_indic_IMod_GetHosp_GetOx == 1) prob_moderate_death_get_hosp_get_ox_Drug_11[i] else prob_moderate_death_get_hosp_get_ox_baseline[i]
+#output(prob_moderate_death_get_hosp_get_ox) <- TRUE
 
 prob_moderate_death_get_hosp_no_ox_baseline[] <- user() # probability of dying from moderate disease (i.e. requiring hospital bed and oxygen) by age given you receive a hospital bed BUT no oxygen)
 prob_moderate_death_get_hosp_no_ox_Drug_11[] <- ((1 - drug_11_prop_treat) * prob_moderate_death_get_hosp_no_ox_baseline[i]) + (drug_11_prop_treat * drug_11_NoOx_effect_size * prob_moderate_death_get_hosp_no_ox_baseline[i]) # weighted sum of death probabilities for treated/untreated depending on Drug 11 properties
@@ -315,19 +317,24 @@ number_IMod_NoHosp_NoOx[] <- number_req_Hosp[i] - number_IMod_GetHosp_GetOx[i] -
 # Outputting the number of individuals requiring
 number_req_hosp_bed <- sum(number_req_Hosp)
 number_get_hosp_full_treat <- sum(number_IMod_GetHosp_GetOx)
-number_get_hosp_any_treat <- sum(number_IMod_GetHosp_GetOx) + sum(number_IMod_GetHosp_NoOx)
+number_get_hosp_incomplete_treat <- sum(number_IMod_GetHosp_NoOx)
+number_get_hosp_any_treat <- number_get_hosp_full_treat + number_get_hosp_incomplete_treat
 
+output(number_req_Hosp) <- TRUE
 output(number_req_hosp_bed) <- TRUE
 output(number_get_hosp_full_treat) <- TRUE
+output(number_get_hosp_incomplete_treat) <- TRUE
 output(number_get_hosp_any_treat) <- TRUE
 
 number_req_ICU_bed <- sum(number_req_ICU)
 number_get_ICU_full_treat <- sum(number_ISev_GetICU_GetOx) + sum(number_ICrit_GetICU_GetOx_GetMV)
+number_get_ICU_incomplete_treat <- sum(number_ISev_GetICU_NoOx) + sum(number_ICrit_GetICU_GetOx_NoMV) + sum(number_ICrit_GetICU_NoOx_NoMV)
 number_get_ICU_any_treat <- sum(number_ISev_GetICU_GetOx) + sum(number_ISev_GetICU_NoOx) +
                             sum(number_ICrit_GetICU_GetOx_GetMV) + sum(number_ICrit_GetICU_GetOx_NoMV) + sum(number_ICrit_GetICU_NoOx_NoMV)
 
 output(number_req_ICU_bed) <- TRUE
 output(number_get_ICU_full_treat) <- TRUE
+output(number_get_ICU_incomplete_treat) <- TRUE
 output(number_get_ICU_any_treat) <- TRUE
 
 output(n_ICase2_Hosp_tot) <- TRUE
@@ -422,6 +429,7 @@ number_ISev_NoICU_NoOx[] <- number_NoICU[i] - number_ICrit_NoICU_NoOx_NoMV[i] # 
 
 # Numbers changing between hospital bed related compartments
 n_IMod_GetHosp_GetOx_Die1[] <- number_IMod_GetHosp_GetOx[i] * prob_moderate_death_get_hosp_get_ox[i]
+output(n_IMod_GetHosp_GetOx_Die1) <- TRUE
 n_IMod_GetHosp_GetOx_Die1_IMod_GetHosp_GetOx_Die2[] <- IMod_GetHosp_GetOx_Die1[i] * gamma_IMod_GetHosp_GetOx_Die
 n_IMod_GetHosp_GetOx_Die2_D_Hospital[] <- IMod_GetHosp_GetOx_Die2[i] * gamma_IMod_GetHosp_GetOx_Die
 n_IMod_GetHosp_GetOx_Surv1[] <- number_IMod_GetHosp_GetOx[i] - n_IMod_GetHosp_GetOx_Die1[i]
@@ -429,6 +437,7 @@ n_IMod_GetHosp_GetOx_Surv1_IMod_GetHosp_GetOx_Surv2[] <- if (drug_8_indic_IMod_G
 n_IMod_GetHosp_GetOx_Surv2_R[] <- if (drug_8_indic_IMod_GetHosp_GetOx == 1) IMod_GetHosp_GetOx_Surv2[i] * gamma_IMod_GetHosp_GetOx_Surv_Drug_8 else IMod_GetHosp_GetOx_Surv2[i] * gamma_IMod_GetHosp_GetOx_Surv
 
 n_IMod_GetHosp_NoOx_Die1[] <- number_IMod_GetHosp_NoOx[i] * prob_moderate_death_get_hosp_no_ox[i]
+output(n_IMod_GetHosp_NoOx_Die1) <- TRUE
 n_IMod_GetHosp_NoOx_Die1_IMod_GetHosp_NoOx_Die2[] <- IMod_GetHosp_NoOx_Die1[i] * gamma_IMod_GetHosp_NoOx_Die
 n_IMod_GetHosp_NoOx_Die2_D_Hospital[] <- IMod_GetHosp_NoOx_Die2[i] * gamma_IMod_GetHosp_NoOx_Die
 n_IMod_GetHosp_NoOx_Surv1[] <- number_IMod_GetHosp_NoOx[i] - n_IMod_GetHosp_NoOx_Die1[i]
@@ -436,6 +445,7 @@ n_IMod_GetHosp_NoOx_Surv1_IMod_GetHosp_NoOx_Surv2[] <- if (drug_8_indic_IMod_Get
 n_IMod_GetHosp_NoOx_Surv2_R[] <- if (drug_8_indic_IMod_GetHosp_NoOx == 1) IMod_GetHosp_NoOx_Surv2[i] * gamma_IMod_GetHosp_NoOx_Surv_Drug_8 else IMod_GetHosp_NoOx_Surv2[i] * gamma_IMod_GetHosp_NoOx_Surv
 
 n_IMod_NoHosp_NoOx_Die1[] <- number_IMod_NoHosp_NoOx[i] * prob_moderate_death_no_hosp_no_ox[i]
+output(n_IMod_NoHosp_NoOx_Die1) <- TRUE
 n_IMod_NoHosp_NoOx_Die1_IMod_NoHosp_NoOx_Die2[] <- IMod_NoHosp_NoOx_Die1[i] * gamma_IMod_NoHosp_NoOx_Die
 n_IMod_NoHosp_NoOx_Die2_D_Community[] <- IMod_NoHosp_NoOx_Die2[i] * gamma_IMod_NoHosp_NoOx_Die
 n_IMod_NoHosp_NoOx_Surv1[] <- number_IMod_NoHosp_NoOx[i] - n_IMod_NoHosp_NoOx_Die1[i]

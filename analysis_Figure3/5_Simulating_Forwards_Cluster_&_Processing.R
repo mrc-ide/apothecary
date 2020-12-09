@@ -1,6 +1,7 @@
 # Loading required libraries
 library(tidyverse); library(qpdf); library(stringi); library(rnaturalearth); library(ggplot2); library(dplyr);
-library(rgdal); library(rgeos); library(sf); library(rnaturalearthdata)
+library(rgdal); library(rgeos); library(sf); library(rnaturalearthdata); library(patchwork); library(rnaturalearthhires)
+library(mapproj)
 
 # Setting Up Cluster
 loc <- didehpc::path_mapping("location", "N:", "//fi--didenas5/malaria", "N:")
@@ -81,12 +82,49 @@ summary <- overall %>%
 red <- overall %>%
   dplyr::select(country, low, high)
 
-world <- ne_countries(scale = "medium", returnclass = "sf")
+world <- ne_countries(scale = "small", returnclass = "sf")
 world <- world %>%
   left_join(red, by = c("iso_a3" = "country"))
+
+# crs available from: https://proj.org/operations/projections/
 ggplot(data = world) +
   geom_sf(aes(fill = low)) +
-  scale_fill_viridis_c(option = "magma", breaks = c(0, 1), limits = c(0, 1), direction = -1)
+  coord_sf(crs = "+proj=eck4") +
+  scale_fill_viridis_c(option = "magma", breaks = c(0, 1), limits = c(0, 1), direction = -1) +
+  cowplot::theme_minimal_grid()
+
 ggplot(data = world) +
+  geom_sf(aes(fill = low)) +
+  coord_sf(crs = "+proj=eck4") +
+  scale_fill_viridis_c(option = "magma", breaks = c(0, 1), limits = c(0, 1), direction = -1) +
+  theme(legend.position = "left",
+        #panel.background = element_rect(fill = "light grey"),
+        panel.grid = element_line(color = "white"))
+
+
+a <- ggplot(data = world) +
+  geom_sf(aes(fill = low)) +
+  scale_fill_viridis_c(option = "magma", breaks = c(0, 1), limits = c(0, 1), direction = -1) +
+  theme(legend.position = "left")
+b <- ggplot(data = world) +
   geom_sf(aes(fill = high)) +
-  scale_fill_viridis_c(option = "magma", breaks = c(0, 1), limits = c(0, 1), direction = -1)
+  scale_fill_viridis_c(option = "magma", breaks = c(0, 1), limits = c(0, 1), direction = -1) +
+  theme(legend.position = "left")
+c <- ggplot(data = overall, aes(x = income_group, y = low, fill = income_group)) +
+  geom_boxplot(outlier.alpha = 0) +
+  labs(y = "", x = "") +
+  scale_x_discrete(labels = c("Low income" = "LIC", "Upper middle income" = "UMIC",
+                              "Lower middle income" = "LMIC", "High income" = "HIC")) +
+  theme(legend.position = "none") +
+  scale_y_continuous(position = "right")
+d <- ggplot(data = overall, aes(x = income_group, y = high, fill = income_group)) +
+  geom_boxplot(outlier.alpha = 0) +
+  labs(y = "", x = "") +
+  scale_x_discrete(labels = c("Low income" = "LIC", "Upper middle income" = "UMIC",
+                              "Lower middle income" = "LMIC", "High income" = "HIC")) +
+  theme(legend.position = "none") +
+  scale_y_continuous(position = "right")
+
+a + c + b + d +
+  plot_layout(guides = 'auto', widths = c(3, 1))
+
