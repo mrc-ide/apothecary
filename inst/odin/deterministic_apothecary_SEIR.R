@@ -417,7 +417,6 @@ n_ICrit_NoICU_NoOx_NoMV_Surv1[] <- number_ICrit_NoICU_NoOx_NoMV[i] - n_ICrit_NoI
 n_ICrit_NoICU_NoOx_NoMV_Surv1_ICrit_NoICU_NoOx_NoMV_Surv2[] <- ICrit_NoICU_NoOx_NoMV_Surv1[i] * gamma_ICrit_NoICU_NoOx_NoMV_Surv
 n_ICrit_NoICU_NoOx_NoMV_Surv2_R[] <- ICrit_NoICU_NoOx_NoMV_Surv2[i] * gamma_ICrit_NoICU_NoOx_NoMV_Surv
 
-
 ## DERIVATIVES FOR ALL STATE VARIABLES
 ##------------------------------------------------------------------------------------------
 
@@ -1030,8 +1029,12 @@ output(n_PE1_PE2) <- TRUE
 # Variables to Check for Drug 3
 
 # Variables to Check for Drug 4
-output(gamma_IMild) <- TRUE
+output(gamma_IPreAsymp_Drug_2) <- TRUE
+output(gamma_IPreMild_Drug_2) <- TRUE
+output(gamma_IPreCase_Drug_2) <- TRUE
+output(gamma_IAsymp_Drug_4) <- TRUE
 output(gamma_IMild_Drug_4) <- TRUE
+output(gamma_ICase_Drug_4) <- TRUE
 
 # Variables to Check for Drug 5
 
@@ -1054,6 +1057,14 @@ output(gamma_ISev_GetICU_NoOx_Surv_Drug_9) <- TRUE
 output(n_ISev_GetICU_GetOx_Die1) <- TRUE
 output(n_ISev_GetICU_GetOx_Surv1) <- TRUE
 output(n_ISev_GetICU_GetOx_Surv1_ISev_GetICU_GetOx_Surv2) <- TRUE
+
+output(n_IMod_GetHosp_GetOx_Surv2_R) <- TRUE
+output(n_IMod_GetHosp_NoOx_Surv2_R) <- TRUE
+output(n_ISev_GetICU_GetOx_Surv2_Rec) <- TRUE
+output(n_ISev_GetICU_NoOx_Surv2_Rec) <- TRUE
+output(n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec) <- TRUE
+output(n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec) <- TRUE
+output(n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec) <- TRUE
 
 # Variables to Check for Drug 10
 output(gamma_ICrit_GetICU_GetOx_GetMV_Surv) <- TRUE
@@ -1102,7 +1113,6 @@ output(current_prop_ox_hosp_beds) <- TRUE
 output(current_hosp_bed_capacity) <- TRUE
 output(current_free_hosp_bed_ox) <- TRUE
 output(current_free_hosp_bed_no_ox) <- TRUE
-output(n_IMod_GetHosp_GetOx_Surv2_R) <- TRUE
 output(n_IMod_GetHosp_GetOx_Die2_D_Hospital) <- TRUE
 output(hosp_bed_full_treat_occ) <- TRUE
 output(hosp_bed_incomplete_treat_occ) <- TRUE
@@ -1136,9 +1146,7 @@ output(overall_ICU_occ) <- TRUE
 output(overall_ICU_demand) <- TRUE
 output(current_free_ICU_bed_ox) <- TRUE
 output(current_free_ICU_bed_no_ox) <- TRUE
-output(n_ISev_GetICU_NoOx_Surv2_Rec) <- TRUE
 output(n_ISev_GetICU_NoOx_Die2_D_Hospital) <- TRUE
-output(n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec) <- TRUE
 output(n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital) <- TRUE
 output(total_GetICU_GetOx_initial) <- TRUE
 output(total_GetICU_GetOx_to_IMod) <- TRUE
