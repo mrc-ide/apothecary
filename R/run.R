@@ -73,9 +73,14 @@ probs <- default_probs()
 default_durations <- function() {
   list(
     dur_E  = 4.6,
-    dur_IAsymp = 2.1,
-    dur_IMild = 2.1,
-    dur_ICase = 4.5,
+
+    dur_IPreAsymp = 0.5,
+    dur_IPreMild = 0.5,
+    dur_IPreCase = 0.5,
+
+    dur_IAsymp = 1.6, # was 2.1 until adding in presymptomatic
+    dur_IMild = 1.6, # was 2.1 until adding in presymptomatic
+    dur_ICase = 4, # was 4.5 until adding in presymptomatic
     dur_rec = 4,
 
     dur_IMod_GetHosp_GetOx_Surv = 7.25,
@@ -166,6 +171,11 @@ run_apothecary <- function(
 
   # durations
   dur_E  = NULL,
+
+  dur_IPreAsymp = NULL,
+  dur_IPreMild = NULL,
+  dur_IPreCase = NULL,
+
   dur_IAsymp = NULL,
   dur_IMild = NULL,
   dur_ICase = NULL,
@@ -201,16 +211,22 @@ run_apothecary <- function(
   prophylactic_drug_wane = 1000000,
   drug_1_indic = 0,
   drug_1_effect_size = 0,
-  drug_2_indic = 0,
-  drug_2_effect_size = 0,
+
+  drug_2_indic_IPreAsymp = 0,
+  drug_2_indic_IPreMild = 0,
+  drug_2_indic_IPreCase = 0,
+  drug_2_prop_treat = 0,
+  drug_2_effect_size = 1,
 
   drug_3_indic = 0,
   drug_3_prop_treat = 0,
-  drug_3_effect_size = 0,
+  drug_3_effect_size = 1,
 
-  drug_4_indic = 0,
+  drug_4_indic_IAsymp = 0,
+  drug_4_indic_IMild = 0,
+  drug_4_indic_ICase = 0,
   drug_4_prop_treat = 0,
-  drug_4_effect_size = 0,
+  drug_4_effect_size = 1,
 
   drug_5_indic_IMild = 0,
   drug_5_indic_ICase = 0,
@@ -346,12 +362,17 @@ run_apothecary <- function(
                                 prophylactic_drug_wane = prophylactic_drug_wane,
                                 drug_1_indic = drug_1_indic,
                                 drug_1_effect_size = drug_1_effect_size,
-                                drug_2_indic = drug_2_indic,
+                                drug_2_indic_IPreAsymp = drug_2_indic_IPreAsymp,
+                                drug_2_indic_IPreMild = drug_2_indic_IPreMild,
+                                drug_2_indic_IPreCase = drug_2_indic_IPreCase,
+                                drug_2_prop_treat = drug_2_prop_treat,
                                 drug_2_effect_size = drug_2_effect_size,
                                 drug_3_indic = drug_3_indic,
                                 drug_3_prop_treat = drug_3_prop_treat,
                                 drug_3_effect_size = drug_3_effect_size,
-                                drug_4_indic = drug_4_indic,
+                                drug_4_indic_IAsymp = drug_4_indic_IAsymp,
+                                drug_4_indic_IMild = drug_4_indic_IMild,
+                                drug_4_indic_ICase = drug_4_indic_ICase,
                                 drug_4_prop_treat = drug_4_prop_treat,
                                 drug_4_effect_size = drug_4_effect_size,
                                 drug_5_indic_IMild = drug_5_indic_IMild,

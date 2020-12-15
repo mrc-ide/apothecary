@@ -33,6 +33,16 @@ initial_params <- function(country = NULL, population = NULL, seeding_cases = 20
                 IMild_0 = rep(0, 17),
                 ICase1_0 = rep(0, 17),
                 ICase2_0 = rep(0, 17),
+                IPre1Mild_0 = rep(0, 17),
+                IPre2Mild_0 = rep(0, 17),
+                IPre1Asymp_0 = rep(0, 17),
+                IPre2Asymp_0 = rep(0, 17),
+                IPre1Case_0 = rep(0, 17),
+                IPre2Case_0 = rep(0, 17),
+                IPre1CaseDrug3_0 = rep(0, 17),
+                IPre2CaseDrug3_0 = rep(0, 17),
+                ICase1Drug3_0 = rep(0, 17),
+                ICase2Drug3_0 = rep(0, 17),
                 IRec1_0 = rep(0, 17),
                 IRec2_0 = rep(0, 17),
                 R_0 = rep(0, 17),
@@ -151,6 +161,9 @@ apothecary_parameters <- function(
   dur_IAsymp = NULL,
   dur_IMild = NULL,
   dur_ICase = NULL,
+  dur_IPreAsymp = NULL,
+  dur_IPreMild = NULL,
+  dur_IPreCase = NULL,
   dur_rec = NULL,
 
   dur_IMod_GetHosp_GetOx_Surv = NULL,
@@ -183,12 +196,17 @@ apothecary_parameters <- function(
   prophylactic_drug_wane = 1000000,
   drug_1_indic = 0,
   drug_1_effect_size = 0,
-  drug_2_indic = 0,
-  drug_2_effect_size = 0,
+  drug_2_indic_IPreAsymp = 0,
+  drug_2_indic_IPreMild = 0,
+  drug_2_indic_IPreCase = 0,
+  drug_2_prop_treat = 0,
+  drug_2_effect_size = 1,
   drug_3_indic = 0,
   drug_3_prop_treat = 0,
   drug_3_effect_size = 0,
-  drug_4_indic = 0,
+  drug_4_indic_IAsymp = 0,
+  drug_4_indic_IMild = 0,
+  drug_4_indic_ICase = 0,
   drug_4_prop_treat = 0,
   drug_4_effect_size = 0,
   drug_5_indic_IMild = 0,
@@ -286,6 +304,9 @@ apothecary_parameters <- function(
                                      dur_IAsymp = dur_IAsymp,
                                      dur_IMild = dur_IMild,
                                      dur_ICase = dur_ICase,
+                                     dur_IPreAsymp = dur_IPreAsymp,
+                                     dur_IPreMild = dur_IPreMild,
+                                     dur_IPreCase = dur_IPreCase,
                                      dur_IMod_GetHosp_GetOx_Surv = dur_IMod_GetHosp_GetOx_Surv,
                                      dur_IMod_GetHosp_GetOx_Die = dur_IMod_GetHosp_GetOx_Die,
                                      dur_IMod_GetHosp_NoOx_Surv = dur_IMod_GetHosp_NoOx_Surv,
@@ -313,6 +334,9 @@ apothecary_parameters <- function(
   dur_IAsymp <- duration_params$dur_IAsymp
   dur_IMild <- duration_params$dur_IMild
   dur_ICase <- duration_params$dur_ICase
+  dur_IPreAsymp <- duration_params$dur_IPreAsymp
+  dur_IPreMild <- duration_params$dur_IPreMild
+  dur_IPreCase <- duration_params$dur_IPreCase
   dur_IMod_GetHosp_GetOx_Surv <- duration_params$dur_IMod_GetHosp_GetOx_Surv
   dur_IMod_GetHosp_GetOx_Die <- duration_params$dur_IMod_GetHosp_GetOx_Die
   dur_IMod_GetHosp_NoOx_Surv <- duration_params$dur_IMod_GetHosp_NoOx_Surv
@@ -394,6 +418,11 @@ apothecary_parameters <- function(
   gamma_IAsymp = 1/dur_IAsymp
   gamma_IMild = 1/dur_IMild
   gamma_ICase = 2 * 1/dur_ICase
+
+  gamma_IPreAsymp = 2 * 1/dur_IPreAsymp
+  gamma_IPreMild = 2 * 1/dur_IPreMild
+  gamma_IPreCase = 2 * 1/dur_IPreCase
+
   gamma_rec = 2 * 1/dur_rec
 
   gamma_IMod_GetHosp_GetOx_Surv = 2 * 1/dur_IMod_GetHosp_GetOx_Surv
@@ -425,6 +454,9 @@ apothecary_parameters <- function(
     beta_set <- beta_est_apothecary(dur_IAsymp = dur_IAsymp,
                                     dur_IMild = dur_IMild,
                                     dur_ICase = dur_ICase,
+                                    dur_IPreAsymp = dur_IPreAsymp,
+                                    dur_IPreMild = dur_IPreMild,
+                                    dur_IPreCase = dur_IPreCase,
                                     rel_inf_asymp = rel_inf_asymp,
                                     rel_inf_mild = rel_inf_mild,
                                     prob_asymp = prob_asymp,
@@ -458,6 +490,9 @@ apothecary_parameters <- function(
                     gamma_IAsymp = gamma_IAsymp,
                     gamma_IMild = gamma_IMild,
                     gamma_ICase = gamma_ICase,
+                    gamma_IPreAsymp = gamma_IPreAsymp,
+                    gamma_IPreMild = gamma_IPreMild,
+                    gamma_IPreCase = gamma_IPreCase,
                     gamma_rec = gamma_rec,
                     gamma_IMod_GetHosp_GetOx_Surv =gamma_IMod_GetHosp_GetOx_Surv,
                     gamma_IMod_GetHosp_GetOx_Die = gamma_IMod_GetHosp_GetOx_Die,
@@ -485,12 +520,17 @@ apothecary_parameters <- function(
                     prophylactic_drug_wane = prophylactic_drug_wane,
                     drug_1_indic = drug_1_indic,
                     drug_1_effect_size = drug_1_effect_size,
-                    drug_2_indic = drug_2_indic,
+                    drug_2_indic_IPreAsymp = drug_2_indic_IPreAsymp,
+                    drug_2_indic_IPreMild = drug_2_indic_IPreMild,
+                    drug_2_indic_IPreCase = drug_2_indic_IPreCase,
+                    drug_2_prop_treat = drug_2_prop_treat,
                     drug_2_effect_size = drug_2_effect_size,
                     drug_3_indic = drug_3_indic,
                     drug_3_prop_treat = drug_3_prop_treat,
                     drug_3_effect_size = drug_3_effect_size,
-                    drug_4_indic = drug_4_indic,
+                    drug_4_indic_IAsymp = drug_4_indic_IAsymp,
+                    drug_4_indic_IMild = drug_4_indic_IMild,
+                    drug_4_indic_ICase = drug_4_indic_ICase,
                     drug_4_prop_treat = drug_4_prop_treat,
                     drug_4_effect_size = drug_4_effect_size,
                     drug_5_indic_IMild = drug_5_indic_IMild,

@@ -12,13 +12,18 @@
 #' @return Eigenvalue
 #' @export
 #'
-adjusted_eigen <- function(dur_IAsymp, dur_IMild, dur_ICase, rel_inf_asymp, rel_inf_mild,
+adjusted_eigen <- function(dur_IAsymp, dur_IMild, dur_ICase,
+                           dur_IPreAsymp, dur_IPreMild, dur_IPreCase,
+                           rel_inf_asymp, rel_inf_mild,
                            prob_asymp, prob_hosp, mixing_matrix) {
 
   # assertions
   assert_single_pos(dur_IAsymp, zero_allowed = FALSE)
   assert_single_pos(dur_IMild, zero_allowed = FALSE)
   assert_single_pos(dur_ICase, zero_allowed = FALSE)
+  assert_single_pos(dur_IPreAsymp, zero_allowed = FALSE)
+  assert_single_pos(dur_IPreMild, zero_allowed = FALSE)
+  assert_single_pos(dur_IPreCase, zero_allowed = FALSE)
   assert_numeric(rel_inf_asymp)
   assert_numeric(rel_inf_mild)
   assert_numeric(prob_asymp)
@@ -35,9 +40,9 @@ adjusted_eigen <- function(dur_IAsymp, dur_IMild, dur_ICase, rel_inf_asymp, rel_
     stop("mixing_matrix must not contain NAs")
   }
 
-  relative_R0_by_age <- prob_hosp * dur_ICase +
-                        ((1 - prob_hosp) * prob_asymp * dur_IAsymp) +
-                        ((1 - prob_hosp) * (1 - prob_asymp) * dur_IMild)
+  relative_R0_by_age <- (prob_hosp * (dur_ICase + dur_IPreCase)) +
+                        ((1 - prob_hosp) * prob_asymp * (dur_IAsymp + dur_IPreAsymp)) +
+                        ((1 - prob_hosp) * (1 - prob_asymp) * (dur_IMild + dur_IPreMild))
   Re(eigen(mixing_matrix*relative_R0_by_age)$values[1])
 }
 
@@ -55,10 +60,14 @@ adjusted_eigen <- function(dur_IAsymp, dur_IMild, dur_ICase, rel_inf_asymp, rel_
 #' @return Eigenvalue
 #' @export
 #'
-beta_est_apothecary <- function(dur_IAsymp, dur_IMild, dur_ICase, rel_inf_asymp, rel_inf_mild,
+beta_est_apothecary <- function(dur_IAsymp, dur_IMild, dur_ICase,
+                                dur_IPreAsymp, dur_IPreMild, dur_IPreCase,
+                                rel_inf_asymp, rel_inf_mild,
                                 prob_asymp, prob_hosp, mixing_matrix, R0) {
   assert_pos(R0, zero_allowed = FALSE)
-  R0 / adjusted_eigen(dur_IAsymp, dur_IMild, dur_ICase, rel_inf_asymp, rel_inf_mild,
+  R0 / adjusted_eigen(dur_IAsymp, dur_IMild, dur_ICase,
+                      dur_IPreAsymp, dur_IPreMild, dur_IPreCase,
+                      rel_inf_asymp, rel_inf_mild,
                       prob_asymp, prob_hosp, mixing_matrix)
 }
 

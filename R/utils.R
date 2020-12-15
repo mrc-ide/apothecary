@@ -466,6 +466,9 @@ parse_durations <- function(dur_E = NULL,
                             dur_IAsymp = NULL,
                             dur_IMild = NULL,
                             dur_ICase = NULL,
+                            dur_IPreAsymp = NULL,
+                            dur_IPreMild = NULL,
+                            dur_IPreCase = NULL,
                             dur_IMod_GetHosp_GetOx_Surv = NULL,
                             dur_IMod_GetHosp_GetOx_Die = NULL,
                             dur_IMod_GetHosp_NoOx_Surv = NULL,
@@ -496,13 +499,22 @@ parse_durations <- function(dur_E = NULL,
       dur_E <- 4.6
     }
     if (is.null(dur_IAsymp)) {
-      dur_IAsymp <- 2.1
+      dur_IAsymp <- 1.6
     }
     if (is.null(dur_IMild)) {
-      dur_IMild <- 2.1
+      dur_IMild <- 1.6
     }
     if (is.null(dur_ICase)) {
-      dur_ICase <- 4.5
+      dur_ICase <- 4
+    }
+    if (is.null(dur_IPreAsymp)) {
+      dur_IPreAsymp <- 0.5
+    }
+    if (is.null(dur_IPreMild)) {
+      dur_IPreMild <- 0.5
+    }
+    if (is.null(dur_IPreCase)) {
+      dur_IPreCase <- 0.5
     }
     if (is.null(dur_IMod_GetHosp_GetOx_Surv)) {
       dur_IMod_GetHosp_GetOx_Surv <- 9.5
@@ -581,6 +593,15 @@ parse_durations <- function(dur_E = NULL,
     if (is.null(dur_ICase)) {
       dur_ICase <- durations$dur_ICase
     }
+    if (is.null(dur_IPreAsymp)) {
+      dur_IPreAsymp <- durations$dur_IPreAsymp
+    }
+    if (is.null(dur_IPreMild)) {
+      dur_IPreMild <- durations$dur_IPreMild
+    }
+    if (is.null(dur_IPreCase)) {
+      dur_IPreCase <- durations$dur_IPreCase
+    }
     if (is.null(dur_IMod_GetHosp_GetOx_Surv)) {
       dur_IMod_GetHosp_GetOx_Surv <- durations$dur_IMod_GetHosp_GetOx_Surv
     }
@@ -650,6 +671,9 @@ parse_durations <- function(dur_E = NULL,
               dur_IAsymp = dur_IAsymp,
               dur_IMild = dur_IMild,
               dur_ICase = dur_ICase,
+              dur_IPreAsymp = dur_IPreAsymp,
+              dur_IPreMild = dur_IPreMild,
+              dur_IPreCase = dur_IPreCase,
               dur_IMod_GetHosp_GetOx_Surv = dur_IMod_GetHosp_GetOx_Surv,
               dur_IMod_GetHosp_GetOx_Die = dur_IMod_GetHosp_GetOx_Die,
               dur_IMod_GetHosp_NoOx_Surv = dur_IMod_GetHosp_NoOx_Surv,
