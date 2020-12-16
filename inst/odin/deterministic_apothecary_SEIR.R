@@ -235,6 +235,8 @@ n_E2_IPre1Mild_or_IPre1Asymp[] <- n_E2_IPre[i] - n_E2_IPre1ICase_initial[i]
 n_E2_IPre1Asymp[] <- n_E2_IPre1Mild_or_IPre1Asymp[i] * prob_asymp[i]
 n_E2_IPre1Mild[] <- n_E2_IPre1Mild_or_IPre1Asymp[i] - n_E2_IPre1Asymp[i]
 
+output(n_E2_IPre1ICaseDrug3) <- TRUE
+
 # Progression through the pre-symptomatic compartments
 n_IPre1_Asymp_IPre2_Asymp[] <- if (drug_2_indic_IPreAsymp == 1) gamma_IPreAsymp_Drug_2 * IPre1Asymp[i] else gamma_IPreAsymp * IPre1Asymp[i]
 n_IPre2_Asymp_IAsymp[] <- if (drug_2_indic_IPreAsymp == 1) gamma_IPreAsymp_Drug_2 * IPre2Asymp[i] else gamma_IPreAsymp * IPre2Asymp[i]

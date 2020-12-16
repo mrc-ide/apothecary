@@ -23,13 +23,13 @@ actual_MV_capacity <- round(actual_ICU_beds * 0.5)
 time <- 600
 
 # Running and assessing Remdesivir impact
-none <- run_apothecary(country = "Bhutan", R0 = 3, population = standard_population, contact_matrix_set = standard_matrix,
+none <- run_apothecary(country = "Bhutan", R0 = 2, population = standard_population, contact_matrix_set = standard_matrix,
                        time_period = time, seeding_cases = 20, day_return = TRUE,
                        hosp_bed_capacity = actual_hosp_beds, ICU_bed_capacity = actual_ICU_beds,
                        prop_ox_hosp_beds = actual_prop_ox_hosp_beds, prop_ox_ICU_beds = actual_prop_ox_ICU_beds,
                        MV_capacity = actual_MV_capacity)
 
-rem <- run_apothecary(country = "Bhutan", R0 = 3, population = standard_population, contact_matrix_set = standard_matrix,
+rem <- run_apothecary(country = "Bhutan", R0 = 2, population = standard_population, contact_matrix_set = standard_matrix,
                       time_period = time, seeding_cases = 20, day_return = TRUE,
                       hosp_bed_capacity = actual_hosp_beds, ICU_bed_capacity = actual_ICU_beds,
                       prop_ox_hosp_beds = actual_prop_ox_hosp_beds, prop_ox_ICU_beds = actual_prop_ox_ICU_beds,
@@ -62,7 +62,7 @@ num_IMod_not_in_nothing <- unname(apply(none$output[, index$number_IMod_NoHosp_N
 num_IMod_not_in_inc <- unname(apply(none$output[, index$number_IMod_GetHosp_NoOx], 2, sum) - apply(rem$output[, index$number_IMod_GetHosp_NoOx], 2, sum)) # how many extra get full healthcare?
 IMod_D_avert_none_to_full_incr_hc <- sum(num_IMod_not_in_nothing * prob_IMod_death_none) - sum(num_IMod_not_in_nothing * prob_IMod_death_full)
 IMod_D_avert_inc_to_full_incr_hc <- sum(num_IMod_not_in_inc * prob_IMod_death_inc) - sum(num_IMod_not_in_inc * prob_IMod_death_full)
-a1<- IMod_D_avert_none_to_full_incr_hc + IMod_D_avert_inc_to_full_incr_hc
+a1 <- IMod_D_avert_none_to_full_incr_hc + IMod_D_avert_inc_to_full_incr_hc
 
 # people absent from a compartment
 # work from the assumption that the extra people receiving healthcare come from compartment below
@@ -70,7 +70,7 @@ alt_num_IMod_not_in_nothing <- unname(apply(none$output[, index$number_IMod_NoHo
 alt_num_IMod_not_in_inc <- unname(apply(none$output[, index$number_IMod_GetHosp_NoOx], 2, sum) - apply(rem$output[, index$number_IMod_GetHosp_NoOx], 2, sum)) # how many extra get full healthcare?
 alt_IMod_D_avert_none_to_inc_incr_hc <- sum(num_IMod_not_in_nothing * prob_IMod_death_none) - sum(num_IMod_not_in_nothing * prob_IMod_death_inc)
 alt_IMod_D_avert_inc_to_full_incr_hc <- sum((num_IMod_not_in_inc + num_IMod_not_in_nothing) * prob_IMod_death_inc) - sum((num_IMod_not_in_inc + num_IMod_not_in_nothing) * prob_IMod_death_full)
-a2 <- alt2_IMod_D_avert_none_to_inc_incr_hc + alt2_IMod_D_avert_inc_to_full_incr_hc
+a2 <- alt_IMod_D_avert_none_to_inc_incr_hc + alt_IMod_D_avert_inc_to_full_incr_hc
 
 # 2a) Extra deaths averted from those better treated individuals getting benefit of the drug
 # work from the assumption that the extra people receiving healthcare come from "not receiving healthcare"
@@ -101,20 +101,3 @@ c <- IMod_D_no_drug - IMod_D_drug
 
 (a1+b1+c) - total_deaths_averted
 (a2+b2+c) - total_deaths_averted
-
-
-
-
-# extra people in each compartment
-# work from the assumption that the extra people receiving healthcare come from "not receiving healthcare"
-# num_IMod_extra_inc <- unname(apply(rem$output[, index$number_IMod_GetHosp_NoOx], 2, sum) - apply(none$output[, index$number_IMod_GetHosp_NoOx], 2, sum)) # how many extra get incomplete healthcare?
-# num_IMod_extra_full <- unname(apply(rem$output[, index$number_IMod_GetHosp_GetOx], 2, sum) - apply(none$output[, index$number_IMod_GetHosp_GetOx], 2, sum)) # how many extra get full healthcare?
-#
-# IMod_D_avert_none_to_full_incr_hc <- sum(num_IMod_extra_inc * prob_IMod_death_none) - sum(num_IMod_extra_inc * prob_IMod_death_inc) # how man would've died otherwise?
-# IMod_D_avert_inc_to_full_incr_hc <- sum(num_IMod_extra_full * prob_IMod_death_none) - sum(num_IMod_extra_full * prob_IMod_death_full) # how man would've died otherwise?
-# IMod_D_avert_none_to_full_incr_hc + IMod_D_avert_inc_to_full_incr_hc
-
-# extra people in each compartment
-# work from the assumption that the extra people receiving healthcare come from compartment below
-# ???? unsure how to do it this way
-
