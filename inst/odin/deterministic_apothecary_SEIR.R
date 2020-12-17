@@ -24,7 +24,9 @@ drug_2_indic_IPreAsymp <- user() # binary indicator (0 or 1) specifying whether 
 drug_2_indic_IPreMild <- user() # binary indicator (0 or 1) specifying whether drug property 2 is activated or not for IPreMild state
 drug_2_indic_IPreCase <- user() # binary indicator (0 or 1) specifying whether drug property 2 is activated or not for IPreCase state
 drug_2_prop_treat <- user() # proportion of individuals receiving the drug
-drug_2_effect_size <- user() # the multiple by which the rate of progression through pre-symptomatic occurs for individuals (1 = the same, >1 = increased rate)
+drug_2_effect_size_IPreAsymp <- user() # the multiple by which the rate of recovery for individuals in IMild has increased by (1 = the same, >1 = increased rate)
+drug_2_effect_size_IPreMild <- user() # the multiple by which the rate of recovery for individuals in IMild has increased by (1 = the same, >1 = increased rate)
+drug_2_effect_size_IPreCase <- user() # the multiple by which the rate of recovery for individuals in IMild has increased by (1 = the same, >1 = increased rate)
 
 # Property 3 - reduces the severity of disease once symptom onset occurs (preferential movement to IMild over ICase - proportion going to IAsymp unaffected)
 drug_3_indic <- user() # binary indicator (0 or 1) specifying whether drug property 3 is activated or not
@@ -36,7 +38,9 @@ drug_4_indic_IAsymp <- user() # binary indicator (0 or 1) specifying whether dru
 drug_4_indic_IMild <- user() # binary indicator (0 or 1) specifying whether drug property 4 is activated or not
 drug_4_indic_ICase <- user() # binary indicator (0 or 1) specifying whether drug property 4 is activated or not
 drug_4_prop_treat <- user() # proportion of individuals in IMild who receive the drug
-drug_4_effect_size <- user() # the multiple by which the rate of recovery for individuals in IMild has increased by (1 = the same, >1 = increased rate)
+drug_4_effect_size_IAsymp <- user() # the multiple by which the rate of recovery for individuals in IMild has increased by (1 = the same, >1 = increased rate)
+drug_4_effect_size_IMild <- user() # the multiple by which the rate of recovery for individuals in IMild has increased by (1 = the same, >1 = increased rate)
+drug_4_effect_size_ICase <- user() # the multiple by which the rate of recovery for individuals in IMild has increased by (1 = the same, >1 = increased rate)
 
 # Property 5 - reduces infectivity of individuals in IMild/ICase, reducing the FOI experienced by Susceptible individuals
 # NEEDS TO BE BEEFED OUT TO ACCOUNT FOR REDUCING INFECTIVITY OF ALL THE DIFFERENT STATES AND PRE/POST SYMPTOMS - TO DO LATER.
@@ -111,18 +115,18 @@ drug_13_NoOx_NoMV_effect_size <- user() # the multiple of the baseline age-speci
 gamma_E <- user() # passage through latent infection
 
 gamma_IPreAsymp <- user() # passage through presymptomatic infection for those eventually going on to IAsymp
-gamma_IPreAsymp_Drug_2 <- ((1 - drug_2_prop_treat) * gamma_IPreAsymp) + (drug_2_prop_treat * drug_2_effect_size * gamma_IPreAsymp) # weighted sum of recovery rates for treated/untreated depending on Drug 4 properties
+gamma_IPreAsymp_Drug_2 <- ((1 - drug_2_prop_treat) * gamma_IPreAsymp) + (drug_2_prop_treat * drug_2_effect_size_IPreAsymp * gamma_IPreAsymp) # weighted sum of recovery rates for treated/untreated depending on Drug 4 properties
 gamma_IPreMild <- user() # passage through presymptomatic infection for those eventually going on to IMild
-gamma_IPreMild_Drug_2 <- ((1 - drug_2_prop_treat) * gamma_IPreMild) + (drug_2_prop_treat * drug_2_effect_size * gamma_IPreMild) # weighted sum of recovery rates for treated/untreated depending on Drug 4 properties
+gamma_IPreMild_Drug_2 <- ((1 - drug_2_prop_treat) * gamma_IPreMild) + (drug_2_prop_treat * drug_2_effect_size_IPreMild * gamma_IPreMild) # weighted sum of recovery rates for treated/untreated depending on Drug 4 properties
 gamma_IPreCase <- user() # passage through presymptomatic infection for those eventually going on to ICase
-gamma_IPreCase_Drug_2 <- ((1 - drug_2_prop_treat) * gamma_IPreCase) + (drug_2_prop_treat * drug_2_effect_size * gamma_IPreCase) # weighted sum of recovery rates for treated/untreated depending on Drug 4 properties
+gamma_IPreCase_Drug_2 <- ((1 - drug_2_prop_treat) * gamma_IPreCase) + (drug_2_prop_treat * drug_2_effect_size_IPreCase * gamma_IPreCase) # weighted sum of recovery rates for treated/untreated depending on Drug 4 properties
 
 gamma_IAsymp <- user() # asymptomatic infection to recovery
-gamma_IAsymp_Drug_4 <- ((1 - drug_4_prop_treat) * gamma_IAsymp) + (drug_4_prop_treat * drug_4_effect_size * gamma_IAsymp) # weighted sum of recovery rates for treated/untreated depending on Drug 4 properties
+gamma_IAsymp_Drug_4 <- ((1 - drug_4_prop_treat) * gamma_IAsymp) + (drug_4_prop_treat * drug_4_effect_size_IAsymp * gamma_IAsymp) # weighted sum of recovery rates for treated/untreated depending on Drug 4 properties
 gamma_IMild <- user() # mild infection to recovery
-gamma_IMild_Drug_4 <- ((1 - drug_4_prop_treat) * gamma_IMild) + (drug_4_prop_treat * drug_4_effect_size * gamma_IMild) # weighted sum of recovery rates for treated/untreated depending on Drug 4 properties
+gamma_IMild_Drug_4 <- ((1 - drug_4_prop_treat) * gamma_IMild) + (drug_4_prop_treat * drug_4_effect_size_IMild * gamma_IMild) # weighted sum of recovery rates for treated/untreated depending on Drug 4 properties
 gamma_ICase <- user() # symptom onset to requiring hospitalisation
-gamma_ICase_Drug_4 <- ((1 - drug_4_prop_treat) * gamma_ICase) + (drug_4_prop_treat * drug_4_effect_size * gamma_ICase) # weighted sum of recovery rates for treated/untreated depending on Drug 4 properties
+gamma_ICase_Drug_4 <- ((1 - drug_4_prop_treat) * gamma_ICase) + (drug_4_prop_treat * drug_4_effect_size_ICase * gamma_ICase) # weighted sum of recovery rates for treated/untreated depending on Drug 4 properties
 
 gamma_rec <- user() # rate of progression through post-ICU recovery compartment
 
@@ -242,16 +246,16 @@ n_IPre1_Asymp_IPre2_Asymp[] <- if (drug_2_indic_IPreAsymp == 1) gamma_IPreAsymp_
 n_IPre2_Asymp_IAsymp[] <- if (drug_2_indic_IPreAsymp == 1) gamma_IPreAsymp_Drug_2 * IPre2Asymp[i] else gamma_IPreAsymp * IPre2Asymp[i]
 n_IPre1_Mild_IPre2_Mild[] <- if (drug_2_indic_IPreMild == 1) gamma_IPreMild_Drug_2 * IPre1Mild[i] else gamma_IPreMild * IPre1Mild[i]
 n_IPre2_Mild_IMild[] <- if (drug_2_indic_IPreMild == 1) gamma_IPreMild_Drug_2 * IPre2Mild[i] else gamma_IPreMild * IPre2Mild[i]
-n_IPre1_Case_IPre2_Case[] <- if (drug_2_indic_IPreCase == 1) gamma_IPreCase_Drug_2 * IPre1Case[i] else gamma_IPreCase * IPre1Case[i]
-n_IPre2_Case_ICase1[] <- if (drug_2_indic_IPreCase == 1) gamma_IPreCase_Drug_2 * IPre2Case[i] else gamma_IPreCase * IPre2Case[i]
+n_IPre1_Case_IPre2_Case[] <- gamma_IPreCase * IPre1Case[i] # no Drug 2 effect as implication of that would be that it speeds up time to hospitalisation
+n_IPre2_Case_ICase1[] <- gamma_IPreCase * IPre2Case[i] # no Drug 2 effect as implication of that would be that it speeds up time to hospitalisation
 n_IPre1_CaseDrug3_IPre2_CaseDrug3[] <- if (drug_2_indic_IPreCase == 1) gamma_IPreCase_Drug_2 * IPre1CaseDrug3[i] else gamma_IPreCase * IPre1CaseDrug3[i]
 n_IPre2_CaseDrug3_ICase1Drug3[] <- if (drug_2_indic_IPreCase == 1) gamma_IPreCase_Drug_2 * IPre2CaseDrug3[i] else gamma_IPreCase * IPre2CaseDrug3[i]
 
 # Individuals moving either to Recovery or the Hospital
 n_IAsymp_R[] <- if (drug_4_indic_IAsymp == 1) gamma_IAsymp_Drug_4 * IAsymp[i] else gamma_IAsymp * IAsymp[i]
 n_IMild_R[] <- if (drug_4_indic_IMild == 1) gamma_IMild_Drug_4 * IMild[i]  else gamma_IMild * IMild[i]
-n_ICase1_ICase2[] <- if (drug_4_indic_ICase == 1) gamma_ICase_Drug_4 * ICase1[i] else gamma_ICase * ICase1[i]
-n_ICase2_Hosp[] <- if (drug_4_indic_ICase == 1) gamma_ICase_Drug_4 * ICase2[i] else gamma_ICase * ICase2[i]
+n_ICase1_ICase2[] <- gamma_ICase * ICase1[i] # no Drug 4 effect as implication of that would be that it speeds up time to hospitalisation
+n_ICase2_Hosp[] <- gamma_ICase * ICase2[i] # no Drug 4 effect as implication of that would be that it speeds up time to hospitalisation
 n_ICase1Drug3_ICase2Drug3[] <- if (drug_4_indic_ICase == 1) gamma_ICase_Drug_4 * ICase1Drug3[i] else gamma_ICase * ICase1Drug3[i]
 n_ICase2Drug3_R[] <- if (drug_4_indic_ICase == 1) gamma_ICase_Drug_4 * ICase2Drug3[i] else gamma_ICase * ICase2Drug3[i]
 n_IRec1_IRec2[] <- gamma_rec * IRec1[i]
@@ -1014,7 +1018,7 @@ dim(n_E2_IPre1Mild_or_IPre1Asymp) <- N_age
 ## MODEL OUTPUTS
 ##----------------------------------------------------------
 output(new_deaths) <- TRUE
-
+output(n_E2_IPre) <- TRUE
 output(pop) <- TRUE
 
 output(time) <- TRUE

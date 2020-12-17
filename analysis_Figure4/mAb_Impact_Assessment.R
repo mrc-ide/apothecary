@@ -103,8 +103,6 @@ deaths_averted_directly_and_indirectly
 # 3) Indirectly by preventing individuals from being hospitalised (and dying)
 #      Run the model with only the prob_hosp effect in, and now limited healthcare. Impact here is from the drug
 #      preventing people from going to hospital AND from the reduced strain on healthcare.
-# DOESN'T TAKE INTO ACCOUNT WHAT CARE THE INDIVIDUALS WOULD'VE RECEIVED IF THEY HADN'T BEEN SAVED FROM PROB_HOSP ABOVE. OR AT LEAST,
-# IT ASSUMES THAT THEY WOULD GET FULL HEALTHCARE (MAYBE, NEED TO THINK THIS THROUGH).
 none_lim_hc_2 <- run_apothecary(country = "Bhutan", R0 = R0, population = standard_population, contact_matrix_set = standard_matrix,
                               time_period = time, seeding_cases = 20, day_return = TRUE,
                               hosp_bed_capacity = actual_hosp_beds, ICU_bed_capacity = actual_ICU_beds,
@@ -115,9 +113,9 @@ mab_lim_hc_dur_change <- run_apothecary(country = "Bhutan", R0 = R0, population 
                                         prop_ox_hosp_beds = actual_prop_ox_hosp_beds, prop_ox_ICU_beds = actual_prop_ox_ICU_beds, MV_capacity = actual_MV_capacity,
                                         drug_3_indic = 1, drug_3_prop_treat = 1, drug_3_effect_size = drug_3_effect_size,
                                         drug_2_indic_IPreAsymp = 1, drug_2_indic_IPreMild = 1, drug_2_indic_IPreCase = 1,
-                                        drug_2_prop_treat = 1, drug_2_effect_size = 2,
+                                        drug_2_prop_treat = 1, drug_2_effect_size = 1.5,
                                         drug_4_indic_IAsymp = 1, drug_4_indic_IMild = 1, drug_4_indic_ICase = 1,
-                                        drug_4_prop_treat = 1, drug_4_effect_size = 2)
+                                        drug_4_prop_treat = 1, drug_4_effect_size = 1.5)
 index <- squire:::odin_index(none_lim_hc_2$model)
 total_deaths_averted <- sum(apply(none_lim_hc_2$output[, index$D], 2, max)) - sum(apply(mab_lim_hc_dur_change$output[, index$D], 2, max))
 
