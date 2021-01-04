@@ -63,7 +63,6 @@ sum(a + b + c + d + e)
 #      preventing people from going to hospital.
 total_deaths_averted - sum(a + b + c + d + e)
 
-
 # Scrapola #
 # Think I could work this out directly by working out proportions in extra categories and then assigning an avert's total proportionally to each of the extras
 extra_IMod_GetHosp_GetOx <- sum(apply(drug$output[, index$number_IMod_GetHosp_GetOx], 2, sum) - apply(none$output[, index$number_IMod_GetHosp_GetOx], 2, sum))
