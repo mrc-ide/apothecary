@@ -29,7 +29,6 @@ time <- 600
 #   2) Indirectly by remaining hospitalised individuals getting better healthcare (due to lower demand)
 #   3) Indirectly by reducing duration of infectivity, therefore R0 and therefore final numbers infected
 
-
 # 3) Indirectly by preventing individuals from being hospitalised (and dying)
 #      Run the model with only the duration of infection effect in, and now limited healthcare. Impact here is from the drug
 #      preventing people from going to hospital AND from the reduced strain on healthcare.

@@ -101,3 +101,8 @@ c <- IMod_D_no_drug - IMod_D_drug
 
 (a1+b1+c) - total_deaths_averted
 (a2+b2+c) - total_deaths_averted
+
+indirect <- a1 + b1
+direct <- c
+direct/total_deaths_averted
+
