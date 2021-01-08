@@ -99,10 +99,44 @@ IMod_D_drug <- sum(apply(none$output[, index$number_IMod_GetHosp_GetOx], 2, sum)
                sum(apply(none$output[, index$number_IMod_GetHosp_NoOx], 2, sum) * prob_IMod_death_inc * rem$parameters$drug_11_NoOx_effect_size)
 c <- IMod_D_no_drug - IMod_D_drug
 
+# Total Deaths Averted
 (a1+b1+c) - total_deaths_averted
 (a2+b2+c) - total_deaths_averted
 
 indirect <- a1 + b1
 direct <- c
 direct/total_deaths_averted
+
+# IFR
+none_IFR <- max(apply(none$output[, index$D], 1, sum))/ max(apply(none$output[, index$R], 1, sum)) * 100
+rem_IFR <- max(apply(rem$output[, index$D], 1, sum))/ max(apply(rem$output[, index$R], 1, sum)) * 100
+
+# Proportion of Individuals Receiving Complete Healthcare
+sum(none$output[, index$number_get_hosp_full_treat])/(sum(none$output[, index$number_get_hosp_full_treat]) +
+                                                        sum(none$output[, index$number_get_hosp_incomplete_treat]) +
+                                                        sum(none$output[, index$number_need_hosp_no_treat]))
+sum(rem$output[, index$number_get_hosp_full_treat])/(sum(rem$output[, index$number_get_hosp_full_treat]) +
+                                                        sum(rem$output[, index$number_get_hosp_incomplete_treat]) +
+                                                        sum(rem$output[, index$number_need_hosp_no_treat]))
+
+sum(none$output[, index$number_get_ICU_full_treat])/(sum(none$output[, index$number_get_ICU_full_treat]) +
+                                                        sum(none$output[, index$number_get_ICU_incomplete_treat]) +
+                                                        sum(none$output[, index$number_need_ICU_no_treat]))
+sum(rem$output[, index$number_get_ICU_full_treat])/(sum(rem$output[, index$number_get_ICU_full_treat]) +
+                                                       sum(rem$output[, index$number_get_ICU_incomplete_treat]) +
+                                                       sum(rem$output[, index$number_need_ICU_no_treat]))
+
+# Number of Days Spent Over Capacity
+sum(none$output[, index$number_get_ICU_incomplete_treat] > 0.5 & none$output[, index$number_need_ICU] > 0.5)
+sum(none$output[, index$number_need_ICU_no_treat] > 0.5 & none$output[, index$number_need_ICU] > 0.5)
+
+sum(rem$output[, index$number_get_ICU_incomplete_treat] > 0.5 & rem$output[, index$number_need_ICU] > 0.5)
+sum(rem$output[, index$number_need_ICU_no_treat] > 0.5 & rem$output[, index$number_need_ICU] > 0.5)
+
+sum(none$output[, index$number_get_hosp_incomplete_treat] > 0.5 & none$output[, index$number_need_hosp] > 0.5)
+sum(none$output[, index$number_need_hosp_no_treat] > 0.5 & none$output[, index$number_need_ICU] > 0.5)
+
+sum(rem$output[, index$number_get_hosp_incomplete_treat] > 0.5 & rem$output[, index$number_need_ICU] > 0.5)
+sum(rem$output[, index$number_need_hosp_no_treat] > 0.5 & rem$output[, index$number_need_ICU] > 0.5)
+
 

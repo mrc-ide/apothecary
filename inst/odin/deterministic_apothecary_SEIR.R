@@ -272,10 +272,10 @@ hosp_bed_ox_occ <- sum(IMod_GetHosp_GetOx_Surv1) + sum(IMod_GetHosp_GetOx_Surv2)
 hosp_bed_no_ox_occ <- sum(IMod_GetHosp_NoOx_Surv1) + sum(IMod_GetHosp_NoOx_Surv2) + sum(IMod_GetHosp_NoOx_Die1) + sum(IMod_GetHosp_NoOx_Die2) + sum(IRec1) + sum(IRec2)
 current_free_hosp_bed_ox <- round(current_prop_ox_hosp_beds * current_hosp_bed_capacity) + sum(n_IMod_GetHosp_GetOx_Surv2_R) + sum(n_IMod_GetHosp_GetOx_Die2_D_Hospital) - hosp_bed_ox_occ
 current_free_hosp_bed_no_ox <- (current_hosp_bed_capacity - round(current_prop_ox_hosp_beds * current_hosp_bed_capacity))  +
-                               sum(n_IMod_GetHosp_NoOx_Surv2_R) + sum(n_IMod_GetHosp_NoOx_Die2_D_Hospital) +
-                               sum(n_IRec2_R) -
-                               sum(n_ISev_GetICU_GetOx_Surv2_Rec) - sum(n_ISev_GetICU_NoOx_Surv2_Rec) -
-                               sum(n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec) - sum(n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec) - sum(n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec) - hosp_bed_no_ox_occ
+  sum(n_IMod_GetHosp_NoOx_Surv2_R) + sum(n_IMod_GetHosp_NoOx_Die2_D_Hospital) +
+  sum(n_IRec2_R) -
+  sum(n_ISev_GetICU_GetOx_Surv2_Rec) - sum(n_ISev_GetICU_NoOx_Surv2_Rec) -
+  sum(n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec) - sum(n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec) - sum(n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec) - hosp_bed_no_ox_occ
 
 # Calculating Individuals Getting A Hospital Bed With Oxygen
 total_IMod_GetHosp_GetOx <- if (current_free_hosp_bed_ox <= 0) 0 else (if(current_free_hosp_bed_ox - total_req_Hosp >= 0) total_req_Hosp else(current_free_hosp_bed_ox)) # Working out the number of new hospital bed requiring infections that get an oxygen hospital bed
@@ -298,17 +298,17 @@ total_req_ICU <- sum(number_req_ICU) # Totaling number newly requiring an ICU be
 
 # Calculating New Occupancy After Taking Into Account Individuals Leaving ICU Beds This Timestep
 ICU_bed_ox_occ <- sum(ISev_GetICU_GetOx_Surv1) + sum(ISev_GetICU_GetOx_Surv2) + sum(ISev_GetICU_GetOx_Die1) + sum(ISev_GetICU_GetOx_Die2) +
-                  sum(ICrit_GetICU_GetOx_GetMV_Surv1) + sum(ICrit_GetICU_GetOx_GetMV_Surv2) + sum(ICrit_GetICU_GetOx_GetMV_Die1) + sum(ICrit_GetICU_GetOx_GetMV_Die2) +
-                  sum(ICrit_GetICU_GetOx_NoMV_Surv1) + sum(ICrit_GetICU_GetOx_NoMV_Surv2) + sum(ICrit_GetICU_GetOx_NoMV_Die1) + sum(ICrit_GetICU_GetOx_NoMV_Die2)
+  sum(ICrit_GetICU_GetOx_GetMV_Surv1) + sum(ICrit_GetICU_GetOx_GetMV_Surv2) + sum(ICrit_GetICU_GetOx_GetMV_Die1) + sum(ICrit_GetICU_GetOx_GetMV_Die2) +
+  sum(ICrit_GetICU_GetOx_NoMV_Surv1) + sum(ICrit_GetICU_GetOx_NoMV_Surv2) + sum(ICrit_GetICU_GetOx_NoMV_Die1) + sum(ICrit_GetICU_GetOx_NoMV_Die2)
 ICU_bed_no_ox_occ <- sum(ISev_GetICU_NoOx_Surv1) + sum(ISev_GetICU_NoOx_Surv2) + sum(ISev_GetICU_NoOx_Die1) + sum(ISev_GetICU_NoOx_Die2) +
-                     sum(ICrit_GetICU_NoOx_NoMV_Surv1) + sum(ICrit_GetICU_NoOx_NoMV_Surv2) + sum(ICrit_GetICU_NoOx_NoMV_Die1) + sum(ICrit_GetICU_NoOx_NoMV_Die2)
+  sum(ICrit_GetICU_NoOx_NoMV_Surv1) + sum(ICrit_GetICU_NoOx_NoMV_Surv2) + sum(ICrit_GetICU_NoOx_NoMV_Die1) + sum(ICrit_GetICU_NoOx_NoMV_Die2)
 current_free_ICU_bed_ox <- round(current_prop_ox_ICU_beds * current_ICU_bed_capacity) +
-                           sum(n_ISev_GetICU_GetOx_Surv2_Rec) + sum(n_ISev_GetICU_GetOx_Die2_D_Hospital) +
-                           sum(n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec) + sum(n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital) +
-                           sum(n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec) + sum(n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital) - ICU_bed_ox_occ
+  sum(n_ISev_GetICU_GetOx_Surv2_Rec) + sum(n_ISev_GetICU_GetOx_Die2_D_Hospital) +
+  sum(n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec) + sum(n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital) +
+  sum(n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec) + sum(n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital) - ICU_bed_ox_occ
 current_free_ICU_bed_no_ox <- (current_ICU_bed_capacity - round(current_prop_ox_ICU_beds * current_ICU_bed_capacity)) +
-                              sum(n_ISev_GetICU_NoOx_Surv2_Rec) + sum(n_ISev_GetICU_NoOx_Die2_D_Hospital) +
-                              sum(n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec) + sum(n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital) - ICU_bed_no_ox_occ
+  sum(n_ISev_GetICU_NoOx_Surv2_Rec) + sum(n_ISev_GetICU_NoOx_Die2_D_Hospital) +
+  sum(n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec) + sum(n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital) - ICU_bed_no_ox_occ
 
 # Individuals Getting ICU Beds With Oxygen And Their Associated Disease Severity
 total_GetICU_GetOx_initial <- if(current_free_ICU_bed_ox <= 0) 0 else(if(current_free_ICU_bed_ox - total_req_ICU >= 0) total_req_ICU else(current_free_ICU_bed_ox)) # Working out the number of new ICU requiring infections that get a bed
@@ -498,22 +498,22 @@ deriv(ICrit_NoICU_NoOx_NoMV_Surv2[]) <- n_ICrit_NoICU_NoOx_NoMV_Surv1_ICrit_NoIC
 
 # Passage Through Recovery, from Mild Infection, Requiring Oxygen or From ICU Post-Requiring Mechanical Ventilation
 deriv(IRec1[]) <- n_ISev_GetICU_GetOx_Surv2_Rec[i] + n_ISev_GetICU_NoOx_Surv2_Rec[i] +
-                  n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec[i]  + n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec[i] + n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec[i] -
-                  n_IRec1_IRec2[i]
+  n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec[i]  + n_ICrit_GetICU_GetOx_NoMV_Surv2_Rec[i] + n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec[i] -
+  n_IRec1_IRec2[i]
 deriv(IRec2[]) <- n_IRec1_IRec2[i] - n_IRec2_R[i]
 deriv(D_Community[]) <- n_IMod_NoHosp_NoOx_Die2_D_Community[i] + n_ISev_NoICU_NoOx_Die2_D_Community[i] + n_ICrit_NoICU_NoOx_NoMV_Die2_D_Community[i]
 deriv(D_Hospital[]) <- n_IMod_GetHosp_GetOx_Die2_D_Hospital[i] + n_IMod_GetHosp_NoOx_Die2_D_Hospital[i] +
-                       n_ISev_GetICU_GetOx_Die2_D_Hospital[i] + n_ISev_GetICU_NoOx_Die2_D_Hospital[i] +
-                       n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital[i] + n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital[i] + n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital[i]
+  n_ISev_GetICU_GetOx_Die2_D_Hospital[i] + n_ISev_GetICU_NoOx_Die2_D_Hospital[i] +
+  n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital[i] + n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital[i] + n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital[i]
 deriv(D[]) <- n_IMod_NoHosp_NoOx_Die2_D_Community[i] + n_ISev_NoICU_NoOx_Die2_D_Community[i] + n_ICrit_NoICU_NoOx_NoMV_Die2_D_Community[i] +
-              n_IMod_GetHosp_GetOx_Die2_D_Hospital[i] + n_IMod_GetHosp_NoOx_Die2_D_Hospital[i] +
-              n_ISev_GetICU_GetOx_Die2_D_Hospital[i] + n_ISev_GetICU_NoOx_Die2_D_Hospital[i] +
-              n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital[i] + n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital[i] + n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital[i]
+  n_IMod_GetHosp_GetOx_Die2_D_Hospital[i] + n_IMod_GetHosp_NoOx_Die2_D_Hospital[i] +
+  n_ISev_GetICU_GetOx_Die2_D_Hospital[i] + n_ISev_GetICU_NoOx_Die2_D_Hospital[i] +
+  n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital[i] + n_ICrit_GetICU_GetOx_NoMV_Die2_D_Hospital[i] + n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital[i]
 deriv(R[]) <- n_IAsymp_R[i] + n_IMild_R[i] + n_ICase2Drug3_R[i] +
-              n_IRec2_R[i] +
-              n_IMod_GetHosp_GetOx_Surv2_R[i] + n_IMod_GetHosp_NoOx_Surv2_R[i] + n_IMod_NoHosp_NoOx_Surv2_R[i] +
-              n_ISev_NoICU_NoOx_Surv2_R[i] +
-              n_ICrit_NoICU_NoOx_NoMV_Surv2_R[i]
+  n_IRec2_R[i] +
+  n_IMod_GetHosp_GetOx_Surv2_R[i] + n_IMod_GetHosp_NoOx_Surv2_R[i] + n_IMod_NoHosp_NoOx_Surv2_R[i] +
+  n_ISev_NoICU_NoOx_Surv2_R[i] +
+  n_ICrit_NoICU_NoOx_NoMV_Surv2_R[i]
 
 ## COMPUTING THE FORCE OF INFECTION AND INTERPOLATION FOR MIXING MATRIX AND BETA
 ##------------------------------------------------------------------------------
@@ -534,13 +534,13 @@ dim(beta_set) <- length(tt_beta)
 
 # Generating Force of Infection
 temp[] <- (rel_inf_asymp * IPre1Asymp[i]) + (rel_inf_asymp * IPre2Asymp[i]) +
-          (rel_inf_mild * IPre1Mild[i]) + (rel_inf_mild * IPre2Mild[i]) +
-          IPre1Case[i] + IPre2Case[i] +
-          IPre1CaseDrug3[i] + IPre2CaseDrug3[i] +
-          (rel_inf_asymp * IAsymp[i] * (1 - drug_5_prop_treat)) + (rel_inf_asymp * IAsymp[i] * drug_5_prop_treat * drug_5_effect_size) +
-          (rel_inf_mild * IMild[i] * (1 - drug_5_prop_treat)) + (rel_inf_mild * IMild[i] * drug_5_prop_treat * drug_5_effect_size) +
-          ICase1[i] + ICase2[i] +
-          ICase1Drug3[i] + ICase2Drug3[i]
+  (rel_inf_mild * IPre1Mild[i]) + (rel_inf_mild * IPre2Mild[i]) +
+  IPre1Case[i] + IPre2Case[i] +
+  IPre1CaseDrug3[i] + IPre2CaseDrug3[i] +
+  (rel_inf_asymp * IAsymp[i] * (1 - drug_5_prop_treat)) + (rel_inf_asymp * IAsymp[i] * drug_5_prop_treat * drug_5_effect_size) +
+  (rel_inf_mild * IMild[i] * (1 - drug_5_prop_treat)) + (rel_inf_mild * IMild[i] * drug_5_prop_treat * drug_5_effect_size) +
+  ICase1[i] + ICase2[i] +
+  ICase1Drug3[i] + ICase2Drug3[i]
 s_ij[,] <- m[i, j] * temp[j]
 lambda[] <- beta * sum(s_ij[i, ])
 
@@ -1211,7 +1211,9 @@ overall_ICU_demand <- overall_ICU_occ + ICU_bed_no_treat_occ
 number_req_hosp_bed <- sum(number_req_Hosp)
 number_get_hosp_full_treat <- sum(number_IMod_GetHosp_GetOx)
 number_get_hosp_incomplete_treat <- sum(number_IMod_GetHosp_NoOx)
+number_need_hosp_no_treat <- sum(number_IMod_NoHosp_NoOx)
 number_get_hosp_any_treat <- number_get_hosp_full_treat + number_get_hosp_incomplete_treat
+number_need_hosp <- number_get_hosp_any_treat + sum(number_IMod_NoHosp_NoOx)
 
 # Calculating Total Current Hosp Occupancy As Well As For Specifically for Beds With and Without Oxygen
 hosp_bed_full_treat_occ <- sum(IMod_GetHosp_GetOx_Surv1) + sum(IMod_GetHosp_GetOx_Surv2) + sum(IMod_GetHosp_GetOx_Die1) + sum(IMod_GetHosp_GetOx_Die2)
@@ -1224,7 +1226,14 @@ overall_hosp_demand <- overall_hosp_occ + hosp_bed_no_treat_occ
 # Outputting the Number of Individuals Requiring Hospital Beds and Proportion Getting/Not Getting Treatment
 number_req_ICU_bed <- sum(number_req_ICU)
 number_get_ICU_full_treat <- sum(number_ISev_GetICU_GetOx) + sum(number_ICrit_GetICU_GetOx_GetMV)
+number_get_ICU_ox <- sum(number_ISev_GetICU_NoOx) + sum(number_ICrit_GetICU_GetOx_NoMV)
 number_get_ICU_incomplete_treat <- sum(number_ISev_GetICU_NoOx) + sum(number_ICrit_GetICU_GetOx_NoMV) + sum(number_ICrit_GetICU_NoOx_NoMV)
+number_need_ICU_no_treat <- sum(number_ISev_NoICU_NoOx) + sum(number_ICrit_NoICU_NoOx_NoMV)
 number_get_ICU_any_treat <- number_get_ICU_full_treat + number_get_ICU_incomplete_treat
 number_need_ICU <-  number_get_ICU_any_treat + sum(number_ISev_NoICU_NoOx) + sum(number_ICrit_NoICU_NoOx_NoMV)
+
+output(number_need_hosp_no_treat) <- TRUE
+output(number_need_ICU_no_treat) <- TRUE
+output(number_need_hosp) <- TRUE
+output(number_get_ICU_ox) <- TRUE
 

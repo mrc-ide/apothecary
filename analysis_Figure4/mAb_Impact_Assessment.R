@@ -33,6 +33,7 @@ time <- 600
 #      Run the model with only the duration of infection effect in, and now limited healthcare. Impact here is from the drug
 #      preventing people from going to hospital AND from the reduced strain on healthcare.
 R0 <- 2
+pre_symp_rate <- 1
 none_lim_hc_1 <- run_apothecary(country = "Bhutan", R0 = R0, population = standard_population, contact_matrix_set = standard_matrix,
                                 time_period = time, seeding_cases = 20, day_return = TRUE,
                                 hosp_bed_capacity = actual_hosp_beds, ICU_bed_capacity = actual_ICU_beds,
@@ -42,7 +43,7 @@ dur_change <- run_apothecary(country = "Bhutan", R0 = R0, population = standard_
                              hosp_bed_capacity = actual_hosp_beds, ICU_bed_capacity = actual_ICU_beds,
                              prop_ox_hosp_beds = actual_prop_ox_hosp_beds, prop_ox_ICU_beds = actual_prop_ox_ICU_beds, MV_capacity = actual_MV_capacity,
                              drug_2_indic_IPreAsymp = 1, drug_2_indic_IPreMild = 1, drug_2_indic_IPreCase = 1,
-                             drug_2_prop_treat = 1, drug_2_effect_size_IPreAsymp = 1.5, drug_2_effect_size_IPreMild = 1.5, drug_2_effect_size_IPreCase = 1,
+                             drug_2_prop_treat = 1, drug_2_effect_size_IPreAsymp = pre_symp_rate, drug_2_effect_size_IPreMild = pre_symp_rate, drug_2_effect_size_IPreCase = 1,
                              drug_4_indic_IAsymp = 1, drug_4_indic_IMild = 1, drug_4_indic_ICase = 1,
                              drug_4_prop_treat = 1, drug_4_effect_size_IAsymp = 1.5, drug_4_effect_size_IMild = 1.5, drug_4_effect_size_ICase = 1)
 index <- squire:::odin_index(none_lim_hc_1$model)
@@ -56,7 +57,7 @@ dur_and_hosp_change <- run_apothecary(country = "Bhutan", R0 = R0, population = 
                                       hosp_bed_capacity = actual_hosp_beds, ICU_bed_capacity = actual_ICU_beds,
                                       prop_ox_hosp_beds = actual_prop_ox_hosp_beds, prop_ox_ICU_beds = actual_prop_ox_ICU_beds, MV_capacity = actual_MV_capacity,
                                       drug_2_indic_IPreAsymp = 1, drug_2_indic_IPreMild = 1, drug_2_indic_IPreCase = 1,
-                                      drug_2_prop_treat = 1, drug_2_effect_size_IPreAsymp = 1.5, drug_2_effect_size_IPreMild = 1.5, drug_2_effect_size_IPreCase = 1,
+                                      drug_2_prop_treat = 1, drug_2_effect_size_IPreAsymp = pre_symp_rate, drug_2_effect_size_IPreMild = pre_symp_rate, drug_2_effect_size_IPreCase = 1,
                                       drug_4_indic_IAsymp = 1, drug_4_indic_IMild = 1, drug_4_indic_ICase = 1,
                                       drug_4_prop_treat = 1, drug_4_effect_size_IAsymp = 1.5, drug_4_effect_size_IMild = 1.5, drug_4_effect_size_ICase = 1,
                                       drug_3_indic = 1, drug_3_prop_treat = 1, drug_3_effect_size = drug_3_effect_size)
@@ -68,7 +69,7 @@ dur_and_hosp_change2 <- run_apothecary(country = "Bhutan", R0 = R0, population =
                                        hosp_bed_capacity = actual_hosp_beds, ICU_bed_capacity = actual_ICU_beds,
                                        prop_ox_hosp_beds = actual_prop_ox_hosp_beds, prop_ox_ICU_beds = actual_prop_ox_ICU_beds, MV_capacity = actual_MV_capacity,
                                        drug_2_indic_IPreAsymp = 1, drug_2_indic_IPreMild = 1, drug_2_indic_IPreCase = 1,
-                                       drug_2_prop_treat = 1, drug_2_effect_size_IPreAsymp = 1.5, drug_2_effect_size_IPreMild = 1.5, drug_2_effect_size_IPreCase = 1.5,
+                                       drug_2_prop_treat = 1, drug_2_effect_size_IPreAsymp = pre_symp_rate, drug_2_effect_size_IPreMild = pre_symp_rate, drug_2_effect_size_IPreCase = pre_symp_rate,
                                        drug_4_indic_IAsymp = 1, drug_4_indic_IMild = 1, drug_4_indic_ICase = 1,
                                        drug_4_prop_treat = 1, drug_4_effect_size_IAsymp = 1.5, drug_4_effect_size_IMild = 1.5, drug_4_effect_size_ICase = 1.5,
                                        drug_3_indic = 1, drug_3_prop_treat = 1, drug_3_effect_size = drug_3_effect_size)
@@ -146,4 +147,45 @@ indirect_deaths_averted_prob_hosp_mod <- a+b+c+d+e+f+g
 
 total_deaths_averted
 indirect_deaths_averted_R0_red + indirect_deaths_averted_Drug3_ICase + direct_deaths_averted_prob_hosp_mod + indirect_deaths_averted_prob_hosp_mod
+
+# IFR
+none_IFR <- max(apply(none_lim_hc_1$output[, index$D], 1, sum))/ max(apply(none_lim_hc_1$output[, index$R], 1, sum)) * 100
+dur_and_hosp_change2_IFR <- max(apply(dur_and_hosp_change2$output[, index$D], 1, sum))/ max(apply(dur_and_hosp_change2$output[, index$R], 1, sum)) * 100
+
+# Proportion of Individuals Receiving Complete Healthcare
+sum(none$output[, index$number_get_hosp_full_treat])/(sum(none_lim_hc_1$output[, index$number_get_hosp_full_treat]) +
+                                                        sum(none_lim_hc_1$output[, index$number_get_hosp_incomplete_treat]) +
+                                                        sum(none_lim_hc_1$output[, index$number_need_hosp_no_treat]))
+sum(dur_and_hosp_change2$output[, index$number_get_hosp_full_treat])/(sum(dur_and_hosp_change2$output[, index$number_get_hosp_full_treat]) +
+                                                        sum(dur_and_hosp_change2$output[, index$number_get_hosp_incomplete_treat]) +
+                                                        sum(dur_and_hosp_change2$output[, index$number_need_hosp_no_treat]))
+
+sum(none$output[, index$number_get_ICU_full_treat])/(sum(none_lim_hc_1$output[, index$number_get_ICU_full_treat]) +
+                                                       sum(none_lim_hc_1$output[, index$number_get_ICU_incomplete_treat]) +
+                                                       sum(none_lim_hc_1$output[, index$number_need_ICU_no_treat]))
+sum(dur_and_hosp_change2$output[, index$number_get_ICU_full_treat])/(sum(dur_and_hosp_change2$output[, index$number_get_ICU_full_treat]) +
+                                                       sum(dur_and_hosp_change2$output[, index$number_get_ICU_incomplete_treat]) +
+                                                       sum(dur_and_hosp_change2$output[, index$number_need_ICU_no_treat]))
+
+# Number of Days Spent Over Capacity
+sum(none_lim_hc_1$output[, index$number_get_ICU_incomplete_treat] > 0.5 & none_lim_hc_1$output[, index$number_need_ICU] > 0.5)
+sum(none_lim_hc_1$output[, index$number_need_ICU_no_treat] > 0.5 & none_lim_hc_1$output[, index$number_need_ICU] > 0.5)
+
+sum(dur_and_hosp_change2$output[, index$number_get_ICU_incomplete_treat] > 0.5 & dur_and_hosp_change2$output[, index$number_need_ICU] > 0.5)
+sum(dur_and_hosp_change2$output[, index$number_need_ICU_no_treat] > 0.5 & dur_and_hosp_change2$output[, index$number_need_ICU] > 0.5)
+
+plot(none_lim_hc_1$output[, index$number_get_ICU_incomplete_treat])
+plot(dur_and_hosp_change2$output[, index$number_get_ICU_incomplete_treat])
+
+sum(none_lim_hc_1$output[, index$number_get_hosp_incomplete_treat] > 0.5 & none_lim_hc_1$output[, index$number_need_hosp] > 0.5)
+sum(none_lim_hc_1$output[, index$number_need_hosp_no_treat] > 0.5 & none_lim_hc_1$output[, index$number_need_ICU] > 0.5)
+
+sum(dur_and_hosp_change2$output[, index$number_get_hosp_incomplete_treat] > 0.5 & dur_and_hosp_change2$output[, index$number_need_ICU] > 0.5)
+sum(dur_and_hosp_change2$output[, index$number_need_hosp_no_treat] > 0.5 & dur_and_hosp_change2$output[, index$number_need_ICU] > 0.5)
+
+none_infected <- max(apply(none_lim_hc_1$output[, index$D], 1, sum)) + max(apply(none_lim_hc_1$output[, index$R], 1, sum))
+drug_infected <- max(apply(dur_and_hosp_change2$output[, index$D], 1, sum)) + max(apply(dur_and_hosp_change2$output[, index$R], 1, sum))
+
+none_AR <- none_infected/sum(standard_population)
+drug_AR <- drug_infected/sum(standard_population)
 
