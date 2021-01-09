@@ -47,23 +47,27 @@ hosp_occ <- data.frame(t = seq(1, length(lowR0$output[, index$overall_hosp_occ])
                        scenario = c(rep("low", length(lowR0$output[, index$overall_hosp_occ])), rep("high", length(lowR0$output[, index$overall_hosp_occ]))))
 hosp_bed_occ <- ggplot() +
   geom_ribbon(data = hosp_occ, aes(x = t, ymin = 0, ymax = hosp_occ, fill = scenario)) +
-  scale_fill_manual(values = alpha(c("#3FA7D6", "#F79D84"), 0.5), name = "fill") +
+  scale_fill_manual(values = alpha(c("#E4521B", "#8AB13C"), 0.5), name = "fill") +
   geom_line(data = hosp_occ, aes(x = t, y = hosp_occ, colour = scenario), linetype = "solid", size = 1) +
-  scale_colour_manual(values = c("#3FA7D6", "#F79D84")) +
+  scale_colour_manual(values = c("#E4521B", "#8AB13C")) +
   lims(x = c(0, 320)) +
   labs(x = "Time (Days)", y = "Hospital Bed Demand") +
   scale_y_continuous(labels = comma) +
   theme(legend.position = "none", axis.title = element_text(size = 10), axis.text = element_text(size = 10)) +
   theme(plot.margin = unit(c(0.5, 0, 0, 0), "cm"))
 
+# "#42B3D5", "#DCEDC8" # blue and lime
+# "#E4521B", "#FEEB65" # orange and yellow
+# "#E4521B", "#8AB13C # orange and green
+
 ICU_occ <- data.frame(t = seq(1, length(lowR0$output[, index$overall_ICU_occ])),
                       ICU_occ = c(lowR0$output[, index$overall_ICU_occ], highR0$output[, index$overall_ICU_occ]),
                       scenario = c(rep("low", length(lowR0$output[, index$overall_ICU_occ])), rep("high", length(lowR0$output[, index$overall_ICU_occ]))))
 ICU_bed_occ <- ggplot() +
   geom_ribbon(data = ICU_occ, aes(x = t, ymin = 0, ymax = ICU_occ, fill = scenario)) +
-  scale_fill_manual(values = alpha(c("#3FA7D6", "#F79D84"), 0.5), name = "fill") +
+  scale_fill_manual(values = alpha(c("#E4521B", "#8AB13C"), 0.5), name = "fill") +
   geom_line(data = ICU_occ, aes(x = t, y = ICU_occ, colour = scenario), linetype = "solid", size = 1) +
-  scale_colour_manual(values = c("#3FA7D6", "#F79D84")) +
+  scale_colour_manual(values = c("#E4521B", "#8AB13C")) +
   lims(x = c(0, 320)) +
   labs(x = "Time (Days)", y = "") +
   scale_y_continuous(labels = comma) +
@@ -99,16 +103,18 @@ high_R0_ICU_full <- sum(highR0$output[, index$number_get_ICU_full_treat])/sum(hi
 treat_prop <- data.frame(metric = rep(c("Hospital", "ICU"), 4),
                          R0 = rep(c("Low R0", "High R0"), each = 4),
                          treat_extent = rep(c("Bed Only", "Bed Only", "Complete\nHealthcare", "Complete\nHealthcare"), 2),
-                         value = c(low_R0_hosp_bed, low_R0_ICU_bed, low_R0_hosp_full, low_R0_ICU_full,
-                                   high_R0_hosp_bed, high_R0_ICU_bed, high_R0_hosp_full, high_R0_ICU_full))
-treat_prop$R0 <- factor(treat_prop$R0, levels = c("Low R0", "High R0"))
+                         value = c(low_R0_hosp_bed - low_R0_hosp_full, low_R0_ICU_bed - low_R0_ICU_full, low_R0_hosp_full, low_R0_ICU_full,
+                                   high_R0_hosp_bed - high_R0_hosp_full, high_R0_ICU_bed - high_R0_ICU_full, high_R0_hosp_full, high_R0_ICU_full))
+treat_prop$R0 <- factor(treat_prop$R0, levels = c("High R0", "Low R0"))
 tret_prop_plot <- ggplot() +
-  geom_bar(data = treat_prop, aes(x = R0, y = value, fill = treat_extent, group = treat_extent),
-           stat = "identity", position = "dodge") +
+  geom_bar(data = treat_prop, aes(x = R0, y = value, fill = interaction(R0, treat_extent), group = treat_extent),
+           stat = "identity") +
   facet_grid(~metric) +
+  scale_fill_manual(values = c(alpha(c("#E4521B", "#8AB13C"), alpha = 0.4), "#E4521B", "#8AB13C")) +
   labs(y = "% Patients Receiving Healthcare") +
-  theme(axis.title.x = element_blank(), legend.position = "bottom", legend.title = element_blank()) +
+  theme(axis.title.x = element_blank(), legend.position = "none", legend.title = element_blank()) +
   theme(plot.margin = unit(c(0.5, 0, 0, 0), "cm"))
+tret_prop_plot
 
 # Figure 2C - IFR from the Different Drug Effect/R0/Health Resource Scenarios
 
@@ -188,8 +194,8 @@ IFRplot1 <- ggplot(overall) +
   geom_hline(aes(yintercept = no_hc_IFR), no_hc, linetype = "dashed") +
   facet_grid(R0 ~ drug_benefit,
              labeller = labeller(R0 = R0.labs, drug_benefit = healthcare.labs), switch = "y") +
-  scale_fill_manual(values = c("white", "white", "#B7C0EE", "#DBF0CE", "#7067CF",
-                               "#82CA59", "#541894", "#549418", "purple", "pink"),
+  scale_fill_manual(values = c("white", "white", "#F6A78A", "#DBF0CE", "#E4521B",
+                               "#82CA59", "#9E3813", "#549418", "purple", "pink"),
                     name = "fill") +
   scale_x_discrete(labels = c("Unlimited\nHealthcare",
                               "Limited\nARS",
@@ -206,6 +212,7 @@ IFRplot1 <- ggplot(overall) +
   lims(y = c(0, 0.55)) #+
   #scale_y_continuous(position="right")
 
+#c("#F6A78A", "#E4521B", "#9E3813")
 
 IFRplot2 <- ggplot(overall) +
   geom_boxplot(aes(x = healthcare, y = IFR, fill = interaction(R0, healthcare)), outlier.shape = NA) +
@@ -214,8 +221,8 @@ IFRplot2 <- ggplot(overall) +
   geom_hline(aes(yintercept = no_hc_IFR), no_hc, linetype = "dashed") +
   facet_grid(. ~ drug_benefit,
              labeller = labeller(R0 = R0.labs, drug_benefit = healthcare.labs)) +
-  scale_fill_manual(values = c("white", "white", "#B7C0EE", "#DBF0CE", "#7067CF",
-                               "#82CA59", "#541894", "#549418", "purple", "pink"),
+  scale_fill_manual(values = c("white", "white", "#F6A78A", "#DBF0CE", "#E4521B",
+                               "#82CA59", "#9E3813", "#549418", "purple", "pink"),
                     name = "fill") +
   scale_x_discrete(labels = c("Unlimited\nHealthcare",
                               "Limited\nARS",
@@ -262,6 +269,7 @@ ben <- ggplot(overall_new) +
   geom_bar(aes(x = drug_benefit, y = prop_benefit_gained, fill = R0, group = interaction(healthcare, R0)),
            stat = "identity", position = "dodge") +
   facet_grid(R0 ~ ., labeller = labeller(R0 = R0.labs)) +
+  scale_fill_manual(values = c("#9E3813", "#549418")) +
   scale_y_continuous(position="right", limits = c(0, 1)) +
   theme(legend.position = "none", axis.title = element_blank(),
         axis.text.x = element_text(size = 2),
@@ -272,6 +280,7 @@ ben2 <- ggplot(overall_new) +
            stat = "identity", position = "dodge") +
   facet_grid(. ~ R0, labeller = labeller(R0 = R0.labs)) +
   scale_y_continuous(position="right", limits = c(0, 1)) +
+  scale_fill_manual(values = c("#9E3813", "#549418")) +
   theme(legend.position = "none", axis.title = element_blank(),
         axis.text.x = element_text(size = 2),
         strip.background.x = element_blank(),
@@ -290,7 +299,7 @@ plot_grid(partAB, partC1, ncol = 1, rel_heights = c(1.2, 2)) +
 
 partAB <- plot_grid(hosp_bed_occ, ICU_bed_occ, tret_prop_plot, rel_widths = c(0.75, 0.75, 1), axis = "b", align = "h", nrow = 1)
 partC2 <- plot_grid(IFRplot2, ben2, nrow = 1, rel_widths = c(3, 1.3), align = "h", axis = "b")
-plot_grid(partAB, partC2, ncol = 1, rel_heights = c(1.4, 2)) +
+plot_grid(partAB, partC2, ncol = 1, rel_heights = c(1.3, 2)) +
   draw_plot_label(
     c("A", "B", "C", "D"),
     c(0, 0.6, 0, 0.65),
