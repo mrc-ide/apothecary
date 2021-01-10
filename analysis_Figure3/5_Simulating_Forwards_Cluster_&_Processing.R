@@ -1,7 +1,7 @@
 # Loading required libraries
 library(tidyverse); library(qpdf); library(stringi); library(rnaturalearth); library(ggplot2); library(dplyr);
 library(rgdal); library(rgeos); library(sf); library(rnaturalearthdata); library(patchwork); library(rnaturalearthhires)
-library(mapproj)
+library(mapproj); library(cowplot)
 
 # Setting Up Cluster
 loc <- didehpc::path_mapping("location", "N:", "//fi--didenas5/malaria", "N:")
@@ -104,27 +104,64 @@ ggplot(data = world) +
 
 a <- ggplot(data = world) +
   geom_sf(aes(fill = low)) +
-  scale_fill_viridis_c(option = "magma", breaks = c(0, 1), limits = c(0, 1), direction = -1) +
-  theme(legend.position = "left")
+  scale_fill_viridis_c(option = "magma", breaks = seq(0, 1, 0.25), limits = c(0, 1), direction = -1) +
+  theme(legend.position = "left",
+        legend.key.width = unit(0.05, "npc"),
+        legend.key.height = unit(0.08, "npc"),
+        legend.title = element_blank())
 b <- ggplot(data = world) +
   geom_sf(aes(fill = high)) +
-  scale_fill_viridis_c(option = "magma", breaks = c(0, 1), limits = c(0, 1), direction = -1) +
-  theme(legend.position = "left")
-c <- ggplot(data = overall, aes(x = income_group, y = low, fill = income_group)) +
-  geom_boxplot(outlier.alpha = 0) +
-  labs(y = "", x = "") +
-  scale_x_discrete(labels = c("Low income" = "LIC", "Upper middle income" = "UMIC",
-                              "Lower middle income" = "LMIC", "High income" = "HIC")) +
-  theme(legend.position = "none") +
-  scale_y_continuous(position = "right")
-d <- ggplot(data = overall, aes(x = income_group, y = high, fill = income_group)) +
-  geom_boxplot(outlier.alpha = 0) +
-  labs(y = "", x = "") +
-  scale_x_discrete(labels = c("Low income" = "LIC", "Upper middle income" = "UMIC",
-                              "Lower middle income" = "LMIC", "High income" = "HIC")) +
-  theme(legend.position = "none") +
-  scale_y_continuous(position = "right")
+  scale_fill_viridis_c(option = "magma", breaks = seq(0, 1, 0.25), limits = c(0, 1), direction = -1) +
+  theme(legend.position = "left",
+        legend.key.width = unit(0.05, "npc"),
+        legend.key.height = unit(0.08, "npc"),
+        legend.title = element_blank())
 
-a + c + b + d +
-  plot_layout(guides = 'auto', widths = c(3, 1))
+c <- ggplot(data = overall, aes(x = income_group, y = 100 * low, col = income_group)) +
+  geom_boxplot(outlier.alpha = 0, size = 1) +
+  geom_jitter(data = overall, aes(x = income_group, y = 100 * low, fill = income_group),
+              pch = 21, size = 3, width = 0.2) +
+  labs(y = "", x = "") +
+  scale_x_discrete(labels = c("Low income" = "LIC", "Upper middle income" = "UMIC",
+                              "Lower middle income" = "LMIC", "High income" = "HIC")) +
+  scale_colour_manual(values = c("#B7C0EE", "#7067CF", "#362E91", "#241F60")) +
+  scale_fill_manual(values = c("#B7C0EE", "#7067CF", "#362E91", "#241F60")) +
+  labs(y = "% Maximum Therapeutic Benefit") +
+  scale_y_continuous(position = "right", limits = c(0, 100)) +
+  theme(legend.position = "none",
+        axis.text.x = element_text(size = 12),
+        axis.text.y = element_text(size = 14),
+        axis.title.y = element_text(size = 14))
+d <- ggplot(data = overall, aes(x = income_group, y = 100 * high, col = income_group)) +
+  geom_boxplot(outlier.alpha = 0, size = 1) +
+  geom_jitter(data = overall, aes(x = income_group, y = 100 * high, fill = income_group),
+              pch = 21, size = 3, width = 0.2) +
+  labs(y = "", x = "") +
+  scale_x_discrete(labels = c("Low income" = "LIC", "Upper middle income" = "UMIC",
+                              "Lower middle income" = "LMIC", "High income" = "HIC")) +
+  scale_colour_manual(values = c("#B7C0EE", "#7067CF", "#362E91", "#241F60")) +
+  scale_fill_manual(values = c("#B7C0EE", "#7067CF", "#362E91", "#241F60")) +
+  labs(y = "% Maximum Therapeutic Benefit") +
+  scale_y_continuous(position = "right", limits = c(0, 100)) +
+  theme(legend.position = "none",
+        axis.text.x = element_text(size = 12),
+        axis.text.y = element_text(size = 14),
+        axis.title.y = element_text(size = 14))
+
+
+# 10.5 width x 7.5 height
+plot_grid(a, c, b, d, ncol = 2, rel_widths = c(2.5, 1), align = 'h', axis = 'tb') +
+  draw_plot_label(
+    c("A", "B", "C", "D"),
+    c(0.01, 0.71, 0.01, 0.71),
+    c(1.02, 1.02, 0.55, 0.55),
+    size = 30)
+
+# a <- ggplot(data = world) +
+#   geom_sf(aes(fill = low)) +
+#   coord_sf(crs = "+proj=eck4") +
+#   scale_fill_viridis_c(option = "magma", breaks = c(0, 1), limits = c(0, 1), direction = -1) +
+#   cowplot::theme_minimal_grid() +
+#   theme(legend.position = "left") +
+#   theme(plot.margin = unit(c(0, 0, 0, 0), "cm"))
 

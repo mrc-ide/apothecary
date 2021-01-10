@@ -65,7 +65,7 @@ mob <-  goog %>%
   select(country_region, iso3c, date, overall)
 
 # Loading World Bank Metadata (Charlie can update to url as needed)
-wb_metadata <- read.csv("cluster_running/Inputs/World_Bank_Country_Metadata.csv", fileEncoding="UTF-8-BOM", stringsAsFactors = TRUE) %>%
+wb_metadata <- read.csv("analysis_Figure3/Inputs/World_Bank_Country_Metadata.csv", fileEncoding="UTF-8-BOM", stringsAsFactors = TRUE) %>%
   rename(ISO = country_code) %>%
   select(ISO, income_group, region) %>%
   filter(region != "")
