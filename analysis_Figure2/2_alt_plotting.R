@@ -1,18 +1,13 @@
 overall <- overall %>%
   mutate(drug_benefit = as.character(drug_benefit)) %>%
-  mutate(drug_benefit = case_when(
-    drug_benefit == "treatonly_benfull" ~ "atreatonly_benfull",
-    drug_benefit == "allhosp_gradbencons" ~ "ballhosp_gradbencons",
-    drug_benefit == "allhosp_gradbenopti" ~ "callhosp_gradbenopti",
-    TRUE ~ drug_benefit)
-  )
-
+  mutate(drug_benefit = case_when(drug_benefit == "treatonly_benfull" ~ "atreatonly_benfull",
+                                  drug_benefit == "allhosp_gradbencons" ~ "ballhosp_gradbencons",
+                                  drug_benefit == "allhosp_gradbenopti" ~ "callhosp_gradbenopti",
+                                  TRUE ~ drug_benefit))
 overall$drug_benefit <- factor(overall$drug_benefit, levels = c("atreatonly_benfull", "ballhosp_gradbencons", "callhosp_gradbenopti"))
-
 healthcare.labs <- c("Impact Only In Treated Patients",
                      "Impact In All Hospitalised Patients - Pess.",
                      "Impact In All Hospitalised Patients - Opti.")
-#"Impact In All Hospitalised Patients - Full")
 names(healthcare.labs) <- c("atreatonly_benfull", "ballhosp_gradbencons", "callhosp_gradbenopti")
 
 IFRplot2 <- ggplot(overall) +
