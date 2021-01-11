@@ -12285,7 +12285,7 @@ SEXP deterministic_apothecary_SEIR_set_user(SEXP internal_p, SEXP user) {
   internal->dim_s_ij_2 = internal->N_age;
   internal->dim_temp = internal->N_age;
   internal->gamma_IAsymp_Drug_4 = ((1 - internal->drug_4_prop_treat) * internal->gamma_IAsymp) + (internal->drug_4_prop_treat * internal->drug_4_effect_size_IAsymp * internal->gamma_IAsymp);
-  internal->gamma_ICase_Drug_4 = ((1 - internal->drug_4_prop_treat) * internal->gamma_ICase) + (internal->drug_4_prop_treat * internal->drug_4_effect_size_ICase * internal->gamma_ICase);
+  internal->gamma_ICase_Drug_4 = internal->drug_4_effect_size_ICase * internal->gamma_ICase;
   internal->gamma_ICrit_GetICU_GetOx_GetMV_Surv_Drug_10 = (((1 - internal->drug_10_prop_treat) * internal->gamma_ICrit_GetICU_GetOx_GetMV_Surv) + (internal->drug_10_prop_treat * internal->drug_10_GetOx_GetMV_effect_size * internal->gamma_ICrit_GetICU_GetOx_GetMV_Surv));
   internal->gamma_ICrit_GetICU_GetOx_NoMV_Surv_Drug_10 = (((1 - internal->drug_10_prop_treat) * internal->gamma_ICrit_GetICU_GetOx_NoMV_Surv) + (internal->drug_10_prop_treat * internal->drug_10_GetOx_NoMV_effect_size * internal->gamma_ICrit_GetICU_GetOx_NoMV_Surv));
   internal->gamma_ICrit_GetICU_NoOx_NoMV_Surv_Drug_10 = (((1 - internal->drug_10_prop_treat) * internal->gamma_ICrit_GetICU_NoOx_NoMV_Surv) + (internal->drug_10_prop_treat * internal->drug_10_NoOx_NoMV_effect_size * internal->gamma_ICrit_GetICU_NoOx_NoMV_Surv));

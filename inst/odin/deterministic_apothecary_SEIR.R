@@ -126,8 +126,8 @@ gamma_IAsymp_Drug_4 <- ((1 - drug_4_prop_treat) * gamma_IAsymp) + (drug_4_prop_t
 gamma_IMild <- user() # mild infection to recovery
 gamma_IMild_Drug_4 <- ((1 - drug_4_prop_treat) * gamma_IMild) + (drug_4_prop_treat * drug_4_effect_size_IMild * gamma_IMild) # weighted sum of recovery rates for treated/untreated depending on Drug 4 properties
 gamma_ICase <- user() # symptom onset to requiring hospitalisation
-gamma_ICase_Drug_4 <- ((1 - drug_4_prop_treat) * gamma_ICase) + (drug_4_prop_treat * drug_4_effect_size_ICase * gamma_ICase) # weighted sum of recovery rates for treated/untreated depending on Drug 4 properties
-
+gamma_ICase_Drug_4 <- drug_4_effect_size_ICase * gamma_ICase # all ICase_Drug4 by definition must have got treatment via Drug 3, so no weighted combo used. All get benefit.
+                                                             # NOTE: will need to rework if looking at multiple drugs (e.g. a Drug 3 and then they take a Drug 4 separtely, as opposed to it being a combined Drug3+4 drug etc)
 gamma_rec <- user() # rate of progression through post-ICU recovery compartment
 
 # Rates Related to Requiring Hospital Bed and Oxygen, Incorporating Effects of Drug 8 If Relevant

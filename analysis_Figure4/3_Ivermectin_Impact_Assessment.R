@@ -101,6 +101,9 @@ drug_ICU_any_days_capacity <- days_over_capacity(drug, "ICU_any")
 drug_infected <- max(apply(drug$output[, index$R], 1, sum) + apply(drug$output[, index$D], 1, sum))
 drug_AR <- calc_AR(drug)
 
+# Doses
+drug_doses <- sum(drug$output[, index$number_get_ICU_any_treat]) + sum(drug$output[, index$number_get_hosp_any_treat])
+
 drug_df <- data.frame(drug = "Ivermetin", total_infected = drug_infected, attack_rate = drug_AR,
                      deaths = drug_deaths, total_deaths_averted = total_deaths_averted,
                      direct_deaths_averted = direct_deaths_averted, indirect_deaths_averted_healthcare = indirect_deaths_averted_healthcare,
@@ -108,7 +111,8 @@ drug_df <- data.frame(drug = "Ivermetin", total_infected = drug_infected, attack
                      prop_full_hosp = drug_hosp_full_receive, prop_any_hosp = drug_hosp_any_receive,
                      prop_full_ICU = drug_ICU_full_receive, prop_any_ICU = drug_ICU_any_receive,
                      days_over_full_hosp = drug_hosp_full_days_capacity, days_over_any_hosp = drug_hosp_any_days_capacity,
-                     days_over_full_ICU = drug_ICU_full_days_capacity, days_over_any_ICU = drug_ICU_any_days_capacity)
+                     days_over_full_ICU = drug_ICU_full_days_capacity, days_over_any_ICU = drug_ICU_any_days_capacity,
+                     doses = drug_doses)
 saveRDS(drug_df, file = "analysis_Figure4/Outputs/ivm_df.rds")
 
 # Scrapola #

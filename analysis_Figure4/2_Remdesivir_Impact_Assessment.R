@@ -31,6 +31,7 @@ none <- run_apothecary(country = "Bhutan", R0 = 2, population = standard_populat
                        hosp_bed_capacity = actual_hosp_beds, ICU_bed_capacity = actual_ICU_beds,
                        prop_ox_hosp_beds = actual_prop_ox_hosp_beds, prop_ox_ICU_beds = actual_prop_ox_ICU_beds,
                        MV_capacity = actual_MV_capacity)
+index <- squire:::odin_index(none$model)
 none_deaths <- sum(apply(none$output[, index$D], 2, max))
 
 rem <- run_apothecary(country = "Bhutan", R0 = 2, population = standard_population, contact_matrix_set = standard_matrix,
@@ -43,7 +44,6 @@ rem <- run_apothecary(country = "Bhutan", R0 = 2, population = standard_populati
                       drug_11_indic_IMod_GetHosp_GetOx = 1, drug_11_indic_IMod_GetHosp_NoOx = 1, drug_11_prop_treat = 1,
                       drug_11_GetOx_effect_size = 0.8, drug_11_NoOx_effect_size = 0.9)
 rem_deaths <- sum(apply(rem$output[, index$D], 2, max))
-index <- squire:::odin_index(none$model)
 total_deaths_averted <- sum(apply(none$output[, index$D], 2, max)) - sum(apply(rem$output[, index$D], 2, max))
 
 # Impact for Moderate Patients:
@@ -131,6 +131,9 @@ rem_ICU_any_days_capacity <- days_over_capacity(rem, "ICU_any")
 rem_infected <- max(apply(rem$output[, index$R], 1, sum) + apply(rem$output[, index$D], 1, sum))
 rem_AR <- calc_AR(rem)
 
+# Doses
+rem_doses <- sum(rem$output[, index$number_get_hosp_any_treat])
+
 rem_df <- data.frame(drug = "Remdesivir", total_infected = rem_infected, attack_rate = rem_AR,
                      deaths = rem_deaths, total_deaths_averted = total_deaths_averted,
                      direct_deaths_averted = direct_deaths_averted, indirect_deaths_averted_healthcare = indirect_deaths_averted_healthcare,
@@ -138,7 +141,8 @@ rem_df <- data.frame(drug = "Remdesivir", total_infected = rem_infected, attack_
                      prop_full_hosp = rem_hosp_full_receive, prop_any_hosp = rem_hosp_any_receive,
                      prop_full_ICU = rem_ICU_full_receive, prop_any_ICU = rem_ICU_any_receive,
                      days_over_full_hosp = rem_hosp_full_days_capacity, days_over_any_hosp = rem_hosp_any_days_capacity,
-                     days_over_full_ICU = rem_ICU_full_days_capacity, days_over_any_ICU = rem_ICU_any_days_capacity)
+                     days_over_full_ICU = rem_ICU_full_days_capacity, days_over_any_ICU = rem_ICU_any_days_capacity,
+                     doses = rem_doses)
 saveRDS(rem_df, file = "analysis_Figure4/Outputs/rem_df.rds")
 
 

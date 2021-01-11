@@ -34,6 +34,7 @@ none <- run_apothecary(country = "Bhutan", R0 = R0, population = standard_popula
                        time_period = time, seeding_cases = 20, day_return = TRUE,
                        hosp_bed_capacity = actual_hosp_beds, ICU_bed_capacity = actual_ICU_beds,
                        prop_ox_hosp_beds = actual_prop_ox_hosp_beds, prop_ox_ICU_beds = actual_prop_ox_ICU_beds, MV_capacity = actual_MV_capacity)
+index <- squire:::odin_index(none$model)
 none_deaths <- sum(apply(none$output[, index$D], 2, max))
 dexy <- run_apothecary(country = "Bhutan", R0 = R0, population = standard_population, contact_matrix_set = standard_matrix,
                        time_period = time, seeding_cases = 20, day_return = TRUE,
@@ -45,7 +46,6 @@ dexy <- run_apothecary(country = "Bhutan", R0 = R0, population = standard_popula
                        drug_12_prop_treat = 1, drug_12_GetOx_effect_size = 0.64, drug_12_NoOx_effect_size = 0.82,
                        drug_13_indic_ICrit_GetICU_GetOx_GetMV = 1, drug_13_indic_ICrit_GetICU_GetOx_NoMV = 1, drug_13_indic_ICrit_GetICU_NoOx_NoMV = 1,
                        drug_13_prop_treat = 1, drug_13_GetOx_GetMV_effect_size = 0.64, drug_13_GetOx_NoMV_effect_size = 0.82, drug_13_NoOx_NoMV_effect_size = 0.82)
-index <- squire:::odin_index(none$model)
 dexy_deaths <- sum(apply(dexy$output[, index$D], 2, max))
 total_deaths_averted <- sum(apply(none$output[, index$D], 2, max)) - sum(apply(dexy$output[, index$D], 2, max))
 direct_deaths_averted <- total_deaths_averted
@@ -85,6 +85,10 @@ none_AR <- calc_AR(none)
 dexy_infected <- max(apply(dexy$output[, index$R], 1, sum) + apply(dexy$output[, index$D], 1, sum))
 dexy_AR <- calc_AR(dexy)
 
+# Doses
+none_doses <- 0
+dexy_doses <- sum(dexy$output[, index$number_get_ICU_any_treat]) + sum(dexy$output[, index$number_get_hosp_any_treat])
+
 # Creating Dataframe Storing Metrics
 none_df <- data.frame(drug = "None", total_infected = none_infected, attack_rate = none_AR,
                       deaths = none_deaths, total_deaths_averted = 0,
@@ -93,7 +97,8 @@ none_df <- data.frame(drug = "None", total_infected = none_infected, attack_rate
                       prop_full_hosp = none_hosp_full_receive, prop_any_hosp = none_hosp_any_receive,
                       prop_full_ICU = none_ICU_full_receive, prop_any_ICU = none_ICU_any_receive,
                       days_over_full_hosp = none_hosp_full_days_capacity, days_over_any_hosp = none_hosp_any_days_capacity,
-                      days_over_full_ICU = none_ICU_full_days_capacity, days_over_any_ICU = none_ICU_any_days_capacity)
+                      days_over_full_ICU = none_ICU_full_days_capacity, days_over_any_ICU = none_ICU_any_days_capacity,
+                      doses = none_doses)
 saveRDS(none_df, file = "analysis_Figure4/Outputs/none_df.rds")
 
 dexy_df <- data.frame(drug = "Dexamethasone", total_infected = dexy_infected, attack_rate = dexy_AR,
@@ -103,7 +108,8 @@ dexy_df <- data.frame(drug = "Dexamethasone", total_infected = dexy_infected, at
                       prop_full_hosp = dexy_hosp_full_receive, prop_any_hosp = dexy_hosp_any_receive,
                       prop_full_ICU = dexy_ICU_full_receive, prop_any_ICU = dexy_ICU_any_receive,
                       days_over_full_hosp = dexy_hosp_full_days_capacity, days_over_any_hosp = dexy_hosp_any_days_capacity,
-                      days_over_full_ICU = dexy_ICU_full_days_capacity, days_over_any_ICU = dexy_ICU_any_days_capacity)
+                      days_over_full_ICU = dexy_ICU_full_days_capacity, days_over_any_ICU = dexy_ICU_any_days_capacity,
+                      doses = dexy_doses)
 saveRDS(dexy_df, file = "analysis_Figure4/Outputs/dexy_df.rds")
 
 
