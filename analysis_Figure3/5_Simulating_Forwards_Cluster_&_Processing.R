@@ -126,7 +126,7 @@ c <- ggplot(data = overall, aes(x = income_group, y = 100 * low, col = income_gr
                               "Lower middle income" = "LMIC", "High income" = "HIC")) +
   scale_colour_manual(values = c("#B7C0EE", "#7067CF", "#362E91", "#241F60")) +
   scale_fill_manual(values = c("#B7C0EE", "#7067CF", "#362E91", "#241F60")) +
-  labs(y = "% Maximum Therapeutic Benefit") +
+  labs(y = "% Potential Benefit") +
   scale_y_continuous(position = "right", limits = c(0, 100)) +
   theme(legend.position = "none",
         axis.text.x = element_text(size = 12),
@@ -141,7 +141,7 @@ d <- ggplot(data = overall, aes(x = income_group, y = 100 * high, col = income_g
                               "Lower middle income" = "LMIC", "High income" = "HIC")) +
   scale_colour_manual(values = c("#B7C0EE", "#7067CF", "#362E91", "#241F60")) +
   scale_fill_manual(values = c("#B7C0EE", "#7067CF", "#362E91", "#241F60")) +
-  labs(y = "% Maximum Therapeutic Benefit") +
+  labs(y = "% Potential Benefit") +
   scale_y_continuous(position = "right", limits = c(0, 100)) +
   theme(legend.position = "none",
         axis.text.x = element_text(size = 12),
@@ -150,12 +150,14 @@ d <- ggplot(data = overall, aes(x = income_group, y = 100 * high, col = income_g
 
 
 # 10.5 width x 7.5 height
-plot_grid(a, c, b, d, ncol = 2, rel_widths = c(2.5, 1), align = 'h', axis = 'tb') +
+fig3 <- plot_grid(a, c, b, d, ncol = 2, rel_widths = c(2.5, 1), align = 'h', axis = 'tb') +
   draw_plot_label(
     c("A", "B", "C", "D"),
     c(0.01, 0.71, 0.01, 0.71),
     c(1.02, 1.02, 0.55, 0.55),
     size = 30)
+ggsave2(file = "analysis_Figure3/Figure_3.pdf", fig3, dpi = 300,
+        width = 10.5, height = 7.5)
 
 # a <- ggplot(data = world) +
 #   geom_sf(aes(fill = low)) +

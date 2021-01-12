@@ -436,12 +436,14 @@ insetplot <- IFRplot2 +
 
 # go with 12 wide and 8 high
 partAB <- plot_grid(hosp_bed_occ, ICU_bed_occ, tret_prop_plot, rel_widths = c(0.75, 0.75, 1), axis = "b", align = "h", nrow = 1)
-plot_grid(partAB, insetplot, ncol = 1, rel_heights = c(1.3, 2)) +
+fig2 <- plot_grid(partAB, insetplot, ncol = 1, rel_heights = c(1.3, 2)) +
   draw_plot_label(
     c("A", "B", "C"),
-    c(0, 0.6, 0),
-    c(1, 1, 0.65),
+    c(0, 0.58, 0),
+    c(1.02, 1.02, 0.65),
     size = 30)
+ggsave2("analysis_Figure2/Figure_2.pdf", fig2, dpi = 400,
+        width = 12, height = 8)
 
 # Left Aligned
 # plots <- align_plots(hosp_bed_occ, IFRplot1, align = 'v', axis = 'l')
