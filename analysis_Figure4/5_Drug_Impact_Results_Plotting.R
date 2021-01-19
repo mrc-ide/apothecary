@@ -2,81 +2,107 @@
 library(ggplot2); library(tidyverse); library(dplyr); library(cowplot); library(scales)
 
 # load in data
-none <- readRDS("analysis_Figure4/Outputs/none_df.rds")
-dexy <- readRDS("analysis_Figure4/Outputs/dexy_df.rds")
-rem <- readRDS("analysis_Figure4/Outputs/rem_df.rds")
-ivm <- readRDS("analysis_Figure4/Outputs/ivm_df.rds")
-mabs <- readRDS("analysis_Figure4/Outputs/mab_df.rds")
+none_low <- readRDS("analysis_Figure4/Outputs/none_low_df.rds")
+none_high <- readRDS("analysis_Figure4/Outputs/none_high_df.rds")
+dexy_low <- readRDS("analysis_Figure4/Outputs/dexy_low_df.rds")
+dexy_high <- readRDS("analysis_Figure4/Outputs/dexy_high_df.rds")
+rem_low <- readRDS("analysis_Figure4/Outputs/rem_low_df.rds")
+rem_high <- readRDS("analysis_Figure4/Outputs/rem_high_df.rds")
+ivm_low <- readRDS("analysis_Figure4/Outputs/ivm_low_df.rds")
+ivm_high <- readRDS("analysis_Figure4/Outputs/ivm_high_df.rds")
+mab_low <- readRDS("analysis_Figure4/Outputs/mab_low_df.rds")
+mab_high <- readRDS("analysis_Figure4/Outputs/mab_high_df.rds")
 
-ivm$drug <- "Ivermectin"
-drugs_df <- rbind(none, dexy, rem, ivm, mabs) %>%
+ivm_low$drug <- "Ivermectin"
+ivm_high$drug <- "Ivermectin"
+drugs_df <- rbind(none_low, none_high, dexy_low, dexy_high, rem_low, rem_high, ivm_low, ivm_high, mab_low, mab_high) %>%
   filter(drug != "None")
+drugs_df$drug <- factor(drugs_df$drug, levels = c("Dexamethasone", "Ivermectin", "Remdesivir", "mAb"))
 
 deaths_df <- drugs_df %>%
-  select(drug, direct_deaths_averted, indirect_deaths_averted_transmission, indirect_deaths_averted_healthcare) %>%
-  pivot_longer(cols = -drug, names_to = "effect_type", values_to = "deaths_averted")
+  select(drug, R0, direct_deaths_averted, indirect_deaths_averted_transmission, indirect_deaths_averted_healthcare) %>%
+  pivot_longer(cols = c(-drug, -R0), names_to = "effect_type", values_to = "deaths_averted")
 
 deaths_df$effect_type <- factor(deaths_df$effect_type, levels = c("indirect_deaths_averted_transmission",
                                                                   "indirect_deaths_averted_healthcare",
                                                                   "direct_deaths_averted"))
-deaths_df_plot <-
-  ggplot(deaths_df) +
-  geom_bar(aes(x = drug, y = deaths_averted, fill = interaction(effect_type, drug)), stat = "identity") +
-  scale_fill_manual(values = c("#C49799", "#C49799", "#C49799", "#BFB6BB", "#D9D3D6", "#BFB6BB",
-                               "#E4EFF1", "#CADFE3", "#AFD0D6", "#C2E4FF", "#C2E4FF", "#A5D8FF"),
-                    labels = c("Indirect - Transmission", "Indirect - Healthcare", "Direct")) +
-  theme(legend.position = "none", legend.title = element_blank(),
-        axis.text.x = element_text(size = 12)) +
+deaths_df$drug <- factor(deaths_df$drug, levels = c("Dexamethasone", "Ivermectin", "Remdesivir", "mAb"))
+deaths_df_plot <- ggplot(deaths_df) +
+  geom_bar(width=0.9, aes(x = R0, y = deaths_averted,
+               fill = interaction(drug, effect_type, R0)), stat = "identity") +
+  facet_wrap(~drug, nrow = 1) +
   labs(x = "", y = "Total Deaths Averted") +
-  guides(fill=guide_legend(ncol=2))
-
-#plot(seq(1:10), col = hue_pal()(10), pch = 20, cex = 3.5)
+  scale_x_discrete(labels = c("High R0", "Low R0")) +
+  theme(panel.margin = grid::unit(0.2, "lines"),
+        legend.position = "none", axis.text.x = element_text(size = 12)) +
+  scale_fill_manual(values = c("pink", "pink", "pink", "#E4EFF1", "pink", "#D9D3D6",
+                               "#C2E4FF", "#CADFE3", "#C49799", "#BFB6BB", "#A5D8FF", "#AFD0D6",
+                               "pink", "pink", "pink", "#E4EFF1", "pink", "#D9D3D6",
+                               "#C2E4FF", "#CADFE3", "#C49799", "#BFB6BB", "#A5D8FF", "#AFD0D6"))
 
 IFR <- ggplot(drugs_df) +
-  geom_bar(aes(x = drug, y = IFR, fill = drug), stat = "identity") +
-  scale_fill_manual(values = c("#C49799", "#BFB6BB", "#AFD0D6", "#A5D8FF")) +
+  geom_bar(aes(x = R0, y = IFR, fill = drug), stat = "identity") +
+  facet_wrap(~drug, nrow = 1) +
+  scale_fill_manual(values = c("#C49799", "#BFB6BB", "#A5D8FF", "#AFD0D6")) +
   lims(y = c(0, 0.5)) +
   labs(x = "", y = "IFR") +
-  theme(legend.position = "none",
-        axis.text.x = element_text(size = 8))
+  scale_x_discrete(labels = c("High\nR0", "Low\nR0")) +
+  theme(panel.margin = grid::unit(0.2, "lines"),
+        strip.text = element_text(size = 8),
+        legend.position = "none", axis.text.x = element_text(size = 8))
 
 AR <- ggplot(drugs_df) +
-  geom_bar(aes(x = drug, y = attack_rate, fill = drug), stat = "identity") +
-  scale_fill_manual(values = c("#C49799", "#BFB6BB", "#AFD0D6", "#A5D8FF")) +
+  geom_bar(aes(x = R0, y = attack_rate, fill = drug), stat = "identity") +
+  facet_wrap(~drug, nrow = 1) +
+  scale_fill_manual(values = c("#C49799", "#BFB6BB", "#A5D8FF", "#AFD0D6")) +
   lims(y = c(0, 1)) +
   labs(x = "", y = "Attack Rate") +
-  theme(legend.position = "none",
-        axis.text.x = element_text(size = 8))
+  scale_x_discrete(labels = c("High\nR0", "Low\nR0")) +
+  theme(panel.margin = grid::unit(0.2, "lines"),
+        strip.text = element_text(size = 8),
+        legend.position = "none", axis.text.x = element_text(size = 8))
 
 prop_full_hosp <- ggplot(drugs_df) +
-  geom_bar(aes(x = drug, y = prop_full_hosp, fill = drug), stat = "identity") +
-  scale_fill_manual(values = c("#C49799", "#BFB6BB", "#AFD0D6", "#A5D8FF")) +
+  geom_bar(aes(x = R0, y = prop_full_hosp, fill = drug), stat = "identity") +
+  facet_wrap(~drug, nrow = 1) +
+  scale_fill_manual(values = c("#C49799", "#BFB6BB", "#A5D8FF", "#AFD0D6")) +
   lims(y = c(0, 1)) +
-  labs(x = "", y = "Prop. Full Healthcare\nGeneral Hospital") +
-  theme(legend.position = "none",
-        axis.text.x = element_text(size = 8))
+  labs(x = "", y = "Prop. Full Hosp") +
+  scale_x_discrete(labels = c("High\nR0", "Low\nR0")) +
+  theme(panel.margin = grid::unit(0.2, "lines"),
+        strip.text = element_text(size = 8),
+        legend.position = "none", axis.text.x = element_text(size = 8))
 
 prop_full_ICU <- ggplot(drugs_df) +
-  geom_bar(aes(x = drug, y = prop_full_ICU, fill = drug), stat = "identity") +
-  scale_fill_manual(values = c("#C49799", "#BFB6BB", "#AFD0D6", "#A5D8FF")) +
+  geom_bar(aes(x = R0, y = prop_full_ICU, fill = drug), stat = "identity") +
+  facet_wrap(~drug, nrow = 1) +
+  scale_fill_manual(values = c("#C49799", "#BFB6BB", "#A5D8FF", "#AFD0D6")) +
   lims(y = c(0, 1)) +
-  labs(x = "", y = "Prop. Full\nHealthcare ICU") +
-  theme(legend.position = "none",
-        axis.text.x = element_text(size = 8))
+  labs(x = "", y = "Prop. Full ICU") +
+  scale_x_discrete(labels = c("High\nR0", "Low\nR0")) +
+  theme(panel.margin = grid::unit(0.2, "lines"),
+        strip.text = element_text(size = 8),
+        legend.position = "none", axis.text.x = element_text(size = 8))
 
 doses <- ggplot(drugs_df) +
-  geom_bar(aes(x = drug, y = doses, fill = drug), stat = "identity") +
-  scale_fill_manual(values = c("#C49799", "#BFB6BB", "#AFD0D6", "#A5D8FF")) +
-  labs(x = "") +
-  theme(legend.position = "none",
-        axis.text.x = element_text(size = 8))
+  geom_bar(aes(x = R0, y = doses, fill = drug), stat = "identity") +
+  facet_wrap(~drug, nrow = 1) +
+  scale_fill_manual(values = c("#C49799", "#BFB6BB", "#A5D8FF", "#AFD0D6")) +
+  labs(x = "", y = "Doses") +
+  scale_x_discrete(labels = c("High\nR0", "Low\nR0")) +
+  theme(panel.margin = grid::unit(0.2, "lines"),
+        strip.text = element_text(size = 8),
+        legend.position = "none", axis.text.x = element_text(size = 8))
 
 deaths_per_dose <- ggplot(drugs_df) +
-  geom_bar(aes(x = drug, y = total_deaths_averted/doses, fill = drug), stat = "identity") +
-  scale_fill_manual(values = c("#C49799", "#BFB6BB", "#AFD0D6", "#A5D8FF")) +
-  labs(x = "", y = "Deaths Averted Per Dose") +
-  theme(legend.position = "none",
-        axis.text.x = element_text(size = 8))
+  geom_bar(aes(x = R0, y = total_deaths_averted/doses, fill = drug), stat = "identity") +
+  facet_wrap(~drug, nrow = 1) +
+  scale_fill_manual(values = c("#C49799", "#BFB6BB", "#A5D8FF", "#AFD0D6")) +
+  labs(x = "", y = "Doses") +
+  scale_x_discrete(labels = c("High\nR0", "Low\nR0")) +
+  theme(panel.margin = grid::unit(0.2, "lines"),
+        strip.text = element_text(size = 8),
+        legend.position = "none", axis.text.x = element_text(size = 8))
 
 one <- plot_grid(deaths_df_plot, labels = c(''), ncol = 1)
 two <- plot_grid(IFR, AR, ncol = 1)
@@ -91,5 +117,5 @@ fig4 <- five +
     c(1.02, 1.02, 0.70, 0.38, 0.38, 0.38),
     size = 30)
 ggsave2(file = "analysis_Figure4/Figure_4.pdf", fig4, dpi = 300,
-        width = 11, height = 7.5)
+        width = 12.55, height = 8.5)
 # 11 x 7.5

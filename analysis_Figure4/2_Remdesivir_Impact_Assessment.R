@@ -24,9 +24,15 @@ actual_prop_ox_hosp_beds <- 0.6
 actual_prop_ox_ICU_beds <- 0.8
 actual_MV_capacity <- round(actual_ICU_beds * 0.5)
 time <- 600
+R <- "low"
+if (R == "high") {
+  R0 <- 2
+} else {
+  R0 <- 1.35
+}
 
 # Running and assessing Remdesivir impact
-none <- run_apothecary(country = "Bhutan", R0 = 2, population = standard_population, contact_matrix_set = standard_matrix,
+none <- run_apothecary(country = "Bhutan", R0 = R0, population = standard_population, contact_matrix_set = standard_matrix,
                        time_period = time, seeding_cases = 20, day_return = TRUE,
                        hosp_bed_capacity = actual_hosp_beds, ICU_bed_capacity = actual_ICU_beds,
                        prop_ox_hosp_beds = actual_prop_ox_hosp_beds, prop_ox_ICU_beds = actual_prop_ox_ICU_beds,
@@ -34,7 +40,7 @@ none <- run_apothecary(country = "Bhutan", R0 = 2, population = standard_populat
 index <- squire:::odin_index(none$model)
 none_deaths <- sum(apply(none$output[, index$D], 2, max))
 
-rem <- run_apothecary(country = "Bhutan", R0 = 2, population = standard_population, contact_matrix_set = standard_matrix,
+rem <- run_apothecary(country = "Bhutan", R0 = R0, population = standard_population, contact_matrix_set = standard_matrix,
                       time_period = time, seeding_cases = 20, day_return = TRUE,
                       hosp_bed_capacity = actual_hosp_beds, ICU_bed_capacity = actual_ICU_beds,
                       prop_ox_hosp_beds = actual_prop_ox_hosp_beds, prop_ox_ICU_beds = actual_prop_ox_ICU_beds,
@@ -134,7 +140,7 @@ rem_AR <- calc_AR(rem)
 # Doses
 rem_doses <- sum(rem$output[, index$number_get_hosp_any_treat])
 
-rem_df <- data.frame(drug = "Remdesivir", total_infected = rem_infected, attack_rate = rem_AR,
+rem_df <- data.frame(drug = "Remdesivir", R0 = R, total_infected = rem_infected, attack_rate = rem_AR,
                      deaths = rem_deaths, total_deaths_averted = total_deaths_averted,
                      direct_deaths_averted = direct_deaths_averted, indirect_deaths_averted_healthcare = indirect_deaths_averted_healthcare,
                      indirect_deaths_averted_transmission = 0, IFR = rem_IFR,
@@ -143,6 +149,6 @@ rem_df <- data.frame(drug = "Remdesivir", total_infected = rem_infected, attack_
                      days_over_full_hosp = rem_hosp_full_days_capacity, days_over_any_hosp = rem_hosp_any_days_capacity,
                      days_over_full_ICU = rem_ICU_full_days_capacity, days_over_any_ICU = rem_ICU_any_days_capacity,
                      doses = rem_doses)
-saveRDS(rem_df, file = "analysis_Figure4/Outputs/rem_df.rds")
+saveRDS(rem_df, file = paste0("analysis_Figure4/Outputs/rem_", R, "_df.rds"))
 
 

@@ -23,7 +23,8 @@ actual_ICU_beds <- round(squire::get_healthcare_capacity(country)$ICU_beds * sum
 actual_prop_ox_hosp_beds <- 0.6
 actual_prop_ox_ICU_beds <- 0.8
 actual_MV_capacity <- round(actual_ICU_beds * 0.5)
-time <- 600
+time <- 750
+
 
 # Running and assessing mAb (or similar) impact
 # Impact from mAbs (or similar drug reducing prob_hosp and also duration of infectiousness) comes
@@ -35,7 +36,12 @@ time <- 600
 # 3) Indirectly by preventing individuals from being hospitalised (and dying)
 #      Run the model with only the duration of infection effect in, and now limited healthcare. Impact here is from the drug
 #      preventing people from going to hospital AND from the reduced strain on healthcare.
-R0 <- 2
+R <- "low"
+if (R == "high") {
+  R0 <- 2
+} else {
+  R0 <- 1.35
+}
 pre_symp_rate <- 1
 prop_treat <- 0.5
 none_lim_hc_1 <- run_apothecary(country = "Bhutan", R0 = R0, population = standard_population, contact_matrix_set = standard_matrix,
@@ -53,7 +59,8 @@ dur_change <- run_apothecary(country = "Bhutan", R0 = R0, population = standard_
 index <- squire:::odin_index(none_lim_hc_1$model)
 indirect_deaths_averted_R0_red <- sum(apply(none_lim_hc_1$output[, index$D], 2, max)) - sum(apply(dur_change$output[, index$D], 2, max))
 
-# initial
+# Now sequentially ading in the drug 3 effect - first adding in without changing the duration of infectiousness for ICaseDrug3, then with the change in also
+drug_3_effect_size <- 0.5
 dur_and_hosp_change <- run_apothecary(country = "Bhutan", R0 = R0, population = standard_population, contact_matrix_set = standard_matrix,
                                       time_period = time, seeding_cases = 20, day_return = TRUE,
                                       hosp_bed_capacity = actual_hosp_beds, ICU_bed_capacity = actual_ICU_beds,
@@ -65,8 +72,6 @@ dur_and_hosp_change <- run_apothecary(country = "Bhutan", R0 = R0, population = 
                                       drug_3_indic = 1, drug_3_prop_treat = prop_treat, drug_3_effect_size = drug_3_effect_size)
 index <- squire:::odin_index(none_lim_hc_1$model)
 
-# Now sequentially ading in the drug 3 effect - first adding in without changing the duration of infectiousness for ICaseDrug3, then with the change in also
-drug_3_effect_size <- 0.5
 dur_and_hosp_change2 <- run_apothecary(country = "Bhutan", R0 = R0, population = standard_population, contact_matrix_set = standard_matrix,
                                        time_period = time, seeding_cases = 20, day_return = TRUE,
                                        hosp_bed_capacity = actual_hosp_beds, ICU_bed_capacity = actual_ICU_beds,
@@ -153,7 +158,7 @@ g <- sum((extra_ICritfull_from_none * probs$prob_critical_death_no_ICU_no_ox_no_
 indirect_deaths_averted_prob_hosp_mod <- a+b+c+d+e+f+g
 
 total_deaths_averted
-indirect_deaths_averted_R0_red + direct_deaths_averted_prob_hosp_mod + indirect_deaths_averted_prob_hosp_mod # + indirect_deaths_averted_Drug3_ICase don't need this last part anymore I don't think
+indirect_deaths_averted_R0_red + direct_deaths_averted_prob_hosp_mod + indirect_deaths_averted_prob_hosp_mod + indirect_deaths_averted_Drug3_ICase #don't need this last part anymore I don't think
 
 direct_deaths_averted_prob_hosp_mod
 indirect_deaths_averted_healthcare <- indirect_deaths_averted_prob_hosp_mod
@@ -182,7 +187,7 @@ drug_AR <- calc_AR(dur_and_hosp_change2)
 # Doses
 drug_doses <- sum(dur_and_hosp_change2$output[, index$n_E2_IPre])
 
-drug_df <- data.frame(drug = "mAb", total_infected = drug_infected, attack_rate = drug_AR,
+drug_df <- data.frame(drug = "mAb", R0 = R, total_infected = drug_infected, attack_rate = drug_AR,
                       deaths = drug_deaths, total_deaths_averted = total_deaths_averted,
                       direct_deaths_averted = direct_deaths_averted, indirect_deaths_averted_healthcare = indirect_deaths_averted_healthcare,
                       indirect_deaths_averted_transmission = indirect_deaths_averted_transmission, IFR = drug_IFR,
@@ -191,4 +196,4 @@ drug_df <- data.frame(drug = "mAb", total_infected = drug_infected, attack_rate 
                       days_over_full_hosp = drug_hosp_full_days_capacity, days_over_any_hosp = drug_hosp_any_days_capacity,
                       days_over_full_ICU = drug_ICU_full_days_capacity, days_over_any_ICU = drug_ICU_any_days_capacity,
                       doses = drug_doses)
-saveRDS(drug_df, file = "analysis_Figure4/Outputs/mab_df.rds")
+saveRDS(drug_df, file = paste0("analysis_Figure4/Outputs/mab_", R, "_df.rds"))

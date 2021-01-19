@@ -29,7 +29,12 @@ time <- 600
 # Impact comes from a multiple of different sources:
 #   1) Directly by shifting individuals from higher risk (ICU) to lower risk (hosp) categories
 #   2) Indirectly by remaining ICU individuals being able to get access to better healthcare (due to lower demand)
-R0 <- 2
+R <- "low"
+if (R == "high") {
+  R0 <- 2
+} else {
+  R0 <- 1.35
+}
 none <- run_apothecary(country = "Bhutan", R0 = R0, population = standard_population, contact_matrix_set = standard_matrix,
                        time_period = time, seeding_cases = 20, day_return = TRUE,
                        hosp_bed_capacity = actual_hosp_beds, ICU_bed_capacity = actual_ICU_beds,
@@ -90,7 +95,7 @@ none_doses <- 0
 dexy_doses <- sum(dexy$output[, index$number_get_ICU_any_treat]) + sum(dexy$output[, index$number_get_hosp_any_treat])
 
 # Creating Dataframe Storing Metrics
-none_df <- data.frame(drug = "None", total_infected = none_infected, attack_rate = none_AR,
+none_df <- data.frame(drug = "None", R0 = R, total_infected = none_infected, attack_rate = none_AR,
                       deaths = none_deaths, total_deaths_averted = 0,
                       direct_deaths_averted = 0, indirect_deaths_averted_healthcare = 0,
                       indirect_deaths_averted_transmission = 0, IFR = none_IFR,
@@ -99,9 +104,9 @@ none_df <- data.frame(drug = "None", total_infected = none_infected, attack_rate
                       days_over_full_hosp = none_hosp_full_days_capacity, days_over_any_hosp = none_hosp_any_days_capacity,
                       days_over_full_ICU = none_ICU_full_days_capacity, days_over_any_ICU = none_ICU_any_days_capacity,
                       doses = none_doses)
-saveRDS(none_df, file = "analysis_Figure4/Outputs/none_df.rds")
+saveRDS(none_df, file = paste0("analysis_Figure4/Outputs/none_", R, "_df.rds"))
 
-dexy_df <- data.frame(drug = "Dexamethasone", total_infected = dexy_infected, attack_rate = dexy_AR,
+dexy_df <- data.frame(drug = "Dexamethasone", R0 = R, total_infected = dexy_infected, attack_rate = dexy_AR,
                       deaths = dexy_deaths, total_deaths_averted = total_deaths_averted,
                       direct_deaths_averted = direct_deaths_averted, indirect_deaths_averted_healthcare = indirect_deaths_averted_healthcare,
                       indirect_deaths_averted_transmission = indirect_deaths_averted_transmission, IFR = dexy_IFR,
@@ -110,6 +115,6 @@ dexy_df <- data.frame(drug = "Dexamethasone", total_infected = dexy_infected, at
                       days_over_full_hosp = dexy_hosp_full_days_capacity, days_over_any_hosp = dexy_hosp_any_days_capacity,
                       days_over_full_ICU = dexy_ICU_full_days_capacity, days_over_any_ICU = dexy_ICU_any_days_capacity,
                       doses = dexy_doses)
-saveRDS(dexy_df, file = "analysis_Figure4/Outputs/dexy_df.rds")
+saveRDS(dexy_df, file = paste0("analysis_Figure4/Outputs/dexy_", R, "_df.rds"))
 
 

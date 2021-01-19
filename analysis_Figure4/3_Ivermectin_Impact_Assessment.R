@@ -30,7 +30,13 @@ time <- 600
 #   1) Directly by shifting individuals from higher risk (ICU) to lower risk (hosp) categories
 #   2) Indirectly by remaining ICU individuals being able to get access to better healthcare (due to lower demand)
 drug_6_effect_size <- 0.5
-R0 <- 2
+R <- "low"
+if (R == "high") {
+  R0 <- 2
+} else {
+  R0 <- 1.35
+}
+
 none <- run_apothecary(country = "Bhutan", R0 = R0, population = standard_population, contact_matrix_set = standard_matrix,
                                 time_period = time, seeding_cases = 20, day_return = TRUE,
                                 hosp_bed_capacity = actual_hosp_beds, ICU_bed_capacity = actual_ICU_beds,
@@ -104,7 +110,7 @@ drug_AR <- calc_AR(drug)
 # Doses
 drug_doses <- sum(drug$output[, index$number_get_ICU_any_treat]) + sum(drug$output[, index$number_get_hosp_any_treat])
 
-drug_df <- data.frame(drug = "Ivermetin", total_infected = drug_infected, attack_rate = drug_AR,
+drug_df <- data.frame(drug = "Ivermectin", R0 = R, total_infected = drug_infected, attack_rate = drug_AR,
                      deaths = drug_deaths, total_deaths_averted = total_deaths_averted,
                      direct_deaths_averted = direct_deaths_averted, indirect_deaths_averted_healthcare = indirect_deaths_averted_healthcare,
                      indirect_deaths_averted_transmission = 0, IFR = drug_IFR,
@@ -113,7 +119,7 @@ drug_df <- data.frame(drug = "Ivermetin", total_infected = drug_infected, attack
                      days_over_full_hosp = drug_hosp_full_days_capacity, days_over_any_hosp = drug_hosp_any_days_capacity,
                      days_over_full_ICU = drug_ICU_full_days_capacity, days_over_any_ICU = drug_ICU_any_days_capacity,
                      doses = drug_doses)
-saveRDS(drug_df, file = "analysis_Figure4/Outputs/ivm_df.rds")
+saveRDS(drug_df, file = paste0("analysis_Figure4/Outputs/ivm_", R, "_df.rds"))
 
 # Scrapola #
 # Think I could work this out directly by working out proportions in extra categories and then assigning an avert's total proportionally to each of the extras
