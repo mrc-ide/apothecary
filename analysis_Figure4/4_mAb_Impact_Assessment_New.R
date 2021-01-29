@@ -72,6 +72,7 @@ dur_and_hosp_change <- run_apothecary(country = "Bhutan", R0 = R0, population = 
                                       drug_3_indic = 1, drug_3_prop_treat = prop_treat, drug_3_effect_size = drug_3_effect_size)
 index <- squire:::odin_index(none_lim_hc_1$model)
 
+# do we need to get rid of asymptomatics receiving the drug? yes quite possiblyyyy!!!!
 dur_and_hosp_change2 <- run_apothecary(country = "Bhutan", R0 = R0, population = standard_population, contact_matrix_set = standard_matrix,
                                        time_period = time, seeding_cases = 20, day_return = TRUE,
                                        hosp_bed_capacity = actual_hosp_beds, ICU_bed_capacity = actual_ICU_beds,

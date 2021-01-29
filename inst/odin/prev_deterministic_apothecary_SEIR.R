@@ -311,7 +311,7 @@ current_free_ICU_bed_no_ox <- (current_ICU_bed_capacity - round(current_prop_ox_
   sum(n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec) + sum(n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital) - ICU_bed_no_ox_occ
 
 # Individuals Getting ICU Beds With Oxygen And Their Associated Disease Severity
-total_GetICU_GetOx_initial <- if(current_free_ICU_bed_ox <= 0) 0 else(if(current_free_ICU_bed_ox - total_req_ICU > 0) total_req_ICU else(current_free_ICU_bed_ox)) # Working out the number of new ICU requiring infections that get a bed
+total_GetICU_GetOx_initial <- if(current_free_ICU_bed_ox <= 0) 0 else(if(current_free_ICU_bed_ox - total_req_ICU >= 0) total_req_ICU else(current_free_ICU_bed_ox)) # Working out the number of new ICU requiring infections that get a bed
 total_GetICU_GetOx_to_IMod <- if (total_GetICU_GetOx_initial > 0 && drug_6_indic == 1) total_GetICU_GetOx_initial * (drug_6_prop_treat * drug_6_effect_size) else 0 # Working out what number of these individuals get pushed to IMod instead by successful treatment
 total_GetICU_GetOx <- if(current_free_ICU_bed_ox <= 0) 0 else(if(current_free_ICU_bed_ox - (total_req_ICU - total_GetICU_GetOx_to_IMod) >= 0) (total_req_ICU - total_GetICU_GetOx_to_IMod) else(current_free_ICU_bed_ox)) # redoing the oxygen ICU bed assignment minus those who've been pushed to IMod
 
@@ -327,11 +327,11 @@ number_ISev_GetICU_GetOx[] <- number_GetICU_GetOx[i] - number_ICrit_GetICU_GetOx
 MV_occ <- sum(ICrit_GetICU_GetOx_GetMV_Surv1) + sum(ICrit_GetICU_GetOx_GetMV_Surv2) + sum(ICrit_GetICU_GetOx_GetMV_Die1) + sum(ICrit_GetICU_GetOx_GetMV_Die2) # Current Mechanical Ventilator Usage
 current_free_MV <- MV_capacity + sum(n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec) + sum(n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital) - MV_occ # Number of mechanical ventilators that are currently free after taking into account flows out of ICrit
 total_ICrit_GetICU_GetOx_GetMV <- if(current_free_MV <= 0) 0 else(if(current_free_MV - sum(number_ICrit_GetICU_GetOx) >= 0) sum(number_ICrit_GetICU_GetOx) else(current_free_MV))
-number_ICrit_GetICU_GetOx_GetMV[] <-  if(total_ICrit_GetICU_GetOx_GetMV <= 0 || sum(number_ICrit_GetICU_GetOx) <= 0) 0 else number_ICrit_GetICU_GetOx[i]/sum(number_ICrit_GetICU_GetOx) * total_ICrit_GetICU_GetOx_GetMV
+number_ICrit_GetICU_GetOx_GetMV[] <-  if(total_ICrit_GetICU_GetOx_GetMV <= 0) 0 else number_ICrit_GetICU_GetOx[i]/sum(number_ICrit_GetICU_GetOx) * total_ICrit_GetICU_GetOx_GetMV
 number_ICrit_GetICU_GetOx_NoMV[] <- number_ICrit_GetICU_GetOx[i] - number_ICrit_GetICU_GetOx_GetMV[i]
 
 # Individuals Getting ICU Beds Without Oxygen And Their Associated Disease Severity
-total_GetICU_NoOx_initial <- if(current_free_ICU_bed_no_ox <= 0) 0 else(if(current_free_ICU_bed_no_ox - (total_req_ICU - total_GetICU_GetOx - total_GetICU_GetOx_to_IMod) > 0) total_req_ICU - total_GetICU_GetOx - total_GetICU_GetOx_to_IMod else (current_free_ICU_bed_no_ox))
+total_GetICU_NoOx_initial <- if(current_free_ICU_bed_no_ox <= 0) 0 else(if(current_free_ICU_bed_no_ox - (total_req_ICU - total_GetICU_GetOx - total_GetICU_GetOx_to_IMod) >= 0) total_req_ICU - total_GetICU_GetOx - total_GetICU_GetOx_to_IMod else (current_free_ICU_bed_no_ox))
 total_GetICU_NoOx_to_IMod <- if (total_GetICU_NoOx_initial > 0 && drug_6_indic == 1) total_GetICU_NoOx_initial * (drug_6_prop_treat * drug_6_effect_size) else 0
 total_GetICU_NoOx <- if(current_free_ICU_bed_no_ox <= 0) 0 else(if(current_free_ICU_bed_no_ox - (total_req_ICU - total_GetICU_GetOx - total_GetICU_GetOx_to_IMod - total_GetICU_NoOx_to_IMod) >= 0) total_req_ICU - total_GetICU_GetOx - total_GetICU_GetOx_to_IMod - total_GetICU_NoOx_to_IMod else (current_free_ICU_bed_no_ox))
 

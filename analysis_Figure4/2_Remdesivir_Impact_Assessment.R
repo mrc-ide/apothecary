@@ -24,7 +24,7 @@ actual_prop_ox_hosp_beds <- 0.6
 actual_prop_ox_ICU_beds <- 0.8
 actual_MV_capacity <- round(actual_ICU_beds * 0.5)
 time <- 600
-R <- "low"
+R <- "high"
 if (R == "high") {
   R0 <- 2
 } else {

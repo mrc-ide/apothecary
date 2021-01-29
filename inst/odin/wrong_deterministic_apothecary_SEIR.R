@@ -264,7 +264,7 @@ n_IRec2_R[] <- gamma_rec * IRec2[i]
 ## WORKING OUT NUMBER OF HOSPITAL BEDS AVAILABILE AND HOW MANY INDIVIDUALS RECEIVE THEM
 ##-------------------------------------------------------------------------------------
 # Calculating Number of Individuals Requiring An ICU Bed (Includes those otherwise needing ICU but who benefit from treatment reducing severity)
-number_req_Hosp[] <- (n_ICase2_Hosp[i] + number_GetICU_GetOx_to_IMod[i] + number_GetICU_NoOx_to_IMod[i]) - number_req_ICU[i]  # Number of new hospitalisations that are going to require a hospital bed and oxygen (i.e. IMod)
+number_req_Hosp[] <- n_ICase2_Hosp[i] - number_req_ICU[i]  # Number of new hospitalisations that are going to require a hospital bed and oxygen (i.e. IMod)
 total_req_Hosp <- sum(number_req_Hosp) # Totaling number newly requiring a hospital bed and oxygen (i.e. IMod) over age groups
 
 # Calculating Hospital Bed Occupancy, Taking Into Account Individuals Leaving Hospital Beds to Recovery and Entering Stepdown Hospital Beds from the ICU
@@ -293,8 +293,10 @@ number_IMod_NoHosp_NoOx[] <- number_req_Hosp[i] - number_IMod_GetHosp_GetOx[i] -
 ## WORKING OUT NUMBER OF ICU BEDS AVAILABILE HOW MANY INDIVIDUALS RECEIVE THEM, OXYGEN AND MECHANCAL VENTILATION
 ##--------------------------------------------------------------------------------------------------------------
 # Calculating Number of Individuals Requiring An ICU Bed
-number_req_ICU[] <- n_ICase2_Hosp[i] * prob_severe[i] # Initial number of new hospitalisations that are going to require an ICU bed (either with or w/o mechanical ventilation)
+prelim_number_req_ICU[] <- n_ICase2_Hosp[i] * prob_severe[i] # Initial number of new hospitalisations that are going to require an ICU bed (either with or w/o mechanical ventilation)
+number_req_ICU[] <- if (drug_6_indic == 1) prelim_number_req_ICU[i] * (drug_6_prop_treat * drug_6_effect_size) else prelim_number_req_ICU[i]
 total_req_ICU <- sum(number_req_ICU) # Totaling number newly requiring an ICU bed over age groups
+dim(prelim_number_req_ICU) <- N_age
 
 # Calculating New Occupancy After Taking Into Account Individuals Leaving ICU Beds This Timestep
 ICU_bed_ox_occ <- sum(ISev_GetICU_GetOx_Surv1) + sum(ISev_GetICU_GetOx_Surv2) + sum(ISev_GetICU_GetOx_Die1) + sum(ISev_GetICU_GetOx_Die2) +
@@ -311,13 +313,9 @@ current_free_ICU_bed_no_ox <- (current_ICU_bed_capacity - round(current_prop_ox_
   sum(n_ICrit_GetICU_NoOx_NoMV_Surv2_Rec) + sum(n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital) - ICU_bed_no_ox_occ
 
 # Individuals Getting ICU Beds With Oxygen And Their Associated Disease Severity
-total_GetICU_GetOx_initial <- if(current_free_ICU_bed_ox <= 0) 0 else(if(current_free_ICU_bed_ox - total_req_ICU > 0) total_req_ICU else(current_free_ICU_bed_ox)) # Working out the number of new ICU requiring infections that get a bed
-total_GetICU_GetOx_to_IMod <- if (total_GetICU_GetOx_initial > 0 && drug_6_indic == 1) total_GetICU_GetOx_initial * (drug_6_prop_treat * drug_6_effect_size) else 0 # Working out what number of these individuals get pushed to IMod instead by successful treatment
-total_GetICU_GetOx <- if(current_free_ICU_bed_ox <= 0) 0 else(if(current_free_ICU_bed_ox - (total_req_ICU - total_GetICU_GetOx_to_IMod) >= 0) (total_req_ICU - total_GetICU_GetOx_to_IMod) else(current_free_ICU_bed_ox)) # redoing the oxygen ICU bed assignment minus those who've been pushed to IMod
-
+total_GetICU_GetOx <- if(current_free_ICU_bed_ox <= 0) 0 else(if(current_free_ICU_bed_ox - total_req_ICU >= 0) total_req_ICU else(current_free_ICU_bed_ox)) # Working out the number of new ICU requiring infections that get a bed
 number_GetICU_GetOx[] <- if (total_req_ICU <= 0 || total_GetICU_GetOx <= 0) 0 else number_req_ICU[i]/sum(number_req_ICU) * total_GetICU_GetOx # assigning individuals to receive oxygen in proportion to the size of their age-group requring oxygen (at random). Note drug effect is age-independent and so the proportions don't change.
-number_GetICU_GetOx_to_IMod[] <- if (total_req_ICU <= 0 || total_GetICU_GetOx_to_IMod <= 0) 0 else number_req_ICU[i]/sum(number_req_ICU) * total_GetICU_GetOx_to_IMod # note this only works because drug applied equally across ages. Otherwise, would need to do a different fraction for
-number_req_ICU_remaining[] <- number_req_ICU[i] - number_GetICU_GetOx[i] - number_GetICU_GetOx_to_IMod[i]
+number_req_ICU_remaining[] <- number_req_ICU[i] - number_GetICU_GetOx[i]
 
 number_ICrit_GetICU_GetOx_initial[] <- number_GetICU_GetOx[i] * prob_critical[i] # Initial number of new ICU Bed admissions that are going to have Critical Disease (i.e. require oxygen AND MV)
 number_ICrit_GetICU_GetOx[] <- if (drug_7_indic == 1) number_ICrit_GetICU_GetOx_initial[i] * (1 - (drug_7_prop_treat * drug_7_effect_size)) else number_ICrit_GetICU_GetOx_initial[i] # Number of new ICU Bed admissions that are going to have Critical Disease (i.e. require oxygen AND MV) after taking Drug 7 effects into account
@@ -327,23 +325,19 @@ number_ISev_GetICU_GetOx[] <- number_GetICU_GetOx[i] - number_ICrit_GetICU_GetOx
 MV_occ <- sum(ICrit_GetICU_GetOx_GetMV_Surv1) + sum(ICrit_GetICU_GetOx_GetMV_Surv2) + sum(ICrit_GetICU_GetOx_GetMV_Die1) + sum(ICrit_GetICU_GetOx_GetMV_Die2) # Current Mechanical Ventilator Usage
 current_free_MV <- MV_capacity + sum(n_ICrit_GetICU_GetOx_GetMV_Surv2_Rec) + sum(n_ICrit_GetICU_GetOx_GetMV_Die2_D_Hospital) - MV_occ # Number of mechanical ventilators that are currently free after taking into account flows out of ICrit
 total_ICrit_GetICU_GetOx_GetMV <- if(current_free_MV <= 0) 0 else(if(current_free_MV - sum(number_ICrit_GetICU_GetOx) >= 0) sum(number_ICrit_GetICU_GetOx) else(current_free_MV))
-number_ICrit_GetICU_GetOx_GetMV[] <-  if(total_ICrit_GetICU_GetOx_GetMV <= 0 || sum(number_ICrit_GetICU_GetOx) <= 0) 0 else number_ICrit_GetICU_GetOx[i]/sum(number_ICrit_GetICU_GetOx) * total_ICrit_GetICU_GetOx_GetMV
+number_ICrit_GetICU_GetOx_GetMV[] <-  if(total_ICrit_GetICU_GetOx_GetMV <= 0) 0 else number_ICrit_GetICU_GetOx[i]/sum(number_ICrit_GetICU_GetOx) * total_ICrit_GetICU_GetOx_GetMV
 number_ICrit_GetICU_GetOx_NoMV[] <- number_ICrit_GetICU_GetOx[i] - number_ICrit_GetICU_GetOx_GetMV[i]
 
 # Individuals Getting ICU Beds Without Oxygen And Their Associated Disease Severity
-total_GetICU_NoOx_initial <- if(current_free_ICU_bed_no_ox <= 0) 0 else(if(current_free_ICU_bed_no_ox - (total_req_ICU - total_GetICU_GetOx - total_GetICU_GetOx_to_IMod) > 0) total_req_ICU - total_GetICU_GetOx - total_GetICU_GetOx_to_IMod else (current_free_ICU_bed_no_ox))
-total_GetICU_NoOx_to_IMod <- if (total_GetICU_NoOx_initial > 0 && drug_6_indic == 1) total_GetICU_NoOx_initial * (drug_6_prop_treat * drug_6_effect_size) else 0
-total_GetICU_NoOx <- if(current_free_ICU_bed_no_ox <= 0) 0 else(if(current_free_ICU_bed_no_ox - (total_req_ICU - total_GetICU_GetOx - total_GetICU_GetOx_to_IMod - total_GetICU_NoOx_to_IMod) >= 0) total_req_ICU - total_GetICU_GetOx - total_GetICU_GetOx_to_IMod - total_GetICU_NoOx_to_IMod else (current_free_ICU_bed_no_ox))
-
+total_GetICU_NoOx <- if(current_free_ICU_bed_no_ox <= 0) 0 else(if(current_free_ICU_bed_no_ox - (total_req_ICU - total_GetICU_GetOx) >= 0) total_req_ICU - total_GetICU_GetOx else (current_free_ICU_bed_no_ox))
 number_GetICU_NoOx[] <- if(total_GetICU_NoOx <= 0) 0 else number_req_ICU_remaining[i]/sum(number_req_ICU_remaining) * total_GetICU_NoOx
-number_GetICU_NoOx_to_IMod[] <- if (sum(number_req_ICU_remaining) <= 0 || total_GetICU_NoOx_to_IMod <= 0) 0 else number_req_ICU_remaining[i]/sum(number_req_ICU_remaining) * total_GetICU_NoOx_to_IMod # note this only works because drug applied equally across ages. Otherwise, would need to do a different fraction for
 
 number_ICrit_GetICU_NoOx_NoMV_initial[] <- number_GetICU_NoOx[i] * prob_critical[i] # Initial number of new ICU Bed admissions that are going to have Critical Disease (i.e. require oxygen AND MV)
 number_ICrit_GetICU_NoOx_NoMV[] <- if (drug_7_indic == 1) number_ICrit_GetICU_NoOx_NoMV_initial[i] * (1 - (drug_7_prop_treat * drug_7_effect_size)) else number_ICrit_GetICU_NoOx_NoMV_initial[i] # Number of new ICU Bed admissions that are going to have Critical Disease (i.e. require oxygen AND MV) after taking Drug 7 effects into account
 number_ISev_GetICU_NoOx[] <- number_GetICU_NoOx[i] - number_ICrit_GetICU_NoOx_NoMV[i] # Number of new ICU admissions that going to require oxygen only
 
 # Individuals Not Receiving ICU Beds And Their Associated Disease Severities
-number_NoICU[] <- number_req_ICU[i] - number_GetICU_GetOx[i] - number_GetICU_NoOx[i] - number_GetICU_GetOx_to_IMod[i] - number_GetICU_NoOx_to_IMod[i] # number who do not get an ICU bed
+number_NoICU[] <- number_req_ICU[i] - number_GetICU_GetOx[i] - number_GetICU_NoOx[i] # number who do not get an ICU bed
 number_ICrit_NoICU_NoOx_NoMV[] <- number_NoICU[i] * prob_critical[i] # number who do not get an ICU bed and who require both oxygen and mechanical ventilation (i.e. ICrit)
 number_ISev_NoICU_NoOx[] <- number_NoICU[i] - number_ICrit_NoICU_NoOx_NoMV[i] # number who do not get an ICU bed and who require oxygen only (i.e. ISev)
 
@@ -1154,22 +1148,13 @@ output(current_free_ICU_bed_ox) <- TRUE
 output(current_free_ICU_bed_no_ox) <- TRUE
 output(n_ISev_GetICU_NoOx_Die2_D_Hospital) <- TRUE
 output(n_ICrit_GetICU_NoOx_NoMV_Die2_D_Hospital) <- TRUE
-output(total_GetICU_GetOx_initial) <- TRUE
-output(total_GetICU_GetOx_to_IMod) <- TRUE
-output(number_GetICU_GetOx_to_IMod) <- TRUE
 output(total_GetICU_GetOx) <- TRUE
 output(number_GetICU_GetOx) <- TRUE
 output(number_req_ICU_remaining) <- TRUE
 output(MV_occ) <- TRUE
 output(current_free_MV) <- TRUE
-output(total_GetICU_NoOx_initial) <- TRUE
-output(total_GetICU_NoOx_to_IMod) <- TRUE
-output(number_GetICU_NoOx_to_IMod) <- TRUE
 output(total_GetICU_NoOx) <- TRUE
 output(number_GetICU_NoOx) <- TRUE
-
-dim(number_GetICU_GetOx_to_IMod) <- N_age
-dim(number_GetICU_NoOx_to_IMod) <- N_age
 
 ## MISCELLANEOUS VARIABLES USED TO TRACK AND CHECK THE MODEL
 ##----------------------------------------------------------
