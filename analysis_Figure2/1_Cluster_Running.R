@@ -4,7 +4,6 @@ config <- didehpc::didehpc_config(shares = loc, use_rrq = FALSE, cluster = "fi--
                                   parallel = FALSE, rtools = TRUE)
 packages <- c("lubridate", "dplyr", "tidyr", "odin", "squire", "apothecary", "dde")
 
-
 # Creating a Context
 sources <- c("N:/Charlie/apothecary_fitting/apothecary/analysis_Figure2/Functions/Figure_2_Functions.R")
 additional_identifier <- ""
