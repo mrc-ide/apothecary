@@ -74,13 +74,13 @@ default_durations <- function() {
   list(
     dur_E  = 4.6,
 
-    dur_IPreAsymp = 0.5,
-    dur_IPreMild = 0.5,
-    dur_IPreCase = 0.5,
+    dur_IPreAsymp = 1.1,
+    dur_IPreMild = 1.1,
+    dur_IPreCase = 1.1,
 
-    dur_IAsymp = 1.6, # was 2.1 until adding in presymptomatic
-    dur_IMild = 1.6, # was 2.1 until adding in presymptomatic
-    dur_ICase = 4, # was 4.5 until adding in presymptomatic
+    dur_IAsymp = 2.1,
+    dur_IMild = 2.1,
+    dur_ICase = 4.5,
     dur_rec = 4,
 
     dur_IMod_GetHosp_GetOx_Surv = 7.25,
