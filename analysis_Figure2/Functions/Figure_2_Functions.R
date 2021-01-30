@@ -107,8 +107,8 @@ run_drugs_hc_combo <- function(demog_pars, hc_pars, drug_ind_pars, drug_eff_pars
       drug_13_prop_treat = drug_ind_pars$drug_13_prop_treat,
 
       # Drug Effect Parameters
-      drug_11_GetOx_effect_size = drug_eff_pars$rem_mod_getox_mort[x] * drug_eff_pars$dexy_mod_getox_mort[x],
-      drug_11_NoOx_effect_size = drug_eff_pars$rem_mod_noox_mort[x] * drug_eff_pars$dexy_mod_noox_mort[x],
+      drug_11_GetOx_effect_size = drug_eff_pars$dexy_mod_getox_mort[x],
+      drug_11_NoOx_effect_size = drug_eff_pars$dexy_mod_noox_mort[x],
 
       drug_12_GetOx_effect_size = drug_eff_pars$dexy_sev_getox_mort[x],
       drug_12_NoOx_effect_size = drug_eff_pars$dexy_sev_noox_mort[x],
@@ -127,6 +127,7 @@ run_drugs_hc_combo <- function(demog_pars, hc_pars, drug_ind_pars, drug_eff_pars
     ICU_outputs <- get_ICU_occ(temp)
     ICU_fully_treated_prop <- sum(ICU_outputs$ICU_get_full_treat)/sum(ICU_outputs$ICU_need)
     ICU_any_treated_prop <- sum(ICU_outputs$ICU_get_any_treat)/sum(ICU_outputs$ICU_need)
+    #print(x)
 
     return(c(demog_pars$R0, IFR, hosp_fully_treated_prop, hosp_any_treated_prop, ICU_fully_treated_prop, ICU_any_treated_prop))
 
