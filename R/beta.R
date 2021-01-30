@@ -41,8 +41,8 @@ adjusted_eigen <- function(dur_IAsymp, dur_IMild, dur_ICase,
   }
 
   relative_R0_by_age <- (prob_hosp * (dur_ICase + dur_IPreCase)) +
-                        ((1 - prob_hosp) * prob_asymp * (dur_IAsymp + dur_IPreAsymp)) +
-                        ((1 - prob_hosp) * (1 - prob_asymp) * (dur_IMild + dur_IPreMild))
+                        ((1 - prob_hosp) * prob_asymp * rel_inf_asymp * (dur_IAsymp + dur_IPreAsymp)) +
+                        ((1 - prob_hosp) * (1 - prob_asymp) * rel_inf_mild * (dur_IMild + dur_IPreMild))
   Re(eigen(mixing_matrix*relative_R0_by_age)$values[1])
 }
 
