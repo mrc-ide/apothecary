@@ -93,10 +93,6 @@ run_drugs_hc_combo <- function(demog_pars, hc_pars, drug_ind_pars, drug_eff_pars
       MV_capacity = hc_pars$MV_capacity,
 
       # Drug Indicator and Proportion Treated Parameters
-      drug_8_indic_IMod_GetHosp_GetOx = drug_ind_pars$drug_8_indic_IMod_GetHosp_GetOx,
-      drug_8_indic_IMod_GetHosp_NoOx = drug_ind_pars$drug_8_indic_IMod_GetHosp_NoOx,
-      drug_8_prop_treat = drug_ind_pars$drug_8_prop_treat,
-
       drug_11_indic_IMod_GetHosp_GetOx = drug_ind_pars$drug_11_indic_IMod_GetHosp_GetOx,
       drug_11_indic_IMod_GetHosp_NoOx = drug_ind_pars$drug_11_indic_IMod_GetHosp_NoOx,
       drug_11_prop_treat = drug_ind_pars$drug_11_prop_treat,
@@ -111,9 +107,6 @@ run_drugs_hc_combo <- function(demog_pars, hc_pars, drug_ind_pars, drug_eff_pars
       drug_13_prop_treat = drug_ind_pars$drug_13_prop_treat,
 
       # Drug Effect Parameters
-      drug_8_GetOx_effect_size = drug_eff_pars$rem_mod_getox_dur[x],
-      drug_8_NoOx_effect_size = drug_eff_pars$rem_mod_noox_dur[x],
-
       drug_11_GetOx_effect_size = drug_eff_pars$rem_mod_getox_mort[x] * drug_eff_pars$dexy_mod_getox_mort[x],
       drug_11_NoOx_effect_size = drug_eff_pars$rem_mod_noox_mort[x] * drug_eff_pars$dexy_mod_noox_mort[x],
 
