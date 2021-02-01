@@ -111,10 +111,12 @@ for (i in 1:length(type2_effectiveness)) {
 
   print(c(i, type2_low_deaths, type2_high_deaths))
 }
-type2_high[3] <- 195370.42
-type2_high[4] <- 193744.4
-type2_low[4] <- 94296.84
-type2_low[6] <- 89533.72
+
+type2_low[3] <- 95396.69
+type2_low[5] <- 90368.44
+type2_high[6] <- 186176.28
+type2_high[12] <- 175877.75
+
 plot(type2_effectiveness, type2_low/none_low_deaths, type = "l", ylim = c(0, 1))
 lines(type2_effectiveness, type2_high/none_high_deaths, type = "l", col = "red")
 
@@ -227,8 +229,7 @@ for (i in 1:length(type5_effectiveness)) {
 plot(1-duration_prop, type5_low/none_low_deaths, type = "l", ylim = c(0, 1))
 lines(1-duration_prop, type5_high/none_high_deaths, type = "l", col = "red")
 
-plot()
-
+par(mfrow = c(1, 2))
 plot(type1_effectiveness, type1_low/none_low_deaths, type = "l", ylim = c(0, 1))
 lines(type2_effectiveness, type2_low/none_low_deaths, col = "red")
 lines(1-duration_prop, type3_low/none_low_deaths, type = "l", ylim = c(0, 1), col = "blue")
@@ -241,6 +242,34 @@ lines(1-duration_prop, type3_high/none_high_deaths, type = "l", col = "blue")
 lines(type4_effectiveness, type4_high/none_high_deaths, type = "l", col = "orange")
 lines(1-duration_prop, type5_high/none_high_deaths, type = "l", col = "dark green")
 
+total_length <- length(type1_effectiveness) + length(type2_effectiveness) + length(type3_effectiveness) +
+  length(type4_effectiveness) + length(type5_effectiveness)
 
+df <- data.frame(
+  drug = c(rep("type_1", length(type1_effectiveness)),
+           rep("type_2", length(type2_effectiveness)),
+           rep("type_3", length(type3_effectiveness)),
+           rep("type_4", length(type4_effectiveness)),
+           rep("type_5", length(type5_effectiveness))),
+  R0 = c(rep("low", total_length), rep("high", total_length)),
+  averted = c(type1_low/none_low_deaths, type2_low/none_low_deaths, type3_low/none_low_deaths,
+              type4_low/none_low_deaths, type5_low/none_low_deaths,
+              type1_high/none_high_deaths, type2_high/none_high_deaths, type3_high/none_high_deaths,
+              type4_high/none_high_deaths, type5_high/none_high_deaths),
+  effectiveness = c(type1_effectiveness, type2_effectiveness, 1-duration_prop,
+                    type4_effectiveness, 1-duration_prop))
+saveRDS(df, "analysis_Figure4/Outputs/effectiveness_scan.rds")
+
+# nice red: e12f4a
+ggplot(df, aes(x = effectiveness, y = averted, col = drug)) +
+  geom_path() +
+  scale_y_continuous(position = "right") +
+  facet_grid(R0~.) +
+  labs(x = "Drug Effectiveness", y = "Proportion of Deaths Averted") +
+  scale_colour_manual(values = c("#8b82f8", "#f32bb1", "#f76c07", "#98cb66", "#009bfd")) +
+  theme(legend.position = "none",
+        strip.background = element_blank(),
+        strip.text = element_blank(),
+        axis.text = element_text(size = 12))
 
 
