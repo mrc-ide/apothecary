@@ -29,7 +29,7 @@ time <- 600
 # Impact comes from a multiple of different sources:
 #   1) Directly by shifting individuals from higher risk (ICU) to lower risk (hosp) categories
 #   2) Indirectly by remaining ICU individuals being able to get access to better healthcare (due to lower demand)
-R <- "low"
+R <- "high"
 if (R == "high") {
   R0 <- 2
 } else {

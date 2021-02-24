@@ -240,6 +240,7 @@ n_E2_IPre1Asymp[] <- n_E2_IPre1Mild_or_IPre1Asymp[i] * prob_asymp[i]
 n_E2_IPre1Mild[] <- n_E2_IPre1Mild_or_IPre1Asymp[i] - n_E2_IPre1Asymp[i]
 
 output(n_E2_IPre1ICaseDrug3) <- TRUE
+output(n_E2_IPre1ICase) <- TRUE
 
 # Progression through the pre-symptomatic compartments
 n_IPre1_Asymp_IPre2_Asymp[] <- if (drug_2_indic_IPreAsymp == 1) gamma_IPreAsymp_Drug_2 * IPre1Asymp[i] else gamma_IPreAsymp * IPre1Asymp[i]
@@ -264,8 +265,12 @@ n_IRec2_R[] <- gamma_rec * IRec2[i]
 ## WORKING OUT NUMBER OF HOSPITAL BEDS AVAILABILE AND HOW MANY INDIVIDUALS RECEIVE THEM
 ##-------------------------------------------------------------------------------------
 # Calculating Number of Individuals Requiring An ICU Bed (Includes those otherwise needing ICU but who benefit from treatment reducing severity)
+test_number_req_Hosp[] <- n_ICase2_Hosp[i] - number_req_ICU[i]
 number_req_Hosp[] <- (n_ICase2_Hosp[i] + number_GetICU_GetOx_to_IMod[i] + number_GetICU_NoOx_to_IMod[i]) - number_req_ICU[i]  # Number of new hospitalisations that are going to require a hospital bed and oxygen (i.e. IMod)
 total_req_Hosp <- sum(number_req_Hosp) # Totaling number newly requiring a hospital bed and oxygen (i.e. IMod) over age groups
+
+dim(test_number_req_Hosp) <- N_age
+output(test_number_req_Hosp) <- TRUE
 
 # Calculating Hospital Bed Occupancy, Taking Into Account Individuals Leaving Hospital Beds to Recovery and Entering Stepdown Hospital Beds from the ICU
 hosp_bed_ox_occ <- sum(IMod_GetHosp_GetOx_Surv1) + sum(IMod_GetHosp_GetOx_Surv2) + sum(IMod_GetHosp_GetOx_Die1) + sum(IMod_GetHosp_GetOx_Die2)
@@ -295,6 +300,8 @@ number_IMod_NoHosp_NoOx[] <- number_req_Hosp[i] - number_IMod_GetHosp_GetOx[i] -
 # Calculating Number of Individuals Requiring An ICU Bed
 number_req_ICU[] <- n_ICase2_Hosp[i] * prob_severe[i] # Initial number of new hospitalisations that are going to require an ICU bed (either with or w/o mechanical ventilation)
 total_req_ICU <- sum(number_req_ICU) # Totaling number newly requiring an ICU bed over age groups
+
+output(n_ICase2_Hosp) <- TRUE
 
 # Calculating New Occupancy After Taking Into Account Individuals Leaving ICU Beds This Timestep
 ICU_bed_ox_occ <- sum(ISev_GetICU_GetOx_Surv1) + sum(ISev_GetICU_GetOx_Surv2) + sum(ISev_GetICU_GetOx_Die1) + sum(ISev_GetICU_GetOx_Die2) +
@@ -346,6 +353,8 @@ number_ISev_GetICU_NoOx[] <- number_GetICU_NoOx[i] - number_ICrit_GetICU_NoOx_No
 number_NoICU[] <- number_req_ICU[i] - number_GetICU_GetOx[i] - number_GetICU_NoOx[i] - number_GetICU_GetOx_to_IMod[i] - number_GetICU_NoOx_to_IMod[i] # number who do not get an ICU bed
 number_ICrit_NoICU_NoOx_NoMV[] <- number_NoICU[i] * prob_critical[i] # number who do not get an ICU bed and who require both oxygen and mechanical ventilation (i.e. ICrit)
 number_ISev_NoICU_NoOx[] <- number_NoICU[i] - number_ICrit_NoICU_NoOx_NoMV[i] # number who do not get an ICU bed and who require oxygen only (i.e. ISev)
+
+output(number_NoICU) <- TRUE
 
 ## CALCULATING THE NUMBER OF INDIVIDUALS MOVING OUT OF HOSPITAL/ICU BED RELATED COMPARTMENTS
 ##------------------------------------------------------------------------------------------

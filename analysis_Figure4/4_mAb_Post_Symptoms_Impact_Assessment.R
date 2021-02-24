@@ -25,7 +25,6 @@ actual_prop_ox_ICU_beds <- 0.8
 actual_MV_capacity <- round(actual_ICU_beds * 0.5)
 time <- 750
 
-
 # Running and assessing mAb (or similar) impact
 # Impact from mAbs (or similar drug reducing prob_hosp and also duration of infectiousness) comes
 # from a multiple of different sources:
@@ -36,7 +35,7 @@ time <- 750
 # 3) Indirectly by preventing individuals from being hospitalised (and dying)
 #      Run the model with only the duration of infection effect in, and now limited healthcare. Impact here is from the drug
 #      preventing people from going to hospital AND from the reduced strain on healthcare.
-R <- "low"
+R <- "high"
 if (R == "high") {
   R0 <- 2
 } else {
@@ -55,7 +54,7 @@ dur_change <- run_apothecary(country = "Bhutan", R0 = R0, population = standard_
                              drug_2_indic_IPreAsymp = 1, drug_2_indic_IPreMild = 1, drug_2_indic_IPreCase = 1,
                              drug_2_prop_treat = 1, drug_2_effect_size_IPreAsymp = pre_symp_rate, drug_2_effect_size_IPreMild = pre_symp_rate, drug_2_effect_size_IPreCase = 1,
                              drug_4_indic_IAsymp = 1, drug_4_indic_IMild = 1, drug_4_indic_ICase = 1,
-                             drug_4_prop_treat = prop_treat, drug_4_effect_size_IAsymp = 1.5, drug_4_effect_size_IMild = 1.5, drug_4_effect_size_ICase = 1.5)
+                             drug_4_prop_treat = prop_treat, drug_4_effect_size_IAsymp = 1, drug_4_effect_size_IMild = 1.5, drug_4_effect_size_ICase = 1.5)
 index <- squire:::odin_index(none_lim_hc_1$model)
 indirect_deaths_averted_R0_red <- sum(apply(none_lim_hc_1$output[, index$D], 2, max)) - sum(apply(dur_change$output[, index$D], 2, max))
 
@@ -68,7 +67,7 @@ dur_and_hosp_change <- run_apothecary(country = "Bhutan", R0 = R0, population = 
                                       drug_2_indic_IPreAsymp = 1, drug_2_indic_IPreMild = 1, drug_2_indic_IPreCase = 1,
                                       drug_2_prop_treat = 1, drug_2_effect_size_IPreAsymp = pre_symp_rate, drug_2_effect_size_IPreMild = pre_symp_rate, drug_2_effect_size_IPreCase = 1,
                                       drug_4_indic_IAsymp = 1, drug_4_indic_IMild = 1, drug_4_indic_ICase = 1,
-                                      drug_4_prop_treat = prop_treat, drug_4_effect_size_IAsymp = 1.5, drug_4_effect_size_IMild = 1.5, drug_4_effect_size_ICase = 1,
+                                      drug_4_prop_treat = prop_treat, drug_4_effect_size_IAsymp = 1, drug_4_effect_size_IMild = 1.5, drug_4_effect_size_ICase = 1,
                                       drug_3_indic = 1, drug_3_prop_treat = prop_treat, drug_3_effect_size = drug_3_effect_size)
 index <- squire:::odin_index(none_lim_hc_1$model)
 
@@ -80,7 +79,7 @@ dur_and_hosp_change2 <- run_apothecary(country = "Bhutan", R0 = R0, population =
                                        drug_2_indic_IPreAsymp = 1, drug_2_indic_IPreMild = 1, drug_2_indic_IPreCase = 1,
                                        drug_2_prop_treat = 1, drug_2_effect_size_IPreAsymp = pre_symp_rate, drug_2_effect_size_IPreMild = pre_symp_rate, drug_2_effect_size_IPreCase = pre_symp_rate,
                                        drug_4_indic_IAsymp = 1, drug_4_indic_IMild = 1, drug_4_indic_ICase = 1,
-                                       drug_4_prop_treat = prop_treat, drug_4_effect_size_IAsymp = 1.5, drug_4_effect_size_IMild = 1.5, drug_4_effect_size_ICase = 1.5,
+                                       drug_4_prop_treat = prop_treat, drug_4_effect_size_IAsymp = 1, drug_4_effect_size_IMild = 1.5, drug_4_effect_size_ICase = 1.5,
                                        drug_3_indic = 1, drug_3_prop_treat = prop_treat, drug_3_effect_size = drug_3_effect_size)
 index <- squire:::odin_index(none_lim_hc_1$model)
 drug_deaths <- sum(apply(dur_and_hosp_change2$output[, index$D], 2, max))
@@ -197,4 +196,4 @@ drug_df <- data.frame(drug = "mAb", R0 = R, total_infected = drug_infected, atta
                       days_over_full_hosp = drug_hosp_full_days_capacity, days_over_any_hosp = drug_hosp_any_days_capacity,
                       days_over_full_ICU = drug_ICU_full_days_capacity, days_over_any_ICU = drug_ICU_any_days_capacity,
                       doses = drug_doses)
-saveRDS(drug_df, file = paste0("analysis_Figure4/Outputs/mab_", R, "_df.rds"))
+saveRDS(drug_df, file = paste0("analysis_Figure4/Outputs/mab_post_symptom_", R, "_df.rds"))

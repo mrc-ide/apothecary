@@ -10,14 +10,26 @@ rem_low <- readRDS("analysis_Figure4/Outputs/rem_low_df.rds")
 rem_high <- readRDS("analysis_Figure4/Outputs/rem_high_df.rds")
 ivm_low <- readRDS("analysis_Figure4/Outputs/ivm_low_df.rds")
 ivm_high <- readRDS("analysis_Figure4/Outputs/ivm_high_df.rds")
-mab_low <- readRDS("analysis_Figure4/Outputs/mab_low_df.rds")
-mab_high <- readRDS("analysis_Figure4/Outputs/mab_high_df.rds")
+colc_low <- readRDS("analysis_Figure4/Outputs/colchicine_low_df.rds")
+colc_high <- readRDS("analysis_Figure4/Outputs/colchicine_high_df.rds")
+mab_symp_low <- readRDS("analysis_Figure4/Outputs/mab_post_symptom_low_df.rds")
+mab_symp_high <- readRDS("analysis_Figure4/Outputs/mab_post_symptom_high_df.rds")
+mab_exp_low <- readRDS("analysis_Figure4/Outputs/mab_post_exposure_low_df.rds")
+mab_exp_high <- readRDS("analysis_Figure4/Outputs/mab_post_exposure_high_df.rds")
 
 ivm_low$drug <- "Ivermectin"
 ivm_high$drug <- "Ivermectin"
-drugs_df <- rbind(none_low, none_high, dexy_low, dexy_high, rem_low, rem_high, ivm_low, ivm_high, mab_low, mab_high) %>%
+mab_symp_low$drug <- "mAb Post-Sympt"
+mab_symp_high$drug <- "mAb Post-Sympt"
+mab_exp_low$drug <- "mAb Post-Exp"
+mab_exp_high$drug <- "mAb Post-Exp"
+colc_low$drug <- "Colchicine"
+colc_high$drug <- "Colchicine"
+
+drugs_df <- rbind(none_low, none_high, dexy_low, dexy_high, rem_low, rem_high, ivm_low, ivm_high,
+                  colc_low, colc_high, mab_symp_low, mab_symp_high, mab_exp_low, mab_exp_high) %>%
   filter(drug != "None")
-drugs_df$drug <- factor(drugs_df$drug, levels = c("Dexamethasone", "Ivermectin", "Remdesivir", "mAb"))
+drugs_df$drug <- factor(drugs_df$drug, levels = c("Dexamethasone", "Ivermectin", "Remdesivir", "Colchicine", "mAb Post-Sympt", "mAb Post-Exp"))
 
 deaths_df <- drugs_df %>%
   select(drug, R0, direct_deaths_averted, indirect_deaths_averted_transmission, indirect_deaths_averted_healthcare) %>%
@@ -26,8 +38,8 @@ deaths_df <- drugs_df %>%
 deaths_df$effect_type <- factor(deaths_df$effect_type, levels = c("indirect_deaths_averted_transmission",
                                                                   "indirect_deaths_averted_healthcare",
                                                                   "direct_deaths_averted"))
-deaths_df$drug <- factor(deaths_df$drug, levels = c("Dexamethasone", "Ivermectin", "Remdesivir", "mAb"))
-deaths_df_plot <- ggplot(deaths_df) +
+# deaths_df_plot  <-
+ggplot(deaths_df) +
   geom_bar(width=0.9, aes(x = R0, y = deaths_averted,
                fill = interaction(drug, effect_type, R0)), stat = "identity") +
   facet_wrap(~drug, nrow = 1) +
@@ -35,10 +47,12 @@ deaths_df_plot <- ggplot(deaths_df) +
   scale_x_discrete(labels = c("High R0", "Low R0")) +
   theme(panel.margin = grid::unit(0.2, "lines"),
         legend.position = "none", axis.text.x = element_text(size = 12)) +
-  scale_fill_manual(values = c("pink", "pink", "pink", "#E4EFF1", "pink", "#D9D3D6",
-                               "#C2E4FF", "#CADFE3", "#C49799", "#BFB6BB", "#A5D8FF", "#AFD0D6",
-                               "pink", "pink", "pink", "#E4EFF1", "pink", "#D9D3D6",
-                               "#C2E4FF", "#CADFE3", "#C49799", "#BFB6BB", "#A5D8FF", "#AFD0D6"))
+  scale_fill_manual(values = c("blue", "blue", "blue", "blue", "red", "red", # high R0 indirect transmission
+                               "pink", "#E4EFF1", "pink", "pink", "green", "green", # high R0 indirect hosp
+                               "pink", "#D9D3D6", "#C2E4FF", "#CADFE3", "blue", "blue", # high R0 direct
+                               "#A5D8FF", "#AFD0D6", "pink", "pink", "pink", "#E4EFF1", # low R0 indirect transmission
+                               "pink", "#D9D3D6", "#C2E4FF", "#CADFE3", "#C49799", "#BFB6BB", # low R0 indirect hosp
+                               "#A5D8FF", "#AFD0D6", "pink", "#A5D8FF", "#AFD0D6", "pink")) # low R0 direct
 
 IFR <- ggplot(drugs_df) +
   geom_bar(aes(x = R0, y = IFR, fill = drug), stat = "identity") +
