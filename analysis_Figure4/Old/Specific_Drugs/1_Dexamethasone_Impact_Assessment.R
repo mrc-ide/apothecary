@@ -35,6 +35,7 @@ if (R == "high") {
 } else {
   R0 <- 1.35
 }
+type_1_eff <- 0.64
 none <- run_apothecary(country = "Bhutan", R0 = R0, population = standard_population, contact_matrix_set = standard_matrix,
                        time_period = time, seeding_cases = 20, day_return = TRUE,
                        hosp_bed_capacity = actual_hosp_beds, ICU_bed_capacity = actual_ICU_beds,
@@ -46,11 +47,11 @@ dexy <- run_apothecary(country = "Bhutan", R0 = R0, population = standard_popula
                        hosp_bed_capacity = actual_hosp_beds, ICU_bed_capacity = actual_ICU_beds,
                        prop_ox_hosp_beds = actual_prop_ox_hosp_beds, prop_ox_ICU_beds = actual_prop_ox_ICU_beds, MV_capacity = actual_MV_capacity,
                        drug_11_indic_IMod_GetHosp_GetOx = 1, drug_11_indic_IMod_GetHosp_NoOx = 1,
-                       drug_11_prop_treat = 1, drug_11_GetOx_effect_size = 0.82, drug_11_NoOx_effect_size = 0.94,
+                       drug_11_prop_treat = 1, drug_11_GetOx_effect_size = type_1_eff, drug_11_NoOx_effect_size = type_1_eff + 0.5 * (1 - type_1_eff),
                        drug_12_indic_ISev_GetICU_GetOx = 1, drug_12_indic_ISev_GetICU_NoOx = 1,
-                       drug_12_prop_treat = 1, drug_12_GetOx_effect_size = 0.64, drug_12_NoOx_effect_size = 0.82,
+                       drug_12_prop_treat = 1, drug_12_GetOx_effect_size = type_1_eff, drug_12_NoOx_effect_size = type_1_eff + 0.5 * (1 - type_1_eff),
                        drug_13_indic_ICrit_GetICU_GetOx_GetMV = 1, drug_13_indic_ICrit_GetICU_GetOx_NoMV = 1, drug_13_indic_ICrit_GetICU_NoOx_NoMV = 1,
-                       drug_13_prop_treat = 1, drug_13_GetOx_GetMV_effect_size = 0.64, drug_13_GetOx_NoMV_effect_size = 0.82, drug_13_NoOx_NoMV_effect_size = 0.82)
+                       drug_13_prop_treat = 1, drug_13_GetOx_GetMV_effect_size = type_1_eff, drug_13_GetOx_NoMV_effect_size = type_1_eff + 0.5 * (1 - type_1_eff), drug_13_NoOx_NoMV_effect_size = 1)
 dexy_deaths <- sum(apply(dexy$output[, index$D], 2, max))
 total_deaths_averted <- sum(apply(none$output[, index$D], 2, max)) - sum(apply(dexy$output[, index$D], 2, max))
 direct_deaths_averted <- total_deaths_averted
