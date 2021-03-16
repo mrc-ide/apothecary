@@ -23,9 +23,9 @@ demog_pars_lowR0 <- list(R0 = 1.35, country = country, population = standard_pop
                           time_period = 300, seeding_cases = 1000)
 actual_hosp_beds <- round(squire::get_healthcare_capacity(country)$hosp_beds * sum(standard_population)/1000)
 actual_ICU_beds <- round(squire::get_healthcare_capacity(country)$ICU_beds * sum(standard_population)/1000)
-actual_prop_ox_hosp_beds <- 0.6
-actual_prop_ox_ICU_beds <- 0.8
-actual_MV_capacity <- round(actual_ICU_beds * 0.5)
+actual_prop_ox_hosp_beds <- 0.4 #0.6
+actual_prop_ox_ICU_beds <- 0.4 #0.8
+actual_MV_capacity <- round(actual_ICU_beds * 0.4) #0.5
 
 # Figure 2A - Epidemic Curves of Hospital & ICU Bed Demand for Each of the High/Low R0 Scenarios
 lowR0 <- run_apothecary(country = demog_pars_lowR0$country, R0 = demog_pars_lowR0$R0,
@@ -147,12 +147,13 @@ tret_prop_plot_ICU <- ggplot() +
   theme(axis.title.x = element_blank(), legend.position = "none", legend.title = element_blank()) +
   theme(plot.margin = unit(c(0.5, 0, 0, 0.25), "cm"))
 
-
 # Figure 2D - IFR from the Different Drug Effect/R0/Health Resource Scenarios
 
 # Loading in required files and creating relevant dataframes
 filenames <- list.files("analysis_Figure2/Outputs/")
-drug_filenames <- filenames[!grepl("notreat", filenames)]
+
+# Loading in outputs where Dexamethasone is present (and varying healthcare constraints and R)
+drug_filenames <- filenames[grepl("allhosp_gradbencons", filenames)]
 for (i in 1:length(drug_filenames)) {
   if (i == 1) {
     drug_temp <- readRDS(paste0("analysis_Figure2/Outputs/", drug_filenames[i]))
@@ -164,8 +165,9 @@ drugs <- drug_temp %>%
   tidyr::separate(scenario, c("number", "drug","R0", "healthcare", "drug_benefit", "drug_benefit2")) %>%
   unite("drug_benefit", drug_benefit:drug_benefit2, remove = TRUE) %>%
   mutate(healthcare = factor(healthcare, levels = c("unlimHC", "limMV", "limMVox", "limMVoxbeds", "noHC"))) %>%
-  mutate(drug_benefit = factor(drug_benefit, levels = c("treatonly_benfull", "allhosp_gradbencons", "allhosp_gradbenopti", "allhosp_benfull")))
+  mutate(drug_benefit = factor(drug_benefit))
 
+# Loading in outputs where Dexamethasone is NOT present (and varying healthcare constraints and R)
 no_drug_filenames <- filenames[grepl("notreat", filenames)]
 for (i in 1:length(no_drug_filenames)) {
   if (i == 1) {
@@ -180,25 +182,9 @@ no_drugs <- no_drug_temp %>%
   group_by(R0, healthcare) %>%
   summarise(no_drugs_IFR = mean(IFR))
 
-no_hc_filenames <- filenames[grepl("noHC", filenames)]
-for (i in 1:length(no_drug_filenames)) {
-  if (i == 1) {
-    no_hc_temp <- readRDS(paste0("analysis_Figure2/Outputs/", no_hc_filenames[i]))
-  } else {
-    no_hc_temp <- rbind(no_hc_temp, readRDS(paste0("analysis_Figure2/Outputs/", no_hc_filenames[i])))
-  }
-}
-no_hc <- no_hc_temp %>%
-  separate(scenario, c("number", "drug","R0", "healthcare", "drug_benefit", "drug_benefit2")) %>%
-  select(IFR, R0, healthcare) %>%
-  group_by(R0, healthcare) %>%
-  summarise(no_hc_IFR = mean(IFR)) %>%
-  select(R0, no_hc_IFR)
-
 # Merging Drug and No Drug Dataframes Together and Plotting the IFR
 overall <- drugs %>%
   left_join(no_drugs, by = c("R0", "healthcare")) %>%
-  left_join(no_hc, by = c("R0")) %>%
   mutate(IFR_diff = no_drugs_IFR - IFR) %>%
   mutate(prop_IFR_red = IFR_diff/no_drugs_IFR) %>%
   mutate(healthcare = factor(healthcare, levels = c("unlimHC", "limMV", "limMVox", "limMVoxbeds", "noHC"))) %>%
@@ -209,35 +195,10 @@ no_drug_data <- overall %>%
   group_by(healthcare, R0) %>%
   distinct(no_drugs_IFR)
 
-# New facet labels for R0 variables
-R0.labs <- c("High R0", "Low R0")
-names(R0.labs) <- c("highR0", "lowR0")
-
-# New facet label names for Healthcare Scenario variables
-healthcare.labs <- c(#"Impact Only In Treated Patients",
-                     "Impact In All Hospitalised Patients - Pess.")
-                     #"Impact In All Hospitalised Patients - Opti.")
-                     #"Impact In All Hospitalised Patients - Full")
-names(healthcare.labs) <- c("allhosp_gradbencons")# "allhosp_gradbenopti")# "allhosp_benfull")
-
-# Alternative Figure 2
-overall <- overall %>%
-  mutate(drug_benefit = as.character(drug_benefit)) %>%
-  mutate(drug_benefit = case_when(drug_benefit == "allhosp_gradbencons" ~ "ballhosp_gradbencons",
-                                  drug_benefit == "allhosp_gradbenopti" ~ "callhosp_gradbenopti",
-                                  TRUE ~ drug_benefit))
-overall$drug_benefit <- factor(overall$drug_benefit, levels = c("ballhosp_gradbencons", "callhosp_gradbenopti"))
-healthcare.labs <- c("Impact In All Hospitalised Patients - Pess.",
-                     "Impact In All Hospitalised Patients - Opti.")
-names(healthcare.labs) <- c("ballhosp_gradbencons", "callhosp_gradbenopti")
-
 IFRplot2 <- ggplot(overall) +
   geom_boxplot(aes(x = healthcare, y = IFR, fill = interaction(R0, healthcare)), outlier.shape = NA) +
   geom_point(data = no_drug_data, aes(x = healthcare, y = no_drugs_IFR, group = interaction(R0, healthcare)),
              shape = 19, position = position_dodge(width = 0.75)) +
-  geom_hline(aes(yintercept = no_hc_IFR), no_hc, linetype = "dashed") +
-  facet_grid(. ~ drug_benefit,
-             labeller = labeller(R0 = R0.labs, drug_benefit = healthcare.labs)) +
   scale_fill_manual(values = c("white", "white", "#F6A78A", "#DBF0CE", "#E4521B",
                                "#82CA59", "#9E3813", "#549418", "purple", "pink"),
                     name = "fill") +
@@ -255,6 +216,7 @@ IFRplot2 <- ggplot(overall) +
   labs(x = "", y = "Infection Fatality Ratio (%)") +
   lims(y = c(0, 0.55))
 
+# Figure 2E - the percentage of Dexamethasone's maximum potential impact that is achieved
 unlimcHC_drug_benefit <- overall %>%
   filter(healthcare == "unlimHC") %>%
   mutate(abs_unlimitedHC_drug_IFR_reduction = no_drugs_IFR - IFR,
@@ -281,9 +243,7 @@ overall_new <- limHC_drug_benefit %>%
   mutate(prop_benefit_gained = prop_limitedHC_drug_IFR_reduction/prop_unlimitedHC_drug_IFR_reduction) %>%
   filter(drug_benefit != "allhosp_benfull")
 
-allhosp_gradbencons <- overall_new %>%
-  filter(drug_benefit == "ballhosp_gradbencons")
-prob_ben_plot <- ggplot(allhosp_gradbencons) +
+prob_ben_plot <- ggplot(overall_new) +
   geom_bar(aes(x = R0, y = 100 * prop_benefit_gained, fill = interaction(R0, healthcare), group = interaction(healthcare, R0)),
            stat = "identity", position = "dodge", col = "black") +
   scale_fill_manual(values = alpha(c("white", "white", "#F6A78A", "#DBF0CE",
@@ -306,4 +266,4 @@ fig2 <- plot_grid(partAB, partC, ncol = 1, rel_heights = c(1.3, 2)) +
     c(1.02, 1.02, 0.65),
     size = 30)
 fig2
-ggsave2("analysis_Figure2/test_Figure_2.pdf", fig2, dpi = 400, width = 10, height = 8)
+ggsave2("analysis_Figure2/Figure_2.pdf", fig2, dpi = 400, width = 10, height = 8)

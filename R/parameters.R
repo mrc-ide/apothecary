@@ -147,14 +147,14 @@ apothecary_parameters <- function(
   prob_critical = NULL,
   prob_moderate_death_get_hosp_get_ox_baseline = NULL,
   prob_moderate_death_get_hosp_no_ox_baseline = NULL,
-  prob_moderate_death_no_hosp_no_ox = NULL,
+  prob_moderate_death_no_hosp_no_ox_baseline = NULL,
   prob_severe_death_get_ICU_get_ox_baseline = NULL,
   prob_severe_death_get_ICU_no_ox_baseline = NULL,
-  prob_severe_death_no_ICU_no_ox = NULL,
+  prob_severe_death_no_ICU_no_ox_baseline = NULL,
   prob_critical_death_get_ICU_get_ox_get_MV_baseline = NULL,
   prob_critical_death_get_ICU_get_ox_no_MV_baseline = NULL,
   prob_critical_death_get_ICU_no_ox_no_MV_baseline = NULL,
-  prob_critical_death_no_ICU_no_ox_no_MV = NULL,
+  prob_critical_death_no_ICU_no_ox_no_MV_baseline = NULL,
 
   # durations
   dur_E  = NULL,
@@ -242,21 +242,27 @@ apothecary_parameters <- function(
   drug_10_NoOx_NoMV_effect_size = 0,
   drug_11_indic_IMod_GetHosp_GetOx = 0,
   drug_11_indic_IMod_GetHosp_NoOx = 0,
+  drug_11_indic_IMod_NoHosp_NoOx = 0,
   drug_11_prop_treat = 0,
-  drug_11_GetOx_effect_size = 0,
-  drug_11_NoOx_effect_size = 0,
+  drug_11_GetOx_effect_size = 1,
+  drug_11_NoOx_effect_size = 1,
+  drug_11_NoHosp_effect_size = 1,
   drug_12_indic_ISev_GetICU_GetOx = 0,
   drug_12_indic_ISev_GetICU_NoOx = 0,
+  drug_12_indic_ISev_NoICU_NoOx = 0,
   drug_12_prop_treat = 0,
-  drug_12_GetOx_effect_size = 0,
-  drug_12_NoOx_effect_size = 0,
+  drug_12_GetOx_effect_size = 1,
+  drug_12_NoOx_effect_size = 1,
+  drug_12_NoICU_effect_size = 1,
   drug_13_indic_ICrit_GetICU_GetOx_GetMV = 0,
   drug_13_indic_ICrit_GetICU_GetOx_NoMV = 0,
   drug_13_indic_ICrit_GetICU_NoOx_NoMV = 0,
+  drug_13_indic_ICrit_NoICU_NoOx_NoMV = 0,
   drug_13_prop_treat = 0,
-  drug_13_GetOx_GetMV_effect_size = 0,
-  drug_13_GetOx_NoMV_effect_size = 0,
-  drug_13_NoOx_NoMV_effect_size = 0,
+  drug_13_GetOx_GetMV_effect_size = 1,
+  drug_13_GetOx_NoMV_effect_size = 1,
+  drug_13_NoOx_NoMV_effect_size = 1,
+  drug_13_NoICU_effect_size = 1,
 
   walker_params = FALSE
 
@@ -278,14 +284,14 @@ apothecary_parameters <- function(
                                             prob_critical = prob_critical,
                                             prob_moderate_death_get_hosp_get_ox_baseline = prob_moderate_death_get_hosp_get_ox_baseline,
                                             prob_moderate_death_get_hosp_no_ox_baseline = prob_moderate_death_get_hosp_no_ox_baseline,
-                                            prob_moderate_death_no_hosp_no_ox = prob_moderate_death_no_hosp_no_ox,
+                                            prob_moderate_death_no_hosp_no_ox_baseline = prob_moderate_death_no_hosp_no_ox_baseline,
                                             prob_severe_death_get_ICU_get_ox_baseline = prob_severe_death_get_ICU_get_ox_baseline,
                                             prob_severe_death_get_ICU_no_ox_baseline = prob_severe_death_get_ICU_no_ox_baseline,
-                                            prob_severe_death_no_ICU_no_ox = prob_severe_death_no_ICU_no_ox,
+                                            prob_severe_death_no_ICU_no_ox_baseline = prob_severe_death_no_ICU_no_ox_baseline,
                                             prob_critical_death_get_ICU_get_ox_get_MV_baseline = prob_critical_death_get_ICU_get_ox_get_MV_baseline,
                                             prob_critical_death_get_ICU_get_ox_no_MV_baseline = prob_critical_death_get_ICU_get_ox_no_MV_baseline,
                                             prob_critical_death_get_ICU_no_ox_no_MV_baseline = prob_critical_death_get_ICU_no_ox_no_MV_baseline,
-                                            prob_critical_death_no_ICU_no_ox_no_MV = prob_critical_death_no_ICU_no_ox_no_MV,
+                                            prob_critical_death_no_ICU_no_ox_no_MV_baseline = prob_critical_death_no_ICU_no_ox_no_MV_baseline,
                                             walker_params = walker_params)
 
   prob_asymp <- severity_params$prob_asymp
@@ -294,14 +300,14 @@ apothecary_parameters <- function(
   prob_critical <- severity_params$prob_critical
   prob_moderate_death_get_hosp_get_ox_baseline <- severity_params$prob_moderate_death_get_hosp_get_ox_baseline
   prob_moderate_death_get_hosp_no_ox_baseline <- severity_params$prob_moderate_death_get_hosp_no_ox_baseline
-  prob_moderate_death_no_hosp_no_ox <- severity_params$prob_moderate_death_no_hosp_no_ox
+  prob_moderate_death_no_hosp_no_ox_baseline <- severity_params$prob_moderate_death_no_hosp_no_ox_baseline
   prob_severe_death_get_ICU_get_ox_baseline <- severity_params$prob_severe_death_get_ICU_get_ox_baseline
   prob_severe_death_get_ICU_no_ox_baseline <- severity_params$prob_severe_death_get_ICU_no_ox_baseline
-  prob_severe_death_no_ICU_no_ox <- severity_params$prob_severe_death_no_ICU_no_ox
+  prob_severe_death_no_ICU_no_ox_baseline <- severity_params$prob_severe_death_no_ICU_no_ox_baseline
   prob_critical_death_get_ICU_get_ox_get_MV_baseline <- severity_params$prob_critical_death_get_ICU_get_ox_get_MV_baseline
   prob_critical_death_get_ICU_get_ox_no_MV_baseline <- severity_params$prob_critical_death_get_ICU_get_ox_no_MV_baseline
   prob_critical_death_get_ICU_no_ox_no_MV_baseline <- severity_params$prob_critical_death_get_ICU_no_ox_no_MV_baseline
-  prob_critical_death_no_ICU_no_ox_no_MV <- severity_params$prob_critical_death_no_ICU_no_ox_no_MV
+  prob_critical_death_no_ICU_no_ox_no_MV_baseline <- severity_params$prob_critical_death_no_ICU_no_ox_no_MV_baseline
 
   # Handle duration parameters
   duration_params <- parse_durations(dur_E = dur_E,
@@ -570,35 +576,41 @@ apothecary_parameters <- function(
                     drug_10_NoOx_NoMV_effect_size = drug_10_NoOx_NoMV_effect_size,
                     drug_11_indic_IMod_GetHosp_GetOx = drug_11_indic_IMod_GetHosp_GetOx,
                     drug_11_indic_IMod_GetHosp_NoOx = drug_11_indic_IMod_GetHosp_NoOx,
+                    drug_11_indic_IMod_NoHosp_NoOx = drug_11_indic_IMod_NoHosp_NoOx,
                     drug_11_prop_treat = drug_11_prop_treat,
                     drug_11_GetOx_effect_size = drug_11_GetOx_effect_size,
                     drug_11_NoOx_effect_size = drug_11_NoOx_effect_size,
+                    drug_11_NoHosp_effect_size = drug_11_NoHosp_effect_size,
                     drug_12_indic_ISev_GetICU_GetOx = drug_12_indic_ISev_GetICU_GetOx,
                     drug_12_indic_ISev_GetICU_NoOx = drug_12_indic_ISev_GetICU_NoOx,
+                    drug_12_indic_ISev_NoICU_NoOx = drug_12_indic_ISev_NoICU_NoOx,
                     drug_12_prop_treat = drug_12_prop_treat,
                     drug_12_GetOx_effect_size = drug_12_GetOx_effect_size,
                     drug_12_NoOx_effect_size = drug_12_NoOx_effect_size,
+                    drug_12_NoICU_effect_size = drug_12_NoICU_effect_size,
                     drug_13_indic_ICrit_GetICU_GetOx_GetMV = drug_13_indic_ICrit_GetICU_GetOx_GetMV,
                     drug_13_indic_ICrit_GetICU_GetOx_NoMV = drug_13_indic_ICrit_GetICU_GetOx_NoMV,
                     drug_13_indic_ICrit_GetICU_NoOx_NoMV = drug_13_indic_ICrit_GetICU_NoOx_NoMV,
+                    drug_13_indic_ICrit_NoICU_NoOx_NoMV = drug_13_indic_ICrit_NoICU_NoOx_NoMV,
                     drug_13_prop_treat = drug_13_prop_treat,
                     drug_13_GetOx_GetMV_effect_size = drug_13_GetOx_GetMV_effect_size,
                     drug_13_GetOx_NoMV_effect_size = drug_13_GetOx_NoMV_effect_size,
                     drug_13_NoOx_NoMV_effect_size = drug_13_NoOx_NoMV_effect_size,
+                    drug_13_NoICU_effect_size = drug_13_NoICU_effect_size,
                     prob_asymp = prob_asymp,
                     prob_hosp = prob_hosp,
                     prob_severe = prob_severe,
                     prob_critical = prob_critical,
                     prob_moderate_death_get_hosp_get_ox_baseline = prob_moderate_death_get_hosp_get_ox_baseline,
                     prob_moderate_death_get_hosp_no_ox_baseline = prob_moderate_death_get_hosp_no_ox_baseline,
-                    prob_moderate_death_no_hosp_no_ox = prob_moderate_death_no_hosp_no_ox,
+                    prob_moderate_death_no_hosp_no_ox_baseline = prob_moderate_death_no_hosp_no_ox_baseline,
                     prob_severe_death_get_ICU_get_ox_baseline = prob_severe_death_get_ICU_get_ox_baseline,
                     prob_severe_death_get_ICU_no_ox_baseline = prob_severe_death_get_ICU_no_ox_baseline,
-                    prob_severe_death_no_ICU_no_ox = prob_severe_death_no_ICU_no_ox,
+                    prob_severe_death_no_ICU_no_ox_baseline = prob_severe_death_no_ICU_no_ox_baseline,
                     prob_critical_death_get_ICU_get_ox_get_MV_baseline = prob_critical_death_get_ICU_get_ox_get_MV_baseline,
                     prob_critical_death_get_ICU_get_ox_no_MV_baseline = prob_critical_death_get_ICU_get_ox_no_MV_baseline,
                     prob_critical_death_get_ICU_no_ox_no_MV_baseline = prob_critical_death_get_ICU_no_ox_no_MV_baseline,
-                    prob_critical_death_no_ICU_no_ox_no_MV = prob_critical_death_no_ICU_no_ox_no_MV,
+                    prob_critical_death_no_ICU_no_ox_no_MV_baseline = prob_critical_death_no_ICU_no_ox_no_MV_baseline,
                     time_period = time_period,
                     contact_matrix_set = contact_matrix_set,
                     population = population))

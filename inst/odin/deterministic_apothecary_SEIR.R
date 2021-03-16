@@ -89,25 +89,31 @@ drug_10_NoOx_NoMV_effect_size <- user() # the multiple by which the rate of reco
 # Drug 11 reduces mortality in IMod Patients - can be dependent on receiving other appropriate treatment (Oxygen) or not
 drug_11_indic_IMod_GetHosp_GetOx <- user() # binary indicator (0 or 1) specifying whether drug property 11 is activated or not for IMod who get Hosp Bed and Oxygen
 drug_11_indic_IMod_GetHosp_NoOx <- user() # binary indicator (0 or 1) specifying whether drug property 11 is activated or not for IMod who get Hosp Bed BUT NOT Oxygen
+drug_11_indic_IMod_NoHosp_NoOx <- user() # binary indicator (0 or 1) specifying whether drug property 11 is activated or not for IMod who DO NOT GET Hosp Bed OR Oxygen
 drug_11_prop_treat <- user() # Proportion of individuals in relevant IMod compartments who receive the drug
 drug_11_GetOx_effect_size <- user() # the multiple of the baseline age-specific probability of IMod death treated individuals who receive Hosp Bed and Oxygen experience (1 = the same as untreated, <1 = mortality reduction)
 drug_11_NoOx_effect_size <- user() # the multiple of the baseline age-specific probability of IMod death treated individuals who receive Hosp Bed BUT NOT Oxygen experience (1 = the same as untreated, <1 = mortality reduction)
+drug_11_NoHosp_effect_size <- user() # the multiple of the baseline age-specific probability of IMod death treated individuals who DO NOT GET Hosp Bed OR Oxygen experience (1 = the same as untreated, <1 = mortality reduction)
 
 # Drug 12 reduces mortality in ISev Patients - can be dependent on receiving other appropriate treatment (Oxygen) or not
 drug_12_indic_ISev_GetICU_GetOx <- user() # binary indicator (0 or 1) specifying whether drug property 12 is activated or not for ISev who get ICU Bed and Oxygen
 drug_12_indic_ISev_GetICU_NoOx <- user() # binary indicator (0 or 1) specifying whether drug property 12 is activated or not for ISev who get ICU Bed BUT NOT Oxygen
+drug_12_indic_ISev_NoICU_NoOx <- user() # binary indicator (0 or 1) specifying whether drug property 12 is activated or not for ISev who DO NOT GET ICU Bed OR Oxygen
 drug_12_prop_treat <- user() # proportion of individuals in relevant ISev compartments who receive the drug
 drug_12_GetOx_effect_size <- user() # the multiple of the baseline age-specific probability of ISev death treated individuals who receive ICU Bed and Oxygen experience (1 = the same as untreated, <1 = mortality reduction)
 drug_12_NoOx_effect_size <- user() # the multiple of the baseline age-specific probability of ISev death treated individuals who receive ICU Bed BUT NO Oxygen experience (1 = the same as untreated, <1 = mortality reduction)
+drug_12_NoICU_effect_size <- user() # the multiple of the baseline age-specific probability of ISev death treated individuals who DO NOT GET ICU Bed OR Oxygen experience (1 = the same as untreated, <1 = mortality reduction)
 
 # Drug 13 reduces mortality in ICrit Patients - can be dependent on receiving other appropriate treatment (Oxygen and MV) or not
 drug_13_indic_ICrit_GetICU_GetOx_GetMV <- user() # binary indicator (0 or 1) specifying whether drug property 13 is activated or not for ICrit who get ICU Bed, Oxygen and MV
 drug_13_indic_ICrit_GetICU_GetOx_NoMV <- user() # binary indicator (0 or 1) specifying whether drug property 13 is activated or not for ICrit who get ICU Bed, Oxygen BUT NOT MV
 drug_13_indic_ICrit_GetICU_NoOx_NoMV <- user() # binary indicator (0 or 1) specifying whether drug property 13 is activated or not for ICrit who get ICU Bed BUT NOT Oxygen AND NOT MV
+drug_13_indic_ICrit_NoICU_NoOx_NoMV <- user() # binary indicator (0 or 1) specifying whether drug property 13 is activated or not for ICrit who DO NOT GET ICU Bed OR Oxygen OR MV
 drug_13_prop_treat <- user() # proportion of individuals in relevant ICrit compartments who receive the drug
 drug_13_GetOx_GetMV_effect_size <- user() # the multiple of the baseline age-specific probability of ICrit death treated individuals who receive ICU Bed, Oxygen and MV experience (1 = the same as untreated, <1 = mortality reduction)
 drug_13_GetOx_NoMV_effect_size <- user() # the multiple of the baseline age-specific probability of ICrit death treated individuals who receive ICU Bed, Oxygen BUT NOT MV experience (1 = the same as untreated, <1 = mortality reduction)
 drug_13_NoOx_NoMV_effect_size <- user() # the multiple of the baseline age-specific probability of ICrit death treated individuals who receive ICU Bed BUT NOT Oxygen AND NOT MV experience (1 = the same as untreated, <1 = mortality reduction)
+drug_13_NoICU_effect_size <- user() # the multiple of the baseline age-specific probability of ICrit death treated individuals who DO NOT GET ICU Bed OR Oxygen OR MV experience (1 = the same as untreated, <1 = mortality reduction)
 
 ## RATES
 ##------------------------------------------------------------------------------
@@ -186,7 +192,13 @@ prob_moderate_death_get_hosp_no_ox_baseline[] <- user() # probability of dying f
 prob_moderate_death_get_hosp_no_ox_Drug_11[] <- ((1 - drug_11_prop_treat) * prob_moderate_death_get_hosp_no_ox_baseline[i]) + (drug_11_prop_treat * drug_11_NoOx_effect_size * prob_moderate_death_get_hosp_no_ox_baseline[i]) # weighted sum of death probabilities for treated/untreated depending on Drug 11 properties
 prob_moderate_death_get_hosp_no_ox[] <- if (drug_11_indic_IMod_GetHosp_NoOx == 1) prob_moderate_death_get_hosp_no_ox_Drug_11[i] else prob_moderate_death_get_hosp_no_ox_baseline[i]
 
-prob_moderate_death_no_hosp_no_ox[] <- user() # probability of dying from moderate disease (i.e. requiring hospital bed and oxygen) by age given you do NOT receive a hospital bed and you do NOT receive oxygen
+prob_moderate_death_no_hosp_no_ox_baseline[] <- user() # probability of dying from moderate disease (i.e. requiring hospital bed and oxygen) by age given you do NOT receive a hospital bed and you do NOT receive oxygen
+prob_moderate_death_no_hosp_no_ox_Drug_11[] <- ((1 - drug_11_prop_treat) * prob_moderate_death_no_hosp_no_ox_baseline[i]) + (drug_11_prop_treat * drug_11_NoHosp_effect_size * prob_moderate_death_no_hosp_no_ox_baseline[i]) # weighted sum of death probabilities for treated/untreated depending on Drug 11 properties
+prob_moderate_death_no_hosp_no_ox[] <- if (drug_11_indic_IMod_NoHosp_NoOx == 1) prob_moderate_death_no_hosp_no_ox_Drug_11[i] else prob_moderate_death_no_hosp_no_ox_baseline[i]
+
+output(prob_moderate_death_no_hosp_no_ox_baseline) <- TRUE
+output(prob_moderate_death_no_hosp_no_ox_Drug_11) <- TRUE
+output(prob_moderate_death_no_hosp_no_ox) <- TRUE
 
 # Probabilities of Death Related to Requiring ICU Bed and Oxygen, Incorporating Effects of Drug 12 If Relevant
 prob_severe_death_get_ICU_get_ox_baseline[] <- user() # probability of dying from severe disease (i.e. requiring ICU bed and oxygen) by age given you receive an ICU bed AND oxygen)
@@ -197,7 +209,13 @@ prob_severe_death_get_ICU_no_ox_baseline[] <- user() # probability of dying from
 prob_severe_death_get_ICU_no_ox_Drug_12[] <- ((1 - drug_12_prop_treat) * prob_severe_death_get_ICU_no_ox_baseline[i]) + (drug_12_prop_treat * drug_12_NoOx_effect_size * prob_severe_death_get_ICU_no_ox_baseline[i]) # weighted sum of death probabilities for treated/untreated depending on Drug 12 properties
 prob_severe_death_get_ICU_no_ox[] <- if (drug_12_indic_ISev_GetICU_NoOx == 1) prob_severe_death_get_ICU_no_ox_Drug_12[i] else prob_severe_death_get_ICU_no_ox_baseline[i]
 
-prob_severe_death_no_ICU_no_ox[] <- user() # probability of dying from severe disease (i.e. requiring ICU bed and oxygen) by age given you do NOT receive an ICU bed and you do NOT receive oxygen
+prob_severe_death_no_ICU_no_ox_baseline[] <- user() # probability of dying from severe disease (i.e. requiring ICU bed and oxygen) by age given you do NOT receive an ICU bed and you do NOT receive oxygen
+prob_severe_death_no_ICU_no_ox_Drug_12[] <- ((1 - drug_12_prop_treat) * prob_severe_death_no_ICU_no_ox_baseline[i]) + (drug_12_prop_treat * drug_12_NoICU_effect_size * prob_severe_death_no_ICU_no_ox_baseline[i]) # weighted sum of death probabilities for treated/untreated depending on Drug 11 properties
+prob_severe_death_no_ICU_no_ox[] <- if (drug_12_indic_ISev_NoICU_NoOx == 1) prob_severe_death_no_ICU_no_ox_Drug_12[i] else prob_severe_death_no_ICU_no_ox_baseline[i]
+
+output(prob_severe_death_no_ICU_no_ox_baseline) <- TRUE
+output(prob_severe_death_no_ICU_no_ox_Drug_12) <- TRUE
+output(prob_severe_death_no_ICU_no_ox) <- TRUE
 
 # Probabilities of Death Related to Requiring ICU Bed, Oxygen and Mechanical Ventilation, Incorporating Effects of Drug 13 If Relevant
 prob_critical_death_get_ICU_get_ox_get_MV_baseline[] <- user() # probability of dying from critical disease (i.e. requiring ICU bed, oxygen and MV) by age given you receive an ICU bed AND oxygen AND MV)
@@ -212,8 +230,13 @@ prob_critical_death_get_ICU_no_ox_no_MV_baseline[] <- user() # probability of dy
 prob_critical_death_get_ICU_no_ox_no_MV_Drug_13[] <- ((1 - drug_13_prop_treat) * prob_critical_death_get_ICU_no_ox_no_MV_baseline[i]) + (drug_13_prop_treat * drug_13_NoOx_NoMV_effect_size * prob_critical_death_get_ICU_no_ox_no_MV_baseline[i]) # weighted sum of death probabilities depending on Drug 13 properties
 prob_critical_death_get_ICU_no_ox_no_MV[] <- if (drug_13_indic_ICrit_GetICU_NoOx_NoMV == 1) prob_critical_death_get_ICU_no_ox_no_MV_Drug_13[i] else prob_critical_death_get_ICU_no_ox_no_MV_baseline[i]
 
-prob_critical_death_no_ICU_no_ox_no_MV[] <- user() # probability of dying from critical disease (i.e. requiring ICU bed, oxygen and MV) by age given you do NOT receive an ICU bed, you do NOT receive oxygen, and you do NOT receive MV
+prob_critical_death_no_ICU_no_ox_no_MV_baseline[] <- user() # probability of dying from critical disease (i.e. requiring ICU bed, oxygen and MV) by age given you do NOT receive an ICU bed, you do NOT receive oxygen, and you do NOT receive MV
+prob_critical_death_no_ICU_no_ox_no_MV_Drug_13[] <- ((1 - drug_13_prop_treat) * prob_critical_death_no_ICU_no_ox_no_MV_baseline[i]) + (drug_13_prop_treat * drug_13_NoICU_effect_size * prob_critical_death_no_ICU_no_ox_no_MV_baseline[i]) # weighted sum of death probabilities for treated/untreated depending on Drug 11 properties
+prob_critical_death_no_ICU_no_ox_no_MV[] <- if (drug_13_indic_ICrit_NoICU_NoOx_NoMV == 1) prob_critical_death_no_ICU_no_ox_no_MV_Drug_13[i] else prob_critical_death_no_ICU_no_ox_no_MV_baseline[i]
 
+output(prob_critical_death_no_ICU_no_ox_no_MV_baseline) <-TRUE
+output(prob_critical_death_no_ICU_no_ox_no_MV_Drug_13) <-TRUE
+output(prob_critical_death_no_ICU_no_ox_no_MV) <-TRUE
 
 ## CALCULATING THE NUMBER OF INDIVIDUALS MOVING OUT OF NON-HEALTHCARE RELATED COMPARTMENTS
 ##----------------------------------------------------------------------------------------
@@ -996,6 +1019,8 @@ dim(prob_moderate_death_get_hosp_no_ox_baseline) <- N_age
 dim(prob_moderate_death_get_hosp_no_ox_Drug_11) <- N_age
 dim(prob_moderate_death_get_hosp_no_ox) <- N_age
 
+dim(prob_moderate_death_no_hosp_no_ox_baseline) <- N_age
+dim(prob_moderate_death_no_hosp_no_ox_Drug_11) <- N_age
 dim(prob_moderate_death_no_hosp_no_ox) <- N_age
 
 dim(prob_severe_death_get_ICU_get_ox_baseline) <- N_age
@@ -1006,6 +1031,8 @@ dim(prob_severe_death_get_ICU_no_ox_baseline) <- N_age
 dim(prob_severe_death_get_ICU_no_ox_Drug_12) <- N_age
 dim(prob_severe_death_get_ICU_no_ox) <- N_age
 
+dim(prob_severe_death_no_ICU_no_ox_baseline) <- N_age
+dim(prob_severe_death_no_ICU_no_ox_Drug_12) <- N_age
 dim(prob_severe_death_no_ICU_no_ox) <- N_age
 
 dim(prob_critical_death_get_ICU_get_ox_get_MV_baseline) <- N_age
@@ -1020,7 +1047,10 @@ dim(prob_critical_death_get_ICU_no_ox_no_MV_baseline) <- N_age
 dim(prob_critical_death_get_ICU_no_ox_no_MV_Drug_13) <- N_age
 dim(prob_critical_death_get_ICU_no_ox_no_MV) <- N_age
 
+dim(prob_critical_death_no_ICU_no_ox_no_MV_baseline) <- N_age
+dim(prob_critical_death_no_ICU_no_ox_no_MV_Drug_13) <- N_age
 dim(prob_critical_death_no_ICU_no_ox_no_MV) <- N_age
+
 dim(n_E2_IPre1Mild_or_IPre1Asymp) <- N_age
 
 

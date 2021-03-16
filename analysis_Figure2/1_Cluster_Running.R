@@ -1,21 +1,21 @@
 # Setting Up Cluster
 loc <- didehpc::path_mapping("location", "N:", "//fi--didenas5/malaria", "N:")
-config <- didehpc::didehpc_config(shares = loc, use_rrq = FALSE, cluster = "fi--dideclusthn", #"fi--didemrchnb",
+config <- didehpc::didehpc_config(shares = loc, use_rrq = FALSE, cluster = "fi--didemrchnb", # "fi--dideclusthn",
                                   parallel = FALSE, rtools = TRUE)
 packages <- c("lubridate", "dplyr", "tidyr", "odin", "squire", "apothecary", "dde")
 
 # Creating a Context
 sources <- c("N:/Charlie/apothecary_fitting/apothecary/analysis_Figure2/Functions/Figure_2_Functions.R")
 additional_identifier <- ""
-context_name <- paste0("N:/Charlie/apothecary_figure2_runs_", Sys.Date(), additional_identifier)
+context_name <- paste0("N:/Charlie/new_apothecary_figure2_runs_", Sys.Date(), additional_identifier)
 ctx <- context::context_save(path = context_name,
                              sources = sources,
                              packages = packages,
                              package_sources = provisionr::package_sources(local =
                                                                              c("N:/Charlie/apothecary_fitting/apothecary_0.1.0.zip",
                                                                                "N:/Charlie/apothecary_fitting/dde_1.0.2.zip",
-                                                                               "N:/Charlie/apothecary_fitting/odin_1.0.6.zip",
-                                                                               "N:/Charlie/apothecary_fitting/squire_0.5.6.zip")))
+                                                                               "N:/Charlie/apothecary_fitting/odin_1.1.8.zip",
+                                                                               "N:/Charlie/apothecary_fitting/squire_0.6.4.zip")))
 
 # Configure the Queue
 run <- didehpc::queue_didehpc(ctx, config = config)
@@ -46,9 +46,9 @@ demog_pars_low_R0 <- list(R0 = 1.35, country = country, population = standard_po
 # Defining the Healthcare Capacity Parameters Used In Each Scenario
 actual_hosp_beds <- round(squire::get_healthcare_capacity(country)$hosp_beds * sum(standard_population)/1000)
 actual_ICU_beds <- round(squire::get_healthcare_capacity(country)$ICU_beds * sum(standard_population)/1000)
-actual_prop_ox_hosp_beds <- 0.6
-actual_prop_ox_ICU_beds <- 0.8
-actual_MV_capacity <- round(actual_ICU_beds * 0.5)
+actual_prop_ox_hosp_beds <- 0.4 # 0.6
+actual_prop_ox_ICU_beds <- 0.4 # 0.8
+actual_MV_capacity <- round(actual_ICU_beds * 0.4) # 0.5
 unlim <- 100000000
 
 hc_pars_nothing <- list(hosp_bed_capacity = 0, ICU_bed_capacity = 0, prop_ox_hosp_beds = 0, prop_ox_ICU_beds = 0, MV_capacity = 0)
@@ -66,66 +66,79 @@ dexy_mod_mort <- drug_effs$dexy_mod_mort
 dexy_ICU_mort <- drug_effs$dexy_ICU_mort
 
 ## No Drug Effects
-ind_no_drugs <- list(drug_11_indic_IMod_GetHosp_GetOx = 0, drug_11_indic_IMod_GetHosp_NoOx = 0, drug_11_prop_treat = 0,
-                     drug_12_indic_ISev_GetICU_GetOx = 0, drug_12_indic_ISev_GetICU_NoOx = 0, drug_12_prop_treat = 0,
-                     drug_13_indic_ICrit_GetICU_GetOx_GetMV = 0, drug_13_indic_ICrit_GetICU_GetOx_NoMV = 0, drug_13_indic_ICrit_GetICU_NoOx_NoMV = 0, drug_13_prop_treat = 0)
+ind_no_drugs <- list(drug_11_indic_IMod_GetHosp_GetOx = 0, drug_11_indic_IMod_GetHosp_NoOx = 0, drug_11_indic_IMod_NoHosp_NoOx = 0, drug_11_prop_treat = 0,
+                     drug_12_indic_ISev_GetICU_GetOx = 0, drug_12_indic_ISev_GetICU_NoOx = 0, drug_12_indic_ISev_NoICU_NoOx = 0, drug_12_prop_treat = 0,
+                     drug_13_indic_ICrit_GetICU_GetOx_GetMV = 0, drug_13_indic_ICrit_GetICU_GetOx_NoMV = 0, drug_13_indic_ICrit_GetICU_NoOx_NoMV = 0, drug_13_indic_ICrit_NoICU_NoOx_NoMV = 0, drug_13_prop_treat = 0)
 eff_no_drugs <- list(dexy_mod_getox_mort = rep(1, num_draws),
                      dexy_mod_noox_mort = rep(1, num_draws),
+                     dexy_mod_nohosp_mort = rep(1, num_draws),
                      dexy_sev_getox_mort = rep(1, num_draws),
                      dexy_sev_noox_mort = rep(1, num_draws),
+                     dexy_sev_noICU_mort = rep(1, num_draws),
                      dexy_crit_getox_getmv_mort = rep(1, num_draws),
                      dexy_crit_getox_nomv_mort = rep(1, num_draws),
-                     dexy_crit_noox_nomv_mort = rep(1, num_draws))
+                     dexy_crit_noox_nomv_mort = rep(1, num_draws),
+                     dexy_crit_noICU_mort = rep(1, num_draws))
 
 ## Drug Effects Only in Those Fully Treated
-ind_treatonly_benfull <- list(drug_11_indic_IMod_GetHosp_GetOx = 1, drug_11_indic_IMod_GetHosp_NoOx = 0, drug_11_prop_treat = 1,
-                              drug_12_indic_ISev_GetICU_GetOx = 1, drug_12_indic_ISev_GetICU_NoOx = 0, drug_12_prop_treat = 1,
-                              drug_13_indic_ICrit_GetICU_GetOx_GetMV = 1, drug_13_indic_ICrit_GetICU_GetOx_NoMV = 0, drug_13_indic_ICrit_GetICU_NoOx_NoMV = 0, drug_13_prop_treat = 1)
+ind_treatonly_benfull <- list(drug_11_indic_IMod_GetHosp_GetOx = 1, drug_11_indic_IMod_GetHosp_NoOx = 0, drug_11_indic_IMod_NoHosp_NoOx = 0, drug_11_prop_treat = 1,
+                              drug_12_indic_ISev_GetICU_GetOx = 1, drug_12_indic_ISev_GetICU_NoOx = 0, drug_12_indic_ISev_NoICU_NoOx = 0, drug_12_prop_treat = 1,
+                              drug_13_indic_ICrit_GetICU_GetOx_GetMV = 1, drug_13_indic_ICrit_GetICU_GetOx_NoMV = 0, drug_13_indic_ICrit_GetICU_NoOx_NoMV = 0, drug_13_indic_ICrit_NoICU_NoOx_NoMV = 0, drug_13_prop_treat = 1)
 eff_treatonly_benfull <- list(dexy_mod_getox_mort = dexy_mod_mort,
                               dexy_mod_noox_mort = rep(1, num_draws),
+                              dexy_mod_nohosp_mort = rep(1, num_draws),
                               dexy_sev_getox_mort = dexy_ICU_mort,
                               dexy_sev_noox_mort = rep(1, num_draws),
+                              dexy_sev_noICU_mort = rep(1, num_draws),
                               dexy_crit_getox_getmv_mort = dexy_ICU_mort,
                               dexy_crit_getox_nomv_mort = rep(1, num_draws),
-                              dexy_crit_noox_nomv_mort = rep(1, num_draws))
+                              dexy_crit_noox_nomv_mort = rep(1, num_draws),
+                              dexy_crit_noICU_mort = rep(1, num_draws))
 
 ## Full Drug Effects In Fully Treated, Limited Impact In Inadequately Treated
-ind_allhosp_gradbencons <- list(drug_11_indic_IMod_GetHosp_GetOx = 1, drug_11_indic_IMod_GetHosp_NoOx = 1, drug_11_prop_treat = 1,
-                                drug_12_indic_ISev_GetICU_GetOx = 1, drug_12_indic_ISev_GetICU_NoOx = 1, drug_12_prop_treat = 1,
-                                drug_13_indic_ICrit_GetICU_GetOx_GetMV = 1, drug_13_indic_ICrit_GetICU_GetOx_NoMV = 1, drug_13_indic_ICrit_GetICU_NoOx_NoMV = 1, drug_13_prop_treat = 1)
+ind_allhosp_gradbencons <- list(drug_11_indic_IMod_GetHosp_GetOx = 1, drug_11_indic_IMod_GetHosp_NoOx = 1, drug_11_indic_IMod_NoHosp_NoOx = 0, drug_11_prop_treat = 1,
+                                drug_12_indic_ISev_GetICU_GetOx = 1, drug_12_indic_ISev_GetICU_NoOx = 1, drug_12_indic_ISev_NoICU_NoOx = 0, drug_12_prop_treat = 1,
+                                drug_13_indic_ICrit_GetICU_GetOx_GetMV = 1, drug_13_indic_ICrit_GetICU_GetOx_NoMV = 1, drug_13_indic_ICrit_GetICU_NoOx_NoMV = 1, drug_13_indic_ICrit_NoICU_NoOx_NoMV = 0, drug_13_prop_treat = 1)
 eff_allhosp_gradbencons <- list(dexy_mod_getox_mort = dexy_mod_mort,
                                 dexy_mod_noox_mort = dexy_mod_mort + 0.5 * (1 - dexy_mod_mort),
+                                dexy_mod_nohosp_mort = rep(1, num_draws),
                                 dexy_sev_getox_mort = dexy_ICU_mort,
                                 dexy_sev_noox_mort = dexy_ICU_mort + 0.5 * (1 - dexy_ICU_mort),
+                                dexy_sev_noICU_mort = rep(1, num_draws),
                                 dexy_crit_getox_getmv_mort = dexy_ICU_mort,
                                 dexy_crit_getox_nomv_mort = rep(1, num_draws),
-                                dexy_crit_noox_nomv_mort = rep(1, num_draws))
+                                dexy_crit_noox_nomv_mort = rep(1, num_draws),
+                                dexy_crit_noICU_mort = rep(1, num_draws))
 
 ## Full Drug Effects In Fully Treated, Moderate Impact In Inadequately Treated
-ind_allhosp_gradbenopti <- list(drug_11_indic_IMod_GetHosp_GetOx = 1, drug_11_indic_IMod_GetHosp_NoOx = 1, drug_11_prop_treat = 1,
-                                drug_12_indic_ISev_GetICU_GetOx = 1, drug_12_indic_ISev_GetICU_NoOx = 1, drug_12_prop_treat = 1,
-                                drug_13_indic_ICrit_GetICU_GetOx_GetMV = 1, drug_13_indic_ICrit_GetICU_GetOx_NoMV = 1, drug_13_indic_ICrit_GetICU_NoOx_NoMV = 1, drug_13_prop_treat = 1)
+ind_allhosp_gradbenopti <- list(drug_11_indic_IMod_GetHosp_GetOx = 1, drug_11_indic_IMod_GetHosp_NoOx = 1, drug_11_indic_IMod_NoHosp_NoOx = 0, drug_11_prop_treat = 1,
+                                drug_12_indic_ISev_GetICU_GetOx = 1, drug_12_indic_ISev_GetICU_NoOx = 1, drug_12_indic_ISev_NoICU_NoOx  = 0, drug_12_prop_treat = 1,
+                                drug_13_indic_ICrit_GetICU_GetOx_GetMV = 1, drug_13_indic_ICrit_GetICU_GetOx_NoMV = 1, drug_13_indic_ICrit_GetICU_NoOx_NoMV = 1, drug_13_indic_ICrit_NoICU_NoOx_NoMV = 0, drug_13_prop_treat = 1)
 eff_allhosp_gradbenopti <- list(dexy_mod_getox_mort = dexy_mod_mort,
                                 dexy_mod_noox_mort = dexy_mod_mort + 0.25 * (1 - dexy_mod_mort),
+                                dexy_mod_nohosp_mort = rep(1, num_draws),
                                 dexy_sev_getox_mort = dexy_ICU_mort,
                                 dexy_sev_noox_mort = dexy_ICU_mort + 0.25 * (1 - dexy_ICU_mort),
+                                dexy_sev_noICU_mort = rep(1, num_draws),
                                 dexy_crit_getox_getmv_mort = dexy_ICU_mort,
                                 dexy_crit_getox_nomv_mort = dexy_ICU_mort + 0.5 * (1 - dexy_ICU_mort),
-                                dexy_crit_noox_nomv_mort = dexy_ICU_mort + 0.5 * (1 - dexy_ICU_mort))
+                                dexy_crit_noox_nomv_mort = dexy_ICU_mort + 0.75 * (1 - dexy_ICU_mort),
+                                dexy_crit_noICU_mort = rep(1, num_draws))
 
-## Full Drug Effects In Fully Treated, Full Impact In Inadequately Treated
-ind_allhosp_benfull <- list(drug_8_indic_IMod_GetHosp_GetOx = 1, drug_8_indic_IMod_GetHosp_NoOx = 1, drug_8_prop_treat = 1,
-                            drug_11_indic_IMod_GetHosp_GetOx = 1, drug_11_indic_IMod_GetHosp_NoOx = 1, drug_11_prop_treat = 1,
-                            drug_12_indic_ISev_GetICU_GetOx = 1, drug_12_indic_ISev_GetICU_NoOx = 1, drug_12_prop_treat = 1,
-                            drug_13_indic_ICrit_GetICU_GetOx_GetMV = 1, drug_13_indic_ICrit_GetICU_GetOx_NoMV = 1,
-                            drug_13_indic_ICrit_GetICU_NoOx_NoMV = 1, drug_13_prop_treat = 1)
+## Full Drug Effects In Fully Treated, Moderate Impact In Inadequately Treated and Not Treated
+ind_allhosp_benfull <- list(drug_11_indic_IMod_GetHosp_GetOx = 1, drug_11_indic_IMod_GetHosp_NoOx = 1, drug_11_indic_IMod_NoHosp_NoOx = 1, drug_11_prop_treat = 1,
+                            drug_12_indic_ISev_GetICU_GetOx = 1, drug_12_indic_ISev_GetICU_NoOx = 1, drug_12_indic_ISev_NoICU_NoOx  = 1, drug_12_prop_treat = 1,
+                            drug_13_indic_ICrit_GetICU_GetOx_GetMV = 1, drug_13_indic_ICrit_GetICU_GetOx_NoMV = 1, drug_13_indic_ICrit_GetICU_NoOx_NoMV = 1, drug_13_indic_ICrit_NoICU_NoOx_NoMV = 1, drug_13_prop_treat = 1)
 eff_allhosp_benfull <- list(dexy_mod_getox_mort = dexy_mod_mort,
-                            dexy_mod_noox_mort = dexy_mod_mort,
+                            dexy_mod_noox_mort = dexy_mod_mort + 0.25 * (1 - dexy_mod_mort),
+                            dexy_mod_nohosp_mort = dexy_mod_mort + 0.25 * (1 - dexy_mod_mort),
                             dexy_sev_getox_mort = dexy_ICU_mort,
-                            dexy_sev_noox_mort = dexy_ICU_mort,
+                            dexy_sev_noox_mort = dexy_ICU_mort + 0.25 * (1 - dexy_ICU_mort),
+                            dexy_sev_noICU_mort = dexy_ICU_mort + 0.25 * (1 - dexy_ICU_mort),
                             dexy_crit_getox_getmv_mort = dexy_ICU_mort,
-                            dexy_crit_getox_nomv_mort = dexy_ICU_mort,
-                            dexy_crit_noox_nomv_mort = dexy_ICU_mort)
+                            dexy_crit_getox_nomv_mort = dexy_ICU_mort + 0.5 * (1 - dexy_ICU_mort),
+                            dexy_crit_noox_nomv_mort = dexy_ICU_mort + 0.75 * (1 - dexy_ICU_mort),
+                            dexy_crit_noICU_mort = dexy_ICU_mort + 0.75 * (1 - dexy_ICU_mort))
 
 # Tester Run
 # demog_pars <- demog_pars_high_R0
@@ -171,7 +184,7 @@ lowR0_limMVox_allhosp_gradbencons <- run$enqueue(run_hc_drugs_R0(demog_pars_low_
 lowR0_limMVoxbeds_allhosp_gradbencons <- run$enqueue(run_hc_drugs_R0(demog_pars_low_R0, hc_pars_limited_MV_ox_beds, ind_allhosp_gradbencons, eff_allhosp_gradbencons, "29_dexy_lowR0_limMVoxbeds_allhosp_gradbencons"))
 lowR0_noHC_allhosp_gradbencons <- run$enqueue(run_hc_drugs_R0(demog_pars_low_R0, hc_pars_nothing, ind_allhosp_gradbencons, eff_allhosp_gradbencons, "30_dexy_lowR0_noHC_allhosp_gradbencons"))
 
-# All Hospitalised Individuals Get Benefit - Non-Fully Treated Individuals Derive Minimal Benefit (Optimistic Scenario)
+# All Hospitalised Individuals Get Benefit - Non-Fully Treated Individuals Derive More Benefit (Optimistic Scenario)
 highR0_unlimHC_allhosp_gradbenopti <- run$enqueue(run_hc_drugs_R0(demog_pars_high_R0, hc_pars_unlimited, ind_allhosp_gradbenopti, eff_allhosp_gradbenopti, "31_dexy_highR0_unlimHC_allhosp_gradbenopti"))
 highR0_limMV_allhosp_gradbenopti <- run$enqueue(run_hc_drugs_R0(demog_pars_high_R0, hc_pars_limited_MV, ind_allhosp_gradbenopti, eff_allhosp_gradbenopti, "32_dexy_highR0_limMV_allhosp_gradbenopti"))
 highR0_limMVox_allhosp_gradbenopti <- run$enqueue(run_hc_drugs_R0(demog_pars_high_R0, hc_pars_limited_MV_ox, ind_allhosp_gradbenopti, eff_allhosp_gradbenopti, "33_dexy_highR0_limMVox_allhosp_gradbenopti"))
@@ -183,7 +196,7 @@ lowR0_limMVox_allhosp_gradbenopti <- run$enqueue(run_hc_drugs_R0(demog_pars_low_
 lowR0_limMVoxbeds_allhosp_gradbenopti <- run$enqueue(run_hc_drugs_R0(demog_pars_low_R0, hc_pars_limited_MV_ox_beds, ind_allhosp_gradbenopti, eff_allhosp_gradbenopti, "39_dexy_lowR0_limMVoxbeds_allhosp_gradbenopti"))
 lowR0_noHC_allhosp_gradbenopti <- run$enqueue(run_hc_drugs_R0(demog_pars_low_R0, hc_pars_nothing, ind_allhosp_gradbenopti, eff_allhosp_gradbenopti, "40_dexy_lowR0_noHC_allhosp_gradbenopti"))
 
-# All Hospitalised Individuals Get Benefit - Non-Fully Treated Individuals Derive Minimal Benefit (Optimistic Scenario)
+# All Hospitalised Individuals Get Benefit - Non-Fully Treated Individuals Derive More Benefit (Optimistic Scenario), Unhospitalised Individuals Derive Some Benefit
 highR0_unlimHC_allhosp_benfull <- run$enqueue(run_hc_drugs_R0(demog_pars_high_R0, hc_pars_unlimited, ind_allhosp_benfull, eff_allhosp_benfull, "41_dexy_highR0_unlimHC_allhosp_benfull"))
 highR0_limMV_allhosp_benfull <- run$enqueue(run_hc_drugs_R0(demog_pars_high_R0, hc_pars_limited_MV, ind_allhosp_benfull, eff_allhosp_benfull, "42_dexy_highR0_limMV_allhosp_benfull"))
 highR0_limMVox_allhosp_benfull <- run$enqueue(run_hc_drugs_R0(demog_pars_high_R0, hc_pars_limited_MV_ox, ind_allhosp_benfull, eff_allhosp_benfull, "43_dexy_highR0_limMVox_allhosp_benfull"))

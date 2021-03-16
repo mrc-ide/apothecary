@@ -210,14 +210,14 @@ parse_country_severity <- function(country = NULL,
                                    prob_critical = NULL,
                                    prob_moderate_death_get_hosp_get_ox_baseline = NULL,
                                    prob_moderate_death_get_hosp_no_ox_baseline = NULL,
-                                   prob_moderate_death_no_hosp_no_ox = NULL,
+                                   prob_moderate_death_no_hosp_no_ox_baseline = NULL,
                                    prob_severe_death_get_ICU_get_ox_baseline = NULL,
                                    prob_severe_death_get_ICU_no_ox_baseline = NULL,
-                                   prob_severe_death_no_ICU_no_ox = NULL,
+                                   prob_severe_death_no_ICU_no_ox_baseline = NULL,
                                    prob_critical_death_get_ICU_get_ox_get_MV_baseline = NULL,
                                    prob_critical_death_get_ICU_get_ox_no_MV_baseline = NULL,
                                    prob_critical_death_get_ICU_no_ox_no_MV_baseline = NULL,
-                                   prob_critical_death_no_ICU_no_ox_no_MV = NULL,
+                                   prob_critical_death_no_ICU_no_ox_no_MV_baseline = NULL,
                                    walker_params = FALSE) {
 
   # If walker_params == TRUE, use the original squire parameters described in Walker et al.
@@ -255,8 +255,8 @@ parse_country_severity <- function(country = NULL,
     if (is.null(prob_moderate_death_get_hosp_no_ox_baseline)) {
       prob_moderate_death_get_hosp_no_ox_baseline <- rep(0.6, length(prob_hosp))
     }
-    if (is.null(prob_moderate_death_no_hosp_no_ox)) {
-      prob_moderate_death_no_hosp_no_ox <- rep(0.6, length(prob_hosp))
+    if (is.null(prob_moderate_death_no_hosp_no_ox_baseline)) {
+      prob_moderate_death_no_hosp_no_ox_baseline <- rep(0.6, length(prob_hosp))
     }
 
     # Severe Disease
@@ -266,8 +266,8 @@ parse_country_severity <- function(country = NULL,
     if (is.null(prob_severe_death_get_ICU_no_ox_baseline)) {
       prob_severe_death_get_ICU_no_ox_baseline <- rep(0.95, length(prob_hosp))
     }
-    if (is.null(prob_severe_death_no_ICU_no_ox)) {
-      prob_severe_death_no_ICU_no_ox <- rep(0.95, length(prob_hosp))
+    if (is.null(prob_severe_death_no_ICU_no_ox_baseline)) {
+      prob_severe_death_no_ICU_no_ox_baseline <- rep(0.95, length(prob_hosp))
     }
 
     # Critical Disease
@@ -280,8 +280,8 @@ parse_country_severity <- function(country = NULL,
     if (is.null(prob_critical_death_get_ICU_no_ox_no_MV_baseline)) {
       prob_critical_death_get_ICU_no_ox_no_MV_baseline <- rep(0.95, length(prob_hosp))
     }
-    if (is.null(prob_critical_death_no_ICU_no_ox_no_MV)) {
-      prob_critical_death_no_ICU_no_ox_no_MV <- rep(0.95, length(prob_hosp))
+    if (is.null(prob_critical_death_no_ICU_no_ox_no_MV_baseline)) {
+      prob_critical_death_no_ICU_no_ox_no_MV_baseline <- rep(0.95, length(prob_hosp))
     }
 
     ret <- list(country = country,
@@ -291,14 +291,14 @@ parse_country_severity <- function(country = NULL,
                 prob_critical = prob_critical,
                 prob_moderate_death_get_hosp_get_ox_baseline = prob_moderate_death_get_hosp_get_ox_baseline,
                 prob_moderate_death_get_hosp_no_ox_baseline = prob_moderate_death_get_hosp_no_ox_baseline,
-                prob_moderate_death_no_hosp_no_ox = prob_moderate_death_no_hosp_no_ox,
+                prob_moderate_death_no_hosp_no_ox_baseline = prob_moderate_death_no_hosp_no_ox_baseline,
                 prob_severe_death_get_ICU_get_ox_baseline = prob_severe_death_get_ICU_get_ox_baseline,
                 prob_severe_death_get_ICU_no_ox_baseline = prob_severe_death_get_ICU_no_ox_baseline,
-                prob_severe_death_no_ICU_no_ox = prob_severe_death_no_ICU_no_ox,
+                prob_severe_death_no_ICU_no_ox_baseline = prob_severe_death_no_ICU_no_ox_baseline,
                 prob_critical_death_get_ICU_get_ox_get_MV_baseline = prob_critical_death_get_ICU_get_ox_get_MV_baseline,
                 prob_critical_death_get_ICU_get_ox_no_MV_baseline = prob_critical_death_get_ICU_get_ox_no_MV_baseline,
                 prob_critical_death_get_ICU_no_ox_no_MV_baseline = prob_critical_death_get_ICU_no_ox_no_MV_baseline,
-                prob_critical_death_no_ICU_no_ox_no_MV = prob_critical_death_no_ICU_no_ox_no_MV)
+                prob_critical_death_no_ICU_no_ox_no_MV_baseline = prob_critical_death_no_ICU_no_ox_no_MV_baseline)
   }
 
   # Filling in any missing parameters
@@ -325,8 +325,8 @@ parse_country_severity <- function(country = NULL,
     if (is.null(prob_moderate_death_get_hosp_no_ox_baseline)) {
       prob_moderate_death_get_hosp_no_ox_baseline <- probs$prob_moderate_death_get_hosp_no_ox_baseline
     }
-    if (is.null(prob_moderate_death_no_hosp_no_ox)) {
-      prob_moderate_death_no_hosp_no_ox <- probs$prob_moderate_death_no_hosp_no_ox
+    if (is.null(prob_moderate_death_no_hosp_no_ox_baseline)) {
+      prob_moderate_death_no_hosp_no_ox_baseline <- probs$prob_moderate_death_no_hosp_no_ox_baseline
     }
 
     # Severe Disease
@@ -336,8 +336,8 @@ parse_country_severity <- function(country = NULL,
     if (is.null(prob_severe_death_get_ICU_no_ox_baseline)) {
       prob_severe_death_get_ICU_no_ox_baseline <- probs$prob_severe_death_get_ICU_no_ox_baseline
     }
-    if (is.null(prob_severe_death_no_ICU_no_ox)) {
-      prob_severe_death_no_ICU_no_ox <- probs$prob_severe_death_no_ICU_no_ox
+    if (is.null(prob_severe_death_no_ICU_no_ox_baseline)) {
+      prob_severe_death_no_ICU_no_ox_baseline <- probs$prob_severe_death_no_ICU_no_ox_baseline
     }
 
     # Critical Disease
@@ -350,8 +350,8 @@ parse_country_severity <- function(country = NULL,
     if (is.null(prob_critical_death_get_ICU_no_ox_no_MV_baseline)) {
       prob_critical_death_get_ICU_no_ox_no_MV_baseline <- probs$prob_critical_death_get_ICU_no_ox_no_MV_baseline
     }
-    if (is.null(prob_critical_death_no_ICU_no_ox_no_MV)) {
-      prob_critical_death_no_ICU_no_ox_no_MV <- probs$prob_critical_death_no_ICU_no_ox_no_MV
+    if (is.null(prob_critical_death_no_ICU_no_ox_no_MV_baseline)) {
+      prob_critical_death_no_ICU_no_ox_no_MV_baseline <- probs$prob_critical_death_no_ICU_no_ox_no_MV_baseline
     }
     ret <- list(country = country,
                 prob_asymp = prob_asymp,
@@ -360,14 +360,14 @@ parse_country_severity <- function(country = NULL,
                 prob_critical = prob_critical,
                 prob_moderate_death_get_hosp_get_ox_baseline = prob_moderate_death_get_hosp_get_ox_baseline,
                 prob_moderate_death_get_hosp_no_ox_baseline = prob_moderate_death_get_hosp_no_ox_baseline,
-                prob_moderate_death_no_hosp_no_ox = prob_moderate_death_no_hosp_no_ox,
+                prob_moderate_death_no_hosp_no_ox_baseline = prob_moderate_death_no_hosp_no_ox_baseline,
                 prob_severe_death_get_ICU_get_ox_baseline = prob_severe_death_get_ICU_get_ox_baseline,
                 prob_severe_death_get_ICU_no_ox_baseline = prob_severe_death_get_ICU_no_ox_baseline,
-                prob_severe_death_no_ICU_no_ox = prob_severe_death_no_ICU_no_ox,
+                prob_severe_death_no_ICU_no_ox_baseline = prob_severe_death_no_ICU_no_ox_baseline,
                 prob_critical_death_get_ICU_get_ox_get_MV_baseline = prob_critical_death_get_ICU_get_ox_get_MV_baseline,
                 prob_critical_death_get_ICU_get_ox_no_MV_baseline = prob_critical_death_get_ICU_get_ox_no_MV_baseline,
                 prob_critical_death_get_ICU_no_ox_no_MV_baseline = prob_critical_death_get_ICU_no_ox_no_MV_baseline,
-                prob_critical_death_no_ICU_no_ox_no_MV = prob_critical_death_no_ICU_no_ox_no_MV)
+                prob_critical_death_no_ICU_no_ox_no_MV_baseline = prob_critical_death_no_ICU_no_ox_no_MV_baseline)
   }
 
   # If country is specified, check valid and then adjust default probs based on demography
@@ -403,9 +403,9 @@ parse_country_severity <- function(country = NULL,
       prob_moderate_death_get_hosp_no_ox_baseline <- probs$prob_moderate_death_get_hosp_no_ox_baseline
       prob_moderate_death_get_hosp_no_ox_baseline[index] <- min(1, prob_moderate_death_get_hosp_get_ox_baseline[index] * probs$mod_RR * probs$bed_RR)
     }
-    if (is.null(prob_moderate_death_no_hosp_no_ox)) {
-      prob_moderate_death_no_hosp_no_ox <- probs$prob_moderate_death_no_hosp_no_ox
-      prob_moderate_death_no_hosp_no_ox[index] <- min(1, prob_moderate_death_get_hosp_get_ox_baseline[index] * probs$mod_RR)
+    if (is.null(prob_moderate_death_no_hosp_no_ox_baseline)) {
+      prob_moderate_death_no_hosp_no_ox_baseline <- probs$prob_moderate_death_no_hosp_no_ox_baseline
+      prob_moderate_death_no_hosp_no_ox_baseline[index] <- min(1, prob_moderate_death_get_hosp_get_ox_baseline[index] * probs$mod_RR)
     }
 
     # Severe Disease
@@ -417,9 +417,9 @@ parse_country_severity <- function(country = NULL,
       prob_severe_death_get_ICU_no_ox_baseline <- probs$prob_severe_death_get_ICU_no_ox_baseline
       prob_severe_death_get_ICU_no_ox_baseline[index] <- min(1, prob_severe_death_get_ICU_get_ox_baseline[index] * probs$sev_RR * probs$bed_RR)
     }
-    if (is.null(prob_severe_death_no_ICU_no_ox)) {
-      prob_severe_death_no_ICU_no_ox <- probs$prob_severe_death_no_ICU_no_ox
-      prob_severe_death_no_ICU_no_ox[index] <- min(1, prob_severe_death_get_ICU_get_ox_baseline[index] * probs$sev_RR)
+    if (is.null(prob_severe_death_no_ICU_no_ox_baseline)) {
+      prob_severe_death_no_ICU_no_ox_baseline <- probs$prob_severe_death_no_ICU_no_ox_baseline
+      prob_severe_death_no_ICU_no_ox_baseline[index] <- min(1, prob_severe_death_get_ICU_get_ox_baseline[index] * probs$sev_RR)
     }
 
     # Critical Disease
@@ -429,15 +429,15 @@ parse_country_severity <- function(country = NULL,
     }
     if (is.null(prob_critical_death_get_ICU_get_ox_no_MV_baseline)) {
       prob_critical_death_get_ICU_get_ox_no_MV_baseline <- probs$prob_critical_death_get_ICU_get_ox_no_MV_baseline
-      prob_critical_death_get_ICU_get_ox_no_MV_baseline[index] <- min(1, max(0.95, prob_severe_death_no_ICU_no_ox[index]))
+      prob_critical_death_get_ICU_get_ox_no_MV_baseline[index] <- min(1, max(0.95, prob_severe_death_no_ICU_no_ox_baseline[index]))
     }
     if (is.null(prob_critical_death_get_ICU_no_ox_no_MV_baseline)) {
       prob_critical_death_get_ICU_no_ox_no_MV_baseline <- probs$prob_critical_death_get_ICU_no_ox_no_MV_baseline
-      prob_critical_death_get_ICU_no_ox_no_MV_baseline[index] <- min(1, max(0.95, prob_severe_death_no_ICU_no_ox[index]))
+      prob_critical_death_get_ICU_no_ox_no_MV_baseline[index] <- min(1, max(0.95, prob_severe_death_no_ICU_no_ox_baseline[index]))
     }
-    if (is.null(prob_critical_death_no_ICU_no_ox_no_MV)) {
-      prob_critical_death_no_ICU_no_ox_no_MV <- probs$prob_critical_death_no_ICU_no_ox_no_MV
-      prob_critical_death_no_ICU_no_ox_no_MV[index] <- min(1, max(0.95, prob_severe_death_no_ICU_no_ox[index]))
+    if (is.null(prob_critical_death_no_ICU_no_ox_no_MV_baseline)) {
+      prob_critical_death_no_ICU_no_ox_no_MV_baseline <- probs$prob_critical_death_no_ICU_no_ox_no_MV_baseline
+      prob_critical_death_no_ICU_no_ox_no_MV_baseline[index] <- min(1, max(0.95, prob_severe_death_no_ICU_no_ox_baseline[index]))
     }
 
     ret <- list(country = country,
@@ -447,14 +447,14 @@ parse_country_severity <- function(country = NULL,
                 prob_critical = prob_critical,
                 prob_moderate_death_get_hosp_get_ox_baseline = prob_moderate_death_get_hosp_get_ox_baseline,
                 prob_moderate_death_get_hosp_no_ox_baseline = prob_moderate_death_get_hosp_no_ox_baseline,
-                prob_moderate_death_no_hosp_no_ox = prob_moderate_death_no_hosp_no_ox,
+                prob_moderate_death_no_hosp_no_ox_baseline = prob_moderate_death_no_hosp_no_ox_baseline,
                 prob_severe_death_get_ICU_get_ox_baseline = prob_severe_death_get_ICU_get_ox_baseline,
                 prob_severe_death_get_ICU_no_ox_baseline = prob_severe_death_get_ICU_no_ox_baseline,
-                prob_severe_death_no_ICU_no_ox = prob_severe_death_no_ICU_no_ox,
+                prob_severe_death_no_ICU_no_ox_baseline = prob_severe_death_no_ICU_no_ox_baseline,
                 prob_critical_death_get_ICU_get_ox_get_MV_baseline = prob_critical_death_get_ICU_get_ox_get_MV_baseline,
                 prob_critical_death_get_ICU_get_ox_no_MV_baseline = prob_critical_death_get_ICU_get_ox_no_MV_baseline,
                 prob_critical_death_get_ICU_no_ox_no_MV_baseline = prob_critical_death_get_ICU_no_ox_no_MV_baseline,
-                prob_critical_death_no_ICU_no_ox_no_MV = prob_critical_death_no_ICU_no_ox_no_MV)
+                prob_critical_death_no_ICU_no_ox_no_MV_baseline = prob_critical_death_no_ICU_no_ox_no_MV_baseline)
   }
 
   return(ret)

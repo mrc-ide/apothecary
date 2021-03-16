@@ -69,6 +69,9 @@ missing <- countries[!(countries %in% previous_runs)]
 
 # Running Countries Locally to Check They Work
 source("N:/Charlie/apothecary_fitting/apothecary/analysis_Figure3/Functions/MCMC_cluster_function.R")
+test <- run_apothecary_MCMC(country = "FRA", date = "2021-03-05", pars_init = pars_init,
+                            mortality_data = mortality_data, interventions = interventions,
+                            n_mcmc = 20000, replicates = 500, healthcare = "limited", n_chains = 1, gibbs = FALSE)
 for (i in 1:length(countries)) {
   test <- run_apothecary_MCMC(country = countries[i], date = "2021-03-05", pars_init = pars_init,
                               mortality_data = mortality_data, interventions = interventions,

@@ -14,17 +14,6 @@ run_apothecary_MCMC <- function(country, date, pars_init, mortality_data, interv
   parms <- pars_init[[country]]
   iso3c <- country
 
-  # Generating Healthcare Scenarios
-  if (healthcare == "unlimited") {
-    baseline_hosp_bed_capacity <- 10000000000
-    baseline_ICU_bed_capacity <- 10000000000
-  } else if (healthcare == "limited") {
-    baseline_hosp_bed_capacity <- squire:::get_hosp_bed_capacity(country)
-    baseline_ICU_bed_capacity <- squire:::get_ICU_bed_capacity(country)
-  } else {
-    stop("healthcare must be specified as unlimited or limited")
-  }
-
   #### NEED TO ADD SOMETHING IN HERE ABOUT OXYGEN AND ARS AVAILABILITY ####
 
   # Loading in Mortality Data - Default is ECDC Unless Certain Countries, In Which Case Worldometer
@@ -53,6 +42,17 @@ run_apothecary_MCMC <- function(country, date, pars_init, mortality_data, interv
   names(data)[1] <- "date"
   data <- data[order(data$date),]
   data$date <- as.Date(data$date)
+
+  # Generating Healthcare Scenarios
+  if (healthcare == "unlimited") {
+    baseline_hosp_bed_capacity <- 10000000000
+    baseline_ICU_bed_capacity <- 10000000000
+  } else if (healthcare == "limited") {
+    baseline_hosp_bed_capacity <- squire:::get_hosp_bed_capacity(country)
+    baseline_ICU_bed_capacity <- squire:::get_ICU_bed_capacity(country)
+  } else {
+    stop("healthcare must be specified as unlimited or limited")
+  }
 
   # Handle for countries that have eliminated and had reintroduction events
   reintroduction_iso3cs <- c("MMR", "BLZ", "TTO", "BHS", "HKG", "ABW", "GUM", "ISL", "BRB")

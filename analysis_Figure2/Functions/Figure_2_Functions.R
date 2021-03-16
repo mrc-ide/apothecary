@@ -95,27 +95,33 @@ run_drugs_hc_combo <- function(demog_pars, hc_pars, drug_ind_pars, drug_eff_pars
       # Drug Indicator and Proportion Treated Parameters
       drug_11_indic_IMod_GetHosp_GetOx = drug_ind_pars$drug_11_indic_IMod_GetHosp_GetOx,
       drug_11_indic_IMod_GetHosp_NoOx = drug_ind_pars$drug_11_indic_IMod_GetHosp_NoOx,
+      drug_11_indic_IMod_NoHosp_NoOx = drug_ind_pars$drug_11_indic_IMod_NoHosp_NoOx,
       drug_11_prop_treat = drug_ind_pars$drug_11_prop_treat,
 
       drug_12_indic_ISev_GetICU_GetOx = drug_ind_pars$drug_12_indic_ISev_GetICU_GetOx,
       drug_12_indic_ISev_GetICU_NoOx = drug_ind_pars$drug_12_indic_ISev_GetICU_NoOx,
+      drug_12_indic_ISev_NoICU_NoOx = drug_ind_pars$drug_12_indic_ISev_NoICU_NoOx,
       drug_12_prop_treat = drug_ind_pars$drug_12_prop_treat,
 
       drug_13_indic_ICrit_GetICU_GetOx_GetMV = drug_ind_pars$drug_13_indic_ICrit_GetICU_GetOx_GetMV,
       drug_13_indic_ICrit_GetICU_GetOx_NoMV = drug_ind_pars$drug_13_indic_ICrit_GetICU_GetOx_NoMV,
       drug_13_indic_ICrit_GetICU_NoOx_NoMV = drug_ind_pars$drug_13_indic_ICrit_GetICU_NoOx_NoMV,
+      drug_13_indic_ICrit_NoICU_NoOx_NoMV = drug_ind_pars$drug_13_indic_ICrit_NoICU_NoOx_NoMV,
       drug_13_prop_treat = drug_ind_pars$drug_13_prop_treat,
 
       # Drug Effect Parameters
       drug_11_GetOx_effect_size = drug_eff_pars$dexy_mod_getox_mort[x],
       drug_11_NoOx_effect_size = drug_eff_pars$dexy_mod_noox_mort[x],
+      drug_11_NoHosp_effect_size = drug_eff_pars$dexy_mod_nohosp_mort[x],
 
       drug_12_GetOx_effect_size = drug_eff_pars$dexy_sev_getox_mort[x],
       drug_12_NoOx_effect_size = drug_eff_pars$dexy_sev_noox_mort[x],
+      drug_12_NoICU_effect_size = drug_eff_pars$dexy_sev_noICU_mort[x],
 
       drug_13_GetOx_GetMV_effect_size = drug_eff_pars$dexy_crit_getox_getmv_mort[x],
       drug_13_GetOx_NoMV_effect_size = drug_eff_pars$dexy_crit_getox_nomv_mort[x],
-      drug_13_NoOx_NoMV_effect_size = drug_eff_pars$dexy_crit_noox_nomv_mort[x])
+      drug_13_NoOx_NoMV_effect_size = drug_eff_pars$dexy_crit_noox_nomv_mort[x],
+      drug_13_NoICU_effect_size = drug_eff_pars$dexy_crit_noICU_mort[x])
 
     # Extracting Relevant Outputs
     IFR <- 100 * extract_IFR(temp)
