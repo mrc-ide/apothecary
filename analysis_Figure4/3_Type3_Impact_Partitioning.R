@@ -46,11 +46,11 @@ type3 <- run_apothecary(country = "Bhutan", R0 = R0, population = standard_popul
                       prop_ox_hosp_beds = actual_prop_ox_hosp_beds, prop_ox_ICU_beds = actual_prop_ox_ICU_beds,
                       MV_capacity = actual_MV_capacity,
                       drug_8_indic_IMod_GetHosp_GetOx = 1, drug_8_indic_IMod_GetHosp_NoOx = 1, drug_8_prop_treat = 1,
-                      drug_8_GetOx_effect_size = 1.5, drug_8_NoOx_effect_size = 1,
+                      drug_8_GetOx_effect_size = 1.5, drug_8_NoOx_effect_size = 1.5,
                       drug_9_indic_ISev_GetICU_GetOx = 1, drug_9_indic_ISev_GetICU_NoOx = 1, drug_9_prop_treat = 1,
-                      drug_9_GetOx_effect_size = 1.5, drug_9_NoOx_effect_size = 1,
+                      drug_9_GetOx_effect_size = 1.5, drug_9_NoOx_effect_size = 1.5,
                       drug_10_indic_ICrit_GetICU_GetOx_GetMV = 1, drug_10_indic_ICrit_GetICU_GetOx_NoMV = 1, drug_10_indic_ICrit_GetICU_NoOx_NoMV = 1, drug_10_prop_treat = 1,
-                      drug_10_GetOx_GetMV_effect_size = 1.5, drug_10_GetOx_NoMV_effect_size = 1, drug_10_NoOx_NoMV_effect_size = 1)
+                      drug_10_GetOx_GetMV_effect_size = 1.5, drug_10_GetOx_NoMV_effect_size = 1.5, drug_10_NoOx_NoMV_effect_size = 1.5)
 type3_deaths <- sum(apply(type3$output[, index$D], 2, max))
 total_deaths_averted <- sum(apply(none$output[, index$D], 2, max)) - sum(apply(type3$output[, index$D], 2, max))
 

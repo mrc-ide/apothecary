@@ -30,32 +30,36 @@ none_low <- run_apothecary(country = "Bhutan", R0 = 1.35, population = standard_
                            time_period = time, seeding_cases = 20, day_return = TRUE,
                            hosp_bed_capacity = actual_hosp_beds, ICU_bed_capacity = actual_ICU_beds,
                            prop_ox_hosp_beds = actual_prop_ox_hosp_beds, prop_ox_ICU_beds = actual_prop_ox_ICU_beds, MV_capacity = actual_MV_capacity)
+none_high <- run_apothecary(country = "Bhutan", R0 = 2, population = standard_population, contact_matrix_set = standard_matrix,
+                           time_period = time, seeding_cases = 20, day_return = TRUE,
+                           hosp_bed_capacity = actual_hosp_beds, ICU_bed_capacity = actual_ICU_beds,
+                           prop_ox_hosp_beds = actual_prop_ox_hosp_beds, prop_ox_ICU_beds = actual_prop_ox_ICU_beds, MV_capacity = actual_MV_capacity)
 index <- apothecary:::odin_index(none_low$model)
 none_low_deaths <- max(apply(none_low$output[, index$D], 1, sum))
 none_high_deaths <- max(apply(none_high$output[, index$D], 1, sum))
 
 # Plotting Figure 4B
 type1 <- readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type1_low.rds")
-type1_relevant <- type1[6:10, 19:21]
+type1_relevant <- type1[5:10, 19:21]
 type1min <- none_low_deaths - type1_relevant[1, 1]
 type1_direct <- readRDS("analysis_Figure4/Outputs/figure4b_central_estimates/type1_low_df.rds")$total_deaths_averted
 type1_indirect_hc <- 0
 type1_indirect_trans <- 0
 type1_central <- type1_direct + type1_indirect_hc + type1_indirect_trans
-type1max <- none_low_deaths - type1_relevant[5, 3]
+type1max <- none_low_deaths - type1_relevant[6, 3]
 
 type2 <- readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type2_low.rds")
-type2_relevant <- type2[6:10, 19:21]
+type2_relevant <- type2[5:10, 19:21]
 type2min <- none_low_deaths - type2_relevant[1, 1]
 type2_direct <- readRDS("analysis_Figure4/Outputs/figure4b_central_estimates/type2_low_df.rds")$direct_deaths_averted
 type2_indirect_hc <- readRDS("analysis_Figure4/Outputs/figure4b_central_estimates/type2_low_df.rds")$indirect_deaths_averted_healthcare
 type2_indirect_trans <- readRDS("analysis_Figure4/Outputs/figure4b_central_estimates/type2_low_df.rds")$indirect_deaths_averted_transmission
 type2_central <- type2_direct + type2_indirect_hc + type2_indirect_trans
-type2max <- none_low_deaths - type2_relevant[5, 3]
+type2max <- none_low_deaths - type2_relevant[6, 3]
 
 type3 <- readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type3_low.rds")
-type3_relevant <- type3[11:17, 19:21]
-type3min <- none_low_deaths - type3_relevant[7, 1]
+type3_relevant <- type3[12:17, 19:21]
+type3min <- none_low_deaths - type3_relevant[6, 1]
 type3_direct <- readRDS("analysis_Figure4/Outputs/figure4b_central_estimates/type3_low_df.rds")$direct_deaths_averted
 type3_indirect_hc <- readRDS("analysis_Figure4/Outputs/figure4b_central_estimates/type3_low_df.rds")$indirect_deaths_averted_healthcare
 type3_indirect_trans <- readRDS("analysis_Figure4/Outputs/figure4b_central_estimates/type3_low_df.rds")$indirect_deaths_averted_transmission
@@ -63,22 +67,17 @@ type3_central <- type3_direct + type3_indirect_hc + type3_indirect_trans
 type3max <- none_low_deaths - type3_relevant[1, 3]
 
 type4 <- readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type4_low.rds")
-type4_relevant <- type4[8:14, 8:14]
+type4_relevant <- type4[6:16, 6:11]
 type4min <- none_low_deaths - type4_relevant[1, 1]
 type4_direct <- readRDS("analysis_Figure4/Outputs/figure4b_central_estimates/type4_low_df.rds")$direct_deaths_averted
 type4_indirect_hc <- readRDS("analysis_Figure4/Outputs/figure4b_central_estimates/type4_low_df.rds")$indirect_deaths_averted_healthcare
 type4_indirect_trans <- readRDS("analysis_Figure4/Outputs/figure4b_central_estimates/type4_low_df.rds")$indirect_deaths_averted_transmission
 type4_central <- type4_direct + type4_indirect_hc + type4_indirect_trans
-type4max <- none_low_deaths - type4_relevant[7, 7]
-
-duration_prop <- seq(0.01, 1, length.out = 21)
-type3_effectiveness <- 1/duration_prop
-duration_prop[13:17]
-type3_effectiveness[13:17]
+type4max <- none_low_deaths - type4_relevant[11, 6]
 
 type5a <- readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type5_low.rds")
-type5a_relevant <- type5a[13:17, 8:13]
-type5amin <- none_low_deaths - type5a_relevant[7, 1]
+type5a_relevant <- type5a[6:16, 6:11]
+type5amin <- none_low_deaths - type5a_relevant[11, 1]
 type5a_direct <- readRDS("analysis_Figure4/Outputs/figure4b_central_estimates/type5a_low_df.rds")$direct_deaths_averted
 type5a_indirect_hc <- readRDS("analysis_Figure4/Outputs/figure4b_central_estimates/type5a_low_df.rds")$indirect_deaths_averted_healthcare
 type5a_indirect_trans <- readRDS("analysis_Figure4/Outputs/figure4b_central_estimates/type5a_low_df.rds")$indirect_deaths_averted_transmission
@@ -86,13 +85,13 @@ type5a_central <- type5a_direct + type5a_indirect_hc + type5a_indirect_trans
 type5amax <- none_low_deaths - type5a_relevant[1, 6]
 
 type5b <- readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type6_low.rds")
-type5b_relevant <- type5b[13:17, 8:13]
-type5bmin <- none_low_deaths - type5b_relevant[7, 1]
+type5b_relevant <- type5b[6:16, 4:7]
+type5bmin <- none_low_deaths - type5b_relevant[11, 1]
 type5b_direct <- readRDS("analysis_Figure4/Outputs/figure4b_central_estimates/type5b_low_df.rds")$direct_deaths_averted
 type5b_indirect_hc <- readRDS("analysis_Figure4/Outputs/figure4b_central_estimates/type5b_low_df.rds")$indirect_deaths_averted_healthcare
 type5b_indirect_trans <- readRDS("analysis_Figure4/Outputs/figure4b_central_estimates/type5b_low_df.rds")$indirect_deaths_averted_transmission
 type5b_central <- type5b_direct + type5b_indirect_hc + type5b_indirect_trans
-type5bmax <- none_low_deaths - type5b_relevant[1, 6]
+type5bmax <- none_low_deaths - type5b_relevant[1, 4]
 
 drug_type <- c(rep(paste0("Type", seq(1:4)), each = 3), rep("Type5a", 3), rep("Type5b", 3))
 estimate_type <- rep(c("min", "central", "max"), 6)
@@ -298,6 +297,13 @@ i <- heatmap_plot(readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type5_l
 k <- heatmap_plot(readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type6_low.rds"), none_low_deaths, TRUE)
 plot_grid(a, c, e, g, i, k)
 
+i <- heatmap_plot(readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type5_low.rds"), none_low_deaths, TRUE)
+k <- heatmap_plot(readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type6_low.rds"), none_low_deaths, TRUE)
+plot_grid(i, k)
+
+i <- heatmap_plot(readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type5_high.rds"), none_high_deaths, TRUE)
+k <- heatmap_plot(readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type6_high.rds"), none_high_deaths, TRUE)
+plot_grid(i, k)
 
 
 # b <- heatmap_plot(readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type1_high.rds"), none_high_deaths, FALSE)

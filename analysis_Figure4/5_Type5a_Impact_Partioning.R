@@ -41,7 +41,7 @@ if (R == "high") {
 } else {
   R0 <- 1.35
 }
-prop_treat <- 0.5
+prop_treat <- 0.35
 none_lim_hc_1 <- run_apothecary(country = "Bhutan", R0 = R0, population = standard_population, contact_matrix_set = standard_matrix,
                                 time_period = time, seeding_cases = 20, day_return = TRUE,
                                 hosp_bed_capacity = actual_hosp_beds, ICU_bed_capacity = actual_ICU_beds,
@@ -50,8 +50,8 @@ dur_change <- run_apothecary(country = "Bhutan", R0 = R0, population = standard_
                              time_period = time, seeding_cases = 20, day_return = TRUE,
                              hosp_bed_capacity = actual_hosp_beds, ICU_bed_capacity = actual_ICU_beds,
                              prop_ox_hosp_beds = actual_prop_ox_hosp_beds, prop_ox_ICU_beds = actual_prop_ox_ICU_beds, MV_capacity = actual_MV_capacity,
-                             drug_4_indic_IAsymp = 1, drug_4_indic_IMild = 1, drug_4_indic_ICase = 1,
-                             drug_4_prop_treat = prop_treat, drug_4_effect_size_IAsymp = 1, drug_4_effect_size_IMild = 1.5, drug_4_effect_size_ICase = 1.5)
+                             drug_4_indic_IAsymp = 0, drug_4_indic_IMild = 1, drug_4_indic_ICase = 0,
+                             drug_4_prop_treat = prop_treat, drug_4_effect_size_IAsymp = 1, drug_4_effect_size_IMild = 2, drug_4_effect_size_ICase = 1)
 index <- squire:::odin_index(none_lim_hc_1$model)
 drug_deaths <- sum(apply(dur_change$output[, index$D], 2, max))
 total_deaths_averted <- sum(apply(none_lim_hc_1$output[, index$D], 2, max)) - sum(apply(dur_change$output[, index$D], 2, max))

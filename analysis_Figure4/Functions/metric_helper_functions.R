@@ -53,3 +53,42 @@ days_over_capacity <- function(model_output, type) {
   }
 }
 
+heatmap_plot <- function(matrix, deaths, reverse) {
+  matrix <- matrix/deaths
+  colnames(matrix) <- seq(0, 1, length.out = 21)
+  if (reverse) {
+    row.names(matrix) <- seq(1, 0, length.out = 21)
+  } else {
+    row.names(matrix) <- seq(0, 1, length.out = 21)
+  }
+  matrix <- reshape2::melt(matrix)
+  plot <- ggplot() +
+    geom_tile(data = matrix, aes(Var1, Var2, fill = 1-value)) +
+    #geom_raster(data = matrix, aes(Var1, Var2, fill = 1-value), interpolate = TRUE) +
+    scale_x_continuous(limits = c(-0.1, 1.1), expand = c(0, 0)) +
+    scale_y_continuous(limits = c(-0.1, 1.1), expand = c(0, 0)) +
+    #scale_fill_viridis(option="magma", limits = c(-0.01, 1), direction = 1) +
+    # scale_fill_gradient2(limits = c(-0.01, 1),
+    #                      low="navy", mid="white", high="red",
+    #                      midpoint=0.25) +
+    # scale_fill_gradientn(colours = c("#C5A2A6", "#BFB6BB", "#B7C3C9",
+    #                                  "#AFD0D6", "#AAD4EB", "#D1E7F3"),
+    #                      limits = c(-0.01, 1)) +
+    scale_fill_gradientn(colours = c("#C5A2A6",
+                                     "#AFD0D6", "#AAD4EB", "#D1E7F3"),
+                         limits = c(-0.01, 1)) +
+    theme_cowplot() +
+    labs(x = "", y = "") +
+    theme(axis.line=element_blank(), axis.text.x = element_blank(),
+          axis.title.x = element_text(vjust = 8),
+          axis.text.y = element_blank(), axis.title.y = element_text(vjust = -0.5),
+          axis.ticks = element_blank(),
+          legend.position = "none",
+          plot.margin=grid::unit(c(0,0,0,0), "mm")) +
+    #plot.margin = margin(1, 1, 1, 1)) +
+    annotate("text", x = -0.03, y = seq(0, 1, 0.25), label= c("0.00", "0.25", "0.50", "0.75", "1.00"),
+             hjust = 1, size = 4.5) +
+    annotate("text", y = -0.05, x = 0.05 +seq(0, 1, 0.25), label= c("0.00", "0.25", "0.50", "0.75", "1.00"),
+             hjust = 1, size = 4.5)
+  return(plot)
+}

@@ -29,13 +29,13 @@ time <- 600
 # Impact comes from a multiple of different sources:
 #   1) Directly by shifting individuals from higher risk (ICU) to lower risk (hosp) categories
 #   2) Indirectly by remaining ICU individuals being able to get access to better healthcare (due to lower demand)
-R <- "low"
+R <- "high"
 if (R == "high") {
   R0 <- 2
 } else {
   R0 <- 1.35
 }
-type_1_eff <- 0.64
+type_1_eff <- 0.70
 none <- run_apothecary(country = "Bhutan", R0 = R0, population = standard_population, contact_matrix_set = standard_matrix,
                        time_period = time, seeding_cases = 20, day_return = TRUE,
                        hosp_bed_capacity = actual_hosp_beds, ICU_bed_capacity = actual_ICU_beds,

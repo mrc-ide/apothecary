@@ -35,7 +35,7 @@ time <- 750
 # 3) Indirectly by preventing individuals from being hospitalised (and dying)
 #      Run the model with only the duration of infection effect in, and now limited healthcare. Impact here is from the drug
 #      preventing people from going to hospital AND from the reduced strain on healthcare.
-R <- "low"
+R <- "high"
 if (R == "high") {
   R0 <- 2
 } else {
@@ -47,7 +47,7 @@ none_lim_hc_1 <- run_apothecary(country = "Bhutan", R0 = R0, population = standa
                                 prop_ox_hosp_beds = actual_prop_ox_hosp_beds, prop_ox_ICU_beds = actual_prop_ox_ICU_beds, MV_capacity = actual_MV_capacity)
 
 # Adding in the drug 3 effect
-prop_treat <- 0.5
+prop_treat <- 0.35
 drug_3_effect_size <- 0.5
 hosp_change <- run_apothecary(country = "Bhutan", R0 = R0, population = standard_population, contact_matrix_set = standard_matrix,
                               time_period = time, seeding_cases = 20, day_return = TRUE,

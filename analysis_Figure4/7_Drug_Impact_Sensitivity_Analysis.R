@@ -253,15 +253,17 @@ for (i in 1:length(type5_effectiveness)) {
                                     time_period = time, seeding_cases = 20, day_return = TRUE,
                                     hosp_bed_capacity = actual_hosp_beds, ICU_bed_capacity = actual_ICU_beds,
                                     prop_ox_hosp_beds = actual_prop_ox_hosp_beds, prop_ox_ICU_beds = actual_prop_ox_ICU_beds, MV_capacity = actual_MV_capacity,
-                                    drug_4_indic_IAsymp = 1, drug_4_indic_IMild = 1, drug_4_indic_ICase = 1,
-                                    drug_4_prop_treat = type5_cov, drug_4_effect_size_IAsymp = 1, drug_4_effect_size_IMild = type5_dur_effect, drug_4_effect_size_ICase = 1) # drug_4_effect_size_ICase only applied to those where hosp is averted through drug_3_effect so not relevant here
+                                    drug_4_indic_IAsymp = 0, drug_4_indic_IMild = 1, drug_4_indic_ICase = 0,
+                                    drug_4_prop_treat = type5_cov,
+                                    drug_4_effect_size_IAsymp = 1, drug_4_effect_size_IMild = type5_dur_effect, drug_4_effect_size_ICase = 1) # drug_4_effect_size_ICase only applied to those where hosp is averted through drug_3_effect so not relevant here
 
     type5_high_run <- run_apothecary(country = "Bhutan", R0 = 2, population = standard_population, contact_matrix_set = standard_matrix,
                                      time_period = time, seeding_cases = 20, day_return = TRUE,
                                      hosp_bed_capacity = actual_hosp_beds, ICU_bed_capacity = actual_ICU_beds,
                                      prop_ox_hosp_beds = actual_prop_ox_hosp_beds, prop_ox_ICU_beds = actual_prop_ox_ICU_beds, MV_capacity = actual_MV_capacity,
-                                     drug_4_indic_IAsymp = 1, drug_4_indic_IMild = 1, drug_4_indic_ICase = 1,
-                                     drug_4_prop_treat = type5_cov, drug_4_effect_size_IAsymp = 1, drug_4_effect_size_IMild = type5_dur_effect, drug_4_effect_size_ICase = 1) # drug_4_effect_size_ICase only applied to those where hosp is averted through drug_3_effect so not relevant here
+                                     drug_4_indic_IAsymp = 0, drug_4_indic_IMild = 1, drug_4_indic_ICase = 0,
+                                     drug_4_prop_treat = type5_cov,
+                                     drug_4_effect_size_IAsymp = 1, drug_4_effect_size_IMild = type5_dur_effect, drug_4_effect_size_ICase = 1) # drug_4_effect_size_ICase only applied to those where hosp is averted through drug_3_effect so not relevant here
 
     type5_low_deaths <- max(apply(type5_low_run$output[, index$D], 1, sum))
     type5_high_deaths <- max(apply(type5_high_run$output[, index$D], 1, sum))
@@ -298,15 +300,23 @@ for (i in 1:length(type6_effectiveness)) {
                                     time_period = time, seeding_cases = 20, day_return = TRUE,
                                     hosp_bed_capacity = actual_hosp_beds, ICU_bed_capacity = actual_ICU_beds,
                                     prop_ox_hosp_beds = actual_prop_ox_hosp_beds, prop_ox_ICU_beds = actual_prop_ox_ICU_beds, MV_capacity = actual_MV_capacity,
-                                    drug_4_indic_IAsymp = 1, drug_4_indic_IMild = 1, drug_4_indic_ICase = 1,
-                                    drug_4_prop_treat = type6_cov, drug_4_effect_size_IAsymp = type6_dur_effect, drug_4_effect_size_IMild = type6_dur_effect, drug_4_effect_size_ICase = 1)
+                                    drug_2_indic_IPreAsymp = 1, drug_2_indic_IPreMild = 1, drug_2_indic_IPreCase = 0,
+                                    drug_2_prop_treat = type6_cov,
+                                    drug_2_effect_size_IPreAsymp = type6_dur_effect, drug_2_effect_size_IPreMild = type6_dur_effect, drug_2_effect_size_IPreCase = 1,
+                                    drug_4_indic_IAsymp = 1, drug_4_indic_IMild = 1, drug_4_indic_ICase = 0,
+                                    drug_4_prop_treat = type6_cov,
+                                    drug_4_effect_size_IAsymp = type6_dur_effect, drug_4_effect_size_IMild = type6_dur_effect, drug_4_effect_size_ICase = 1)
 
     type6_high_run <- run_apothecary(country = "Bhutan", R0 = 2, population = standard_population, contact_matrix_set = standard_matrix,
                                      time_period = time, seeding_cases = 20, day_return = TRUE,
                                      hosp_bed_capacity = actual_hosp_beds, ICU_bed_capacity = actual_ICU_beds,
                                      prop_ox_hosp_beds = actual_prop_ox_hosp_beds, prop_ox_ICU_beds = actual_prop_ox_ICU_beds, MV_capacity = actual_MV_capacity,
-                                     drug_4_indic_IAsymp = 1, drug_4_indic_IMild = 1, drug_4_indic_ICase = 1,
-                                     drug_4_prop_treat = type6_cov, drug_4_effect_size_IAsymp = type6_dur_effect, drug_4_effect_size_IMild = type6_dur_effect, drug_4_effect_size_ICase = 1)
+                                     drug_2_indic_IPreAsymp = 1, drug_2_indic_IPreMild = 1, drug_2_indic_IPreCase = 0,
+                                     drug_2_prop_treat = type6_cov,
+                                     drug_2_effect_size_IPreAsymp = type6_dur_effect, drug_2_effect_size_IPreMild = type6_dur_effect, drug_2_effect_size_IPreCase = 1,
+                                     drug_4_indic_IAsymp = 1, drug_4_indic_IMild = 1, drug_4_indic_ICase = 0,
+                                     drug_4_prop_treat = type6_cov,
+                                     drug_4_effect_size_IAsymp = type6_dur_effect, drug_4_effect_size_IMild = type6_dur_effect, drug_4_effect_size_ICase = 1)
 
     type6_low_deaths <- max(apply(type6_low_run$output[, index$D], 1, sum))
     type6_high_deaths <- max(apply(type6_high_run$output[, index$D], 1, sum))
@@ -324,48 +334,3 @@ heatmap(type6_low/none_low_deaths, Colv = NA, Rowv = NA, scale="none")
 heatmap(type6_high/none_high_deaths, Colv = NA, Rowv = NA, scale = "none")
 saveRDS(type6_low, "analysis_Figure4/Outputs/sensitivity_analysis/type6_low.rds")
 saveRDS(type6_high, "analysis_Figure4/Outputs/sensitivity_analysis/type6_high.rds")
-
-# par(mfrow = c(1, 2))
-# plot(type1_effectiveness, type1_low/none_low_deaths, type = "l", ylim = c(0, 1))
-# lines(type2_effectiveness, type2_low/none_low_deaths, col = "red")
-# lines(1-duration_prop, type3_low/none_low_deaths, type = "l", ylim = c(0, 1), col = "blue")
-# lines(type4_effectiveness, type4_low/none_low_deaths, type = "l", ylim = c(0, 1), col = "orange")
-# lines(1-duration_prop, type5_low/none_low_deaths, type = "l", ylim = c(0, 1), col = "dark green")
-#
-# plot(type1_effectiveness, type1_high/none_high_deaths, type = "l", ylim = c(0, 1))
-# lines(type2_effectiveness, type2_high/none_high_deaths, col = "red")
-# lines(1-duration_prop, type3_high/none_high_deaths, type = "l", col = "blue")
-# lines(type4_effectiveness, type4_high/none_high_deaths, type = "l", col = "orange")
-# lines(1-duration_prop, type5_high/none_high_deaths, type = "l", col = "dark green")
-#
-# total_length <- length(type1_effectiveness) + length(type2_effectiveness) + length(type3_effectiveness) +
-#   length(type4_effectiveness) + length(type5_effectiveness)
-#
-# df <- data.frame(
-#   drug = c(rep("type_1", length(type1_effectiveness)),
-#            rep("type_2", length(type2_effectiveness)),
-#            rep("type_3", length(type3_effectiveness)),
-#            rep("type_4", length(type4_effectiveness)),
-#            rep("type_5", length(type5_effectiveness))),
-#   R0 = c(rep("low", total_length), rep("high", total_length)),
-#   averted = c(type1_low/none_low_deaths, type2_low/none_low_deaths, type3_low/none_low_deaths,
-#               type4_low/none_low_deaths, type5_low/none_low_deaths,
-#               type1_high/none_high_deaths, type2_high/none_high_deaths, type3_high/none_high_deaths,
-#               type4_high/none_high_deaths, type5_high/none_high_deaths),
-#   effectiveness = c(type1_effectiveness, type2_effectiveness, 1-duration_prop,
-#                     type4_effectiveness, 1-duration_prop))
-# saveRDS(df, "analysis_Figure4/Outputs/effectiveness_scan.rds")
-#
-# # nice red: e12f4a
-# ggplot(df, aes(x = effectiveness, y = averted, col = drug)) +
-#   geom_path() +
-#   scale_y_continuous(position = "right") +
-#   facet_grid(R0~.) +
-#   labs(x = "Drug Effectiveness", y = "Proportion of Deaths Averted") +
-#   scale_colour_manual(values = c("#8b82f8", "#f32bb1", "#f76c07", "#98cb66", "#009bfd")) +
-#   theme(legend.position = "none",
-#         strip.background = element_blank(),
-#         strip.text = element_blank(),
-#         axis.text = element_text(size = 12))
-#
-#
