@@ -4,10 +4,12 @@
 
 # Loading Required Libraries
 library(gbm); library(dismo); library(conflicted); library(gtools); library(lubridate);
-library(magrittr); library(dplyr); library(tidyr)
+library(dplyr); library(tidyverse)
 conflict_prefer("select", "dplyr")
 conflict_prefer("filter", "dplyr")
 conflict_prefer("area", "patchwork")
+conflict_prefer("mutate", "dplyr")
+conflict_prefer("rename", "dplyr")
 
 download_url <- function(url) {
   tryCatch({
@@ -41,7 +43,8 @@ match_clean <- function(a,b, quiet=TRUE){
 ## -----------------------------------------------------------------------------
 ## Step 1: Data Loading
 ## -----------------------------------------------------------------------------
-date <- as.Date("2020-03-05")
+date <- Sys.Date()
+date <- as.Date(date)
 
 # Loading Google Mobility Data
 goog_tf <- download_url("https://www.gstatic.com/covid19/mobility/Global_Mobility_Report.csv")
@@ -62,7 +65,7 @@ mob <-  goog %>%
   select(country_region, iso3c, date, overall)
 
 # Loading World Bank Metadata (Charlie can update to url as needed)
-wb_metadata <- read.csv("analysis_Figure3/Inputs/gdp_income_group.csv", fileEncoding="UTF-8-BOM", stringsAsFactors = TRUE) %>%
+wb_metadata <- read.csv("analysis_Figure3/Inputs/World_Bank_Country_Metadata.csv", fileEncoding="UTF-8-BOM", stringsAsFactors = TRUE) %>%
   rename(ISO = country_code) %>%
   select(ISO, income_group, region) %>%
   filter(region != "")
@@ -85,14 +88,6 @@ if("Database" %in% sheets) {
 # rename starting _
 names(acap) <- gsub("^_","",names(acap))
 
-## -----------------------------------------------------------------------------
-## Missing ACAPs Data to be sourced from Oxford and other sources
-## -----------------------------------------------------------------------------
-
-# Extra:
-acap_extra <- readxl::read_excel("analysis_Figure3/Inputs/acaps_missing.xlsx", progress = FALSE)
-acap <- rbind(acap, acap_extra[,match(names(acap_extra),names(acap))])
-
 # country name fixes. We want to use the ISO3C eventually but there are typos...
 acap$ISO <- countrycode::countrycode(acap$COUNTRY, "country.name", "iso3c",
                                      custom_match = c("Eswatini"="SWZ", "Micronesia"="FSM","CAR"="CAF"))
@@ -100,7 +95,6 @@ acap$ISO <- countrycode::countrycode(acap$COUNTRY, "country.name", "iso3c",
 ## -----------------------------------------------------------------------------
 ## Step 1: Data Loading
 ## -----------------------------------------------------------------------------
-
 ACAPs_measure <- acap %>%
   rename(country = COUNTRY, measure = MEASURE, type = LOG_TYPE, date = DATE_IMPLEMENTED) %>%
   select(ISO, measure, type, date) %>%
@@ -125,12 +119,11 @@ for (i in 1:length(measures)) {
 
 # Tracking Cumulative Number of Each Type of Measure Implemented and Creating New Rows for Dates
 # Not Present in Each Country
-date_0 <- date
 new_ACAPs_measure <- ACAPs_measure %>%
   group_by(ISO) %>%
   arrange(date) %>%
   mutate_at(vars(-ISO, -date), funs(cumsum(.))) %>%
-  complete(date = seq.Date(min(ACAPs_measure$date), date_0, by = "days")) %>%
+  complete(date = seq.Date(min(ACAPs_measure$date), max(ACAPs_measure$date), by = "days")) %>%
   mutate_at(vars( -ISO, -date), funs(replace(., row_number() == 1, 0)))
 
 # Filling Those Newly Created Rows With the Value In the Row Above (As We're Tracking Cumulative)
@@ -185,8 +178,8 @@ brt <- gbm.step(data = x,
                 plot.main = FALSE,
                 plot.folds = FALSE)
 
-# predicted <- predict.gbm(brt, x[, c(2:ncol(x))], n.trees = brt$gbm.call$best.trees, type = "response")
-# plot(overall$overall, predicted, ylim = c(-100, 20), xlim = c(-100, 20), pch = 20, cex = 2, ylab = "")
+predicted <- predict.gbm(brt, x[, c(2:ncol(x))], n.trees = brt$gbm.call$best.trees, type = "response")
+plot(overall$overall, predicted, ylim = c(-100, 20), xlim = c(-100, 20), pch = 20, cex = 2, ylab = "")
 
 # let's create the complete data set and predict where data is missing
 output_data <- new_ACAPs_cat %>%
@@ -221,12 +214,12 @@ yes_mob_no_acaps <- select(yes_mob_no_acaps, ISO, date, overall, all_overall, ob
 
 ## Format the data into the correct form the orderly task
 res <- select(output_data, ISO, date, overall, all_overall, observed, income_group) %>%
+  rbind(yes_mob_no_acaps) %>%
   mutate(overall = (overall+100)/100,
          all_overall = (all_overall+100)/100) %>%
   rename(C = overall,
          C_predict = all_overall,
          iso3c = ISO)
-
 res <- split.data.frame(res, res$iso3c)
 
 # Add in missing countries
@@ -271,137 +264,13 @@ for(r in seq_along(res)) {
     # for the end use the mean of the final 2 weeks
     rw <- tail(res[[r]]$C[which(res[[r]]$observed)], 14)
     rw_end <- tail(which(res[[r]]$observed),1)
-    if(rw_end == length(res[[r]]$C)) {
-      res[[r]]$C[tail(seq_along(res[[r]]$C),7)] <- mean(rw)
-    } else {
-      rw_7 <- res[[r]]$C[(rw_end+1):(rw_end+7)]
-      res[[r]]$C[(rw_end+1):nrow(res[[r]])] <- mean(rw)
-    }
+    rw_7 <- res[[r]]$C[(rw_end+1):(rw_end+7)]
+    res[[r]]$C[(rw_end+1):nrow(res[[r]])] <- mean(rw)
+
   }
+
 }
 
-date_0 <- date
-for(i in seq_along(res)) {
-  if(nrow(res[[i]]) > 0) {
-    res[[i]] <- complete(res[[i]], date = seq.Date(min(res[[i]]$date, na.rm = TRUE), as.Date(date_0), 1)) %>%
-      fill(colnames(res[[i]]), .direction = "down")
-  }
-}
-
-saveRDS(res, "analysis_Figure3/Inputs/google_brt.rds")
-# saveRDS(brt, "analysis_Figure3/Inputs/google_brt_model.rds")
-# saveRDS(output_data, "analysis_Figure3/Inputs/output_data.rds")
-
-# -----------------------------------------------------------------------------
-## Step 5: Data Validation / Plotting
-## -----------------------------------------------------------------------------
-
-
-# Plot Predicted Countries' Google Mobility
-# par(mfrow = c(5, 5), mar = c(5, 3, 1, 1))
-# ACAPs_subset$pred_mob <- predicted
-# predicted_countries <- as.character(unique(ACAPs_subset$country))
-# for (i in 1:length(predicted_countries)) {
-#   country <- predicted_countries[i]
-#   country_index <- which(ACAPs_subset$country == country)
-#   plot(ACAPs_subset$date[country_index], ACAPs_subset$pred_mob[country_index],
-#        type = "l", lwd = 2, ylim = c(-100, 10), ylab = "", xlab = country, las = 1)
-# }
-
-### Supplementary Code for Cross-Validation ###
-
-# Manual Cross Validation of Individual Countries to Check Overfitting Handled By gmb.step
-# country_fold_generator <- function(country_data, number_folds) {
-#   fold_indices <- vector("list", number_folds)
-#   samples <- length(unique(country_data))/number_folds
-#   excluded_indices <- c()
-#   for (i in 1:number_folds) {
-#     if (length(excluded_indices) == 0) {
-#       temp_fold <- sample(1:length(unique(country_data)), samples)
-#     } else {
-#       temp_fold <- sample(c(1:length(unique(country_data)))[-excluded_indices], samples)
-#     }
-#     excluded_indices <- c(excluded_indices, temp_fold)
-#     fold_indices[[i]] <- temp_fold
-#     #print(i)
-#   }
-#   return(fold_indices)
-# }
-#
-# number_folds <- 5
-# folds <- country_fold_generator(overall$country, number_folds)
-# fold_choices <- combinations(n = number_folds, r = number_folds - 1, v = 1:number_folds, repeats.allowed = FALSE)
-# cv_outputs <- vector("list", number_folds)
-# countries <- unique(overall$country)
-# brts <- list()
-# sample_indices_list <- list()
-# for (i in 1:number_folds) {
-#   folds_to_use <- fold_choices[i, ]
-#   sample_indices <- c()
-#   for (j in 1:(number_folds - 1)) {
-#     sample_indices <- c(sample_indices, folds[[folds_to_use[j]]])
-#   }
-#   sample_indices_list[[i]] <- sample_indices
-#   countries_to_use <- countries[sample_indices]
-#   sample_data <- x[overall$country %in% countries_to_use, ]
-#   brt_cv <- gbm.step(data = x, gbm.x = c(2:66), gbm.y = 1, family = "gaussian",
-#                      tree.complexity = tree_complexity, learning.rate = learning_rate,
-#                      bag.fraction = bag_fraction, max.trees = max_trees, n.folds = 5)
-#   brts[[i]] <- brt_cv
-#   observed_train <- x$overall[overall$country %in% countries_to_use]
-#   predicted_train <- predict.gbm(brt_cv,
-#                                  x[overall$country %in% countries_to_use, c(2:66)],
-#                                  n.trees = brt_cv$gbm.call$best.trees, type = "response")
-#   observed_test <- x$overall[!(overall$country %in% countries_to_use)]
-#   predicted_test <- predict.gbm(brt_cv,
-#                                 x[!(overall$country %in% countries_to_use),  c(2:66)],
-#                                 n.trees = brt_cv$gbm.call$best.trees, type = "response")
-#   plot(observed_train, predicted_train, pch = 20)
-#   points(observed_test, predicted_test, pch = 20, col = "red")
-#
-#   cv_outputs[[i]]$observed_train <- observed_train
-#   cv_outputs[[i]]$predicted_train <- predicted_train
-#   cv_outputs[[i]]$train_dist <- abs((observed_train - predicted_train))
-#   cv_outputs[[i]]$train_ss <- sum((observed_train - predicted_train)^2)
-#   cv_outputs[[i]]$observed_test <- observed_test
-#   cv_outputs[[i]]$predicted_test <- predicted_test
-#   cv_outputs[[i]]$test_dist <- abs((observed_test - predicted_test))
-#   cv_outputs[[i]]$test_ss <- sum((observed_test - predicted_test)^2)
-# }
-#
-# par(mfrow = c(2, 3))
-# for (i in 1:number_folds) {
-#   observed_train <- cv_outputs[[i]]$observed_train
-#   predicted_train <- cv_outputs[[i]]$predicted_train
-#   observed_test <- cv_outputs[[i]]$observed_test
-#   predicted_test <- cv_outputs[[i]]$predicted_test
-#   train_ss <- cv_outputs[[i]]$train_ss
-#   test_ss <- cv_outputs[[i]]$test_ss
-#   train_dist <- cv_outputs[[i]]$train_dist
-#   test_dist <- cv_outputs[[i]]$test_dist
-#   print(c(cor(observed_train, predicted_train), cor(observed_test, predicted_test),
-#           mean(train_dist), mean(test_dist)))
-#   plot(observed_train, predicted_train, pch = 20, cex = 1.5)
-#   points(observed_test, predicted_test, pch = 20, col = "red", cex = 1.5)
-# }
-#
-# par(mfrow = c(5, 5), mar = c(5, 1, 1, 1))
-# colours <- c("red", "blue", "orange", "purple", "green")
-# countries <- unique(overall$country)
-# for (j in 1:length(brts)) {
-#   brt <- brts[[j]]
-#   sample_indices <- sample_indices_list[[j]]
-#   countries_to_use <- countries[-sample_indices]
-#   sample_data <- x[overall$country %in% countries_to_use, ]
-#   predicted_test <- predict.gbm(brt_cv,
-#                                 x[overall$country %in% countries_to_use,  c(2:59)],
-#                                 n.trees = brt_cv$gbm.call$best.trees, type = "response")
-#   for (i in 1:length(countries_to_use)) {
-#     index <- which(overall$country[overall$country %in% countries_to_use] == countries_to_use[i])
-#     predicted <- predicted_test[index]
-#     actual_index <- which(overall$country == countries_to_use[i])
-#     actual <- overall[actual_index, ]
-#     plot(actual$date, actual$overall, ylim = c(-100, 10), pch = 20, cex = 2, ylab = "", xlab = countries_to_use[i])
-#     lines(actual$date, predicted, type = "l", ylim = c(-100, 10), lwd = 2, col = colours[j])
-#   }
-# }
+saveRDS(res, "cluster_running/Inputs/google_brt.rds")
+saveRDS(brt, "cluster_running/Inputs/google_brt_model.rds")
+saveRDS(output_data, "cluster_running/Inputs/output_data.rds")

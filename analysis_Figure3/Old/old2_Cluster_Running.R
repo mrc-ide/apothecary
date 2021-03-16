@@ -1,12 +1,3 @@
-# Loading required packages
-library(squire); library(tidyverse)
-version_min <- "0.6.1"
-if(packageVersion("squire") < version_min) {
-  stop("squire needs to be updated to at least v", version_min)
-}
-
-devtools::load_all()
-
 # Initial Setup (Run Once)
 # Setting Up Cluster
 loc <- didehpc::path_mapping("location", "N:", "//fi--didenas5/malaria", "N:")
@@ -38,16 +29,16 @@ run$task_times()
 
 # Testing the Running Locally
 pars_init <- readRDS("analysis_Figure3/Inputs/pars_init.rds")
-jhu <- readRDS("analysis_Figure3/Inputs/jhu_all.rds")
+ecdc <- readRDS("analysis_Figure3/Inputs/ecdc_all.rds")
 worldometer <- readRDS("analysis_Figure3/Inputs/worldometers_all.rds")
-mortality_data <- list(ecdc = jhu, worldometer = worldometer)
+mortality_data <- list(ecdc = ecdc, worldometer = worldometer)
 interventions <- readRDS("analysis_Figure3/Inputs/google_brt.rds")
 
 # Establishing Which Countries to Run (and Track Missing Ones)
 countries <- names(unlist(lapply(interventions, length))[unlist(lapply(interventions, length)) != 0]) # countries for which we have mobility data
 inits_countries <- names(pars_init)
 countries <- countries[countries %in% inits_countries]
-yes_death_countries <- jhu %>%
+yes_death_countries <- ecdc %>%
   dplyr::group_by(Region, countryterritoryCode) %>%
   summarise(total_deaths = sum(deaths)) %>%
   filter(total_deaths != 0)
@@ -55,26 +46,6 @@ countries <- countries[countries %in% yes_death_countries$countryterritoryCode]
 previous_runs <- str_split(list.files("N:/Charlie/apothecary_fitting/apothecary_run_results"), "_")
 previous_runs <- unlist(lapply(previous_runs, `[[`, 1))
 missing <- countries[!(countries %in% previous_runs)]
-
-# country = "FRA"
-# date = "2021-03-05"
-# pars_init = pars_init
-# mortality_data = mortality_data
-# interventions = interventions
-# n_mcmc = 2
-# replicates = 2
-# healthcare = "unlimited"
-# n_chains = 1
-# gibbs = FALSE
-
-# Running Countries Locally to Check They Work
-source("N:/Charlie/apothecary_fitting/apothecary/analysis_Figure3/Functions/MCMC_cluster_function.R")
-for (i in 1:length(countries)) {
-  test <- run_apothecary_MCMC(country = countries[i], date = "2021-03-05", pars_init = pars_init,
-                              mortality_data = mortality_data, interventions = interventions,
-                              n_mcmc = 2, replicates = 2, healthcare = "unlimited", n_chains = 1, gibbs = FALSE)
-  print(c(i, countries[i]))
-}
 
 # Running Countries Locally to Check They Work
 for (i in 1:length(missing)) {

@@ -6,6 +6,10 @@ run_apothecary_MCMC <- function(country, date, pars_init, mortality_data, interv
     stop("incorrect ISO specified")
   }
 
+  ## -----------------------------------------------------------------------------
+  ## Step 1: Incoming Data
+  ## -----------------------------------------------------------------------------
+
   # Loading In Example Initial Parameters and Defining Country and Date Fitting Being Applied To
   parms <- pars_init[[country]]
   iso3c <- country
@@ -21,9 +25,12 @@ run_apothecary_MCMC <- function(country, date, pars_init, mortality_data, interv
     stop("healthcare must be specified as unlimited or limited")
   }
 
+  #### NEED TO ADD SOMETHING IN HERE ABOUT OXYGEN AND ARS AVAILABILITY ####
+
   # Loading in Mortality Data - Default is ECDC Unless Certain Countries, In Which Case Worldometer
-  if (iso3c %in% c("BOL", "ITA", "FRA", "ECU", "CHL", "COD", "ESP", "IRN", "JPN",
-                   "GUF","KGZ", "PER", "MEX", "HKG", "MAC", "TWN", "SDN")) {
+  if (iso3c %in% c("BOL", "ITA", "FRA", "ECU", "CHL", "COD", "ESP", "IRN",
+                   "JPN", "GUF","KGZ", "PER", "MEX", "HKG", "MAC", "TWN",
+                   "SDN", "IRL", "TUR", "NPL")) {
     mortality_data <- mortality_data[["worldometer"]]
   } else {
     mortality_data <- mortality_data[["ecdc"]]
@@ -48,15 +55,16 @@ run_apothecary_MCMC <- function(country, date, pars_init, mortality_data, interv
   data$date <- as.Date(data$date)
 
   # Handle for countries that have eliminated and had reintroduction events
-  if (iso3c %in% c("MMR", "BLZ", "TTO", "BHS", "HKG", "ABW", "GUM")) {
+  reintroduction_iso3cs <- c("MMR", "BLZ", "TTO", "BHS", "HKG", "ABW", "GUM", "ISL", "BRB")
+  if (iso3c %in% reintroduction_iso3cs) {
     deaths_removed <- deaths_removed + sum(data$deaths[data$date < as.Date("2020-06-01")])
     data$deaths[data$date < as.Date("2020-06-01")] <- 0
   }
 
   # Removing Dates Up to First Death After This Period
-  first_report <- which(data$deaths > 0)[1]
+  first_report <- which(data$deaths>0)[1]
   missing <- which(data$deaths == 0 | is.na(data$deaths))
-  to_remove <- missing[missing < first_report]
+  to_remove <- missing[missing<first_report]
   if(length(to_remove) > 0) {
     if(length(to_remove) == (nrow(data)-1)) {
       data <- data[-head(to_remove,-1),]
@@ -64,22 +72,51 @@ run_apothecary_MCMC <- function(country, date, pars_init, mortality_data, interv
       data <- data[-to_remove,]
     }
   }
+
+  ## -----------------------------------------------------------------------------
+  ## Step 2: Set up args for MCMC running
+  ## -----------------------------------------------------------------------------
+
+  null_na <- function(x) {if(is.null(x)) {NA} else {x}}
   min_death_date <- data$date[which(data$deaths > 0)][1]
-  last_start_date <- as.Date(min_death_date) - 10
-  first_start_date <- as.Date(min_death_date) - 75
+  last_start_date <- as.Date(null_na(min_death_date))-10
+  first_start_date <- as.Date(null_na(min_death_date))-55
 
   # Loading in BRT Mobility Data and Processing
   R0_change <- interventions[[iso3c]]$C
   date_R0_change <- interventions[[iso3c]]$date
+
+  # catch for missing mobilty data or China which happened too early for our BRT to be helpful and too late in RWA/PNG case
+  # as well as others that are just not at all informed by mobility :/
+  spline_iso3cs <- c("CHN","MAC","TWN","KOR", "RWA", "PNG", "DZA", "COD", "SYR", "TUN", "UGA","UZB", "BEL")
+  if(is.null(R0_change) || is.null(date_R0_change) || iso3c %in% spline_iso3cs) {
+    date_R0_change <- seq.Date(as.Date("2020-01-01"), as.Date(date), 1)
+    R0_change <- rep(1, length(date_R0_change))
+  }
+
+  date_R0_change <- c(seq.Date(as.Date(date_R0_change[1])-55, as.Date(date_R0_change[1]-1), 1), date_R0_change)
+  R0_change <- c(rep(R0_change[1], 55), R0_change)
+
   R0_change <- R0_change[as.Date(date_R0_change) <= date]
   date_R0_change <- date_R0_change[as.Date(date_R0_change) <= date]
+
+  # either set to end if mobility dictates
+  date_Meff_change <- parms$date_Meff_change
+  if(is.null(date_Meff_change) || is.na(date_Meff_change)) {
+    date_Meff_change <- as.Date("2020-06-01")
+  }
+  # however if the mobility coming in is null then let's set it to the start date and that should
+  # ensure that the correct number of rws are used
+  if (is.null(interventions[[iso3c]]$C) || iso3c %in% spline_iso3cs) {
+    date_Meff_change <- min(max(as.Date(parms$start_date), as.Date(first_start_date)+1), as.Date(last_start_date)-1)
+  }
 
   # Setting Up the Fortnightly Splines
   date_0 <- date
   Rt_rw_duration <- parms$Rt_rw_duration
-  last_shift_date <- as.Date(parms$date_Meff_change) + 7
-  remaining_days <- as.Date(date_0) - last_shift_date - 21
-  rw_needed <- as.numeric(round(remaining_days/Rt_rw_duration))
+  last_shift_date <- as.Date(date_Meff_change) + 7
+  remaining_days <- as.Date(date_0) - last_shift_date - 14
+  rw_needed <- as.numeric(round(remaining_days/Rt_rw_duration)) + 1
   pars_init_rw <- as.list(parms[grep("Rt_rw_\\d",names(parms))])
   if (is.null(parms)) {
     pars_init_rw <- as.list(rep(0, rw_needed))
@@ -95,6 +132,10 @@ run_apothecary_MCMC <- function(country, date, pars_init, mortality_data, interv
         return(x)
       }})
   }
+
+  last_date_rw_starts <- as.Date(last_shift_date) + Rt_rw_duration*(rw_needed-1)
+  number_of_last_rw_days <- as.integer(as.Date(date_0) - last_date_rw_starts)
+
   pars_min_rw <- as.list(rep(-5, rw_needed))
   pars_max_rw <- as.list(rep(5, rw_needed))
   pars_discrete_rw <- as.list(rep(FALSE, rw_needed))
@@ -188,7 +229,8 @@ run_apothecary_MCMC <- function(country, date, pars_init, mortality_data, interv
 
   # MCMC Functions - Prior and Likelihood Calculation (removed uniform start date prior as uniform)
   logprior <- function(pars){
-    ret <- dnorm(x = pars[["R0"]], mean = 3, sd = 1, log = TRUE) +
+    ret <- dunif(x = pars[["start_date"]], min = -55, max = -10, log = TRUE) +
+      dnorm(x = pars[["R0"]], mean = 3, sd = 1, log = TRUE) +
       dnorm(x = pars[["Meff"]], mean = 3, sd = 3, log = TRUE) +
       dunif(x = pars[["Meff_pl"]], min = 0, max = 1, log = TRUE) +
       dnorm(x = pars[["Rt_shift"]], mean = 0, sd = 1, log = TRUE) +
@@ -226,19 +268,19 @@ run_apothecary_MCMC <- function(country, date, pars_init, mortality_data, interv
                                date_R0_change = date_R0_change,
                                Rt_args = squire:::Rt_args_list(
                                  plateau_duration = 7,
-                                 date_Meff_change = parms$date_Meff_change,
+                                 date_Meff_change = date_Meff_change,
                                  scale_Meff_pl = TRUE,
                                  Rt_shift_duration = 7,
                                  Rt_rw_duration = Rt_rw_duration),
-                               burnin = n_mcmc/2,
+                               burnin = round(n_mcmc/2),
                                seeding_cases = 5,
                                replicates = ifelse(n_mcmc < replicates, n_mcmc, replicates),
                                required_acceptance_ratio = 0.20,
                                start_adaptation = 500,
                                baseline_hosp_bed_capacity = baseline_hosp_bed_capacity,
-                               baseline_ICU_bed_capacity = baseline_ICU_bed_capacity,
+                               baseline_ICU_bed_capacity = baseline_ICU_bed_capacity, # need to add oxygen and ARS
                                gibbs_sampling = TRUE,
-                               gibbs_days = 5)
+                               gibbs_days = 2)
   } else {
     pmcmc_res <- squire::pmcmc(data = data,
                                n_mcmc = n_mcmc,
@@ -260,16 +302,16 @@ run_apothecary_MCMC <- function(country, date, pars_init, mortality_data, interv
                                date_R0_change = date_R0_change,
                                Rt_args = squire:::Rt_args_list(
                                  plateau_duration = 7,
-                                 date_Meff_change = parms$date_Meff_change,
+                                 date_Meff_change = date_Meff_change,
                                  scale_Meff_pl = TRUE,
                                  Rt_shift_duration = 7,
                                  Rt_rw_duration = Rt_rw_duration),
-                               burnin = n_mcmc/2,
+                               burnin = round(n_mcmc/2),
                                seeding_cases = 5,
                                replicates = ifelse(n_mcmc < replicates, n_mcmc, replicates),
                                required_acceptance_ratio = 0.20,
                                start_adaptation = 500,
-                               baseline_hosp_bed_capacity = baseline_hosp_bed_capacity,
+                               baseline_hosp_bed_capacity = baseline_hosp_bed_capacity, # need to add oxygen and ARS
                                baseline_ICU_bed_capacity = baseline_ICU_bed_capacity)
   }
 

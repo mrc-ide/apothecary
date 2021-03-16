@@ -1,80 +1,70 @@
 ## -----------------------------------------------------------------------------
 ## Step 1: Data Loading
 ## -----------------------------------------------------------------------------
-
-date <- as.Date("2020-03-05", "%Y-%m-%d")
-if(date <= as.Date("2020-12-12")) {
-
-  if (is.na(date)) {
-    stop("Date must be provided in ISO format (i.e., YYYY-MM-DD)")
-  }
-
-  fmt <- "https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-%s.xlsx"
-  date_iso <- as.character(date)
-  url <- sprintf(fmt, date_iso)
-
-  url_page <- "https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide"
-  tryCatch({
-    code <- download.file(url, "ecdc.xlsx", mode = "wb")
-    if (code != 0) {
-      stop("Error downloading file")
-    }
-  },
-  error = function(e) {
-    stop(sprintf("Error downloading file '%s': %s, please check %s",
-                 url, e$message, url_page))
-  })
-
-  d <- readxl::read_excel("ecdc.xlsx", progress = FALSE)
-  names(d)[1] <- "dateRep"
-
-  names(d)[names(d) %in% c("Countries and territories", "countriesAndTerritories")] <- "Region"
-
-  # sort out the date malarkey that happened on the 16th May
-  if(is.na(as.Date(d$dateRep[1], "%Y-%m-%d"))) {
-    d$dateRep <- as.Date(d$dateRep, format = "%d/%m/%Y")
-  }
-
-  # Data corrections
-
-  # fix negative deaths
-  d$deaths[which(d$deaths<0)] <- 0
-  d$deaths[which(is.na(d$deaths))] <- 0
-
-  # date issues
-  suppressWarnings(md <- lapply(unique(d$countryterritoryCode), function(x){
-    max(as.Date(d$dateRep[d$countryterritoryCode==x]),na.rm = TRUE)
-  }))
-
-  to_fix <- na.omit(unique(d$countryterritoryCode)[which(unlist(md) != as.numeric(date))])
-
-  # spain seems to have stopped reporting now too...
-  if(length(to_fix) > 0) {
-
-    for(i in seq_along(to_fix)) {
-      df_esp <- d[which(d$countryterritoryCode==to_fix[i]),][1,]
-      df_esp$dateRep = max(d$dateRep)
-      df_esp$day = as.numeric(format(as.Date(date), "%d"))
-      df_esp$month = as.numeric(format(as.Date(date), "%m"))
-      df_esp$year = as.numeric(format(as.Date(date), "%Y"))
-      df_esp$cases = 0
-      df_esp$deaths = 0
-      d <- rbind(df_esp, d)
-    }
-
-  }
-  ecdc <- d
-
-  # save
-  saveRDS(ecdc, "ecdc_all.rds")
-
-} else {
-  saveRDS(data.frame(), "ecdc_all.rds")
-  file.create("ecdc.xlsx")
+date <- Sys.Date()
+date <- as.Date(date, "%Y-%m-%d")
+if (is.na(date)) {
+  stop("Date must be provided in ISO format (i.e., YYYY-MM-DD)")
 }
 
+fmt <- "https://www.ecdc.europa.eu/sites/default/files/documents/COVID-19-geographic-disbtribution-worldwide-%s.xlsx"
+date_iso <- as.character(date)
+url <- sprintf(fmt, date_iso)
+
+url_page <- "https://www.ecdc.europa.eu/en/publications-data/download-todays-data-geographic-distribution-covid-19-cases-worldwide"
+tryCatch({
+  code <- download.file(url, "ecdc.xlsx", mode = "wb")
+  if (code != 0) {
+    stop("Error downloading file")
+  }
+},
+error = function(e) {
+  stop(sprintf("Error downloading file '%s': %s, please check %s",
+               url, e$message, url_page))
+})
+
+d <- readxl::read_excel("ecdc.xlsx", progress = FALSE)
+names(d)[1] <- "dateRep"
+
+names(d)[names(d) %in% c("Countries and territories", "countriesAndTerritories")] <- "Region"
+
+# sort out the date malarkey that happened on the 16th May
+if(is.na(as.Date(d$dateRep[1], "%Y-%m-%d"))) {
+  d$dateRep <- as.Date(d$dateRep, format = "%d/%m/%Y")
+}
+
+# Data corrections
+
+# fix negative deaths
+d$deaths[which(d$deaths<0)] <- 0
+d$deaths[which(is.na(d$deaths))] <- 0
+
+# date issues
+suppressWarnings(md <- lapply(unique(d$countryterritoryCode), function(x){
+  max(as.Date(d$dateRep[d$countryterritoryCode==x]),na.rm = TRUE)
+}))
+
+to_fix <- na.omit(unique(d$countryterritoryCode)[which(unlist(md) != as.numeric(date))])
+
+# spain seems to have stopped reporting now too...
+if(length(to_fix) > 0) {
+
+  for(i in seq_along(to_fix)) {
+    df_esp <- d[which(d$countryterritoryCode==to_fix[i]),][1,]
+    df_esp$dateRep = max(d$dateRep)
+    df_esp$day = as.numeric(format(as.Date(date), "%d"))
+    df_esp$month = as.numeric(format(as.Date(date), "%m"))
+    df_esp$year = as.numeric(format(as.Date(date), "%Y"))
+    df_esp$cases = 0
+    df_esp$deaths = 0
+    d <- rbind(df_esp, d)
+  }
+
+}
+ecdc <- d
+
 # save
-saveRDS(ecdc, "analysis_Figure3/Inputs/ecdc_all.rds")
+saveRDS(ecdc, "cluster_running/Inputs/ecdc_all.rds")
 
 #### AND let's get the JHU as well/instead as looks liek it is less susceptible to blips
 
@@ -138,14 +128,12 @@ cases <- group_by(cases, countryterritoryCode, Region) %>%
 jhu_data <- left_join(data, cases, by = c("date", "countryterritoryCode", "Region"))
 jhu_data$dateRep <- jhu_data$date
 
-if(sum(jhu_data$deaths)>0){
-  jhu_data$deaths[jhu_data$deaths < 0] <- 0
-}
-
 # save
-saveRDS(jhu_data, "analysis_Figure3/Inputs/jhu_all.rds")
+saveRDS(jhu_data, "cluster_running/Inputs/jhu_all.rds")
+
 
 # AND Worldometers
+
 
 # function to get data from worldometers
 get_country_data <- function(link, iso3c, name) {
@@ -156,49 +144,6 @@ get_country_data <- function(link, iso3c, name) {
   hcs <- grep("Highcharts.chart", unlist(lapply(scrs, as.character)))
 
   text <- scrs[hcs]
-
-  # 2021 fix func
-  date_func <- function(dates_d){
-
-    jans <- grep("Jan", dates_d)
-
-    if (length(jans) == 0) {
-      dates_d <- as.Date(paste(dates_d, "2020"),  "%b %d %Y")
-    } else if (all(diff(jans)==1) && as.Date(date) < as.Date("2021-01-01")) {
-      dates_d <- as.Date(paste(dates_d, "2020"),  "%b %d %Y")
-    } else {
-      jan_diffs <- diff(jans)
-      new_years <- jans[which(jan_diffs != 1) + 1]
-      if(length(new_years) == 0) {
-        new_years <- jans[1]
-      }
-      dates_d_l <- vector("list", length(new_years)+1)
-      years <- seq(2020, 2020 + length(new_years), 1)
-      for (i in seq_along(dates_d_l)) {
-
-        # starts
-        if(i == 1) {
-          i_1 <- 1
-        } else {
-          i_1 <- new_years[i-1]
-        }
-
-        # ends
-        if(i == length(dates_d_l)) {
-          i_end <- length(dates_d)
-        } else {
-          i_end <- new_years[i]-1
-        }
-
-        dates_d_l[[i]] <- as.character(as.Date(paste(dates_d[seq(i_1, i_end)], years[i]),  "%b %d %Y"))
-
-      }
-      dates_d <- unlist(dates_d_l)
-    }
-
-    return(dates_d)
-
-  }
 
   death_dat <- text[grep("coronavirus-deaths-linear", text)]
   if(length(death_dat) == 0) {
@@ -213,7 +158,7 @@ get_country_data <- function(link, iso3c, name) {
 
     dates_d <- spl[grep("categories", spl)][1]
     dates_d <- strsplit(dates_d, "\"|,")[[1]][which(nchar(strsplit(dates_d, "\"|,")[[1]])==6)]
-    dates_d <- date_func(dates_d)
+    dates_d <- as.Date(dates_d, "%b %d")
     deaths <- spl[grep("data", spl)[1]]
     deaths <- tail(head(strsplit(deaths, ",|\\[|\\]")[[1]],-1),-1)
     deaths <- suppressWarnings(as.numeric(deaths))
@@ -226,8 +171,7 @@ get_country_data <- function(link, iso3c, name) {
 
   dates_c <- spl[grep("categories", spl)]
   dates_c <- strsplit(dates_c, "\"|,")[[1]][which(nchar(strsplit(dates_c, "\"|,")[[1]])==6)]
-  dates_c <- date_func(dates_c)
-
+  dates_c <- as.Date(dates_c, "%b %d")
   cases <- spl[grep("data", spl)[1]]
   cases <- tail(head(strsplit(cases, ",|\\[|\\]")[[1]],-1),-1)
   cases <- suppressWarnings(as.numeric(cases))
@@ -269,6 +213,9 @@ df <- do.call(rbind, dats)
 df$cases[is.na(df$cases)] <- 0
 df$deaths[is.na(df$deaths)] <- 0
 
+# worldometers is a day ahead of ECDC - so to keep it all aligned
+df$dateRep <- df$dateRep + 1
+
 # AND handling their peculiar negative deaths based on comparison against ECDC and manually cleaning :)
 
 # FRA
@@ -303,8 +250,6 @@ df$deaths[df$dateRep == as.Date("2020-06-01") & df$countryterritoryCode == "IRL"
 df$deaths[df$dateRep == as.Date("2020-05-31") & df$countryterritoryCode == "IRL"] <- 1
 df$deaths[df$dateRep == as.Date("2020-05-26") & df$countryterritoryCode == "IRL"] <- 0
 df$deaths[df$dateRep == as.Date("2020-05-25") & df$countryterritoryCode == "IRL"] <- 2
-df$deaths[df$dateRep == as.Date("2020-11-24") & df$countryterritoryCode == "IRL"] <- 0
-df$deaths[df$dateRep == as.Date("2020-11-23") & df$countryterritoryCode == "IRL"] <- 0
 
 # LUX
 # -2 deaths day
@@ -319,7 +264,4 @@ df$deaths[df$dateRep == as.Date("2020-09-08") & df$countryterritoryCode == "COG"
 df$deaths[df$dateRep == as.Date("2020-09-04") & df$countryterritoryCode == "COG"] <- 0
 df$deaths[df$dateRep == as.Date("2020-09-03") & df$countryterritoryCode == "COG"] <- 4
 
-# worldometers is a day ahead of ECDC - so to keep it all aligned
-df$dateRep <- as.Date(df$dateRep) - 1
-
-saveRDS(df, "analysis_Figure3/Inputs/worldometers_all.rds")
+saveRDS(df, "cluster_running/Inputs/worldometers_all.rds")
