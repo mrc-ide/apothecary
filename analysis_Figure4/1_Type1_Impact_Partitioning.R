@@ -20,16 +20,16 @@ standard_matrix <- matrix(rep(prop_pop, 16), ncol = 16, byrow = TRUE)
 # Defining the Healthcare Capacity Parameters Used In Each Scenario
 actual_hosp_beds <- round(squire::get_healthcare_capacity(country)$hosp_beds * sum(standard_population)/1000)
 actual_ICU_beds <- round(squire::get_healthcare_capacity(country)$ICU_beds * sum(standard_population)/1000)
-actual_prop_ox_hosp_beds <- 0.6
-actual_prop_ox_ICU_beds <- 0.8
-actual_MV_capacity <- round(actual_ICU_beds * 0.5)
+actual_prop_ox_hosp_beds <- 0.4
+actual_prop_ox_ICU_beds <- 0.4
+actual_MV_capacity <- round(actual_ICU_beds * 0.4)
 time <- 600
 
 # Running and assessing SOF/DAQ (or similar) impact
 # Impact comes from a multiple of different sources:
 #   1) Directly by shifting individuals from higher risk (ICU) to lower risk (hosp) categories
 #   2) Indirectly by remaining ICU individuals being able to get access to better healthcare (due to lower demand)
-R <- "high"
+R <- "low"
 if (R == "high") {
   R0 <- 2
 } else {

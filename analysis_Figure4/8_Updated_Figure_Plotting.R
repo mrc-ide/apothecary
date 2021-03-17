@@ -20,9 +20,9 @@ standard_matrix <- matrix(rep(prop_pop, 16), ncol = 16, byrow = TRUE)
 # Defining the Healthcare Capacity Parameters Used In Each Scenario
 actual_hosp_beds <- round(squire::get_healthcare_capacity(country)$hosp_beds * sum(standard_population)/1000)
 actual_ICU_beds <- round(squire::get_healthcare_capacity(country)$ICU_beds * sum(standard_population)/1000)
-actual_prop_ox_hosp_beds <- 0.6
-actual_prop_ox_ICU_beds <- 0.8
-actual_MV_capacity <- round(actual_ICU_beds * 0.5)
+actual_prop_ox_hosp_beds <- 0.4 # CHANGE TO 0.4
+actual_prop_ox_ICU_beds <- 0.4 # CHANGE TO 0.4
+actual_MV_capacity <- round(actual_ICU_beds * 0.4) #CHANGE TO 0.4
 time <- 600
 
 # Run Model Runs
@@ -37,6 +37,15 @@ none_high <- run_apothecary(country = "Bhutan", R0 = 2, population = standard_po
 index <- apothecary:::odin_index(none_low$model)
 none_low_deaths <- max(apply(none_low$output[, index$D], 1, sum))
 none_high_deaths <- max(apply(none_high$output[, index$D], 1, sum))
+
+# Plotting Figure 4A - Low R0 Sensitivity Analyses for Different Drug Properties
+type1_low <- heatmap_plot(readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type1_low.rds"), none_low_deaths, FALSE)
+type2_low <- heatmap_plot(readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type2_low.rds"), none_low_deaths, FALSE)
+type3_low <- heatmap_plot(readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type3_low.rds"), none_low_deaths, TRUE)
+type4_low <- heatmap_plot(readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type4_low.rds"), none_low_deaths, FALSE)
+type5a_low <- heatmap_plot(readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type5_low.rds"), none_low_deaths, TRUE)
+type5b_low <- heatmap_plot(readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type6_low.rds"), none_low_deaths, TRUE)
+low_heatmaps <- plot_grid(type1_low, type2_low, type3_low, type4_low, type5a_low, type5b_low)
 
 # Plotting Figure 4B for Low R0
 type1 <- readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type1_low.rds")
@@ -92,8 +101,8 @@ type5b_indirect_hc <- readRDS("analysis_Figure4/Outputs/figure4b_central_estimat
 type5b_indirect_trans <- readRDS("analysis_Figure4/Outputs/figure4b_central_estimates/type5b_low_df.rds")$indirect_deaths_averted_transmission
 type5b_central <- type5b_direct + type5b_indirect_hc + type5b_indirect_trans
 type5bmax <- none_low_deaths - type5b_relevant[1, 4]
-
 drug_type <- c(rep(paste0("Type", seq(1:4)), each = 3), rep("Type5a", 3), rep("Type5b", 3))
+
 estimate_type <- rep(c("min", "central", "max"), 6)
 deaths_averted <- c(type1min, type1_central, type1max,
                     type2min, type2_central, type2max,
@@ -104,12 +113,6 @@ deaths_averted <- c(type1min, type1_central, type1max,
 deaths_averted <- deaths_averted/none_low_deaths
 df1 <- data.frame(drug = drug_type, estimate = estimate_type, deaths_averted = deaths_averted) %>%
   pivot_wider(names_from = estimate, values_from = deaths_averted)
-
-low1 <- ggplot(df1, aes(x = drug, y = central, fill = drug)) +
-  geom_bar(stat = "identity") +
-  geom_errorbar(aes(ymin = min, ymax = max), width = 0.3) +
-  labs(x = "", y = "Deaths Averted") +
-  theme(legend.position = "none")
 
 drug_type <- c(rep(paste0("Type", seq(1:4)), each = 3), rep("Type5a", 3), rep("Type5b", 3))
 estimate_type <- rep(c("direct", "indirect_hc", "indirect_trans"), 6)
@@ -125,64 +128,20 @@ df2$estimate <- factor(df2$estimate, levels = c("indirect_trans", "indirect_hc",
 low2 <- ggplot() +
   geom_bar(data = df2, aes(x = drug, y = deaths_averted, fill = estimate), stat = "identity") +
   geom_errorbar(data = df1, aes(x = drug, ymin = min, ymax = max), width = 0.3) +
-  labs(x = "", y = "Proportio of Deaths Averted") +
+  labs(x = "", y = "Proportion of Deaths Averted") +
   theme(legend.position = "none") +
   scale_y_continuous(position = "right", limits = c(0, 1))
 
-heatmap_plot <- function(matrix, deaths, reverse) {
-  matrix <- matrix/deaths
-  colnames(matrix) <- seq(0, 1, length.out = 21)
-  if (reverse) {
-    row.names(matrix) <- seq(1, 0, length.out = 21)
-  } else {
-    row.names(matrix) <- seq(0, 1, length.out = 21)
-  }
-  matrix <- reshape2::melt(matrix)
+low <- plot_grid(low_heatmaps, low2, rel_widths = c(2, 1))
 
-  # cols <- c(colorRampPalette(c("#e7f0fa", "#c9e2f6", "#95cbee",
-  #                              "#0099dc", "#4ab04a", "#ffd73e"))(40),
-  #           colorRampPalette(c("#eec73a", "#e29421", "#e29421",
-  #                              "#f05336","#ce472e"), bias=2)(60))
-  cols <- c(colorRampPalette(c("#e7f0fa", "#c9e2f6", "#95cbee", "#0099dc", "#25A593",
-                               "#38AB6F", "#4ab04a", "#A5C444", "#D2CE41", "#ffd73e"))(50),
-            colorRampPalette(c("#ffd73e", "#eec73a", "#E8AE2E", "#e29421", "#E9742C",
-                               "#f05336", "#ce472e", "#A62E18"))(50))
-
-  plot <- ggplot() +
-    geom_tile(data = matrix, aes(Var1, Var2, fill = 1-value)) +
-    scale_x_continuous(limits = c(-0.1, 1.1), expand = c(0, 0)) +
-    scale_y_continuous(limits = c(-0.1, 1.1), expand = c(0, 0)) +
-    scale_fill_gradientn(colours=cols, limits=c(-0.01, 1),
-                         breaks=seq(-0.1, 1, by=0.1),
-                         guide=guide_colourbar(ticks=T, nbin=50,
-                                               barheight=.5, label=T,
-                                               barwidth=10)) +
-    # scale_fill_gradient2(limits = c(-0.01, 1),
-    #                      low="white", mid="grey", high="black",
-    #                      midpoint=0.35) +
-    theme_cowplot() +
-    labs(x = "", y = "") +
-    theme(axis.line=element_blank(), axis.text.x = element_blank(),
-          axis.title.x = element_text(vjust = 8),
-          axis.text.y = element_blank(), axis.title.y = element_text(vjust = -0.5),
-          axis.ticks = element_blank(),
-          legend.position = "none",
-          plot.margin=grid::unit(c(0,0,0,0), "mm")) +
-    annotate("text", x = -0.03, y = seq(0, 1, 0.25), label= c("0.00", "0.25", "0.50", "0.75", "1.00"),
-             hjust = 1, size = 4.5) +
-    annotate("text", y = -0.05, x = 0.05 +seq(0, 1, 0.25), label= c("0.00", "0.25", "0.50", "0.75", "1.00"),
-             hjust = 1, size = 4.5)
-  return(plot)
-}
-
-a <- heatmap_plot(readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type1_low.rds"), none_low_deaths, FALSE)
-c <- heatmap_plot(readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type2_low.rds"), none_low_deaths, FALSE)
-e <- heatmap_plot(readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type3_low.rds"), none_low_deaths, TRUE)
-g <- heatmap_plot(readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type4_low.rds"), none_low_deaths, FALSE)
-i <- heatmap_plot(readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type5_low.rds"), none_low_deaths, TRUE)
-k <- heatmap_plot(readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type6_low.rds"), none_low_deaths, TRUE)
-x <- plot_grid(a, c, e, g, i, k)
-low <- plot_grid(x, low2, rel_widths = c(2, 1))
+# Plotting Figure 4A - high R0 Sensitivity Analyses for Different Drug Properties
+type1_high <- heatmap_plot(readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type1_high.rds"), none_high_deaths, FALSE)
+type2_high <- heatmap_plot(readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type2_high.rds"), none_high_deaths, FALSE)
+type3_high <- heatmap_plot(readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type3_high.rds"), none_high_deaths, TRUE)
+type4_high <- heatmap_plot(readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type4_high.rds"), none_high_deaths, FALSE)
+type5a_high <- heatmap_plot(readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type5_high.rds"), none_high_deaths, TRUE)
+type5b_high <- heatmap_plot(readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type6_high.rds"), none_high_deaths, TRUE)
+high_heatmaps <- plot_grid(type1_high, type2_high, type3_high, type4_high, type5a_high, type5b_high)
 
 # Plotting Figure 4B for High R0
 type1 <- readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type1_high.rds")
@@ -251,12 +210,6 @@ deaths_averted <- deaths_averted/none_high_deaths
 df1 <- data.frame(drug = drug_type, estimate = estimate_type, deaths_averted = deaths_averted) %>%
   pivot_wider(names_from = estimate, values_from = deaths_averted)
 
-high1 <- ggplot(df1, aes(x = drug, y = central, fill = drug)) +
-  geom_bar(stat = "identity") +
-  geom_errorbar(aes(ymin = min, ymax = max), width = 0.3) +
-  labs(x = "", y = "Deaths Averted") +
-  theme(legend.position = "none")
-
 drug_type <- c(rep(paste0("Type", seq(1:4)), each = 3), rep("Type5a", 3), rep("Type5b", 3))
 estimate_type <- rep(c("direct", "indirect_hc", "indirect_trans"), 6)
 deaths_averted <- c(type1_direct, type1_indirect_hc, type1_indirect_trans,
@@ -275,13 +228,4 @@ high2 <- ggplot() +
   theme(legend.position = "none") +
   scale_y_continuous(position = "right", limits = c(0, 1))
 
-a <- heatmap_plot(readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type1_high.rds"), none_high_deaths, FALSE)
-c <- heatmap_plot(readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type2_high.rds"), none_high_deaths, FALSE)
-e <- heatmap_plot(readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type3_high.rds"), none_high_deaths, TRUE)
-g <- heatmap_plot(readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type4_high.rds"), none_high_deaths, FALSE)
-i <- heatmap_plot(readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type5_high.rds"), none_high_deaths, TRUE)
-k <- heatmap_plot(readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type6_high.rds"), none_high_deaths, TRUE)
-x <- plot_grid(a, c, e, g, i, k)
-high <- plot_grid(x, high2, rel_widths = c(2, 1))
-
-plot_grid(low, high, nrow = 2)
+high <- plot_grid(high_heatmaps, high2, rel_widths = c(2, 1))

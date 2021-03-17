@@ -18,15 +18,15 @@ packages <- c("lubridate", "dplyr", "tidyr", "odin", "squire", "apothecary", "dd
 # Creating a Context
 sources <- c("N:/Charlie/apothecary_fitting/apothecary/analysis_Figure3/Functions/MCMC_cluster_function.R")
 additional_identifier <- ""
-context_name <- paste0("N:/Charlie/apothecary_runs_", Sys.Date(), additional_identifier)
+context_name <- paste0("N:/Charlie/new_apothecary_runs_", Sys.Date(), additional_identifier)
 ctx <- context::context_save(path = context_name,
                              sources = sources,
                              packages = packages,
                              package_sources = provisionr::package_sources(local =
                                                                              c("N:/Charlie/apothecary_fitting/apothecary_0.1.0.zip",
                                                                                "N:/Charlie/apothecary_fitting/dde_1.0.2.zip",
-                                                                               "N:/Charlie/apothecary_fitting/odin_1.0.6.zip",
-                                                                               "N:/Charlie/apothecary_fitting/squire_0.5.6.zip")))
+                                                                               "N:/Charlie/apothecary_fitting/odin_1.1.8.zip",
+                                                                               "N:/Charlie/apothecary_fitting/squire_0.6.4.zip")))
 
 # Configure the Queue
 run <- didehpc::queue_didehpc(ctx, config = config)
@@ -42,6 +42,7 @@ jhu <- readRDS("analysis_Figure3/Inputs/jhu_all.rds")
 worldometer <- readRDS("analysis_Figure3/Inputs/worldometers_all.rds")
 mortality_data <- list(ecdc = jhu, worldometer = worldometer)
 interventions <- readRDS("analysis_Figure3/Inputs/google_brt.rds")
+gdp_income <- read.csv("analysis_Figure3/Inputs/gdp_income_group.csv")
 
 # Establishing Which Countries to Run (and Track Missing Ones)
 countries <- names(unlist(lapply(interventions, length))[unlist(lapply(interventions, length)) != 0]) # countries for which we have mobility data
@@ -52,9 +53,9 @@ yes_death_countries <- jhu %>%
   summarise(total_deaths = sum(deaths)) %>%
   filter(total_deaths != 0)
 countries <- countries[countries %in% yes_death_countries$countryterritoryCode]
-previous_runs <- str_split(list.files("N:/Charlie/apothecary_fitting/apothecary_run_results"), "_")
-previous_runs <- unlist(lapply(previous_runs, `[[`, 1))
-missing <- countries[!(countries %in% previous_runs)]
+# previous_runs <- str_split(list.files("N:/Charlie/apothecary_fitting/apothecary_run_results"), "_")
+# previous_runs <- unlist(lapply(previous_runs, `[[`, 1))
+# missing <- countries[!(countries %in% previous_runs)]
 
 # country = "FRA"
 # date = "2021-03-05"
@@ -63,39 +64,61 @@ missing <- countries[!(countries %in% previous_runs)]
 # interventions = interventions
 # n_mcmc = 2
 # replicates = 2
-# healthcare = "unlimited"
+# healthcare = "limited"
 # n_chains = 1
 # gibbs = FALSE
+# income_strata = "HIC"
+# use_prev_mat = TRUE
+# test <- run_apothecary_MCMC(country = "FRA", date = "2021-03-05", pars_init = pars_init,
+#                             mortality_data = mortality_data, interventions = interventions,
+#                             n_mcmc = 20000, replicates = 500, healthcare = "limited", n_chains = 1, gibbs = FALSE)
 
 # Running Countries Locally to Check They Work
-source("N:/Charlie/apothecary_fitting/apothecary/analysis_Figure3/Functions/MCMC_cluster_function.R")
-test <- run_apothecary_MCMC(country = "FRA", date = "2021-03-05", pars_init = pars_init,
-                            mortality_data = mortality_data, interventions = interventions,
-                            n_mcmc = 20000, replicates = 500, healthcare = "limited", n_chains = 1, gibbs = FALSE)
+# source("N:/Charlie/apothecary_fitting/apothecary/analysis_Figure3/Functions/MCMC_cluster_function.R")
+# for (i in 1:length(countries)) {
+#   iso <- countries[i]
+#   income_strata <- gdp_income$income_group[which(gdp_income$country_code == iso)]
+#   test <- run_apothecary_MCMC(country = countries[i], date = "2021-03-05", pars_init = pars_init,
+#                               mortality_data = mortality_data, interventions = interventions,
+#                               n_mcmc = 2, replicates = 2, healthcare = "limited", n_chains = 1, gibbs = FALSE,
+#                               income_strata = income_strata, use_prev_mat = TRUE)
+#   print(c(i, countries[i], income_strata))
+# }
+
+# Running Countries Locally to Check They Work
+# for (i in 1:length(missing)) {
+#   test <- run_apothecary_MCMC(country = missing[i], date = "2020-11-16", pars_init = pars_init,
+#                               mortality_data = mortality_data, interventions = interventions,
+#                               n_mcmc = 2, replicates = 2, healthcare = "unlimited", n_chains = 1, gibbs = TRUE)
+#   print(i)
+# }
+
+# Running the Fitting for Every Country
 for (i in 1:length(countries)) {
-  test <- run_apothecary_MCMC(country = countries[i], date = "2021-03-05", pars_init = pars_init,
-                              mortality_data = mortality_data, interventions = interventions,
-                              n_mcmc = 2, replicates = 2, healthcare = "unlimited", n_chains = 1, gibbs = FALSE)
-  print(c(i, countries[i]))
-}
-
-# Running Countries Locally to Check They Work
-for (i in 1:length(missing)) {
-  test <- run_apothecary_MCMC(country = missing[i], date = "2020-11-16", pars_init = pars_init,
-                              mortality_data = mortality_data, interventions = interventions,
-                              n_mcmc = 2, replicates = 2, healthcare = "unlimited", n_chains = 1, gibbs = TRUE)
+  iso <- countries[i]
+  income_strata <- gdp_income$income_group[which(gdp_income$country_code == iso)]
+  test <- run$enqueue(run_apothecary_MCMC(country = countries[i], date = "2021-03-05", pars_init = pars_init,
+                                          mortality_data = mortality_data, interventions = interventions,
+                                          n_mcmc = 20000, replicates = 500, healthcare = "limited", n_chains = 1, gibbs = FALSE,
+                                          income_strata = income_strata, use_prev_mat = TRUE))
   print(i)
 }
 
-# Running the Fitting for Every Country
-for (i in 1:length(missing)) {
-  test <- run$enqueue(run_apothecary_MCMC(country = missing[i], date = "2020-11-16", pars_init = pars_init,
+table(unname(run$task_status()), useNA = "ifany")
+x <- names(which(run$task_status() == "PENDING"))
+run$unsubmit(x)
+pending <- which(unname(run$task_status() == "PENDING"))
+
+for (i in pending) {
+  iso <- countries[i]
+  income_strata <- gdp_income$income_group[which(gdp_income$country_code == iso)]
+  test <- run$enqueue(run_apothecary_MCMC(country = countries[i], date = "2021-03-05", pars_init = pars_init,
                                           mortality_data = mortality_data, interventions = interventions,
-                                          n_mcmc = 20000, replicates = 500, healthcare = "unlimited", n_chains = 1, gibbs = TRUE))
+                                          n_mcmc = 20000, replicates = 500, healthcare = "limited", n_chains = 1, gibbs = FALSE,
+                                          income_strata = income_strata, use_prev_mat = TRUE))
   print(i)
 }
 table(unname(run$task_status()), useNA = "ifany")
-
 
 # Rerunning the initial failures
 x <- run$task_times()

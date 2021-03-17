@@ -1,5 +1,6 @@
 run_apothecary_MCMC <- function(country, date, pars_init, mortality_data, interventions,
-                                n_mcmc, replicates, healthcare, n_chains, gibbs) {
+                                n_mcmc, replicates, healthcare, n_chains, gibbs, income_strata,
+                                use_prev_mat) {
 
   # Checking Correct ISO Specification
   if (!(country %in% unique(squire::population$iso3c))) {
@@ -13,8 +14,6 @@ run_apothecary_MCMC <- function(country, date, pars_init, mortality_data, interv
   # Loading In Example Initial Parameters and Defining Country and Date Fitting Being Applied To
   parms <- pars_init[[country]]
   iso3c <- country
-
-  #### NEED TO ADD SOMETHING IN HERE ABOUT OXYGEN AND ARS AVAILABILITY ####
 
   # Loading in Mortality Data - Default is ECDC Unless Certain Countries, In Which Case Worldometer
   if (iso3c %in% c("BOL", "ITA", "FRA", "ECU", "CHL", "COD", "ESP", "IRN",
@@ -50,6 +49,25 @@ run_apothecary_MCMC <- function(country, date, pars_init, mortality_data, interv
   } else if (healthcare == "limited") {
     baseline_hosp_bed_capacity <- squire:::get_hosp_bed_capacity(country)
     baseline_ICU_bed_capacity <- squire:::get_ICU_bed_capacity(country)
+    if (income_strata == "Low income") {
+      prop_ox_hosp_beds <- 0.2
+      prop_ox_ICU_beds <- 0.2
+      MV_capacity <- round(baseline_ICU_bed_capacity * 0.2)
+    } else if (income_strata == "Lower middle income") {
+      prop_ox_hosp_beds <- 0.4
+      prop_ox_ICU_beds <- 0.4
+      MV_capacity <- round(baseline_ICU_bed_capacity * 0.4)
+    } else if (income_strata == "Upper middle income") {
+      prop_ox_hosp_beds <- 0.6
+      prop_ox_ICU_beds <- 0.6
+      MV_capacity <- round(baseline_ICU_bed_capacity * 0.6)
+    } else if (income_strata == "High income") {
+      prop_ox_hosp_beds <- 1
+      prop_ox_ICU_beds <- 1
+      MV_capacity <- round(baseline_ICU_bed_capacity * 1)
+    } else{
+      stop("incorrect income strata input")
+    }
   } else {
     stop("healthcare must be specified as unlimited or limited")
   }
@@ -205,26 +223,62 @@ run_apothecary_MCMC <- function(country, date, pars_init, mortality_data, interv
 
   pars_obs <- list(phi_cases = 1, k_cases = 2, phi_death = 1, k_death = 2, exp_noise = 1e6)
 
-  # Proposal Covariance Matrix NEED CHANGING
-  if (gibbs) {
-    if (n_chains == 1) {
-      proposal_kernel <- diag(length(names(pars_init)) - 1) * 0.3
-      rownames(proposal_kernel) <- colnames(proposal_kernel) <- names(pars_init)[-1]
+  # Covariance Matrix for MCMC Proposals
+  if (use_prev_mat) {
+    proposal_kernel_proposed <- parms$covariance_matrix[[1]]
+    if(length(grep("Rt_rw", colnames(proposal_kernel_proposed))) == rw_needed) {
+
+      proposal_kernel <- proposal_kernel_proposed
+
+    } else if(length(grep("Rt_rw", colnames(proposal_kernel_proposed))) < rw_needed) {
+
+      add_similar_cr <- function(x) {
+        x <- cbind(rbind(x, 0), 0)
+        rw_num <- colnames(x)[nrow(x)-1]
+        new_rw <- paste0("Rt_rw_", as.numeric(gsub("(.*_)(\\d*)$", "\\2", rw_num)) + 1)
+        colnames(x)[ncol(x)] <- rownames(x)[nrow(x)] <- new_rw
+        x[nrow(x),] <- x[nrow(x) - 1,]
+        x[,ncol(x)] <- x[,ncol(x) - 1]
+        return(x)
+      }
+
+      # add as needed
+      for(i in seq_len(rw_needed - length(grep("Rt_rw", colnames(proposal_kernel_proposed))))) {
+        proposal_kernel_proposed <- add_similar_cr(proposal_kernel_proposed)
+      }
+      proposal_kernel <- proposal_kernel_proposed
     } else {
-      proposal_kernel <- diag(length(names(pars_init[[1]])) - 1) * 0.3
-      rownames(proposal_kernel) <- colnames(proposal_kernel) <- names(pars_init[[1]])[-1]
+      # remove as needed
+      for(i in seq_len(length(grep("Rt_rw", colnames(proposal_kernel_proposed))) - rw_needed)) {
+        proposal_kernel_proposed <- proposal_kernel_proposed[-nrow(proposal_kernel_proposed),-ncol(proposal_kernel_proposed)]
+      }
+    }
+    scaling_factor <- parms$scaling_factor
+    if (gibbs) {
+      proposal_kernel <- proposal_kernel[2:dim(proposal_kernel)[1], 2:dim(proposal_kernel)[1]]
     }
   } else {
-    if (n_chains == 1) {
-      proposal_kernel <- diag(length(names(pars_init))) * 0.3
-      rownames(proposal_kernel) <- colnames(proposal_kernel) <- names(pars_init)
-      proposal_kernel["start_date", "start_date"] <- 1.5
-
+    if (gibbs) {
+      if (n_chains == 1) {
+        proposal_kernel <- diag(length(names(pars_init)) - 1) * 0.3
+        rownames(proposal_kernel) <- colnames(proposal_kernel) <- names(pars_init)[-1]
+      } else {
+        proposal_kernel <- diag(length(names(pars_init[[1]])) - 1) * 0.3
+        rownames(proposal_kernel) <- colnames(proposal_kernel) <- names(pars_init[[1]])[-1]
+      }
     } else {
-      proposal_kernel <- diag(length(names(pars_init))) * 0.3
-      rownames(proposal_kernel) <- colnames(proposal_kernel) <- names(pars_init[[1]])
-      proposal_kernel["start_date", "start_date"] <- 1.5
+      if (n_chains == 1) {
+        proposal_kernel <- diag(length(names(pars_init))) * 0.3
+        rownames(proposal_kernel) <- colnames(proposal_kernel) <- names(pars_init)
+        proposal_kernel["start_date", "start_date"] <- 1.5
+
+      } else {
+        proposal_kernel <- diag(length(names(pars_init))) * 0.3
+        rownames(proposal_kernel) <- colnames(proposal_kernel) <- names(pars_init[[1]])
+        proposal_kernel["start_date", "start_date"] <- 1.5
+      }
     }
+    scaling_factor <- 1
   }
 
   # MCMC Functions - Prior and Likelihood Calculation (removed uniform start date prior as uniform)
@@ -263,6 +317,7 @@ run_apothecary_MCMC <- function(country, date, pars_init, mortality_data, interv
                                pars_max = pars_max,
                                pars_discrete = pars_discrete,
                                proposal_kernel = proposal_kernel,
+                               scaling_factor = scaling_factor,
                                country = country,
                                R0_change = R0_change,
                                date_R0_change = date_R0_change,
@@ -278,7 +333,10 @@ run_apothecary_MCMC <- function(country, date, pars_init, mortality_data, interv
                                required_acceptance_ratio = 0.20,
                                start_adaptation = 500,
                                baseline_hosp_bed_capacity = baseline_hosp_bed_capacity,
-                               baseline_ICU_bed_capacity = baseline_ICU_bed_capacity, # need to add oxygen and ARS
+                               baseline_ICU_bed_capacity = baseline_ICU_bed_capacity,
+                               prop_ox_hosp_beds = prop_ox_hosp_beds,
+                               prop_ox_ICU_beds = prop_ox_ICU_beds,
+                               MV_capacity = MV_capacity,
                                gibbs_sampling = TRUE,
                                gibbs_days = 2)
   } else {
@@ -311,8 +369,11 @@ run_apothecary_MCMC <- function(country, date, pars_init, mortality_data, interv
                                replicates = ifelse(n_mcmc < replicates, n_mcmc, replicates),
                                required_acceptance_ratio = 0.20,
                                start_adaptation = 500,
-                               baseline_hosp_bed_capacity = baseline_hosp_bed_capacity, # need to add oxygen and ARS
-                               baseline_ICU_bed_capacity = baseline_ICU_bed_capacity)
+                               baseline_hosp_bed_capacity = baseline_hosp_bed_capacity,
+                               baseline_ICU_bed_capacity = baseline_ICU_bed_capacity,
+                               prop_ox_hosp_beds = prop_ox_hosp_beds,
+                               prop_ox_ICU_beds = prop_ox_ICU_beds,
+                               MV_capacity = MV_capacity)
   }
 
   if (n_chains > 1) {

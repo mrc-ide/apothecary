@@ -20,9 +20,9 @@ standard_matrix <- matrix(rep(prop_pop, 16), ncol = 16, byrow = TRUE)
 # Defining the Healthcare Capacity Parameters Used In Each Scenario
 actual_hosp_beds <- round(squire::get_healthcare_capacity(country)$hosp_beds * sum(standard_population)/1000)
 actual_ICU_beds <- round(squire::get_healthcare_capacity(country)$ICU_beds * sum(standard_population)/1000)
-actual_prop_ox_hosp_beds <- 0.6
-actual_prop_ox_ICU_beds <- 0.8
-actual_MV_capacity <- round(actual_ICU_beds * 0.5)
+actual_prop_ox_hosp_beds <- 0.4
+actual_prop_ox_ICU_beds <- 0.4
+actual_MV_capacity <- round(actual_ICU_beds * 0.4)
 time <- 750
 
 # Running and assessing mAb (or similar) impact
@@ -35,7 +35,7 @@ time <- 750
 # 3) Indirectly by preventing individuals from being hospitalised (and dying)
 #      Run the model with only the duration of infection effect in, and now limited healthcare. Impact here is from the drug
 #      preventing people from going to hospital AND from the reduced strain on healthcare.
-R <- "high"
+R <- "low"
 if (R == "high") {
   R0 <- 2
 } else {
