@@ -76,7 +76,7 @@ IFRplot2 <- ggplot(overall) +
   geom_boxplot(aes(x = healthcare, y = IFR, fill = interaction(R0, healthcare)), outlier.shape = NA) +
   geom_point(data = no_drug_data, aes(x = healthcare, y = no_drugs_IFR, group = interaction(R0, healthcare)),
              shape = 19, position = position_dodge(width = 0.75)) +
-  facet_grid(. ~ drug_benefit,
+  facet_grid(drug_benefit ~ .,
              labeller = labeller(R0 = R0.labs, drug_benefit = healthcare.labs)) +
   scale_fill_manual(values = c("white", "white", "#F6A78A", "#DBF0CE", "#E4521B",
                                "#82CA59", "#9E3813", "#549418", "purple", "pink"),
@@ -90,8 +90,8 @@ IFRplot2 <- ggplot(overall) +
   theme(legend.position = "none", axis.text.x = element_text(size = 8),
         axis.text.y = element_text(size = 10),
         axis.title.y = element_text(vjust = +2.5),
-        strip.background.x = element_blank(),
-        strip.text.x = element_blank(),
+        strip.background.y = element_blank(),
+        strip.text.y = element_blank(),
         panel.spacing = unit(2, "lines")) +
   labs(x = "", y = "Infection Fatality Ratio (%)") +
   lims(y = c(0, 0.55))
@@ -125,7 +125,7 @@ overall_new <- limHC_drug_benefit %>%
 prob_ben_plot <- ggplot(overall_new) +
   geom_bar(aes(x = R0, y = 100 * prop_benefit_gained, fill = interaction(R0, healthcare), group = interaction(healthcare, R0)),
            stat = "identity", position = "dodge", col = "black") +
-  facet_grid(. ~ drug_benefit,
+  facet_grid(drug_benefit ~ .,
              labeller = labeller(R0 = R0.labs, drug_benefit = healthcare.labs)) +
   scale_fill_manual(values = alpha(c("white", "white", "#F6A78A", "#DBF0CE",
                                      "#E4521B", "#82CA59", "#9E3813", "#549418"),
@@ -134,15 +134,15 @@ prob_ben_plot <- ggplot(overall_new) +
   scale_y_continuous(position="left", limits = c(0, 100)) +
   labs(y = "% Max Drug Impact") +
   theme(legend.position = "none", axis.title.x = element_blank(),
-        strip.background.x = element_blank(),
-        strip.text.x = element_blank(),
+        strip.background.y = element_blank(),
+        strip.text.y = element_blank(),
         panel.spacing = unit(2, "lines"))
 
-fig2 <- plot_grid(IFRplot2, prob_ben_plot, ncol = 1) +
+fig2 <- plot_grid(IFRplot2, prob_ben_plot, nrow = 1, align = "h") +
   draw_plot_label(
     c("A", "B", "C", "D", "E", "F"),
-    c(0, 0.33, 0.66, 0, 0.33, 0.66),
-    c(1.04, 1.04, 1.04, 0.56, 0.56, 0.56),
+    c(0, 0.48, 0, 0.48, 0, 0.48),
+    c(1.04, 1.04, 0.73, 0.73, 0.41, 0.41),
     size = 30)
 fig2
-ggsave2("analysis_Figure2/Supp_Figure_2.pdf", fig2, dpi = 400, width = 11.3, height = 7.1)
+ggsave2("analysis_Figure2/Supp_Figure_2.pdf", fig2, dpi = 400, width = 8, height = 11)

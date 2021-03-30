@@ -5,24 +5,24 @@ library(mapproj); library(cowplot)
 
 # Setting Up Cluster
 loc <- didehpc::path_mapping("location", "N:", "//fi--didenas5/malaria", "N:")
-config <- didehpc::didehpc_config(shares = loc, use_rrq = FALSE, cluster =  "fi--dideclusthn",#"fi--didemrchnb",
+config <- didehpc::didehpc_config(shares = loc, use_rrq = FALSE, cluster =  "fi--didemrchnb", #"fi--dideclusthn",#
                                   parallel = FALSE, rtools = TRUE)
 packages <- c("lubridate", "dplyr", "tidyr", "odin", "squire", "apothecary", "dde")
 
 # Creating a Context
 sources <- c("N:/Charlie/apothecary_fitting/apothecary/analysis_Figure3/Functions/MCMC_cluster_function.R",
-             "N:/Charlie/apothecary_fitting/apothecary/analysis_Figure3/Functions/Cluster_Output_Projectiong_Functions.R")
+             "N:/Charlie/apothecary_fitting/apothecary/analysis_Figure3/Functions/Cluster_Output_Projection_Functions.R")
 
-additional_identifier <- "new"
+additional_identifier <- "yooo_kloop_bloop_comeon_try_newbie"
 context_name <- paste0("N:/Charlie/apothecary_runs_", Sys.Date(), additional_identifier)
 ctx <- context::context_save(path = context_name,
                              sources = sources,
                              packages = packages,
                              package_sources = provisionr::package_sources(local =
                                                                              c("N:/Charlie/apothecary_fitting/apothecary_0.1.0.zip",
-                                                                               "N:/Charlie/apothecary_fitting/dde_1.0.2.zip",
-                                                                               "N:/Charlie/apothecary_fitting/odin_1.0.6.zip",
-                                                                               "N:/Charlie/apothecary_fitting/squire_0.5.6.zip")))
+                                                                               "N:/Charlie/apothecary_fitting/dde_1.0.3.zip",
+                                                                               "N:/Charlie/apothecary_fitting/odin_1.1.8.zip",
+                                                                               "N:/Charlie/apothecary_fitting/squire_0.6.4.zip")))
 # Configure the Queue
 run <- didehpc::queue_didehpc(ctx, config = config)
 
@@ -33,26 +33,83 @@ run$task_times()
 
 # Loading Up Tasks
 filenames <- list.files("N:/Charlie/apothecary_fitting/apothecary_run_results/")
+filenames <- filenames[!grepl("Smaller", filenames)]
 iso <- str_split(filenames, "_")
 iso <- unlist(lapply(iso, `[[`, 1))
 countries <- countrycode::countrycode(iso, origin = "iso3c", destination = "country.name")
 countries <- str_replace(countries, "&", "and")
-misspell <- c("Côte d’Ivoire", "Congo - Brazzaville", "Cape Verde", "Kyrgyzstan", "Myanmar (Burma)", "Palestinian Territories", "São Tomé and Príncipe")
+misspell <- c("Côte d’Ivoire", "Congo - Brazzaville", "Cape Verde", "Kyrgyzstan", "Palestinian Territories", "São Tomé and Príncipe")
 indices <- which(countries %in% misspell)
-countries[indices] <- c("Cote d'Ivoire", "Republic of the Congo", "Cabo Verde", "Kyrgyz Republic", "Myanmar", "State of Palestine", "Sao Tome and Principe")
+countries[indices] <- c("Cote d'Ivoire", "Republic of the Congo", "Cabo Verde", "Kyrgyz Republic", "State of Palestine", "Sao Tome and Principe")
+wb_income <- read.csv("analysis_Figure3/Inputs/gdp_income_group.csv") %>%
+  select(country_code, income_group)
 
 for (i in 1:length(iso)) {
+
+  # Getting income strata for each country
+  income_strata_spec <- wb_income$income_group[wb_income$country_code == iso[i]]
+
+  # Loading in and processing MCMC results for each country
   temp <- filenames[grep(iso[i], filenames)]
   pmcmc_res <- readRDS(paste0("N:/Charlie/apothecary_fitting/apothecary_run_results/", temp))
   index <- squire:::odin_index(pmcmc_res$model)
   past_t <- pmcmc_res$output[, "t", ]
   past_deaths <- apply(pmcmc_res$output[, index$D, ], c(1, 3), sum)
+
+  # Saving smaller version of MCMC results to pass to the cluster
   dims <- dim(pmcmc_res$output)[1]
   pmcmc_res$output <- pmcmc_res$output[(dims-2):dims, , ]
-  test <- run$enqueue(cluster_projections(pmcmc_res = pmcmc_res, iso = iso[i], country = countries[i],
+  saveRDS(list(pmcmc_res = pmcmc_res,
+               past_t = past_t,
+               past_deaths = past_deaths),
+          paste0("N:/Charlie/apothecary_fitting/apothecary_run_results/Smaller_Versions/small_", temp))
+
+  # Running the projections of drug impact
+  test <- run$enqueue(cluster_projections(pmcmc_res = pmcmc_res, iso = iso[i],
+                                          country = countries[i], income_strata = income_strata_spec,
                                           number_replicates = 500, timepoints = past_t, cumulative_deaths_data = past_deaths))
   print(i)
 }
+
+# running the missing ones
+projection_outputs <- list.files("N:/Charlie/apothecary_fitting/apothecary/analysis_Figure3/Outputs/Projections/")
+projection_iso <- str_split(projection_outputs, "_")
+projection_iso <- unlist(lapply(projection_iso, `[[`, 1))
+missing <- iso[!(iso %in% projection_iso)]
+rerun_indices <- which(iso %in% missing)
+
+rerun_indices <- rerun_indices[c(1, 2, 4)]
+countries <- c("Brunei Darussalam", "Republic of the Congo", "Philippines")
+counter <- 1
+for (i in rerun_indices) {
+
+  # Getting income strata for each country
+  income_strata_spec <- wb_income$income_group[wb_income$country_code == iso[i]]
+
+  # Loading in and processing MCMC results for each country
+  temp <- filenames[grep(iso[i], filenames)]
+  pmcmc_res <- readRDS(paste0("N:/Charlie/apothecary_fitting/apothecary_run_results/", temp))
+  index <- squire:::odin_index(pmcmc_res$model)
+  past_t <- pmcmc_res$output[, "t", ]
+  past_deaths <- apply(pmcmc_res$output[, index$D, ], c(1, 3), sum)
+
+  # Saving smaller version of MCMC results to pass to the cluster
+  dims <- dim(pmcmc_res$output)[1]
+  pmcmc_res$output <- pmcmc_res$output[(dims-2):dims, , ]
+  saveRDS(list(pmcmc_res = pmcmc_res,
+               past_t = past_t,
+               past_deaths = past_deaths),
+          paste0("N:/Charlie/apothecary_fitting/apothecary_run_results/Smaller_Versions/small_", temp))
+
+  # Running the projections of drug impact
+  test <- run$enqueue(cluster_projections(pmcmc_res = pmcmc_res, iso = iso[i],
+                                          country = countries[counter], income_strata = income_strata_spec,
+                                          number_replicates = 500, timepoints = past_t, cumulative_deaths_data = past_deaths))
+  counter <- counter + 1
+  print(i, counter)
+}
+
+run$task_status()
 
 # Creating Overall Dataframe
 output <- list.files("analysis_Figure3/Outputs/Projections/")
@@ -64,19 +121,26 @@ for (i in 1:length(output)) {
     overall <- rbind(overall, temp)
   }
 }
-wb <- read.csv("analysis_Figure3/Inputs/World_Bank_Country_Metadata.csv") %>%
-  select(ï..country_code, region, income_group) %>%
-  rename(iso = ï..country_code)
+wb <- read.csv("analysis_Figure3/Inputs/gdp_income_group.csv") %>%
+  select(country_code, region, income_group) %>%
+  rename(iso = country_code)
+
 overall <- overall %>%
   left_join(wb, by = c("country" = "iso")) %>%
   mutate(income_group = factor(income_group, levels = c("Low income", "Lower middle income", "Upper middle income", "High income"))) %>%
   mutate(low = (1 - (low_drugs_limited/low_nodrugs_limited))/(1 - (low_drugs_unlimited/low_nodrugs_unlimited)),
          high = (1 - (high_drugs_limited/high_nodrugs_limited))/(1 - (high_drugs_unlimited/high_nodrugs_unlimited)))
 
+deaths_averted <- overall %>%
+  select(country, income_group, low_drugs_limited, low_nodrugs_limited) %>%
+  mutate(prop_averted = 1 - low_drugs_limited/low_nodrugs_limited) %>%
+  group_by(income_group) %>%
+  summarise(mean = mean(prop_averted))
+
 summary <- overall %>%
   group_by(income_group) %>%
-  summarise(mean_low = mean(low),
-            mean_high = mean(high),
+  summarise(mean_low = median(low),
+            mean_high = median(high),
             n = n())
 
 red <- overall %>%
@@ -100,7 +164,6 @@ ggplot(data = world) +
   theme(legend.position = "left",
         #panel.background = element_rect(fill = "light grey"),
         panel.grid = element_line(color = "white"))
-
 
 a <- ggplot(data = world) +
   geom_sf(aes(fill = low)) +
@@ -148,7 +211,6 @@ d <- ggplot(data = overall, aes(x = income_group, y = 100 * high, col = income_g
         axis.text.y = element_text(size = 14),
         axis.title.y = element_text(size = 14))
 
-
 # 10.5 width x 7.5 height
 fig3 <- plot_grid(a, c, b, d, ncol = 2, rel_widths = c(2.5, 1), align = 'h', axis = 'tb') +
   draw_plot_label(
@@ -158,12 +220,3 @@ fig3 <- plot_grid(a, c, b, d, ncol = 2, rel_widths = c(2.5, 1), align = 'h', axi
     size = 30)
 ggsave2(file = "analysis_Figure3/Figure_3.pdf", fig3, dpi = 300,
         width = 10.5, height = 7.5)
-
-# a <- ggplot(data = world) +
-#   geom_sf(aes(fill = low)) +
-#   coord_sf(crs = "+proj=eck4") +
-#   scale_fill_viridis_c(option = "magma", breaks = c(0, 1), limits = c(0, 1), direction = -1) +
-#   cowplot::theme_minimal_grid() +
-#   theme(legend.position = "left") +
-#   theme(plot.margin = unit(c(0, 0, 0, 0), "cm"))
-

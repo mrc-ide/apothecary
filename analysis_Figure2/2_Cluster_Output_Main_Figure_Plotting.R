@@ -99,6 +99,10 @@ highR0 <- run_apothecary(country = demog_pars_highR0$country, R0 = demog_pars_hi
                          prop_ox_hosp_beds = actual_prop_ox_hosp_beds, prop_ox_ICU_beds = actual_prop_ox_ICU_beds,
                          MV_capacity = actual_MV_capacity)
 
+plot(lowR0$output[, index$overall_ICU_occ])
+
+sum(lowR0$output[, index$number_need_ICU_no_treat])
+
 low_R0_hosp_bed <- sum(lowR0$output[, index$number_get_hosp_any_treat])/sum(lowR0$output[, index$number_req_hosp_bed])
 low_R0_ICU_bed <- sum(lowR0$output[, index$number_get_ICU_any_treat])/sum(lowR0$output[, index$number_req_ICU_bed])
 low_R0_hosp_full <- sum(lowR0$output[, index$number_get_hosp_full_treat])/sum(lowR0$output[, index$number_req_hosp_bed])

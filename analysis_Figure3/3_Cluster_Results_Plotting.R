@@ -8,7 +8,7 @@ source("analysis_Figure3/Functions/Cluster_Output_Plotting_Functions.R")
 filenames <- list.files("N:/Charlie/apothecary_fitting/apothecary_run_results/")
 
 # Plotting MCMC output
-date <- as.Date("2020-11-16")
+date <- as.Date("2021-05-03")
 interventions <- readRDS("analysis_Figure3/Inputs/google_brt.rds")
 pdf_names <- c()
 for (i in 1:length(filenames)) {
@@ -21,8 +21,14 @@ for (i in 1:length(filenames)) {
   x <- overall_plot(out)
   ggsave(paste0("analysis_Figure3/Outputs/", temp_name), width=20, height=8, x)
   print(i)
+  rm(out)
 }
 
 # -28 is to remove sao tome which has weird letters and doesn't combine nicely
-big_pdf <- qpdf::pdf_combine(paste0("analysis_Figure3/Outputs/", pdf_names[-28])) #, output = "analysis_Figure3/Outputs/combined_big_boy.pdf"))
+big_pdf <- qpdf::pdf_combine(paste0("analysis_Figure3/Outputs/", pdf_names[-c(33, 137)])) #, output = "analysis_Figure3/Outputs/combined_big_boy.pdf"))
 
+lapply(out, object.size)
+lapply(out$pmcmc_results, object.size)
+
+
+out$replicate_parameters

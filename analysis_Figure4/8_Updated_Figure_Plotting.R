@@ -133,6 +133,7 @@ low2 <- ggplot() +
   scale_y_continuous(position = "right", limits = c(0, 1))
 
 low <- plot_grid(low_heatmaps, low2, rel_widths = c(2, 1))
+ggsave2("analysis_Figure4/Figure_4.pdf", low, dpi = 400, width = 13, height = 6)
 
 # Plotting Figure 4A - high R0 Sensitivity Analyses for Different Drug Properties
 type1_high <- heatmap_plot(readRDS("analysis_Figure4/Outputs/sensitivity_analysis/type1_high.rds"), none_high_deaths, FALSE)
@@ -229,3 +230,4 @@ high2 <- ggplot() +
   scale_y_continuous(position = "right", limits = c(0, 1))
 
 high <- plot_grid(high_heatmaps, high2, rel_widths = c(2, 1))
+ggsave2("analysis_Figure4/Supp_Figure_4.pdf", high, dpi = 400, width = 13, height = 6)

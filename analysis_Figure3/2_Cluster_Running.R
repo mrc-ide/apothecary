@@ -53,9 +53,31 @@ yes_death_countries <- jhu %>%
   summarise(total_deaths = sum(deaths)) %>%
   filter(total_deaths != 0)
 countries <- countries[countries %in% yes_death_countries$countryterritoryCode]
-# previous_runs <- str_split(list.files("N:/Charlie/apothecary_fitting/apothecary_run_results"), "_")
-# previous_runs <- unlist(lapply(previous_runs, `[[`, 1))
-# missing <- countries[!(countries %in% previous_runs)]
+previous_runs <- str_split(list.files("N:/Charlie/apothecary_fitting/apothecary_run_results"), "_")
+previous_runs <- unlist(lapply(previous_runs, `[[`, 1))
+missing <- countries[!(countries %in% previous_runs)]
+
+for (i in 1:length(missing)) {
+  iso <- missing[i]
+  income_strata <- gdp_income$income_group[which(gdp_income$country_code == iso)]
+  test <- run$enqueue(run_apothecary_MCMC(country = missing[i], date = "2021-03-05", pars_init = pars_init,
+                                          mortality_data = mortality_data, interventions = interventions,
+                                          n_mcmc = 20000, replicates = 500, healthcare = "limited", n_chains = 1, gibbs = FALSE,
+                                          income_strata = income_strata, use_prev_mat = TRUE))
+  print(i)
+}
+table(unname(run$task_status()), useNA = "ifany")
+pending <- which(unname(run$task_status() == "PENDING"))
+for (i in pending) {
+  iso <- missing[i]
+  income_strata <- gdp_income$income_group[which(gdp_income$country_code == iso)]
+  test <- run$enqueue(run_apothecary_MCMC(country = missing[i], date = "2021-03-05", pars_init = pars_init,
+                                          mortality_data = mortality_data, interventions = interventions,
+                                          n_mcmc = 20000, replicates = 500, healthcare = "limited", n_chains = 1, gibbs = FALSE,
+                                          income_strata = income_strata, use_prev_mat = TRUE))
+  print(i)
+}
+table(unname(run$task_status()), useNA = "ifany")
 
 # country = "FRA"
 # date = "2021-03-05"
