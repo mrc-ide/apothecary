@@ -131,9 +131,15 @@ overall <- overall %>%
   mutate(low = (1 - (low_drugs_limited/low_nodrugs_limited))/(1 - (low_drugs_unlimited/low_nodrugs_unlimited)),
          high = (1 - (high_drugs_limited/high_nodrugs_limited))/(1 - (high_drugs_unlimited/high_nodrugs_unlimited)))
 
-deaths_averted <- overall %>%
+deaths_averted_low <- overall %>%
   select(country, income_group, low_drugs_limited, low_nodrugs_limited) %>%
   mutate(prop_averted = 1 - low_drugs_limited/low_nodrugs_limited) %>%
+  group_by(income_group) %>%
+  summarise(mean = mean(prop_averted))
+
+deaths_averted_high <- overall %>%
+  select(country, income_group, high_drugs_limited, high_nodrugs_limited) %>%
+  mutate(prop_averted = 1 - high_drugs_limited/high_nodrugs_limited) %>%
   group_by(income_group) %>%
   summarise(mean = mean(prop_averted))
 
